@@ -167,6 +167,7 @@
 		margin: 0;
 	}
 	.waitlist-consent {
+    	padding-top: 12px;
 		display: flex;
 		align-items: flex-start;
 		gap: 10px;

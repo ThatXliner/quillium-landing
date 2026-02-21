@@ -1,4 +1,6 @@
 <script lang="ts">
+	let hasAgreedToTerms = false;
+
 	function handleWaitlistSubmit(e: Event) {
 		e.preventDefault();
 		const email = (document.getElementById('waitlist-email') as HTMLInputElement)?.value;
@@ -33,17 +35,32 @@
 
 		<div class="reveal reveal-delay-1">
 			<form id="waitlist-form" onsubmit={handleWaitlistSubmit} class="waitlist-form">
-				<input
-					type="email"
-					id="waitlist-email"
-					class="waitlist-input"
-					placeholder="your@email.com"
-					required
-					aria-label="Email address"
-				/>
-				<button type="submit" class="btn-primary btn-large">Join Waitlist</button>
+				<div class="waitlist-form-row">
+					<input
+						type="email"
+						id="waitlist-email"
+						class="waitlist-input"
+						placeholder="your@email.com"
+						required
+						aria-label="Email address"
+					/>
+					<button type="submit" class="btn-primary btn-large" disabled={!hasAgreedToTerms}>Join Waitlist</button>
+				</div>
+				<label class="waitlist-consent">
+					<input type="checkbox" required bind:checked={hasAgreedToTerms} aria-label="I agree to the Early Access Preview terms" />
+					<span>I agree to the Early Access Preview terms below.</span>
+				</label>
 			</form>
 			<p class="waitlist-privacy">No spam. No marketing cadences. Just a quiet note when the doors open.</p>
+			<div class="waitlist-terms" aria-label="Early Access Preview terms">
+				<p class="waitlist-terms-title">Early Access Preview Terms</p>
+				<ul>
+					<li><strong>No sharing.</strong> Do not share, redistribute, or republish any files (although you can use this for essay writing I don't care), links, screenshots, or materials related to Quillium.</li>
+					<li><strong>No recreation.</strong> Do not attempt to recreate, reverse-engineer, or derive works from Quillium.</li>
+					<li><strong>Record-keeping.</strong> This message and your response may be saved for reference.</li>
+					<li><strong>Violation.</strong> Breaking these terms may result in removal from the EAP and revocation of future access.</li>
+				</ul>
+			</div>
 		</div>
 
 		<div id="waitlist-success" class="hidden waitlist-success reveal">
@@ -98,13 +115,17 @@
 		margin-right: auto;
 	}
 	.waitlist-form {
+		display: grid;
+		gap: 14px;
+		margin-bottom: 16px;
+	}
+	.waitlist-form-row {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
-		margin-bottom: 16px;
 	}
 	@media (min-width: 640px) {
-		.waitlist-form {
+		.waitlist-form-row {
 			flex-direction: row;
 		}
 	}
@@ -134,6 +155,51 @@
 		color: #a89e94;
 		font-family: 'Inter', sans-serif;
 		margin: 0;
+	}
+	.waitlist-consent {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		text-align: left;
+		font-family: 'Inter', sans-serif;
+		font-size: 13px;
+		color: #5a554f;
+		line-height: 1.5;
+	}
+	.waitlist-consent input {
+		margin-top: 2px;
+		accent-color: #3b82f6;
+	}
+	.waitlist-form button:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+	.waitlist-terms {
+		margin-top: 18px;
+		padding: 16px;
+		border: 1px solid #d6cfc5;
+		border-radius: 14px;
+		background: rgba(255, 255, 255, 0.7);
+		text-align: left;
+	}
+	.waitlist-terms-title {
+		font-family: 'Inter', sans-serif;
+		font-size: 13px;
+		font-weight: 600;
+		color: #2c2a27;
+		margin: 0 0 8px 0;
+	}
+	.waitlist-terms ul {
+		margin: 0;
+		padding-left: 18px;
+		display: grid;
+		gap: 6px;
+	}
+	.waitlist-terms li {
+		font-family: 'Inter', sans-serif;
+		font-size: 12.5px;
+		color: #5a554f;
+		line-height: 1.5;
 	}
 	.waitlist-success {
 		background: rgba(34, 197, 94, 0.08);

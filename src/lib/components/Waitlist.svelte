@@ -3,10 +3,9 @@
 
 	function handleWaitlistSubmit(e: Event) {
 		e.preventDefault();
-		const email = (document.getElementById('waitlist-email') as HTMLInputElement)?.value;
 		const form = document.getElementById('waitlist-form');
 		const success = document.getElementById('waitlist-success');
-		if (email && email.includes('@') && form && success) {
+		if (hasAgreedToTerms && form && success) {
 			form.style.opacity = '0';
 			form.style.transition = 'opacity 0.3s';
 			setTimeout(() => {
@@ -30,37 +29,78 @@
 				</svg>
 			</div>
 			<h2 class="waitlist-heading">Be among the first<br />writers in.</h2>
-			<p class="waitlist-sub">Quillium is in private early access. Leave your email and we'll reach out when we're ready for you.</p>
+			<p class="waitlist-sub">Quillium is in private early access. Join the waitlist and we'll reach out when we're ready for you.</p>
 		</div>
 
 		<div class="reveal reveal-delay-1">
-			<form id="waitlist-form" onsubmit={handleWaitlistSubmit} class="waitlist-form">
-				<div class="waitlist-form-row">
-					<input
-						type="email"
-						id="waitlist-email"
-						class="waitlist-input"
-						placeholder="your@email.com"
-						required
-						aria-label="Email address"
-					/>
-					<button type="submit" class="btn-primary btn-large" disabled={!hasAgreedToTerms}>Join Waitlist</button>
+			<p class="waitlist-terms-title">Early Access Preview Terms</p>
+			<div class="waitlist-terms" aria-label="Early Access Preview terms">
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">Early Access Status</p>
+					<ul>
+						<li>Quillium is an experimental preview.</li>
+						<li>Features are incomplete and may change or be removed at any time.</li>
+						<li>Documents may not migrate cleanly between versions.</li>
+						<li>Data loss is possible. Do not use it for critical or irreplaceable work.</li>
+						<li>Not for production or commercial use.</li>
+					</ul>
 				</div>
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">Closed Beta &amp; Confidentiality</p>
+					<ul>
+						<li>Access is invitation-only and non-transferable.</li>
+						<li>Do not share screenshots, recordings, internal features, or roadmap details publicly.</li>
+						<li>Do not publicly review or discuss the product during beta.</li>
+						<li>Keep feedback and discussion within official beta channels.</li>
+					</ul>
+				</div>
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">Participation Expectations</p>
+					<ul>
+						<li>Active use and honest feedback are expected.</li>
+						<li>You may be removed from the beta if inactive.</li>
+						<li>Feedback should be candid, specific, and constructive.</li>
+					</ul>
+				</div>
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">License</p>
+					<ul>
+						<li>You are granted a limited, non-exclusive, non-transferable, revocable license to use Quillium only for beta evaluation.</li>
+						<li>All rights not expressly granted are reserved.</li>
+					</ul>
+				</div>
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">Restrictions</p>
+					<ul>
+						<li>Do not reverse engineer, decompile, or attempt to extract source code.</li>
+						<li>Do not recreate, clone, or build derivative tools from Quillium's structure or features.</li>
+						<li>Do not scrape, automate access, or probe for vulnerabilities.</li>
+						<li>Do not use the product for unlawful purposes.</li>
+					</ul>
+				</div>
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">Feedback</p>
+					<ul>
+						<li>Feedback, suggestions, and ideas may be used without restriction or compensation.</li>
+						<li>Quillium may independently build features similar to your feedback.</li>
+					</ul>
+				</div>
+				<div class="waitlist-terms-section">
+					<p class="waitlist-terms-heading">Termination</p>
+					<ul>
+						<li>Access may be suspended or revoked at any time, for any reason.</li>
+						<li>Upon termination, access to documents may be removed.</li>
+					</ul>
+				</div>
+			</div>
+			<form id="waitlist-form" onsubmit={handleWaitlistSubmit} class="waitlist-form">
 				<label class="waitlist-consent">
 					<input type="checkbox" required bind:checked={hasAgreedToTerms} aria-label="I agree to the Early Access Preview terms" />
-					<span>I agree to the Early Access Preview terms below.</span>
+					<span>I agree to the Early Access Preview terms above.</span>
 				</label>
+				<button type="submit" class="btn-primary btn-large" disabled={!hasAgreedToTerms}>Join Waitlist</button>
 			</form>
 			<p class="waitlist-privacy">No spam. No marketing cadences. Just a quiet note when the doors open.</p>
-			<div class="waitlist-terms" aria-label="Early Access Preview terms">
-				<p class="waitlist-terms-title">Early Access Preview Terms</p>
-				<ul>
-					<li><strong>No sharing.</strong> Do not share, redistribute, or republish any files (although you can use this for essay writing I don't care), links, screenshots, or materials related to Quillium.</li>
-					<li><strong>No recreation.</strong> Do not attempt to recreate, reverse-engineer, or derive works from Quillium.</li>
-					<li><strong>Record-keeping.</strong> This message and your response may be saved for reference.</li>
-					<li><strong>Violation.</strong> Breaking these terms may result in removal from the EAP and revocation of future access.</li>
-				</ul>
-			</div>
 		</div>
 
 		<div id="waitlist-success" class="hidden waitlist-success reveal">
@@ -118,37 +158,7 @@
 		display: grid;
 		gap: 14px;
 		margin-bottom: 16px;
-	}
-	.waitlist-form-row {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	}
-	@media (min-width: 640px) {
-		.waitlist-form-row {
-			flex-direction: row;
-		}
-	}
-	.waitlist-input {
-		background: #fefefe;
-		border: 1px solid #d6cfc5;
-		border-radius: 9999px;
-		padding: 12px 20px;
-		font-family: 'Inter', sans-serif;
-		font-size: 15px;
-		color: #2c2a27;
-		outline: none;
-		transition:
-			border-color 0.2s,
-			box-shadow 0.2s;
-		flex: 1;
-	}
-	.waitlist-input:focus {
-		border-color: #3b82f6;
-		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
-	}
-	.waitlist-input::placeholder {
-		color: #a89e94;
+		justify-items: center;
 	}
 	.waitlist-privacy {
 		font-size: 12.5px;
@@ -187,7 +197,18 @@
 		font-size: 13px;
 		font-weight: 600;
 		color: #2c2a27;
-		margin: 0 0 8px 0;
+		margin: 18px 0 8px 0;
+		text-align: left;
+	}
+	.waitlist-terms-section {
+		margin-top: 14px;
+	}
+	.waitlist-terms-heading {
+		margin: 0 0 6px 0;
+		font-family: 'Inter', sans-serif;
+		font-size: 12.5px;
+		font-weight: 600;
+		color: #2c2a27;
 	}
 	.waitlist-terms ul {
 		margin: 0;

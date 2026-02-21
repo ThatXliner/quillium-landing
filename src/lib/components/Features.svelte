@@ -5,17 +5,42 @@
 		<h2 class="section-heading">The tools your writing actually needs.</h2>
 	</div>
 
-	<!-- Feature 1: Branches -->
+	<!-- Feature 1: Branches / Revisions -->
 	<div class="reveal feature-row">
 		<div class="feature-visual">
-			<!-- Replace src with actual screenshot of the branching feature -->
-			<img
-				src=""
-				alt="Quillium branching feature — write multiple versions of a sentence"
-				class="feature-screenshot"
-				width="540"
-				height="360"
-			/>
+			<!-- Revision panel close-up -->
+			<div class="fmock fmock--revision">
+				<div class="fmock-doc">
+					<p class="fmock-prose">
+						...and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of <span class="fmock-underline">mankind requires that they should declare</span> the causes which impel them to the separation.
+					</p>
+				</div>
+				<div class="fmock-sidebar">
+					<div class="fmock-card">
+						<div class="fmock-card-label">REVISION</div>
+						<div class="fmock-pills">
+							<div class="fmock-pill fmock-pill--grey">
+								<span>Lorem ipsum dol...</span>
+								<span class="fmock-pill-x">×</span>
+							</div>
+							<div class="fmock-pill fmock-pill--purple">
+								<span>of mankind requir...</span>
+								<span class="fmock-pill-x">×</span>
+							</div>
+						</div>
+						<div class="fmock-revision-actions">
+							<span class="fmock-action-new">
+								<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1.5V7.5M1.5 4.5H7.5" stroke="#3b82f6" stroke-width="1.2" stroke-linecap="round"/></svg>
+								New version
+							</span>
+							<span class="fmock-action-nested">
+								<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 3.5L4.5 6L7 3.5" stroke="#6b6560" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+								Nested editor
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(59,130,246,0.08);">
@@ -52,28 +77,82 @@
 			</div>
 		</div>
 		<div class="feature-visual">
-			<!-- Replace src with actual screenshot of the AI suggestion feature -->
-			<img
-				src=""
-				alt="Quillium AI second voice — inline suggestions and revisions"
-				class="feature-screenshot"
-				width="540"
-				height="360"
-			/>
+			<!-- AI chat panel close-up -->
+			<div class="fmock fmock--ai">
+				<div class="fmock-ai-panel">
+					<div class="fmock-ai-tabs">
+						<div class="fmock-ai-tab fmock-ai-tab--active">
+							<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 2.5C1.5 2.22 1.72 2 2 2H11C11.28 2 11.5 2.22 11.5 2.5V7.5C11.5 7.78 11.28 8 11 8H8L5.5 10.5V8H2C1.72 8 1.5 7.78 1.5 7.5V2.5Z" stroke="#3b82f6" stroke-width="1.1" stroke-linejoin="round"/></svg>
+						</div>
+						<div class="fmock-ai-tab">
+							<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.8 4.3L11 4.3L8.5 6.2L9.4 9.5L6.5 7.6L3.6 9.5L4.5 6.2L2 4.3L5.2 4.3L6.5 1Z" stroke="#6b6560" stroke-width="1" stroke-linejoin="round"/></svg>
+						</div>
+						<div class="fmock-ai-tab">
+							<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 2L11 4.5L4.5 11H2V8.5L8.5 2Z" stroke="#6b6560" stroke-width="1.1" stroke-linejoin="round"/></svg>
+						</div>
+						<span class="fmock-ai-label">Chat with AI</span>
+						<div style="flex:1"></div>
+						<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 1.5L7.5 7.5M7.5 1.5L1.5 7.5" stroke="#9c968e" stroke-width="1.1" stroke-linecap="round"/></svg>
+					</div>
+					<div class="fmock-ai-body">
+						<p class="fmock-ai-placeholder">Start a conversation about your document</p>
+					</div>
+					<div class="fmock-ai-footer">
+						<div class="fmock-context-quote">
+							<span class="fmock-context-label">Context:</span>
+							<span class="fmock-context-text">"Prudence, indeed, will dictate that Governments long establi..."</span>
+						</div>
+						<div class="fmock-ai-input-wrap">
+							<span class="fmock-ai-input-text">Ask about selection...</span>
+						</div>
+						<div class="fmock-ai-send">Send</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
 	<!-- Feature 3: Annotations -->
 	<div class="reveal feature-row">
 		<div class="feature-visual">
-			<!-- Replace src with actual screenshot of the annotations feature -->
-			<img
-				src=""
-				alt="Quillium annotations — comments and suggestions anchored to text"
-				class="feature-screenshot"
-				width="540"
-				height="360"
-			/>
+			<!-- Comment sidebar close-up -->
+			<div class="fmock fmock--comments">
+				<div class="fmock-doc fmock-doc--wide">
+					<p class="fmock-prose">
+						The <span class="fmock-highlight-comment">unanimous</span> Declaration of the thirteen united States of America, When in the Course of human events, it becomes necessary for one people to dissolve the political bands. <span class="fmock-highlight-yellow">Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes;</span>
+					</p>
+				</div>
+				<div class="fmock-sidebar">
+					<!-- Comment 1 -->
+					<div class="fmock-card fmock-card--comment">
+						<div class="fmock-card-label">COMMENT</div>
+						<div class="fmock-anchor">unanimous</div>
+						<div class="fmock-comment-row">
+							<div class="fmock-avatar">U</div>
+							<div>
+								<div class="fmock-comment-meta"><span class="fmock-comment-author">User</span><span class="fmock-comment-time">just now</span></div>
+								<p class="fmock-comment-body">Is it really though?</p>
+							</div>
+						</div>
+					</div>
+					<!-- Comment 2 -->
+					<div class="fmock-card fmock-card--comment">
+						<div class="fmock-card-label">COMMENT</div>
+						<div class="fmock-anchor">Prudence, indeed, will dictate that...</div>
+						<div class="fmock-comment-row">
+							<div class="fmock-avatar">U</div>
+							<div>
+								<div class="fmock-comment-meta"><span class="fmock-comment-author">User</span><span class="fmock-comment-time">just now</span></div>
+								<p class="fmock-comment-body">This looks alright</p>
+							</div>
+						</div>
+						<div class="fmock-reply-row">
+							<span class="fmock-reply-text">Perhaps?</span>
+							<span class="fmock-reply-send">Send</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(252,188,5,0.1);">
@@ -170,18 +249,276 @@
 		color: #7c3aed;
 	}
 
-	/* ── Feature screenshots ── */
-	.feature-screenshot {
-		width: 100%;
-		height: auto;
+	/* ── Feature mocks shared ── */
+	.fmock {
 		border-radius: 10px;
+		overflow: hidden;
 		box-shadow:
 			0 8px 32px rgba(44, 42, 39, 0.1),
 			0 2px 8px rgba(44, 42, 39, 0.06);
+		font-family: 'Inter', system-ui, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		background: #e8e8e8;
+	}
+
+	/* Revision mock */
+	.fmock--revision {
+		display: grid;
+		grid-template-columns: 1fr 168px;
+	}
+	.fmock-doc {
+		background: white;
+		padding: 20px 22px;
+		border-right: 1px solid #e0e0e0;
+	}
+	.fmock-prose {
+		font-family: 'Georgia', serif;
+		font-size: 12.5px;
+		line-height: 1.8;
+		color: #1e1c1a;
+		margin: 0;
+	}
+	.fmock-underline {
+		border-bottom: 2px solid #6366f1;
+	}
+	.fmock-highlight-comment {
+		background: rgba(251,191,36,0.25);
+		border-bottom: 2px solid #f59e0b;
+	}
+	.fmock-highlight-yellow {
+		background: #fde68a;
+	}
+	.fmock-sidebar {
+		background: #f2f2f2;
+		padding: 8px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.fmock-card {
+		background: white;
+		border: 1px solid #e4e4e4;
+		border-radius: 7px;
+		padding: 8px 9px;
+	}
+	.fmock-card-label {
+		font-size: 8.5px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: #a89e94;
+		margin-bottom: 7px;
+	}
+	.fmock-pills {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin-bottom: 7px;
+	}
+	.fmock-pill {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-radius: 4px;
+		padding: 3px 7px;
+		font-size: 10px;
+		font-weight: 500;
+	}
+	.fmock-pill--grey {
+		background: #f0ede8;
+		color: #6b6560;
+		border: 1px solid #d6cfc5;
+	}
+	.fmock-pill--purple {
+		background: #a855f7;
+		color: white;
+	}
+	.fmock-pill-x {
+		opacity: 0.65;
+		font-size: 12px;
+		line-height: 1;
+	}
+	.fmock-revision-actions {
+		display: flex;
+		gap: 6px;
+		flex-wrap: wrap;
+	}
+	.fmock-action-new {
+		display: flex;
+		align-items: center;
+		gap: 3px;
+		font-size: 9.5px;
+		color: #3b82f6;
+		font-weight: 500;
+	}
+	.fmock-action-nested {
+		display: flex;
+		align-items: center;
+		gap: 3px;
+		font-size: 9.5px;
+		color: #6b6560;
+	}
+
+	/* AI mock */
+	.fmock--ai {
+		background: #f2f2f2;
+	}
+	.fmock-ai-panel {
+		display: flex;
+		flex-direction: column;
+		min-height: 280px;
+	}
+	.fmock-ai-tabs {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		padding: 8px 10px;
+		border-bottom: 1px solid #d8d8d8;
+		background: #f2f2f2;
+	}
+	.fmock-ai-tab {
+		width: 24px;
+		height: 24px;
+		border-radius: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.fmock-ai-tab--active {
+		background: rgba(59,130,246,0.1);
+	}
+	.fmock-ai-label {
+		font-size: 11px;
+		font-weight: 500;
+		color: #4a4a4a;
+		margin-left: 4px;
+	}
+	.fmock-ai-body {
+		flex: 1;
+		padding: 12px 12px 0;
+	}
+	.fmock-ai-placeholder {
+		font-size: 11px;
+		color: #9c968e;
+		margin: 0;
+	}
+	.fmock-ai-footer {
+		padding: 10px;
+		border-top: 1px solid #d8d8d8;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		margin-top: 16px;
+	}
+	.fmock-context-quote {
+		background: #fef9e7;
+		border: 1px solid rgba(252,188,5,0.4);
+		border-radius: 5px;
+		padding: 6px 8px;
+		font-size: 10px;
+		color: #7a6500;
+		line-height: 1.5;
+	}
+	.fmock-context-label {
+		font-weight: 600;
 		display: block;
-		/* Placeholder background shown until real screenshots are added */
+		margin-bottom: 1px;
+	}
+	.fmock-context-text { font-style: italic; }
+	.fmock-ai-input-wrap {
+		background: white;
+		border: 1px solid #d0d0d0;
+		border-radius: 5px;
+		padding: 6px 8px;
+		font-size: 10.5px;
+		color: #9c968e;
+	}
+	.fmock-ai-send {
+		background: #3b82f6;
+		color: white;
+		border-radius: 5px;
+		padding: 7px;
+		font-size: 11.5px;
+		font-weight: 500;
+		text-align: center;
+	}
+
+	/* Comments mock */
+	.fmock--comments {
+		display: grid;
+		grid-template-columns: 1fr 168px;
+	}
+	.fmock-doc--wide {
+		border-right: 1px solid #e0e0e0;
+	}
+	.fmock-card--comment {
+		margin-bottom: 0;
+	}
+	.fmock-anchor {
+		font-size: 10px;
+		font-weight: 500;
+		color: #d97706;
+		border-left: 2px solid #f59e0b;
+		padding-left: 5px;
+		margin-bottom: 6px;
+		font-style: italic;
+		line-height: 1.4;
+	}
+	.fmock-comment-row {
+		display: flex;
+		gap: 5px;
+		align-items: flex-start;
+	}
+	.fmock-avatar {
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		background: #e8e3db;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 9px;
+		font-weight: 700;
+		color: #6b6560;
+		flex-shrink: 0;
+	}
+	.fmock-comment-meta {
+		display: flex;
+		gap: 4px;
+		align-items: baseline;
+		margin-bottom: 1px;
+	}
+	.fmock-comment-author {
+		font-size: 10px;
+		font-weight: 600;
+		color: #3a3a3a;
+	}
+	.fmock-comment-time {
+		font-size: 9px;
+		color: #a89e94;
+	}
+	.fmock-comment-body {
+		font-size: 10.5px;
+		color: #5a554f;
+		margin: 0;
+		line-height: 1.45;
+	}
+	.fmock-reply-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 6px;
 		background: #f7f5f2;
-		min-height: 240px;
-		object-fit: cover;
+		border: 1px solid #e0dbd4;
+		border-radius: 4px;
+		padding: 4px 7px;
+	}
+	.fmock-reply-text {
+		font-size: 10.5px;
+		color: #5a554f;
+	}
+	.fmock-reply-send {
+		font-size: 10.5px;
+		font-weight: 500;
+		color: #3b82f6;
 	}
 </style>

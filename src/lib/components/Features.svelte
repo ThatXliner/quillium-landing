@@ -12,7 +12,7 @@
 			<div class="fmock fmock--revision">
 				<div class="fmock-doc">
 					<p class="fmock-prose">
-						...and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of <span class="fmock-underline">mankind requires that they should declare</span> the causes which impel them to the separation.
+						She had been walking for hours when <span class="fmock-underline">the rain began, softly at first</span>, then all at once — the way grief tends to arrive, without warning or permission.
 					</p>
 				</div>
 				<div class="fmock-sidebar">
@@ -20,11 +20,11 @@
 						<div class="fmock-card-label">REVISION</div>
 						<div class="fmock-pills">
 							<div class="fmock-pill fmock-pill--grey">
-								<span>Lorem ipsum dol...</span>
+								<span>softly at first...</span>
 								<span class="fmock-pill-x">×</span>
 							</div>
 							<div class="fmock-pill fmock-pill--purple">
-								<span>of mankind requir...</span>
+								<span>gently, then all at...</span>
 								<span class="fmock-pill-x">×</span>
 							</div>
 						</div>
@@ -100,7 +100,7 @@
 					<div class="fmock-ai-footer">
 						<div class="fmock-context-quote">
 							<span class="fmock-context-label">Context:</span>
-							<span class="fmock-context-text">"Prudence, indeed, will dictate that Governments long establi..."</span>
+							<span class="fmock-context-text">"the rain began, softly at first, then all at once — the way grief tends to arrive..."</span>
 						</div>
 						<div class="fmock-ai-input-wrap">
 							<span class="fmock-ai-input-text">Ask about selection...</span>
@@ -119,35 +119,35 @@
 			<div class="fmock fmock--comments">
 				<div class="fmock-doc fmock-doc--wide">
 					<p class="fmock-prose">
-						The <span class="fmock-highlight-comment">unanimous</span> Declaration of the thirteen united States of America, When in the Course of human events, it becomes necessary for one people to dissolve the political bands. <span class="fmock-highlight-yellow">Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes;</span>
+						The café had <span class="fmock-highlight-comment">grown quiet</span> by the time she noticed the letter. It was propped against the salt shaker, her name written in handwriting she didn't recognise. <span class="fmock-highlight-yellow">She ordered another coffee she wouldn't finish. The letter stayed where it was.</span>
 					</p>
 				</div>
 				<div class="fmock-sidebar">
 					<!-- Comment 1 -->
 					<div class="fmock-card fmock-card--comment">
 						<div class="fmock-card-label">COMMENT</div>
-						<div class="fmock-anchor">unanimous</div>
+						<div class="fmock-anchor">grown quiet</div>
 						<div class="fmock-comment-row">
-							<div class="fmock-avatar">U</div>
+							<div class="fmock-avatar">E</div>
 							<div>
-								<div class="fmock-comment-meta"><span class="fmock-comment-author">User</span><span class="fmock-comment-time">just now</span></div>
-								<p class="fmock-comment-body">Is it really though?</p>
+								<div class="fmock-comment-meta"><span class="fmock-comment-author">Elena</span><span class="fmock-comment-time">just now</span></div>
+								<p class="fmock-comment-body">Love this — much better than "emptied out."</p>
 							</div>
 						</div>
 					</div>
 					<!-- Comment 2 -->
 					<div class="fmock-card fmock-card--comment">
 						<div class="fmock-card-label">COMMENT</div>
-						<div class="fmock-anchor">Prudence, indeed, will dictate that...</div>
+						<div class="fmock-anchor">The letter stayed where it was.</div>
 						<div class="fmock-comment-row">
-							<div class="fmock-avatar">U</div>
+							<div class="fmock-avatar">E</div>
 							<div>
-								<div class="fmock-comment-meta"><span class="fmock-comment-author">User</span><span class="fmock-comment-time">just now</span></div>
-								<p class="fmock-comment-body">This looks alright</p>
+								<div class="fmock-comment-meta"><span class="fmock-comment-author">Elena</span><span class="fmock-comment-time">just now</span></div>
+								<p class="fmock-comment-body">Best line in the chapter. Don't touch it.</p>
 							</div>
 						</div>
 						<div class="fmock-reply-row">
-							<span class="fmock-reply-text">Perhaps?</span>
+							<span class="fmock-reply-text">Agreed, keeping it.</span>
 							<span class="fmock-reply-send">Send</span>
 						</div>
 					</div>

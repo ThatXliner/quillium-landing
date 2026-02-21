@@ -98,7 +98,7 @@
 						<div class="ai-drawer-footer">
 							<div class="ai-context-quote">
 								<span class="ai-context-label">Context:</span>
-								<span class="ai-context-text">"The rain began — gently at first, the way grief arrives without&nbsp;ceremony..."</span>
+								<span class="ai-context-text">"the rain began — gently at first, then all at once, the way grief arrives..."</span>
 							</div>
 							<input class="ai-input" type="text" placeholder="Ask about selection..." readonly />
 							<button class="ai-send-btn">Send</button>
@@ -109,13 +109,16 @@
 					<div class="doc-editor">
 						<div class="doc-prose">
 							<p class="prose-p">
-								The <span class="highlight-comment">unanimous</span> Declaration of the thirteen united States of America, When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of <span class="highlight-underline">mankind requires that they should declare</span> the causes which impel them to the separation.
+								The café had <span class="highlight-comment">emptied out</span> by the time she noticed the letter. It was propped against the salt shaker, her name written in handwriting she didn't recognise — careful, unhurried, like someone who had practiced saying something difficult.
 							</p>
 							<p class="prose-p">
-								We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.--That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed, --That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness. <span class="highlight-yellow">Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes;</span> and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed.
+								She had been walking for hours when <span class="highlight-yellow">the rain began — gently at first, then all at once, the way grief arrives without warning or ceremony.</span> By the time she reached the corner of Elm and Fifth, her coat was soaked through and she had stopped noticing. The city kept moving around her the way it always did, indifferent and bright.
 							</p>
 							<p class="prose-p">
-								He has refused his Assent to Laws, the most wholesome and necessary for the public good.
+								She ordered another coffee she wouldn't finish. <span class="highlight-underline">The letter stayed where it was.</span>
+							</p>
+							<p class="prose-p">
+								Outside, a man walked his dog in the rain. The dog did not seem to mind.
 							</p>
 						</div>
 					</div>
@@ -130,12 +133,12 @@
 									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5" stroke="#c9c2b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
 								</button>
 							</div>
-							<div class="sidebar-anchor">unanimous</div>
+							<div class="sidebar-anchor">emptied out</div>
 							<div class="sidebar-comment-row">
-								<div class="comment-avatar">U</div>
+								<div class="comment-avatar">E</div>
 								<div>
-									<div class="comment-meta"><span class="comment-author">User</span><span class="comment-time">just now</span></div>
-									<p class="comment-body">Is it really though?</p>
+									<div class="comment-meta"><span class="comment-author">Elena</span><span class="comment-time">just now</span></div>
+									<p class="comment-body">Too casual? "grown quiet" might land better.</p>
 								</div>
 							</div>
 						</div>
@@ -150,11 +153,11 @@
 							</div>
 							<div class="revision-pills">
 								<div class="revision-pill revision-pill--grey">
-									<span>Lorem ipsum dol...</span>
+									<span>gently at first...</span>
 									<button class="pill-x" aria-label="Remove">×</button>
 								</div>
 								<div class="revision-pill revision-pill--purple">
-									<span>of mankind requir...</span>
+									<span>then all at once...</span>
 									<button class="pill-x" aria-label="Remove">×</button>
 								</div>
 							</div>
@@ -178,16 +181,16 @@
 									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5" stroke="#c9c2b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
 								</button>
 							</div>
-							<div class="sidebar-anchor">Prudence, indeed, will dictate that...</div>
+							<div class="sidebar-anchor">The letter stayed where it was.</div>
 							<div class="sidebar-comment-row">
-								<div class="comment-avatar">U</div>
+								<div class="comment-avatar">E</div>
 								<div>
-									<div class="comment-meta"><span class="comment-author">User</span><span class="comment-time">just now</span></div>
-									<p class="comment-body">This looks alright</p>
+									<div class="comment-meta"><span class="comment-author">Elena</span><span class="comment-time">just now</span></div>
+									<p class="comment-body">This is the best line in the chapter.</p>
 								</div>
 							</div>
 							<div class="comment-reply-row">
-								<input class="comment-reply-input" type="text" value="Perhaps?" readonly />
+								<input class="comment-reply-input" type="text" value="Agreed, keeping it." readonly />
 								<button class="comment-reply-send">Send</button>
 							</div>
 							<button class="comment-suggest-btn">

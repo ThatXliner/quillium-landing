@@ -15,10 +15,14 @@
 		<div class="footer-links">
 			<a href="#features" class="footer-link">Product</a>
 			<a href="#manifesto" class="footer-link">Manifesto</a>
-			<a href="#waitlist" class="footer-link">Early Access</a>
+			<a href="#waitlist" class="footer-link">Public Beta</a>
 			<a href="mailto:thatxliner@gmail.com" class="footer-link">Contact</a>
+			<a href="/privacy" class="footer-link">Privacy</a>
 		</div>
-		<p class="footer-copy">&copy; 2026 Quillium</p>
+		<div class="footer-bottom">
+			<p class="footer-copy">&copy; 2026 Quillium</p>
+			<p class="footer-privacy">We collect anonymous usage data to improve the app. No personal information is stored. <a href="/privacy" class="footer-privacy-link">Privacy Policy</a></p>
+		</div>
 	</div>
 </footer>
 
@@ -76,10 +80,30 @@
 	.footer-link:hover {
 		color: #2c2a27;
 	}
+	.footer-bottom {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		text-align: right;
+	}
 	.footer-copy {
 		font-size: 12px;
 		color: #c9c2b8;
 		font-family: 'Inter', sans-serif;
 		margin: 0;
+	}
+	.footer-privacy {
+		font-size: 11px;
+		color: #c9c2b8;
+		font-family: 'Inter', sans-serif;
+		margin: 0;
+	}
+	.footer-privacy-link {
+		color: #a89e94;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+	.footer-privacy-link:hover {
+		color: #6b6560;
 	}
 </style>

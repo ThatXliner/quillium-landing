@@ -29,74 +29,94 @@
 				</svg>
 			</div>
 			<h2 class="waitlist-heading">Be among the first<br />writers in.</h2>
-			<p class="waitlist-sub">Quillium is in private early access. Join the waitlist and we'll reach out when we're ready for you.</p>
+			<p class="waitlist-sub">Quillium is in public beta. Join the waitlist and we'll reach out when we're ready for you.</p>
 		</div>
 
 		<div class="reveal reveal-delay-1">
-			<p class="waitlist-terms-title">Early Access Preview Terms</p>
-			<div class="waitlist-terms" aria-label="Early Access Preview terms">
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">Early Access Status</p>
-					<ul>
-						<li>Quillium is an experimental preview.</li>
-						<li>Features are incomplete and may change or be removed at any time.</li>
-						<li>Documents may not migrate cleanly between versions.</li>
-						<li>Data loss is possible. Do not use it for critical or irreplaceable work.</li>
-						<li>Not for production or commercial use.</li>
-					</ul>
-				</div>
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">Closed Beta &amp; Confidentiality</p>
-					<ul>
-						<li>Access is invitation-only and non-transferable.</li>
-						<li>Do not share screenshots, recordings, internal features, or roadmap details publicly.</li>
-						<li>Do not publicly review or discuss the product during beta.</li>
-						<li>Keep feedback and discussion within official beta channels.</li>
-					</ul>
-				</div>
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">Participation Expectations</p>
-					<ul>
-						<li>Active use and honest feedback are expected.</li>
-						<li>You may be removed from the beta if inactive.</li>
-						<li>Feedback should be candid, specific, and constructive.</li>
-					</ul>
-				</div>
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">License</p>
-					<ul>
-						<li>You are granted a limited, non-exclusive, non-transferable, revocable license to use Quillium only for beta evaluation.</li>
-						<li>All rights not expressly granted are reserved.</li>
-					</ul>
-				</div>
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">Restrictions</p>
-					<ul>
-						<li>Do not reverse engineer, decompile, or attempt to extract source code.</li>
-						<li>Do not recreate, clone, or build derivative tools from Quillium's structure or features.</li>
-						<li>Do not scrape, automate access, or probe for vulnerabilities.</li>
-						<li>Do not use the product for unlawful purposes.</li>
-					</ul>
-				</div>
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">Feedback</p>
-					<ul>
-						<li>Feedback, suggestions, and ideas may be used without restriction or compensation.</li>
-						<li>Quillium may independently build features similar to your feedback.</li>
-					</ul>
-				</div>
-				<div class="waitlist-terms-section">
-					<p class="waitlist-terms-heading">Termination</p>
-					<ul>
-						<li>Access may be suspended or revoked at any time, for any reason.</li>
-						<li>Upon termination, access to documents may be removed.</li>
-					</ul>
+			<p class="waitlist-terms-title">Public Beta Terms</p>
+			<div class="waitlist-terms" aria-label="Public Beta terms">
+				<div class="terms-grid">
+					<div class="term-card">
+						<div class="term-icon">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+								<path d="M9 2L11 7H16L12 10.5L13.5 16L9 13L4.5 16L6 10.5L2 7H7L9 2Z" stroke="#f59e0b" stroke-width="1.4" stroke-linejoin="round" />
+							</svg>
+						</div>
+						<div>
+							<p class="term-heading">Beta Status</p>
+							<p class="term-body">Features are incomplete and may change. Documents may not migrate cleanly between versions. Not for production use.</p>
+						</div>
+					</div>
+
+					<div class="term-card">
+						<div class="term-icon">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+								<path d="M9 2a7 7 0 100 14A7 7 0 009 2z" stroke="#ef4444" stroke-width="1.4" />
+								<path d="M9 6v4M9 12v.5" stroke="#ef4444" stroke-width="1.4" stroke-linecap="round" />
+							</svg>
+						</div>
+						<div>
+							<p class="term-heading">Data Loss Risk</p>
+							<p class="term-body">Data loss is possible. Do not use Quillium for critical or irreplaceable work during the beta period.</p>
+						</div>
+					</div>
+
+					<div class="term-card">
+						<div class="term-icon">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+								<rect x="2" y="5" width="14" height="10" rx="2" stroke="#8b5cf6" stroke-width="1.4" />
+								<path d="M6 5V4a3 3 0 016 0v1" stroke="#8b5cf6" stroke-width="1.4" stroke-linecap="round" />
+							</svg>
+						</div>
+						<div>
+							<p class="term-heading">Confidentiality</p>
+							<p class="term-body">Don't share screenshots, recordings, or roadmap details publicly. Keep feedback within official beta channels.</p>
+						</div>
+					</div>
+
+					<div class="term-card">
+						<div class="term-icon">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+								<path d="M9 2C5.134 2 2 5.134 2 9s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="#3b82f6" stroke-width="1.4" />
+								<path d="M6 9l2 2 4-4" stroke="#3b82f6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+						</div>
+						<div>
+							<p class="term-heading">Participation</p>
+							<p class="term-body">Active use and honest feedback are expected. Inactive accounts may be removed. Feedback may be used to improve the product without compensation.</p>
+						</div>
+					</div>
+
+					<div class="term-card">
+						<div class="term-icon">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+								<path d="M3 4h12M3 9h12M3 14h7" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round" />
+							</svg>
+						</div>
+						<div>
+							<p class="term-heading">License</p>
+							<p class="term-body">You receive a limited, non-transferable license for beta evaluation only. No reverse engineering, cloning, or scraping.</p>
+						</div>
+					</div>
+
+					<div class="term-card">
+						<div class="term-icon">
+							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+								<circle cx="9" cy="9" r="7" stroke="#10b981" stroke-width="1.4" />
+								<path d="M9 5v5l3 2" stroke="#10b981" stroke-width="1.4" stroke-linecap="round" />
+							</svg>
+						</div>
+						<div>
+							<p class="term-heading">Termination</p>
+							<p class="term-body">Access may be suspended at any time for any reason. Upon termination, access to documents may be removed.</p>
+						</div>
+					</div>
 				</div>
 			</div>
 			<form id="waitlist-form" onsubmit={handleWaitlistSubmit} class="waitlist-form">
 				<label class="waitlist-consent">
-					<input type="checkbox" required bind:checked={hasAgreedToTerms} aria-label="I agree to the Early Access Preview terms" />
-					<span>I agree to the Early Access Preview terms above.</span>
+					<input type="checkbox" required bind:checked={hasAgreedToTerms} aria-label="I agree to the Public Beta terms" />
+					<span>I agree to the Public Beta terms above.</span>
 				</label>
 				<button type="submit" class="btn-primary btn-large" disabled={!hasAgreedToTerms}>Join Waitlist</button>
 			</form>
@@ -167,7 +187,7 @@
 		margin: 0;
 	}
 	.waitlist-consent {
-    	padding-top: 12px;
+		padding-top: 12px;
 		display: flex;
 		align-items: flex-start;
 		gap: 10px;
@@ -201,27 +221,52 @@
 		margin: 18px 0 8px 0;
 		text-align: left;
 	}
-	.waitlist-terms-section {
-		margin-top: 14px;
+	/* ── Terms grid ── */
+	.terms-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2px;
 	}
-	.waitlist-terms-heading {
-		margin: 0 0 6px 0;
+	@media (min-width: 480px) {
+		.terms-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	.term-card {
+		display: flex;
+		gap: 12px;
+		padding: 12px;
+		border-radius: 8px;
+		transition: background 0.15s;
+	}
+	.term-card:hover {
+		background: rgba(44, 42, 39, 0.03);
+	}
+	.term-icon {
+		flex-shrink: 0;
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		background: #f7f5f2;
+		border: 1px solid #e8e3db;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 1px;
+	}
+	.term-heading {
+		margin: 0 0 3px 0;
 		font-family: 'Inter', sans-serif;
 		font-size: 12.5px;
 		font-weight: 600;
 		color: #2c2a27;
 	}
-	.waitlist-terms ul {
+	.term-body {
 		margin: 0;
-		padding-left: 18px;
-		display: grid;
-		gap: 6px;
-	}
-	.waitlist-terms li {
 		font-family: 'Inter', sans-serif;
-		font-size: 12.5px;
-		color: #5a554f;
-		line-height: 1.5;
+		font-size: 12px;
+		color: #6b6560;
+		line-height: 1.55;
 	}
 	.waitlist-success {
 		background: rgba(34, 197, 94, 0.08);

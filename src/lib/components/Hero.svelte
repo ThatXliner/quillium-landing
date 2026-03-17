@@ -3,7 +3,7 @@
 	<div class="hero-text">
 		<div class="reveal eyebrow-row">
 			<span class="status-dot"></span>
-			<span class="eyebrow-text">Now accepting early access</span>
+			<span class="eyebrow-text">Now in public beta</span>
 		</div>
 
 		<h1 class="reveal reveal-delay-1 hero-headline">

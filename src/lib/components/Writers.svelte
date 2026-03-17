@@ -61,11 +61,11 @@
 	/* ── Writers ── */
 	.writers-section {
 		background: #faf9f7;
-		padding: 80px 24px;
+		padding: 56px 24px;
 	}
 	@media (min-width: 768px) {
 		.writers-section {
-			padding: 112px 24px;
+			padding: 80px 24px;
 		}
 	}
 	.writers-inner {

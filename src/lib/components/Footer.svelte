@@ -31,7 +31,7 @@
 	.site-footer {
 		background: #f7f5f2;
 		border-top: 1px solid #e8e3db;
-		padding: 48px 24px;
+		padding: 32px 24px;
 	}
 	.footer-inner {
 		max-width: 72rem;

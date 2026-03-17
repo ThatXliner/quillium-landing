@@ -134,11 +134,11 @@
 	.waitlist-section {
 		background: #f7f4ef;
 		background-image: radial-gradient(circle at 50% 0%, rgba(252, 188, 5, 0.07) 0%, transparent 60%);
-		padding: 96px 24px;
+		padding: 64px 24px;
 	}
 	@media (min-width: 768px) {
 		.waitlist-section {
-			padding: 128px 24px;
+			padding: 96px 24px;
 		}
 	}
 	.waitlist-inner {

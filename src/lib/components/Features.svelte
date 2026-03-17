@@ -172,13 +172,13 @@
 <style>
 	/* ── Features ── */
 	.features-section {
-		padding: 80px 24px;
+		padding: 56px 24px;
 		max-width: 72rem;
 		margin: 0 auto;
 	}
 	@media (min-width: 768px) {
 		.features-section {
-			padding: 112px 24px;
+			padding: 80px 24px;
 		}
 	}
 	.features-header {

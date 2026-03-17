@@ -753,6 +753,8 @@
 		background: white;
 		padding: 20px 22px;
 		border-right: 1px solid #e0e0e0;
+		min-width: 0;
+		overflow: hidden;
 	}
 	.fmock-prose {
 		font-family: 'Georgia', serif;
@@ -817,12 +819,16 @@
 		font-family: 'Inter', monospace;
 		font-size: 10.5px;
 		line-height: 1.7;
+		overflow: hidden;
 	}
 	.fmock-diff-line {
 		display: flex;
 		gap: 6px;
 		padding: 1px 4px;
 		border-radius: 2px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	.fmock-diff-line--neutral { color: #5a554f; }
 	.fmock-diff-line--removed { background: #fff1f0; color: #7f1d1d; }

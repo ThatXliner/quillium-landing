@@ -1,3 +1,38 @@
+<script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+
+	let slide0 = 0; // revision carousel
+	let slide1 = 0; // AI carousel
+	let slide2 = 0; // comments carousel
+
+	const INTERVAL = 3500;
+	let timers: ReturnType<typeof setInterval>[] = [];
+
+	function startTimer(set: (n: number) => void, count: number) {
+		let i = 0;
+		return setInterval(() => {
+			i = (i + 1) % count;
+			set(i);
+		}, INTERVAL);
+	}
+
+	onMount(() => {
+		timers = [
+			startTimer((v) => (slide0 = v), 3),
+			startTimer((v) => (slide1 = v), 3),
+			startTimer((v) => (slide2 = v), 3),
+		];
+	});
+
+	onDestroy(() => timers.forEach(clearInterval));
+
+	function goTo(which: 0 | 1 | 2, idx: number) {
+		if (which === 0) slide0 = idx;
+		else if (which === 1) slide1 = idx;
+		else slide2 = idx;
+	}
+</script>
+
 <!-- ==================== FEATURES ==================== -->
 <section id="features" class="features-section">
 	<div class="features-header reveal">
@@ -9,7 +44,11 @@
 	<div class="reveal feature-row">
 		<div class="feature-visual">
 			<!-- Revision panel close-up -->
-			<div class="fmock fmock--revision">
+			<div class="carousel">
+				<div class="carousel-track" style="transform: translateX(-{slide0 * 100}%)">
+					<!-- Slide 0: Base state -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--revision">
 				<div class="fmock-doc">
 					<p class="fmock-prose">
 						She had been walking for hours when <span class="fmock-underline">the rain began, softly at first</span>, then all at once — the way grief tends to arrive, without warning or permission.
@@ -39,6 +78,79 @@
 							</span>
 						</div>
 					</div>
+				</div>
+						</div>
+					</div>
+					<!-- Slide 1: Third version added -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--revision">
+							<div class="fmock-doc">
+								<p class="fmock-prose">
+									She had been walking for hours when <span class="fmock-underline">the rain began, softly at first</span>, then all at once — the way grief tends to arrive, without warning or permission.
+								</p>
+							</div>
+							<div class="fmock-sidebar">
+								<div class="fmock-card">
+									<div class="fmock-card-label">REVISION</div>
+									<div class="fmock-pills">
+										<div class="fmock-pill fmock-pill--grey">
+											<span>softly at first...</span>
+											<span class="fmock-pill-x">×</span>
+										</div>
+										<div class="fmock-pill fmock-pill--purple">
+											<span>gently, then all at...</span>
+											<span class="fmock-pill-x">×</span>
+										</div>
+										<div class="fmock-pill fmock-pill--blue">
+											<span>a cold shock of rain...</span>
+											<span class="fmock-pill-x">×</span>
+										</div>
+									</div>
+									<div style="font-size: 8.5px; color: #6b6560; padding-top: 4px; border-top: 1px solid #e4e4e4; margin-top: 4px; padding-left: 0;">3 versions</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Slide 2: Nested editor open -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--revision">
+							<div class="fmock-doc">
+								<p class="fmock-prose">
+									She had been walking for hours when <span class="fmock-underline">the rain began, softly at first</span>, then all at once — the way grief tends to arrive, without warning or permission.
+								</p>
+								<div style="margin-top: 12px; border-top: 1px solid #e0e0e0; padding-top: 12px;">
+									<div style="font-size: 9px; color: #a89e94; font-weight: 600; margin-bottom: 6px;">NESTED: child note</div>
+									<p class="fmock-prose">This phrase carries both literal and metaphorical weight...</p>
+								</div>
+							</div>
+							<div class="fmock-sidebar">
+								<div class="fmock-card">
+									<div class="fmock-card-label">REVISION</div>
+									<div class="fmock-pills">
+										<div class="fmock-pill fmock-pill--grey">
+											<span>softly at first...</span>
+											<span class="fmock-pill-x">×</span>
+										</div>
+										<div class="fmock-pill fmock-pill--purple">
+											<span>gently, then all at...</span>
+											<span class="fmock-pill-x">×</span>
+										</div>
+									</div>
+									<div class="fmock-revision-actions">
+										<span class="fmock-action-new">
+											<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M4.5 1.5V7.5M1.5 4.5H7.5" stroke="#3b82f6" stroke-width="1.2" stroke-linecap="round"/></svg>
+											New version
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-dots">
+					{#each [0, 1, 2] as i}
+						<button class="dot" class:dot--active={slide0 === i} on:click={() => goTo(0, i)} />
+					{/each}
 				</div>
 			</div>
 		</div>
@@ -78,7 +190,11 @@
 		</div>
 		<div class="feature-visual">
 			<!-- AI chat panel close-up -->
-			<div class="fmock fmock--ai">
+			<div class="carousel">
+				<div class="carousel-track" style="transform: translateX(-{slide1 * 100}%)">
+					<!-- Slide 0: Empty AI panel -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--ai">
 				<div class="fmock-ai-panel">
 					<div class="fmock-ai-tabs">
 						<div class="fmock-ai-tab fmock-ai-tab--active">
@@ -108,6 +224,92 @@
 						<div class="fmock-ai-send">Send</div>
 					</div>
 				</div>
+						</div>
+					</div>
+					<!-- Slide 1: AI chat exchange -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--ai">
+							<div class="fmock-ai-panel">
+								<div class="fmock-ai-tabs">
+									<div class="fmock-ai-tab fmock-ai-tab--active">
+										<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 2.5C1.5 2.22 1.72 2 2 2H11C11.28 2 11.5 2.22 11.5 2.5V7.5C11.5 7.78 11.28 8 11 8H8L5.5 10.5V8H2C1.72 8 1.5 7.78 1.5 7.5V2.5Z" stroke="#3b82f6" stroke-width="1.1" stroke-linejoin="round"/></svg>
+									</div>
+									<div class="fmock-ai-tab">
+										<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.8 4.3L11 4.3L8.5 6.2L9.4 9.5L6.5 7.6L3.6 9.5L4.5 6.2L2 4.3L5.2 4.3L6.5 1Z" stroke="#6b6560" stroke-width="1" stroke-linejoin="round"/></svg>
+									</div>
+									<div class="fmock-ai-tab">
+										<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 2L11 4.5L4.5 11H2V8.5L8.5 2Z" stroke="#6b6560" stroke-width="1.1" stroke-linejoin="round"/></svg>
+									</div>
+									<span class="fmock-ai-label">Chat with AI</span>
+									<div style="flex:1"></div>
+									<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 1.5L7.5 7.5M7.5 1.5L1.5 7.5" stroke="#9c968e" stroke-width="1.1" stroke-linecap="round"/></svg>
+								</div>
+								<div class="fmock-ai-body" style="padding: 12px; gap: 8px; display: flex; flex-direction: column;">
+									<div style="font-size: 10px; color: #5a554f; line-height: 1.5;">
+										<strong style="color: #3a3a3a;">You:</strong> Is this too passive?
+									</div>
+									<div style="font-size: 10px; color: #6b6560; line-height: 1.5; background: rgba(59,130,246,0.08); padding: 6px 8px; border-radius: 5px;">
+										<strong style="color: #3b82f6;">AI:</strong> Yes. "began" is tentative. Try "arrived" or "descended."
+									</div>
+								</div>
+								<div class="fmock-ai-footer">
+									<div class="fmock-context-quote">
+										<span class="fmock-context-label">Context:</span>
+										<span class="fmock-context-text">"the rain began, softly at first..."</span>
+									</div>
+									<div class="fmock-ai-input-wrap">
+										<span class="fmock-ai-input-text">Ask about selection...</span>
+									</div>
+									<div class="fmock-ai-send">Send</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Slide 2: Tone feedback tags -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--ai">
+							<div class="fmock-ai-panel">
+								<div class="fmock-ai-tabs">
+									<div class="fmock-ai-tab fmock-ai-tab--active">
+										<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1.5 2.5C1.5 2.22 1.72 2 2 2H11C11.28 2 11.5 2.22 11.5 2.5V7.5C11.5 7.78 11.28 8 11 8H8L5.5 10.5V8H2C1.72 8 1.5 7.78 1.5 7.5V2.5Z" stroke="#3b82f6" stroke-width="1.1" stroke-linejoin="round"/></svg>
+									</div>
+									<div class="fmock-ai-tab">
+										<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.8 4.3L11 4.3L8.5 6.2L9.4 9.5L6.5 7.6L3.6 9.5L4.5 6.2L2 4.3L5.2 4.3L6.5 1Z" stroke="#6b6560" stroke-width="1" stroke-linejoin="round"/></svg>
+									</div>
+									<div class="fmock-ai-tab">
+										<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 2L11 4.5L4.5 11H2V8.5L8.5 2Z" stroke="#6b6560" stroke-width="1.1" stroke-linejoin="round"/></svg>
+									</div>
+									<span class="fmock-ai-label">Chat with AI</span>
+									<div style="flex:1"></div>
+									<svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 1.5L7.5 7.5M7.5 1.5L1.5 7.5" stroke="#9c968e" stroke-width="1.1" stroke-linecap="round"/></svg>
+								</div>
+								<div class="fmock-ai-body" style="padding: 12px;">
+									<div style="font-size: 10px; color: #6b6560; margin-bottom: 8px;">Tone detected:</div>
+									<div style="display: flex; flex-wrap: wrap; gap: 6px;">
+										<span style="background: #fde68a; border: 1px solid #f59e0b; border-radius: 4px; padding: 3px 7px; font-size: 9px; color: #7a6500; font-weight: 500;">Passive</span>
+										<span style="background: #dbeafe; border: 1px solid #3b82f6; border-radius: 4px; padding: 3px 7px; font-size: 9px; color: #1e40af; font-weight: 500;">Tentative</span>
+										<span style="background: #ede9fe; border: 1px solid #a855f7; border-radius: 4px; padding: 3px 7px; font-size: 9px; color: #6d28d9; font-weight: 500;">Melancholic</span>
+									</div>
+								</div>
+								<div class="fmock-ai-footer">
+									<div class="fmock-context-quote">
+										<span class="fmock-context-label">Context:</span>
+										<span class="fmock-context-text">"the rain began, softly at first..."</span>
+									</div>
+									<div class="fmock-ai-input-wrap">
+										<span class="fmock-ai-input-text">Ask about selection...</span>
+									</div>
+									<div class="fmock-ai-send">Send</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-dots">
+					{#each [0, 1, 2] as i}
+						<button class="dot" class:dot--active={slide1 === i} on:click={() => goTo(1, i)} />
+					{/each}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -116,7 +318,11 @@
 	<div class="reveal feature-row">
 		<div class="feature-visual">
 			<!-- Comment sidebar close-up -->
-			<div class="fmock fmock--comments">
+			<div class="carousel">
+				<div class="carousel-track" style="transform: translateX(-{slide2 * 100}%)">
+					<!-- Slide 0: Base comment state -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--comments">
 				<div class="fmock-doc fmock-doc--wide">
 					<p class="fmock-prose">
 						The café had <span class="fmock-highlight-comment">grown quiet</span> by the time she noticed the letter. It was propped against the salt shaker, her name written in handwriting she didn't recognise. <span class="fmock-highlight-yellow">She ordered another coffee she wouldn't finish. The letter stayed where it was.</span>
@@ -151,6 +357,99 @@
 							<span class="fmock-reply-send">Send</span>
 						</div>
 					</div>
+				</div>
+						</div>
+					</div>
+					<!-- Slide 1: Reply thread expanded -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--comments">
+							<div class="fmock-doc fmock-doc--wide">
+								<p class="fmock-prose">
+									The café had <span class="fmock-highlight-comment">grown quiet</span> by the time she noticed the letter. It was propped against the salt shaker, her name written in handwriting she didn't recognise. <span class="fmock-highlight-yellow">She ordered another coffee she wouldn't finish. The letter stayed where it was.</span>
+								</p>
+							</div>
+							<div class="fmock-sidebar">
+								<!-- Comment 1 -->
+								<div class="fmock-card fmock-card--comment">
+									<div class="fmock-card-label">COMMENT</div>
+									<div class="fmock-anchor">grown quiet</div>
+									<div class="fmock-comment-row">
+										<div class="fmock-avatar">E</div>
+										<div>
+											<div class="fmock-comment-meta"><span class="fmock-comment-author">Elena</span><span class="fmock-comment-time">just now</span></div>
+											<p class="fmock-comment-body">Love this — much better than "emptied out."</p>
+										</div>
+									</div>
+								</div>
+								<!-- Comment 2 with expanded replies -->
+								<div class="fmock-card fmock-card--comment">
+									<div class="fmock-card-label">COMMENT</div>
+									<div class="fmock-anchor">The letter stayed where it was.</div>
+									<div class="fmock-comment-row">
+										<div class="fmock-avatar">E</div>
+										<div>
+											<div class="fmock-comment-meta"><span class="fmock-comment-author">Elena</span><span class="fmock-comment-time">just now</span></div>
+											<p class="fmock-comment-body">Best line in the chapter. Don't touch it.</p>
+										</div>
+									</div>
+									<div style="margin-top: 6px; padding: 6px; background: #f7f5f2; border-radius: 4px;">
+										<div style="font-size: 9px; color: #a89e94; margin-bottom: 4px;">You replied:</div>
+										<div style="font-size: 10.5px; color: #5a554f; margin-bottom: 4px;">Agreed, keeping it.</div>
+										<div style="font-size: 9px; color: #a89e94;">2 min ago</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Slide 2: Comment resolved -->
+					<div class="carousel-slide">
+						<div class="fmock fmock--comments">
+							<div class="fmock-doc fmock-doc--wide">
+								<p class="fmock-prose">
+									The café had <span class="fmock-highlight-comment">grown quiet</span> by the time she noticed the letter. It was propped against the salt shaker, her name written in handwriting she didn't recognise. <span class="fmock-highlight-yellow">She ordered another coffee she wouldn't finish. The letter stayed where it was.</span>
+								</p>
+							</div>
+							<div class="fmock-sidebar">
+								<!-- Comment 1 (resolved - greyed out) -->
+								<div class="fmock-card fmock-card--comment" style="opacity: 0.5;">
+									<div class="fmock-card-label">COMMENT</div>
+									<div class="fmock-anchor">grown quiet</div>
+									<div class="fmock-comment-row">
+										<div class="fmock-avatar">E</div>
+										<div>
+											<div class="fmock-comment-meta"><span class="fmock-comment-author">Elena</span><span class="fmock-comment-time">just now</span></div>
+											<p class="fmock-comment-body">Love this — much better than "emptied out."</p>
+										</div>
+									</div>
+									<div style="margin-top: 6px; display: flex; align-items: center; gap: 4px; font-size: 9px; color: #a89e94;">
+										<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6L5 9L10 2" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+										Resolved
+									</div>
+								</div>
+								<!-- Comment 2 (active) -->
+								<div class="fmock-card fmock-card--comment">
+									<div class="fmock-card-label">COMMENT</div>
+									<div class="fmock-anchor">The letter stayed where it was.</div>
+									<div class="fmock-comment-row">
+										<div class="fmock-avatar">E</div>
+										<div>
+											<div class="fmock-comment-meta"><span class="fmock-comment-author">Elena</span><span class="fmock-comment-time">just now</span></div>
+											<p class="fmock-comment-body">Best line in the chapter. Don't touch it.</p>
+										</div>
+									</div>
+									<div class="fmock-reply-row">
+										<span class="fmock-reply-text">Agreed, keeping it.</span>
+										<span class="fmock-reply-send">Send</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-dots">
+					{#each [0, 1, 2] as i}
+						<button class="dot" class:dot--active={slide2 === i} on:click={() => goTo(2, i)} />
+					{/each}
 				</div>
 			</div>
 		</div>
@@ -249,6 +548,45 @@
 		color: #7c3aed;
 	}
 
+	/* ── Carousel ── */
+	.carousel {
+		position: relative;
+		overflow: hidden;
+		border-radius: 10px;
+		box-shadow:
+			0 8px 32px rgba(44, 42, 39, 0.1),
+			0 2px 8px rgba(44, 42, 39, 0.06);
+	}
+	.carousel-track {
+		display: flex;
+		transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	.carousel-slide {
+		min-width: 100%;
+		flex-shrink: 0;
+	}
+	.carousel-dots {
+		display: flex;
+		justify-content: center;
+		gap: 6px;
+		padding: 10px 0 4px;
+		background: #f5f5f5;
+	}
+	.dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: #d6cfc5;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		transition: background 0.2s, transform 0.2s;
+	}
+	.dot--active {
+		background: #3b82f6;
+		transform: scale(1.3);
+	}
+
 	/* ── Feature mocks shared ── */
 	.fmock {
 		border-radius: 10px;
@@ -330,6 +668,10 @@
 	}
 	.fmock-pill--purple {
 		background: #a855f7;
+		color: white;
+	}
+	.fmock-pill--blue {
+		background: #3b82f6;
 		color: white;
 	}
 	.fmock-pill-x {

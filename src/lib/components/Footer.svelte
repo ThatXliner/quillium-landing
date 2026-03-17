@@ -15,7 +15,7 @@
 		<div class="footer-links">
 			<a href="#features" class="footer-link">Product</a>
 			<a href="#manifesto" class="footer-link">Manifesto</a>
-			<a href="#waitlist" class="footer-link">Public Beta</a>
+			<a href="#waitlist" class="footer-link">Waitlist</a>
 			<a href="mailto:thatxliner@gmail.com" class="footer-link">Contact</a>
 			<a href="/privacy" class="footer-link">Privacy</a>
 		</div>

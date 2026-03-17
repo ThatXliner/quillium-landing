@@ -107,7 +107,7 @@
 						</div>
 						<div>
 							<h3>Why we collect it</h3>
-							<p>To understand what's working, fix bugs, and improve the app. That's it. We don't use it for ads or profiling.</p>
+							<p>Analytics help us understand usage, fix bugs, and improve the app. Email is used only to send you beta access, updates, and respond to feedback. No ads or profiling.</p>
 						</div>
 					</div>
 
@@ -189,10 +189,18 @@
 					</ul>
 					<p>This data is collected in a manner that does not allow us to identify you personally. No IP addresses are stored in identifiable form beyond what PostHog uses for session deduplication (which is anonymized).</p>
 
-					<h3>2.2 Information We Do Not Collect</h3>
+					<h3>2.2 Email for Beta Signups</h3>
+					<p>When you join the beta, we collect your email address. We use it solely to:</p>
+					<ul>
+						<li>Send you the app link and access instructions</li>
+						<li>Notify you of beta updates and releases</li>
+						<li>Respond to feedback or support requests</li>
+					</ul>
+					<p>We do not sell your email or use it for marketing beyond beta-related communications. You can unsubscribe from non-critical emails at any time.</p>
+
+					<h3>2.3 Information We Do Not Collect</h3>
 					<p>At this beta stage, we do not collect:</p>
 					<ul>
-						<li>Names, email addresses, or contact information</li>
 						<li>Account credentials or social login data</li>
 						<li>Payment or financial information</li>
 						<li>User-generated content from within the editor</li>
@@ -215,7 +223,8 @@
 						<li>Improve and prioritize product features</li>
 						<li>Measure the general reach of the Service</li>
 					</ul>
-					<p>We do not use your data for targeted advertising, behavioral profiling, or any purpose unrelated to improving the Service.</p>
+					<p>We use beta signup emails to send you access instructions, beta updates, release notes, and respond to your feedback. We do not use your email for marketing unrelated to the beta.</p>
+					<p>We do not use any data for targeted advertising, behavioral profiling, or any purpose unrelated to improving the Service.</p>
 				</section>
 
 				<section>

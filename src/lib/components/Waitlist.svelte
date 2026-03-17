@@ -1,11 +1,12 @@
 <script lang="ts">
+	let email = '';
 	let hasAgreedToTerms = false;
 
-	function handleWaitlistSubmit(e: Event) {
+	function handleBetaSubmit(e: Event) {
 		e.preventDefault();
-		const form = document.getElementById('waitlist-form');
-		const success = document.getElementById('waitlist-success');
-		if (hasAgreedToTerms && form && success) {
+		const form = document.getElementById('beta-form');
+		const success = document.getElementById('beta-success');
+		if (hasAgreedToTerms && email && form && success) {
 			form.style.opacity = '0';
 			form.style.transition = 'opacity 0.3s';
 			setTimeout(() => {
@@ -23,108 +24,152 @@
 		<div class="reveal">
 			<div class="waitlist-icon">
 				<svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-					<path d="M21 3.5C21 3.5 16.5 6 12.5 11C9.5 15 8 19.5 8 19.5" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+					<path
+						d="M21 3.5C21 3.5 16.5 6 12.5 11C9.5 15 8 19.5 8 19.5"
+						stroke="#3b82f6"
+						stroke-width="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
 					<path d="M8 19.5L10.5 17" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-					<path d="M10.5 17C10.5 17 12.5 20.5 9.5 22.5" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round" />
+					<path
+						d="M10.5 17C10.5 17 12.5 20.5 9.5 22.5"
+						stroke="#2563eb"
+						stroke-width="1.3"
+						stroke-linecap="round"
+					/>
 				</svg>
 			</div>
-			<h2 class="waitlist-heading">Be among the first<br />writers in.</h2>
-			<p class="waitlist-sub">Quillium is in public beta. Join the waitlist and we'll reach out when we're ready for you.</p>
+			<h2 class="waitlist-heading">Join the waitlist.</h2>
+			<p class="waitlist-sub">
+				Quillium is in public beta. Join the waitlist and we'll send you the app link and release
+				notes.
+			</p>
 		</div>
 
 		<div class="reveal reveal-delay-1">
-			<p class="waitlist-terms-title">Public Beta Terms</p>
-			<div class="waitlist-terms" aria-label="Public Beta terms">
+			<p class="waitlist-terms-title">Waitlist Terms</p>
+			<div class="waitlist-terms" aria-label="Waitlist terms">
 				<div class="terms-grid">
 					<div class="term-card">
 						<div class="term-icon">
 							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path d="M9 2L11 7H16L12 10.5L13.5 16L9 13L4.5 16L6 10.5L2 7H7L9 2Z" stroke="#f59e0b" stroke-width="1.4" stroke-linejoin="round" />
+								<path d="M9 2a7 7 0 100 14A7 7 0 009 2z" stroke="#f59e0b" stroke-width="1.4" />
+								<path
+									d="M9 6v4M9 12v.5"
+									stroke="#f59e0b"
+									stroke-width="1.4"
+									stroke-linecap="round"
+								/>
 							</svg>
 						</div>
 						<div>
 							<p class="term-heading">Beta Status</p>
-							<p class="term-body">Features are incomplete and may change. Documents may not migrate cleanly between versions. Not for production use.</p>
+							<p class="term-body">
+								This is an unstable beta. Features may change or be removed at any time. Not
+								intended for production or critical work.
+							</p>
 						</div>
 					</div>
 
 					<div class="term-card">
 						<div class="term-icon">
 							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path d="M9 2a7 7 0 100 14A7 7 0 009 2z" stroke="#ef4444" stroke-width="1.4" />
-								<path d="M9 6v4M9 12v.5" stroke="#ef4444" stroke-width="1.4" stroke-linecap="round" />
+								<path d="M3 9a6 6 0 1012 0A6 6 0 003 9z" stroke="#ef4444" stroke-width="1.4" />
+								<path
+									d="M9 6v3.5M11.5 12L9 9.5"
+									stroke="#ef4444"
+									stroke-width="1.4"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
 							</svg>
 						</div>
 						<div>
-							<p class="term-heading">Data Loss Risk</p>
-							<p class="term-body">Data loss is possible. Do not use Quillium for critical or irreplaceable work during the beta period.</p>
+							<p class="term-heading">No Liability</p>
+							<p class="term-body">
+								The Service is provided "as-is" with no warranties. Data loss is possible — back up
+								important content. We are not liable for any damages arising from beta use.
+							</p>
 						</div>
 					</div>
 
 					<div class="term-card">
 						<div class="term-icon">
 							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<rect x="2" y="5" width="14" height="10" rx="2" stroke="#8b5cf6" stroke-width="1.4" />
-								<path d="M6 5V4a3 3 0 016 0v1" stroke="#8b5cf6" stroke-width="1.4" stroke-linecap="round" />
+								<path
+									d="M9 2C5.134 2 2 5.134 2 9s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z"
+									stroke="#3b82f6"
+									stroke-width="1.4"
+								/>
+								<path
+									d="M6 9l2 2 4-4"
+									stroke="#3b82f6"
+									stroke-width="1.4"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
 							</svg>
 						</div>
 						<div>
-							<p class="term-heading">Confidentiality</p>
-							<p class="term-body">Don't share screenshots, recordings, or roadmap details publicly. Keep feedback within official beta channels.</p>
+							<p class="term-heading">Feedback</p>
+							<p class="term-body">
+								Any feedback you share may be used to improve the Service without compensation.
+								Using the beta does not grant any ownership rights over the app or its features.
+							</p>
 						</div>
 					</div>
 
 					<div class="term-card">
 						<div class="term-icon">
 							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path d="M9 2C5.134 2 2 5.134 2 9s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="#3b82f6" stroke-width="1.4" />
-								<path d="M6 9l2 2 4-4" stroke="#3b82f6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+								<path
+									d="M3 3l12 12M15 3L3 15"
+									stroke="#10b981"
+									stroke-width="1.4"
+									stroke-linecap="round"
+								/>
 							</svg>
 						</div>
 						<div>
-							<p class="term-heading">Participation</p>
-							<p class="term-body">Active use and honest feedback are expected. Inactive accounts may be removed. Feedback may be used to improve the product without compensation.</p>
-						</div>
-					</div>
-
-					<div class="term-card">
-						<div class="term-icon">
-							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path d="M3 4h12M3 9h12M3 14h7" stroke="#6b7280" stroke-width="1.4" stroke-linecap="round" />
-							</svg>
-						</div>
-						<div>
-							<p class="term-heading">License</p>
-							<p class="term-body">You receive a limited, non-transferable license for beta evaluation only. No reverse engineering, cloning, or scraping.</p>
-						</div>
-					</div>
-
-					<div class="term-card">
-						<div class="term-icon">
-							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<circle cx="9" cy="9" r="7" stroke="#10b981" stroke-width="1.4" />
-								<path d="M9 5v5l3 2" stroke="#10b981" stroke-width="1.4" stroke-linecap="round" />
-							</svg>
-						</div>
-						<div>
-							<p class="term-heading">Termination</p>
-							<p class="term-body">Access may be suspended at any time for any reason. Upon termination, access to documents may be removed.</p>
+							<p class="term-heading">No Replication</p>
+							<p class="term-body">
+								You may not use insights from the beta to build competing products or replicate
+								Quillium's features, design, or workflows.
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<form id="waitlist-form" onsubmit={handleWaitlistSubmit} class="waitlist-form">
-				<label class="waitlist-consent">
-					<input type="checkbox" required bind:checked={hasAgreedToTerms} aria-label="I agree to the Public Beta terms" />
-					<span>I agree to the Public Beta terms above.</span>
+			<form id="beta-form" onsubmit={handleBetaSubmit} class="beta-form">
+				<div class="beta-email-group">
+					<input
+						type="email"
+						placeholder="your@email.com"
+						bind:value={email}
+						required
+						class="beta-email-input"
+						aria-label="Email address"
+					/>
+					<button type="submit" class="btn-primary" disabled={!hasAgreedToTerms || !email}
+						>Sign me up!</button
+					>
+				</div>
+				<label class="beta-consent">
+					<input
+						type="checkbox"
+						required
+						bind:checked={hasAgreedToTerms}
+						aria-label="I agree to the terms"
+					/>
+					<span>I agree to the terms above.</span>
 				</label>
-				<button type="submit" class="btn-primary btn-large" disabled={!hasAgreedToTerms}>Join Waitlist</button>
 			</form>
-			<p class="waitlist-privacy">No spam. No marketing cadences. Just a quiet note when the doors open.</p>
+			<p class="beta-note">We'll send you the app link when it's time to access the beta.</p>
 		</div>
 
-		<div id="waitlist-success" class="hidden waitlist-success reveal">
-			<p>You're on the list. We'll be in touch soon.</p>
+		<div id="beta-success" class="beta-success reveal hidden">
+			<p>You're on the waitlist. Check your email when it's time to join the beta.</p>
 		</div>
 	</div>
 </section>
@@ -133,7 +178,11 @@
 	/* ── Waitlist ── */
 	.waitlist-section {
 		background: #f7f4ef;
-		background-image: radial-gradient(circle at 50% 0%, rgba(252, 188, 5, 0.07) 0%, transparent 60%);
+		background-image: radial-gradient(
+			circle at 50% 0%,
+			rgba(252, 188, 5, 0.07) 0%,
+			transparent 60%
+		);
 		padding: 64px 24px;
 	}
 	@media (min-width: 768px) {
@@ -169,25 +218,45 @@
 		font-size: 16px;
 		color: #5a554f;
 		line-height: 1.75;
-		margin: 0 0 32px 0;
+		margin: 0 0 20px 0;
 		max-width: 28rem;
 		margin-left: auto;
 		margin-right: auto;
 	}
-	.waitlist-form {
+	.beta-form {
 		display: grid;
-		gap: 14px;
-		margin-bottom: 16px;
-		justify-items: center;
+		gap: 12px;
+		margin-bottom: 12px;
 	}
-	.waitlist-privacy {
-		font-size: 12.5px;
-		color: #a89e94;
+	.beta-email-group {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 12px;
+	}
+	@media (max-width: 480px) {
+		.beta-email-group {
+			grid-template-columns: 1fr;
+		}
+	}
+	.beta-email-input {
+		padding: 11px 14px;
+		border: 1px solid #d6cfc5;
+		border-radius: 8px;
 		font-family: 'Inter', sans-serif;
-		margin: 0;
+		font-size: 14px;
+		color: #2c2a27;
+		background: white;
+		transition: border-color 0.2s;
 	}
-	.waitlist-consent {
-		padding-top: 12px;
+	.beta-email-input::placeholder {
+		color: #a89e94;
+	}
+	.beta-email-input:focus {
+		outline: none;
+		border-color: #3b82f6;
+		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+	}
+	.beta-consent {
 		display: flex;
 		align-items: flex-start;
 		gap: 10px;
@@ -197,28 +266,35 @@
 		color: #5a554f;
 		line-height: 1.5;
 	}
-	.waitlist-consent input {
+	.beta-consent input {
 		margin-top: 2px;
 		accent-color: #3b82f6;
 	}
-	.waitlist-form button:disabled {
+	.beta-form button:disabled {
 		opacity: 0.55;
 		cursor: not-allowed;
 	}
+	.beta-note {
+		font-size: 12.5px;
+		color: #a89e94;
+		font-family: 'Inter', sans-serif;
+		margin: 0;
+	}
 	.waitlist-terms {
-		margin-top: 18px;
+		margin-top: 0;
 		padding: 16px;
 		border: 1px solid #d6cfc5;
 		border-radius: 14px;
 		background: rgba(255, 255, 255, 0.7);
 		text-align: left;
+		margin-bottom: 20px;
 	}
 	.waitlist-terms-title {
 		font-family: 'Inter', sans-serif;
 		font-size: 13px;
 		font-weight: 600;
 		color: #2c2a27;
-		margin: 18px 0 8px 0;
+		margin: 0 0 12px 0;
 		text-align: left;
 	}
 	/* ── Terms grid ── */
@@ -267,6 +343,13 @@
 		font-size: 12px;
 		color: #6b6560;
 		line-height: 1.55;
+	}
+	.term-link {
+		color: #3b82f6;
+		text-decoration: none;
+	}
+	.term-link:hover {
+		text-decoration: underline;
 	}
 	.waitlist-success {
 		background: rgba(34, 197, 94, 0.08);

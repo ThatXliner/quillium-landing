@@ -64,9 +64,23 @@
 						</div>
 						<button class="export-btn" aria-label="Export">
 							<svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-								<rect x="2" y="2" width="10" height="10" rx="2" stroke="#6b6560" stroke-width="1.2"/>
-								<path d="M5 6L7 4L9 6" stroke="#6b6560" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-								<path d="M7 4V9" stroke="#6b6560" stroke-width="1.2" stroke-linecap="round"/>
+								<rect
+									x="2"
+									y="2"
+									width="10"
+									height="10"
+									rx="2"
+									stroke="#6b6560"
+									stroke-width="1.2"
+								/>
+								<path
+									d="M5 6L7 4L9 6"
+									stroke="#6b6560"
+									stroke-width="1.2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path d="M7 4V9" stroke="#6b6560" stroke-width="1.2" stroke-linecap="round" />
 							</svg>
 						</button>
 					</div>
@@ -78,18 +92,46 @@
 					<div class="ai-drawer">
 						<div class="ai-drawer-tabs">
 							<button class="drawer-tab drawer-tab--active" aria-label="Chat">
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3C2 2.45 2.45 2 3 2H11C11.55 2 12 2.45 12 3V8C12 8.55 11.55 9 11 9H8L5.5 11.5V9H3C2.45 9 2 8.55 2 8V3Z" stroke="#3b82f6" stroke-width="1.2" stroke-linejoin="round"/></svg>
+								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+									><path
+										d="M2 3C2 2.45 2.45 2 3 2H11C11.55 2 12 2.45 12 3V8C12 8.55 11.55 9 11 9H8L5.5 11.5V9H3C2.45 9 2 8.55 2 8V3Z"
+										stroke="#3b82f6"
+										stroke-width="1.2"
+										stroke-linejoin="round"
+									/></svg
+								>
 							</button>
 							<button class="drawer-tab" aria-label="Suggest">
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5L8.2 4.7L11.5 4.7L8.9 6.7L9.8 9.9L7 8L4.2 9.9L5.1 6.7L2.5 4.7L5.8 4.7L7 1.5Z" stroke="#6b6560" stroke-width="1.1" stroke-linejoin="round"/></svg>
+								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+									><path
+										d="M7 1.5L8.2 4.7L11.5 4.7L8.9 6.7L9.8 9.9L7 8L4.2 9.9L5.1 6.7L2.5 4.7L5.8 4.7L7 1.5Z"
+										stroke="#6b6560"
+										stroke-width="1.1"
+										stroke-linejoin="round"
+									/></svg
+								>
 							</button>
 							<button class="drawer-tab" aria-label="Edit">
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2.5L11.5 5L5 11.5H2.5V9L9 2.5Z" stroke="#6b6560" stroke-width="1.2" stroke-linejoin="round"/></svg>
+								<svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+									><path
+										d="M9 2.5L11.5 5L5 11.5H2.5V9L9 2.5Z"
+										stroke="#6b6560"
+										stroke-width="1.2"
+										stroke-linejoin="round"
+									/></svg
+								>
 							</button>
 							<span class="drawer-label">Chat with AI</span>
 							<div class="drawer-spacer"></div>
 							<button class="drawer-close" aria-label="Close">
-								<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2L8 8M8 2L2 8" stroke="#9c968e" stroke-width="1.2" stroke-linecap="round"/></svg>
+								<svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+									><path
+										d="M2 2L8 8M8 2L2 8"
+										stroke="#9c968e"
+										stroke-width="1.2"
+										stroke-linecap="round"
+									/></svg
+								>
 							</button>
 						</div>
 						<div class="ai-drawer-body">
@@ -98,7 +140,9 @@
 						<div class="ai-drawer-footer">
 							<div class="ai-context-quote">
 								<span class="ai-context-label">Context:</span>
-								<span class="ai-context-text">"the rain began — gently at first, then all at once, the way grief arrives..."</span>
+								<span class="ai-context-text"
+									>"the rain began — gently at first, then all at once, the way grief arrives..."</span
+								>
 							</div>
 							<input class="ai-input" type="text" placeholder="Ask about selection..." readonly />
 							<button class="ai-send-btn">Send</button>
@@ -109,13 +153,23 @@
 					<div class="doc-editor">
 						<div class="doc-prose">
 							<p class="prose-p">
-								The café had <span class="highlight-comment">emptied out</span> by the time she noticed the letter. It was propped against the salt shaker, her name written in handwriting she didn't recognise — careful, unhurried, like someone who had practiced saying something difficult.
+								The café had <span class="highlight-comment">emptied out</span> by the time she noticed
+								the letter. It was propped against the salt shaker, her name written in handwriting she
+								didn't recognise — careful, unhurried, like someone who had practiced saying something
+								difficult.
 							</p>
 							<p class="prose-p">
-								She had been walking for hours when <span class="highlight-yellow">the rain began — gently at first, then all at once, the way grief arrives without warning or ceremony.</span> By the time she reached the corner of Elm and Fifth, her coat was soaked through and she had stopped noticing. The city kept moving around her the way it always did, indifferent and bright.
+								She had been walking for hours when <span class="highlight-yellow"
+									>the rain began — gently at first, then all at once, the way grief arrives without
+									warning or ceremony.</span
+								> By the time she reached the corner of Elm and Fifth, her coat was soaked through and
+								she had stopped noticing. The city kept moving around her the way it always did, indifferent
+								and bright.
 							</p>
 							<p class="prose-p">
-								She ordered another coffee she wouldn't finish. <span class="highlight-underline">The letter stayed where it was.</span>
+								She ordered another coffee she wouldn't finish. <span class="highlight-underline"
+									>The letter stayed where it was.</span
+								>
 							</p>
 							<p class="prose-p">
 								Outside, a man walked his dog in the rain. The dog did not seem to mind.
@@ -130,14 +184,26 @@
 							<div class="sidebar-card-header">
 								<span class="sidebar-card-label">COMMENT</span>
 								<button class="sidebar-card-delete" aria-label="Delete">
-									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5" stroke="#c9c2b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"
+										><path
+											d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5"
+											stroke="#c9c2b8"
+											stroke-width="1"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/></svg
+									>
 								</button>
 							</div>
 							<div class="sidebar-anchor">emptied out</div>
 							<div class="sidebar-comment-row">
 								<div class="comment-avatar">E</div>
 								<div>
-									<div class="comment-meta"><span class="comment-author">Elena</span><span class="comment-time">just now</span></div>
+									<div class="comment-meta">
+										<span class="comment-author">Elena</span><span class="comment-time"
+											>just now</span
+										>
+									</div>
 									<p class="comment-body">Too casual? "grown quiet" might land better.</p>
 								</div>
 							</div>
@@ -148,7 +214,15 @@
 							<div class="sidebar-card-header">
 								<span class="sidebar-card-label">REVISION</span>
 								<button class="sidebar-card-delete" aria-label="Delete">
-									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5" stroke="#c9c2b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"
+										><path
+											d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5"
+											stroke="#c9c2b8"
+											stroke-width="1"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/></svg
+									>
 								</button>
 							</div>
 							<div class="revision-pills">
@@ -163,11 +237,26 @@
 							</div>
 							<div class="revision-actions">
 								<button class="revision-btn-new">
-									<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 2V8M2 5H8" stroke="#3b82f6" stroke-width="1.3" stroke-linecap="round"/></svg>
+									<svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+										><path
+											d="M5 2V8M2 5H8"
+											stroke="#3b82f6"
+											stroke-width="1.3"
+											stroke-linecap="round"
+										/></svg
+									>
 									New version
 								</button>
 								<button class="revision-btn-nested">
-									<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4L5 7L8 4" stroke="#6b6560" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+									<svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+										><path
+											d="M2 4L5 7L8 4"
+											stroke="#6b6560"
+											stroke-width="1.2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/></svg
+									>
 									Nested editor
 								</button>
 							</div>
@@ -178,23 +267,47 @@
 							<div class="sidebar-card-header">
 								<span class="sidebar-card-label">COMMENT</span>
 								<button class="sidebar-card-delete" aria-label="Delete">
-									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5" stroke="#c9c2b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+									<svg width="11" height="11" viewBox="0 0 11 11" fill="none"
+										><path
+											d="M2 2.5H9M4.5 2.5V2C4.5 1.72 4.72 1.5 5 1.5H6C6.28 1.5 6.5 1.72 6.5 2V2.5M3 2.5L3.5 9H7.5L8 2.5"
+											stroke="#c9c2b8"
+											stroke-width="1"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/></svg
+									>
 								</button>
 							</div>
 							<div class="sidebar-anchor">The letter stayed where it was.</div>
 							<div class="sidebar-comment-row">
 								<div class="comment-avatar">E</div>
 								<div>
-									<div class="comment-meta"><span class="comment-author">Elena</span><span class="comment-time">just now</span></div>
+									<div class="comment-meta">
+										<span class="comment-author">Elena</span><span class="comment-time"
+											>just now</span
+										>
+									</div>
 									<p class="comment-body">This is the best line in the chapter.</p>
 								</div>
 							</div>
 							<div class="comment-reply-row">
-								<input class="comment-reply-input" type="text" value="Agreed, keeping it." readonly />
+								<input
+									class="comment-reply-input"
+									type="text"
+									value="Agreed, keeping it."
+									readonly
+								/>
 								<button class="comment-reply-send">Send</button>
 							</div>
 							<button class="comment-suggest-btn">
-								<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1L6 3.5H8.5L6.5 5L7.2 7.5L5 6L2.8 7.5L3.5 5L1.5 3.5H4L5 1Z" stroke="#a855f7" stroke-width="0.9" stroke-linejoin="round"/></svg>
+								<svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+									><path
+										d="M5 1L6 3.5H8.5L6.5 5L7.2 7.5L5 6L2.8 7.5L3.5 5L1.5 3.5H4L5 1Z"
+										stroke="#a855f7"
+										stroke-width="0.9"
+										stroke-linejoin="round"
+									/></svg
+								>
 								Suggest
 							</button>
 						</div>
@@ -316,9 +429,15 @@
 		height: 12px;
 		border-radius: 50%;
 	}
-	.tl-red { background: #ff5f57; }
-	.tl-yellow { background: #ffbd2e; }
-	.tl-green { background: #28ca41; }
+	.tl-red {
+		background: #ff5f57;
+	}
+	.tl-yellow {
+		background: #ffbd2e;
+	}
+	.tl-green {
+		background: #28ca41;
+	}
 	.app-title {
 		font-size: 12px;
 		font-weight: 500;
@@ -340,7 +459,7 @@
 		align-items: center;
 		gap: 10px;
 		padding: 6px 14px;
-		box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
 	}
 	.status-dot-green {
 		width: 7px;
@@ -423,7 +542,7 @@
 		color: #6b6560;
 	}
 	.drawer-tab--active {
-		background: rgba(59,130,246,0.1);
+		background: rgba(59, 130, 246, 0.1);
 	}
 	.drawer-label {
 		font-size: 11.5px;
@@ -431,7 +550,9 @@
 		color: #4a4a4a;
 		margin-left: 4px;
 	}
-	.drawer-spacer { flex: 1; }
+	.drawer-spacer {
+		flex: 1;
+	}
 	.drawer-close {
 		width: 20px;
 		height: 20px;
@@ -460,7 +581,7 @@
 	}
 	.ai-context-quote {
 		background: #fef9e7;
-		border: 1px solid rgba(252,188,5,0.4);
+		border: 1px solid rgba(252, 188, 5, 0.4);
 		border-radius: 6px;
 		padding: 7px 9px;
 		font-size: 10.5px;
@@ -704,8 +825,12 @@
 		font-family: 'Inter', sans-serif;
 		padding: 0;
 	}
-	.revision-btn-new { color: #3b82f6; }
-	.revision-btn-nested { color: #6b6560; }
+	.revision-btn-new {
+		color: #3b82f6;
+	}
+	.revision-btn-nested {
+		color: #6b6560;
+	}
 
 	/* Mobile hint */
 	.mobile-hint {

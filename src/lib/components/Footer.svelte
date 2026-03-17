@@ -16,7 +16,7 @@
 			<a href="#features" class="footer-link">Product</a>
 			<a href="#manifesto" class="footer-link">Manifesto</a>
 			<a href="#waitlist" class="footer-link">Early Access</a>
-			<a href="mailto:hello@quillium.io" class="footer-link">Contact</a>
+			<a href="mailto:thatxliner@gmail.com" class="footer-link">Contact</a>
 		</div>
 		<p class="footer-copy">&copy; 2026 Quillium</p>
 	</div>

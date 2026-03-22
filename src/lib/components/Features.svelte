@@ -203,7 +203,7 @@
 					<p class="carousel-caption">{captions0[slide0]}</p>
 					<div class="carousel-dots">
 						{#each [0, 1, 2] as i}
-							<button class="dot" class:dot--active={slide0 === i} on:click={() => goTo(0, i)} />
+							<button class="dot" class:dot--active={slide0 === i} on:click={() => goTo(0, i)} aria-label="Go to slide {i + 1}"></button>
 						{/each}
 					</div>
 				</div>
@@ -385,7 +385,7 @@
 					<p class="carousel-caption">{captions1[slide1]}</p>
 					<div class="carousel-dots">
 						{#each [0, 1, 2] as i}
-							<button class="dot" class:dot--active={slide1 === i} on:click={() => goTo(1, i)} />
+							<button class="dot" class:dot--active={slide1 === i} on:click={() => goTo(1, i)} aria-label="Go to slide {i + 1}"></button>
 						{/each}
 					</div>
 				</div>
@@ -539,7 +539,7 @@
 					<p class="carousel-caption">{captions2[slide2]}</p>
 					<div class="carousel-dots">
 						{#each [0, 1, 2] as i}
-							<button class="dot" class:dot--active={slide2 === i} on:click={() => goTo(2, i)} />
+							<button class="dot" class:dot--active={slide2 === i} on:click={() => goTo(2, i)} aria-label="Go to slide {i + 1}"></button>
 						{/each}
 					</div>
 				</div>
@@ -1039,12 +1039,7 @@
 		color: #4a4a4a;
 		cursor: default;
 	}
-	.fmock-ai-placeholder {
-		font-size: 11px;
-		color: #9c968e;
-		margin: 0;
-	}
-	.fmock-chat-msg {
+.fmock-chat-msg {
 		font-size: 10.5px;
 		line-height: 1.5;
 		border-radius: 6px;

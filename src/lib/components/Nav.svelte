@@ -20,7 +20,7 @@
 
 <nav id="main-nav" class="nav-fixed">
 	<div class="max-w-[72rem] mx-auto px-6 flex items-center justify-between">
-		<a href="#" class="flex items-center gap-3 no-underline text-black/88">
+		<a href="/" class="flex items-center gap-3 no-underline text-black/88">
 			<img src="/logo.svg" alt="Quillium" width="32" height="32" class="rounded-lg" />
 			<span class="font-semibold text-[0.95rem] tracking-[-0.01em]">Quillium</span>
 		</a>

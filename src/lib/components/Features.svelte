@@ -47,11 +47,11 @@
 			</p>
 		</div>
 	</div>
-	<img
+	<!-- <img
 		src={revisionModal}
 		alt="Quillium AI annotation panel providing inline writing feedback"
-		class="feature-screenshot mx-auto my-5 h-1/2"
-	/>
+		class="feature-screenshot mx-auto my-5"
+	/> -->
 	<!-- Feature 2: A Second Voice -->
 	<div class="reveal feature-row feature-row--reversed">
 		<div class="feature-text">

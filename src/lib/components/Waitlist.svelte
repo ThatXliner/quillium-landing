@@ -1,19 +1,39 @@
 <script lang="ts">
-	let email = '';
-	let hasAgreedToTerms = false;
+	let email = $state('');
+	let hasAgreedToTerms = $state(false);
+	let submitting = $state(false);
+	let submitted = $state(false);
+	let error = $state('');
 
-	function handleBetaSubmit(e: Event) {
+	async function handleBetaSubmit(e: Event) {
 		e.preventDefault();
-		const form = document.getElementById('beta-form');
-		const success = document.getElementById('beta-success');
-		if (hasAgreedToTerms && email && form && success) {
-			form.style.opacity = '0';
-			form.style.transition = 'opacity 0.3s';
-			setTimeout(() => {
-				form.style.display = 'none';
-				success.classList.remove('hidden');
-				success.classList.add('visible');
-			}, 300);
+		if (!hasAgreedToTerms || !email || submitting) return;
+
+		submitting = true;
+		error = '';
+
+		try {
+			const data = new FormData(e.target as HTMLFormElement);
+			const res = await fetch('https://formspree.io/f/mwvrdbey', {
+				method: 'POST',
+				body: data,
+				headers: { Accept: 'application/json' }
+			});
+
+			if (res.ok) {
+				submitted = true;
+			} else {
+				const json = await res.json();
+				if (Object.hasOwn(json, 'errors')) {
+					error = json.errors.map((err: { message: string }) => err.message).join(', ');
+				} else {
+					error = 'Something went wrong. Please try again.';
+				}
+			}
+		} catch {
+			error = 'Network error. Please try again.';
+		} finally {
+			submitting = false;
 		}
 	}
 </script>
@@ -140,46 +160,49 @@
 			</div>
 		</div>
 
-		<form id="beta-form" onsubmit={handleBetaSubmit} class="mb-3 grid gap-3">
-			<div class="grid grid-cols-[1fr_auto] gap-3 max-[480px]:grid-cols-1">
-				<input
-					type="email"
-					placeholder="your@email.com"
-					bind:value={email}
-					required
-					class="rounded-lg border border-black/10 bg-white px-3.5 py-2.5 font-[Inter,sans-serif] text-sm text-black/88 transition-[border-color] duration-200 placeholder:text-black/28 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[rgba(59,130,246,0.1)] focus:outline-none"
-					aria-label="Email address"
-				/>
-				<button type="submit" class="btn-primary" disabled={!hasAgreedToTerms || !email}
-					>Sign me up!</button
+		{#if !submitted}
+			<form onsubmit={handleBetaSubmit} class="mb-3 grid gap-3">
+				<div class="grid grid-cols-[1fr_auto] gap-3 max-[480px]:grid-cols-1">
+					<input
+						type="email"
+						name="email"
+						placeholder="your@email.com"
+						bind:value={email}
+						required
+						class="rounded-lg border border-black/10 bg-white px-3.5 py-2.5 font-[Inter,sans-serif] text-sm text-black/88 transition-[border-color] duration-200 placeholder:text-black/28 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[rgba(59,130,246,0.1)] focus:outline-none"
+						aria-label="Email address"
+					/>
+					<button type="submit" class="btn-primary" disabled={!hasAgreedToTerms || !email || submitting}>
+						{submitting ? 'Signing up…' : 'Sign me up!'}
+					</button>
+				</div>
+				<label
+					class="flex items-start gap-2.5 text-left font-[Inter,sans-serif] text-[13px] leading-normal text-black/50"
 				>
+					<input
+						type="checkbox"
+						required
+						bind:checked={hasAgreedToTerms}
+						class="mt-0.5 accent-[#3b82f6]"
+						aria-label="I agree to the terms"
+					/>
+					<span>I agree to the terms above.</span>
+				</label>
+			</form>
+			{#if error}
+				<p class="m-0 font-[Inter,sans-serif] text-[12.5px] text-[#ef4444]">{error}</p>
+			{:else}
+				<p class="m-0 font-[Inter,sans-serif] text-[12.5px] text-black/28">
+					We'll send you the app link when it's time to access the beta.
+				</p>
+			{/if}
+		{:else}
+			<div class="rounded-xl border border-[rgba(34,197,94,0.25)] bg-[rgba(34,197,94,0.08)] px-6 py-4.5">
+				<p class="m-0 font-[Newsreader,Georgia,serif] text-base text-[#15803d] italic">
+					You're on the waitlist. Check your email when it's time to join the beta.
+				</p>
 			</div>
-			<label
-				class="flex items-start gap-2.5 text-left font-[Inter,sans-serif] text-[13px] leading-normal text-black/50"
-			>
-				<input
-					type="checkbox"
-					required
-					bind:checked={hasAgreedToTerms}
-					class="mt-0.5 accent-[#3b82f6]"
-					aria-label="I agree to the terms"
-				/>
-				<span>I agree to the terms above.</span>
-			</label>
-		</form>
-		<p class="m-0 font-[Inter,sans-serif] text-[12.5px] text-black/28">
-			We'll send you the app link when it's time to access the beta.
-		</p>
-	</div>
-
-	<div
-		id="beta-success"
-		class="reveal mx-auto mt-4 hidden max-w-[36rem] rounded-xl border border-[rgba(34,197,94,0.25)] bg-[rgba(34,197,94,0.08)] px-6 py-4.5"
-	>
-		<p class="m-0 font-[Newsreader,Georgia,serif] text-base text-[#15803d] italic">
-			You're on the waitlist. Check your email when it's time to join the beta.
-		</p>
-	</div>
+		{/if}
 </section>
 
 <style>

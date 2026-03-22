@@ -33,14 +33,16 @@
 					}
 				});
 			},
-			{ threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+			{ threshold: 0, rootMargin: '0px 0px -20px 0px' }
 		);
-		revealEls.forEach((el) => revealObserver.observe(el));
-
-		// Make elements already in viewport visible immediately
-		document.querySelectorAll('.reveal').forEach((el) => {
+		revealEls.forEach((el) => {
 			const rect = el.getBoundingClientRect();
-			if (rect.top < window.innerHeight) el.classList.add('visible');
+			// Already in or above the viewport — show immediately
+			if (rect.bottom > 0 && rect.top < window.innerHeight) {
+				el.classList.add('visible');
+			} else {
+				revealObserver.observe(el);
+			}
 		});
 
 		// Smooth scroll for anchor links

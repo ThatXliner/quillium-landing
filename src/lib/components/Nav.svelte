@@ -28,7 +28,7 @@
 			<a href="#features" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
 			<a href="#manifesto" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
 			<a href="#waitlist" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
-			<span class="hidden md:inline text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#22c55e] bg-[rgba(34,197,94,0.08)] py-1.5 px-3 rounded-full border border-[rgba(34,197,94,0.15)]">Public Beta</span>
+			<span class="hidden md:inline text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#22c55e] bg-white/50 shadow-sm backdrop-blur-md py-1.5 px-3 rounded-lg border border-white/35 inset-shadow-sm inset-shadow-white">Public Beta</span>
 		</div>
 	</div>
 </nav>

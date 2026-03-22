@@ -16,7 +16,7 @@
 
 	<div class="reveal reveal-delay-3 flex gap-4 items-center">
 		<a href="#waitlist" class="btn-primary">Join the Waitlist</a>
-		<a href="#features" class="inline-flex items-center gap-2 py-3.5 px-8 bg-radial-[at_30%_25%] from-[#eef0f3] to-[#dfe2e8] text-black/88 border border-white/35 rounded-full text-[0.9rem] font-medium no-underline transition-all duration-300 hover:-translate-y-0.5">
+		<a href="#features" class="inline-flex items-center gap-2 py-3 px-6 bg-white/50 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md text-black/88 rounded-[10px] text-[0.95rem] font-medium no-underline transition-all duration-300 hover:bg-gray-50/30 hover:-translate-y-0.5">
 			See how it works
 		</a>
 	</div>

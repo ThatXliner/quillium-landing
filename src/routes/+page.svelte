@@ -4,6 +4,41 @@
 		name="description"
 		content="The world's first non-linear editor for prose. Write in branches, get contextual AI assistance, and keep every version alive."
 	/>
+	<link rel="canonical" href="https://quillium.bryanhu.com/" />
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://quillium.bryanhu.com/" />
+	<meta property="og:title" content="Quillium — Next Generation Prose" />
+	<meta property="og:description" content="The world's first non-linear editor for prose. Write in branches, get contextual AI assistance, and keep every version alive." />
+	<meta property="og:site_name" content="Quillium" />
+	<meta property="og:image" content="https://quillium.bryanhu.com/og-image.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Quillium — Next Generation Prose" />
+	<meta name="twitter:description" content="The world's first non-linear editor for prose. Write in branches, get contextual AI assistance, and keep every version alive." />
+	<meta name="twitter:image" content="https://quillium.bryanhu.com/og-image.png" />
+
+	<!-- Structured Data -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "SoftwareApplication",
+		"name": "Quillium",
+		"description": "The world's first non-linear editor for prose. Write in branches, get contextual AI assistance, and keep every version alive.",
+		"url": "https://quillium.bryanhu.com",
+		"applicationCategory": "ProductivityApplication",
+		"operatingSystem": "Web",
+		"offers": {
+			"@type": "Offer",
+			"price": "0",
+			"priceCurrency": "USD",
+			"availability": "https://schema.org/PreOrder"
+		}
+	})}</script>`}
+
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link

@@ -1,6 +1,20 @@
 <svelte:head>
 	<title>Privacy Policy – Quillium</title>
 	<meta name="description" content="Quillium's privacy policy — what data we collect, how we use it, and your rights." />
+	<link rel="canonical" href="https://quillium.bryanhu.com/privacy" />
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://quillium.bryanhu.com/privacy" />
+	<meta property="og:title" content="Privacy Policy – Quillium" />
+	<meta property="og:description" content="Quillium's privacy policy — what data we collect, how we use it, and your rights." />
+	<meta property="og:site_name" content="Quillium" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="Privacy Policy – Quillium" />
+	<meta name="twitter:description" content="Quillium's privacy policy — what data we collect, how we use it, and your rights." />
+
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link

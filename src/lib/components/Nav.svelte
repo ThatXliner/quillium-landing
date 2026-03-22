@@ -25,9 +25,9 @@
 			<span class="font-semibold text-[0.95rem] tracking-[-0.01em]">Quillium</span>
 		</a>
 		<div class="flex items-center gap-8">
-			<a href="#features" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
-			<a href="#manifesto" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
-			<a href="#waitlist" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
+			<a href="/#features" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
+			<a href="/#manifesto" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
+			<a href="/#waitlist" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
 			<span class="hidden md:inline text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-[#22c55e]/70">Public Beta</span>
 		</div>
 	</div>

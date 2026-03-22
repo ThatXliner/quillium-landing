@@ -18,59 +18,30 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
-		href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
 		rel="stylesheet"
 	/>
 </svelte:head>
 
 <script lang="ts">
+	import Nav from '$lib/components/Nav.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+
 	let activeTab: 'plain' | 'legal' = $state('plain');
 </script>
 
-<nav class="nav-fixed" id="privacy-nav">
-	<div class="nav-inner">
-		<a href="/" class="logo-group">
-			<svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-				<path
-					d="M20.5 3C20.5 3 16 5.5 12 10.5C9 14.5 7.5 19 7.5 19L10 16.5C10 16.5 12 20 9 22C9 22 14 21.5 17 17.5C17 17.5 18.5 15.5 18 13C18 13 22 8.5 22.5 4.5L20.5 3Z"
-					fill="#3b82f6"
-					opacity="0.15"
-				/>
-				<path
-					d="M21 3.5C21 3.5 16.5 6 12.5 11C9.5 15 8 19.5 8 19.5"
-					stroke="#3b82f6"
-					stroke-width="1.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-				<path d="M8 19.5L10.5 17" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-				<path
-					d="M10.5 17C10.5 17 12.5 20.5 9.5 22.5"
-					stroke="#2563eb"
-					stroke-width="1.3"
-					stroke-linecap="round"
-				/>
-				<path d="M8 19.5C8 19.5 6.5 20.5 5.5 22C5.5 22 7 21 8 19.5Z" fill="#3b82f6" opacity="0.4" />
-			</svg>
-			<span class="logo-name">Quillium</span>
-		</a>
-		<a href="/" class="back-link">
-			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-				<path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-			</svg>
-			Back to home
-		</a>
-	</div>
-</nav>
+<Nav />
 
-<main class="privacy-page">
-	<div class="privacy-inner">
-		<header class="privacy-header">
-			<p class="eyebrow">Legal</p>
-			<h1 class="privacy-title">Privacy Policy</h1>
-			<p class="privacy-meta">Last updated: March 16, 2026 · Quillium Beta</p>
+<main class="min-h-screen px-6 pt-32 pb-20">
+	<div class="mx-auto max-w-[720px]">
+		<header class="mb-12">
+			<p class="section-eyebrow">Legal</p>
+			<h1 class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.02em] text-black/88 italic">
+				Privacy Policy
+			</h1>
+			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: March 16, 2026 · Quillium Beta</p>
 
-			<div class="tab-switcher" role="tablist" aria-label="View mode">
+			<div class="inline-flex gap-0.5 rounded-full bg-white/50 p-1 shadow-sm backdrop-blur-md">
 				<button
 					role="tab"
 					aria-selected={activeTab === 'plain'}
@@ -93,97 +64,97 @@
 		</header>
 
 		{#if activeTab === 'plain'}
-			<div class="content plain-content" role="tabpanel">
-				<div class="tldr-banner">
-					<span class="tldr-label">TL;DR</span>
-					<p>We only collect anonymous usage analytics. We don't know who you are, and we never sell your data.</p>
+			<div role="tabpanel">
+				<div class="mb-8 flex items-start gap-3 rounded-xl border border-[#3b82f6]/15 bg-[#3b82f6]/5 px-5 py-4">
+					<span class="shrink-0 rounded bg-[#3b82f6]/10 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-[#3b82f6]">TL;DR</span>
+					<p class="m-0 text-[0.875rem] leading-relaxed text-black/88">We only collect anonymous usage analytics. We don't know who you are, and we never sell your data.</p>
 				</div>
 
-				<div class="plain-cards">
-					<div class="plain-card">
-						<div class="card-icon">
+				<div class="grid gap-3">
+					<div class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
+						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<circle cx="10" cy="10" r="8" stroke="#3b82f6" stroke-width="1.5" />
 								<path d="M10 6v4l3 2" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
 							</svg>
 						</div>
 						<div>
-							<h3>What we collect</h3>
-							<p>Anonymous usage analytics only — things like which features you use, session length, and device type. We use PostHog for this. <strong>No names, emails, or login info.</strong></p>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">What we collect</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Anonymous usage analytics only — things like which features you use, session length, and device type. We use PostHog for this. <strong class="text-black/88">No names, emails, or login info.</strong></p>
 						</div>
 					</div>
 
-					<div class="plain-card">
-						<div class="card-icon">
+					<div class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
+						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round" />
 							</svg>
 						</div>
 						<div>
-							<h3>Why we collect it</h3>
-							<p>Analytics help us understand usage, fix bugs, and improve the app. Email is used only to send you beta access, updates, and respond to feedback. No ads or profiling.</p>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Why we collect it</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Analytics help us understand usage, fix bugs, and improve the app. Email is used only to send you beta access, updates, and respond to feedback. No ads or profiling.</p>
 						</div>
 					</div>
 
-					<div class="plain-card">
-						<div class="card-icon">
+					<div class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
+						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<rect x="3" y="8" width="14" height="10" rx="2" stroke="#3b82f6" stroke-width="1.5" />
 								<path d="M7 8V6a3 3 0 016 0v2" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
 							</svg>
 						</div>
 						<div>
-							<h3>Who can see it</h3>
-							<p>Only us, via PostHog. The data is anonymized and cannot be linked back to you. We don't sell or share it with third parties for their own use.</p>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Who can see it</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Only us, via PostHog. The data is anonymized and cannot be linked back to you. We don't sell or share it with third parties for their own use.</p>
 						</div>
 					</div>
 
-					<div class="plain-card">
-						<div class="card-icon">
+					<div class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
+						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<path d="M10 17C13.866 17 17 13.866 17 10C17 6.134 13.866 3 10 3C6.134 3 3 6.134 3 10C3 13.866 6.134 17 10 17Z" stroke="#3b82f6" stroke-width="1.5" />
 								<path d="M10 7v3l2 2" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
 							</svg>
 						</div>
 						<div>
-							<h3>Your rights</h3>
-							<p>Since we don't collect personal data, there's no profile to delete. You can opt out of analytics entirely in the app settings. If you're in the EU/UK, GDPR applies. In California, CCPA applies.</p>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Your rights</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Since we don't collect personal data, there's no profile to delete. You can opt out of analytics entirely in the app settings. If you're in the EU/UK, GDPR applies. In California, CCPA applies.</p>
 						</div>
 					</div>
 
-					<div class="plain-card">
-						<div class="card-icon">
+					<div class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
+						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<path d="M3 5h14M3 10h14M3 15h8" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
 							</svg>
 						</div>
 						<div>
-							<h3>Cookies</h3>
-							<p>PostHog may set a cookie to distinguish sessions. It contains no personal info. No marketing or tracking cookies are used.</p>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Cookies</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">PostHog may set a cookie to distinguish sessions. It contains no personal info. No marketing or tracking cookies are used.</p>
 						</div>
 					</div>
 
-					<div class="plain-card">
-						<div class="card-icon">
+					<div class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
+						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8">
 							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<path d="M16 4H4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z" stroke="#3b82f6" stroke-width="1.5" />
 								<path d="M8 10h4M10 8v4" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
 							</svg>
 						</div>
 						<div>
-							<h3>Questions?</h3>
-							<p>Email us at <a href="mailto:thatxliner@gmail.com">thatxliner@gmail.com</a> — we're a small team and we'll respond personally.</p>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Questions?</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Email us at <a href="mailto:thatxliner@gmail.com" class="text-[#3b82f6] no-underline hover:underline">thatxliner@gmail.com</a> — we're a small team and we'll respond personally.</p>
 						</div>
 					</div>
 				</div>
 
-				<p class="plain-footer-note">
+				<p class="mt-8 text-center text-[0.8rem] text-black/28">
 					Want the full legal text?
 					<button class="inline-tab-switch" onclick={() => (activeTab = 'legal')}>Switch to Full Legal view</button>
 				</p>
 			</div>
 		{:else}
-			<div class="content legal-content" role="tabpanel">
+			<div class="legal-content" role="tabpanel">
 				<section>
 					<h2>1. Introduction</h2>
 					<p>Quillium ("we," "us," or "our") operates quillium.bryanhu.com (the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the beta version of the Service. Please read this policy carefully. By accessing or using the Service, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy.</p>
@@ -322,7 +293,7 @@
 					<p>We aim to respond to all inquiries within 30 days.</p>
 				</section>
 
-				<p class="plain-footer-note">
+				<p class="mt-8 text-center text-[0.8rem] text-black/28">
 					Prefer a simpler summary?
 					<button class="inline-tab-switch" onclick={() => (activeTab = 'plain')}>Switch to Plain English view</button>
 				</p>
@@ -331,224 +302,54 @@
 	</div>
 </main>
 
-<footer class="privacy-footer">
-	<div class="privacy-footer-inner">
-		<p>&copy; 2026 Quillium</p>
-		<a href="/" class="footer-home-link">Back to home</a>
-	</div>
-</footer>
+<Footer />
 
 <style>
-	/* ── Nav ── */
-	.nav-fixed {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 50;
-		padding: 16px 0;
-		background: rgba(250, 249, 247, 0.9);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
-		border-bottom: 1px solid rgba(220, 210, 195, 0.4);
-	}
-	.nav-inner {
-		max-width: 72rem;
-		margin: 0 auto;
-		padding: 0 24px;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.logo-group {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		text-decoration: none;
-	}
-	.logo-name {
-		font-family: 'Lora', Georgia, serif;
-		font-weight: 600;
-		font-size: 19px;
-		color: #2c2a27;
-		letter-spacing: -0.01em;
-	}
-	.back-link {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 13.5px;
-		color: #6b6560;
-		text-decoration: none;
-		font-family: 'Inter', sans-serif;
-		transition: color 0.2s;
-	}
-	.back-link:hover {
-		color: #2c2a27;
-	}
-
-	/* ── Page ── */
-	.privacy-page {
-		min-height: 100vh;
-		background: #faf9f7;
-		padding-top: 100px;
-		padding-bottom: 80px;
-		font-family: 'Inter', sans-serif;
-	}
-	.privacy-inner {
-		max-width: 720px;
-		margin: 0 auto;
-		padding: 0 24px;
-	}
-
-	/* ── Header ── */
-	.privacy-header {
-		margin-bottom: 48px;
-	}
-	.eyebrow {
-		font-size: 12px;
-		font-weight: 600;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: #a89e94;
-		margin: 0 0 12px 0;
-	}
-	.privacy-title {
-		font-family: 'Lora', Georgia, serif;
-		font-size: clamp(1.75rem, 4vw, 2.5rem);
-		font-weight: 700;
-		color: #1e1c1a;
-		margin: 0 0 8px 0;
-		line-height: 1.15;
-	}
-	.privacy-meta {
-		font-size: 13px;
-		color: #a89e94;
-		margin: 0 0 32px 0;
-	}
-
 	/* ── Tabs ── */
-	.tab-switcher {
-		display: inline-flex;
-		background: #f0ede8;
-		border-radius: 9999px;
-		padding: 4px;
-		gap: 2px;
-	}
 	.tab-btn {
 		padding: 7px 20px;
 		border-radius: 9999px;
 		border: none;
 		background: transparent;
-		font-size: 13.5px;
+		font-size: 0.8rem;
 		font-weight: 500;
 		font-family: 'Inter', sans-serif;
-		color: #6b6560;
+		color: rgba(0, 0, 0, 0.5);
 		cursor: pointer;
 		transition: all 0.2s;
 	}
 	.tab-btn.active {
 		background: white;
-		color: #2c2a27;
-		box-shadow: 0 1px 4px rgba(44, 42, 39, 0.1);
+		color: rgba(0, 0, 0, 0.88);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 	}
 	.tab-btn:not(.active):hover {
-		color: #2c2a27;
+		color: rgba(0, 0, 0, 0.88);
 	}
 
-	/* ── Plain English ── */
-	.tldr-banner {
-		display: flex;
-		align-items: flex-start;
-		gap: 12px;
-		background: rgba(59, 130, 246, 0.06);
-		border: 1px solid rgba(59, 130, 246, 0.15);
-		border-radius: 12px;
-		padding: 16px 20px;
-		margin-bottom: 32px;
-	}
-	.tldr-label {
-		font-size: 11px;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: #3b82f6;
-		background: rgba(59, 130, 246, 0.1);
-		border-radius: 4px;
-		padding: 2px 8px;
-		white-space: nowrap;
-		margin-top: 1px;
-	}
-	.tldr-banner p {
-		font-size: 14px;
-		color: #2c2a27;
-		margin: 0;
-		line-height: 1.6;
-	}
-	.plain-cards {
-		display: grid;
-		gap: 12px;
-	}
-	.plain-card {
-		display: flex;
-		gap: 16px;
-		background: white;
-		border: 1px solid #e8e3db;
-		border-radius: 12px;
-		padding: 20px;
-	}
-	.card-icon {
-		flex-shrink: 0;
-		width: 36px;
-		height: 36px;
-		background: rgba(59, 130, 246, 0.06);
-		border-radius: 8px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.plain-card h3 {
-		font-size: 14px;
-		font-weight: 600;
-		color: #1e1c1a;
-		margin: 0 0 6px 0;
-	}
-	.plain-card p {
-		font-size: 13.5px;
-		color: #5a554f;
-		line-height: 1.6;
-		margin: 0;
-	}
-	.plain-card a {
-		color: #3b82f6;
-		text-decoration: none;
-	}
-	.plain-card a:hover {
-		text-decoration: underline;
-	}
-
-	/* ── Legal ── */
+	/* ── Legal content ── */
 	.legal-content section {
 		margin-bottom: 40px;
 	}
 	.legal-content h2 {
-		font-family: 'Lora', Georgia, serif;
+		font-family: 'Newsreader', Georgia, serif;
 		font-size: 1.2rem;
-		font-weight: 600;
-		color: #1e1c1a;
+		font-weight: 400;
+		font-style: italic;
+		color: rgba(0, 0, 0, 0.88);
 		margin: 0 0 12px 0;
 		padding-bottom: 8px;
-		border-bottom: 1px solid #e8e3db;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 	}
 	.legal-content h3 {
-		font-size: 14px;
+		font-size: 0.875rem;
 		font-weight: 600;
-		color: #2c2a27;
+		color: rgba(0, 0, 0, 0.88);
 		margin: 20px 0 8px 0;
 	}
 	.legal-content p {
-		font-size: 14px;
-		color: #4a4540;
+		font-size: 0.875rem;
+		color: rgba(0, 0, 0, 0.5);
 		line-height: 1.75;
 		margin: 0 0 12px 0;
 	}
@@ -557,8 +358,8 @@
 		padding-left: 20px;
 	}
 	.legal-content li {
-		font-size: 14px;
-		color: #4a4540;
+		font-size: 0.875rem;
+		color: rgba(0, 0, 0, 0.5);
 		line-height: 1.75;
 		margin-bottom: 4px;
 	}
@@ -569,19 +370,16 @@
 	.legal-content a:hover {
 		text-decoration: underline;
 	}
-
-	/* ── Shared ── */
-	.plain-footer-note {
-		margin-top: 32px;
-		font-size: 13px;
-		color: #a89e94;
-		text-align: center;
+	.legal-content strong {
+		color: rgba(0, 0, 0, 0.88);
 	}
+
+	/* ── Tab switch link ── */
 	.inline-tab-switch {
 		background: none;
 		border: none;
 		color: #3b82f6;
-		font-size: 13px;
+		font-size: 0.8rem;
 		font-family: 'Inter', sans-serif;
 		cursor: pointer;
 		padding: 0;
@@ -590,35 +388,5 @@
 	}
 	.inline-tab-switch:hover {
 		color: #2563eb;
-	}
-
-	/* ── Footer ── */
-	.privacy-footer {
-		background: #f7f5f2;
-		border-top: 1px solid #e8e3db;
-		padding: 24px;
-	}
-	.privacy-footer-inner {
-		max-width: 720px;
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.privacy-footer p {
-		font-size: 12px;
-		color: #c9c2b8;
-		font-family: 'Inter', sans-serif;
-		margin: 0;
-	}
-	.footer-home-link {
-		font-size: 13px;
-		color: #6b6560;
-		font-family: 'Inter', sans-serif;
-		text-decoration: none;
-		transition: color 0.2s;
-	}
-	.footer-home-link:hover {
-		color: #2c2a27;
 	}
 </style>

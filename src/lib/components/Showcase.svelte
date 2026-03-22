@@ -63,6 +63,11 @@
 		/* width driven by image height: 50vh × 8/5 aspect ratio + padding */
 		max-width: calc(70vh * 8 / 5 + 48px);
 	}
+	@media (max-width: 1200px) {
+		.showcase {
+			display: none;
+		}
+	}
 	.showcase-window {
 		overflow: hidden;
 		border-radius: 12px;

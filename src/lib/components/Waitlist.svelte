@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { supabase } from '$lib/supabase';
+
 	let email = $state('');
 	let hasAgreedToTerms = $state(false);
 	let submitting = $state(false);
@@ -12,29 +14,19 @@
 		submitting = true;
 		error = '';
 
-		try {
-			const data = new FormData(e.target as HTMLFormElement);
-			const res = await fetch('https://formspree.io/f/mwvrdbey', {
-				method: 'POST',
-				body: data,
-				headers: { Accept: 'application/json' }
-			});
+		const { error: dbError } = await supabase.from('waitlist').insert({ email });
 
-			if (res.ok) {
-				submitted = true;
+		if (dbError) {
+			if (dbError.code === '23505') {
+				error = "You're already on the waitlist!";
 			} else {
-				const json = await res.json();
-				if (Object.hasOwn(json, 'errors')) {
-					error = json.errors.map((err: { message: string }) => err.message).join(', ');
-				} else {
-					error = 'Something went wrong. Please try again.';
-				}
+				error = 'Something went wrong. Please try again.';
 			}
-		} catch {
-			error = 'Network error. Please try again.';
-		} finally {
-			submitting = false;
+		} else {
+			submitted = true;
 		}
+
+		submitting = false;
 	}
 </script>
 
@@ -165,7 +157,6 @@
 				<div class="grid grid-cols-[1fr_auto] gap-3 max-[480px]:grid-cols-1">
 					<input
 						type="email"
-						name="email"
 						placeholder="your@email.com"
 						bind:value={email}
 						required

@@ -32,9 +32,6 @@
 	<div
 		class="reveal reveal-delay-4 mt-16 flex items-center gap-8 border-t border-black/4 pt-12 max-md:flex-col max-md:gap-4"
 	>
-		<span class="text-[0.7rem] font-medium tracking-[0.12em] text-black/28 uppercase"
-			>Built for writers, not content creators</span
-		>
 		<div class="flex gap-2">
 			<span class="h-2 w-2 rounded-full bg-[#3b82f6]"></span>
 			<span class="h-2 w-2 rounded-full bg-[#a855f7]"></span>

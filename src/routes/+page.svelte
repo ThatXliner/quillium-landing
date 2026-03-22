@@ -7,7 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
-		href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
 		rel="stylesheet"
 	/>
 </svelte:head>
@@ -18,7 +18,6 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Manifesto from '$lib/components/Manifesto.svelte';
-	import Writers from '$lib/components/Writers.svelte';
 	import Waitlist from '$lib/components/Waitlist.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
@@ -69,10 +68,6 @@
 <div class="warm-divider section-divider"></div>
 
 <Manifesto />
-
-<div class="warm-divider"></div>
-
-<Writers />
 
 <div class="warm-divider"></div>
 

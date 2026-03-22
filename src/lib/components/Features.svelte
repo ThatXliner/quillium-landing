@@ -602,22 +602,23 @@
 		margin-bottom: 20px;
 	}
 	.feature-heading {
-		font-family: 'Lora', Georgia, serif;
+		font-family: 'Newsreader', Georgia, serif;
 		font-size: 1.65rem;
-		font-weight: 700;
-		color: #1e1c1a;
+		font-weight: 400;
+		color: rgba(0, 0, 0, 0.88);
 		margin: 0 0 12px 0;
 		line-height: 1.2;
+		letter-spacing: -0.01em;
 	}
 	.feature-lead {
 		font-size: 15.5px;
-		color: #5a554f;
+		color: rgba(0, 0, 0, 0.5);
 		line-height: 1.8;
 		margin: 0 0 16px 0;
 	}
 	.feature-body {
 		font-size: 14px;
-		color: #7c756d;
+		color: rgba(0, 0, 0, 0.35);
 		line-height: 1.75;
 		margin: 0;
 	}
@@ -668,7 +669,7 @@
 	}
 	.carousel-caption {
 		font-size: 10.5px;
-		color: #9c968e;
+		color: rgba(0, 0, 0, 0.28);
 		margin: 0;
 		font-family: 'Inter', sans-serif;
 		white-space: nowrap;
@@ -684,7 +685,7 @@
 		width: 6px;
 		height: 6px;
 		border-radius: 50%;
-		background: #d6cfc5;
+		background: rgba(0, 0, 0, 0.15);
 		border: none;
 		cursor: pointer;
 		padding: 0;

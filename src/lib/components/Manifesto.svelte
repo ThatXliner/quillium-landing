@@ -1,196 +1,167 @@
 <!-- ==================== MANIFESTO ==================== -->
-<section id="manifesto" class="manifesto-section">
-	<div class="manifesto-inner">
-		<div class="reveal manifesto-eyebrow">
-			<p class="section-eyebrow section-eyebrow--centered">The Manifesto</p>
-		</div>
+<section id="manifesto" class="manifesto">
+	<div class="manifesto-inner reveal">
+		<p class="section-eyebrow section-eyebrow--centered">The Manifesto</p>
 
-		<div class="reveal manifesto-lede">
-			<p class="lede-text">
-				Writing tools have always assumed<br class="lede-br" />
-				you know where you're going.
-			</p>
-			<p class="lede-sub">They don't. Neither do you. That's not a flaw.</p>
-		</div>
+		<h2 class="manifesto-headline">
+			Writing tools have always assumed you know where you're going.
+		</h2>
 
-		<div class="manifesto-grid">
-			<div class="reveal manifesto-card">
-				<p class="manifesto-label">The Problem</p>
-				<p class="manifesto-prose">
-					Writing is a web of attempts — a tangle of better and worse, a conversation between drafts.
-					Every blank page pretending otherwise is lying to you.
+		<p class="manifesto-subtitle">They don't. Neither do you. That's not a flaw.</p>
+
+		<div class="manifesto-cards">
+			<div
+				class="manifesto-card gap-2 rounded-lg bg-white/50 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-colors hover:bg-gray-50/30 hover:text-black/70"
+			>
+				<h3>The Problem</h3>
+				<p>
+					Writing is a web of attempts — a tangle of better and worse, a conversation between
+					drafts. Every blank page pretending otherwise is lying to you.
 				</p>
 			</div>
-
-			<div class="reveal manifesto-card">
-				<p class="manifesto-label">Who It's For</p>
-				<div class="persona-list">
-					<div class="persona">
-						<span class="persona-icon">✦</span>
-						<span>Novelists writing the same chapter four different ways</span>
-					</div>
-					<div class="persona">
-						<span class="persona-icon">✦</span>
-						<span>Essayists testing three theses before committing to one</span>
-					</div>
-					<div class="persona">
-						<span class="persona-icon">✦</span>
-						<span>Memoirists still reshaping sentences at 2am</span>
-					</div>
-				</div>
+			<div
+				class="manifesto-card gap-2 rounded-lg bg-white/50 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-colors hover:bg-gray-50/30 hover:text-black/70"
+			>
+				<h3>Who It's For</h3>
+				<ul>
+					<li>
+						<span class="bullet"></span>
+						Novelists writing the same chapter four different ways
+					</li>
+					<li>
+						<span class="bullet"></span>
+						Essayists testing three theses before committing to one
+					</li>
+					<li>
+						<span class="bullet"></span>
+						Memoirists still reshaping sentences at 2am
+					</li>
+				</ul>
 			</div>
 		</div>
 
-		<div class="reveal manifesto-statement">
-			<blockquote class="statement-quote">
-				"We built an editor that treats non-linearity as a
-				<em class="statement-highlight">feature</em>,
-				not a problem to manage."
-			</blockquote>
-			<p class="statement-sub">
-				AI as a second voice in the room — one that annotates rather than interrupts,
-				responds to your text rather than pulling you away from it.
-				Warm. Calm. Focused. Because the writing is the product.
-			</p>
-		</div>
+		<div class="manifesto-divider"></div>
+
+		<p class="manifesto-quote">
+			"We built an editor that treats non-linearity as a
+			<span class="highlight">feature</span>, not a problem to manage."
+		</p>
+
+		<p class="manifesto-closing">
+			AI as a second voice in the room — one that annotates rather than interrupts, responds to your
+			text rather than pulling you away from it. Warm. Calm. Focused. Because the writing is the
+			product.
+		</p>
 	</div>
 </section>
 
 <style>
-	/* ── Manifesto ── */
-	.manifesto-section {
-		background: #f0ede8;
-		background-image:
-			radial-gradient(circle at 20% 80%, rgba(252, 188, 5, 0.05) 0%, transparent 50%),
-			radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
-		padding: 64px 24px;
-	}
-	@media (min-width: 768px) {
-		.manifesto-section {
-			padding: 96px 24px;
-		}
+	.manifesto {
+		text-align: center;
+		padding: 8rem 2rem;
 	}
 	.manifesto-inner {
-		max-width: 62rem;
+		max-width: 800px;
 		margin: 0 auto;
 	}
-	.manifesto-eyebrow {
-		margin-bottom: 36px;
-	}
-
-	/* ── Lede ── */
-	.manifesto-lede {
-		text-align: center;
-		margin-bottom: 40px;
-	}
-	.lede-text {
-		font-family: 'Lora', Georgia, serif;
-		font-size: clamp(1.5rem, 4vw, 2.4rem);
+	.manifesto-headline {
+		font-family: 'Newsreader', Georgia, serif;
+		font-size: clamp(1.8rem, 4vw, 2.8rem);
+		font-weight: 400;
 		font-style: italic;
-		line-height: 1.35;
-		color: #1e1c1a;
-		margin: 0 0 14px 0;
+		line-height: 1.25;
+		color: rgba(0, 0, 0, 0.88);
+		margin: 0 0 1.25rem 0;
 	}
-	.lede-br {
-		display: none;
-	}
-	@media (min-width: 560px) {
-		.lede-br {
-			display: inline;
-		}
-	}
-	.lede-sub {
-		font-family: 'Inter', sans-serif;
-		font-size: clamp(0.95rem, 2vw, 1.1rem);
-		color: #a89e94;
-		margin: 0;
-		letter-spacing: 0.01em;
+	.manifesto-subtitle {
+		font-size: 1.05rem;
+		color: rgba(0, 0, 0, 0.28);
+		margin: 0 0 3.5rem 0;
+		line-height: 1.6;
 	}
 
 	/* ── Cards ── */
-	.manifesto-grid {
+	.manifesto-cards {
 		display: grid;
-		grid-template-columns: 1fr;
-		gap: 16px;
-		margin-bottom: 40px;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.25rem;
+		margin-bottom: 4rem;
+		text-align: left;
 	}
-	@media (min-width: 768px) {
-		.manifesto-grid {
-			grid-template-columns: 1fr 1fr;
-			gap: 20px;
+	@media (max-width: 768px) {
+		.manifesto-cards {
+			grid-template-columns: 1fr;
 		}
 	}
 	.manifesto-card {
-		border: 1px solid #d6cfc5;
-		background: rgba(255, 255, 255, 0.6);
-		border-radius: 16px;
-		padding: 24px;
+		padding: 2rem;
 	}
-	.manifesto-label {
-		font-family: 'Inter', sans-serif;
-		font-size: 11px;
-		font-weight: 600;
-		letter-spacing: 0.08em;
+	.manifesto-card h3 {
+		font-size: 0.65rem;
+		font-weight: 700;
 		text-transform: uppercase;
-		color: #6b6560;
-		margin: 0 0 14px 0;
+		letter-spacing: 0.12em;
+		color: rgba(0, 0, 0, 0.88);
+		margin: 0 0 1.25rem 0;
 	}
-	.manifesto-prose {
-		font-family: 'Lora', Georgia, serif;
-		font-size: 16px;
+	.manifesto-card p {
+		font-size: 0.95rem;
+		color: rgba(0, 0, 0, 0.5);
 		line-height: 1.75;
-		color: #4d4742;
 		margin: 0;
 	}
-
-	/* ── Persona list ── */
-	.persona-list {
-		display: grid;
-		gap: 12px;
-	}
-	.persona {
+	.manifesto-card ul {
+		list-style: none;
 		display: flex;
-		align-items: flex-start;
-		gap: 10px;
-		font-family: 'Lora', Georgia, serif;
-		font-size: 15px;
-		line-height: 1.55;
-		color: #4d4742;
+		flex-direction: column;
+		gap: 1rem;
+		padding: 0;
+		margin: 0;
 	}
-	.persona-icon {
-		color: #fcbc05;
-		font-size: 10px;
-		margin-top: 5px;
+	.manifesto-card li {
+		font-size: 0.95rem;
+		color: rgba(0, 0, 0, 0.5);
+		line-height: 1.6;
+		display: flex;
+		align-items: baseline;
+		gap: 0.6rem;
+	}
+	.bullet {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: #fcbc05;
 		flex-shrink: 0;
+		margin-top: 0.45em;
 	}
 
-	/* ── Statement ── */
-	.manifesto-statement {
-		border-top: 1px solid #d6cfc5;
-		padding-top: 40px;
-		text-align: center;
-		max-width: 48rem;
+	/* ── Divider + Quote ── */
+	.manifesto-divider {
+		width: 100%;
+		max-width: 800px;
+		height: 1px;
+		background: rgba(0, 0, 0, 0.06);
+		margin: 0 auto 4rem;
+	}
+	.manifesto-quote {
+		font-family: 'Newsreader', Georgia, serif;
+		font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+		font-style: italic;
+		line-height: 1.6;
+		color: rgba(0, 0, 0, 0.88);
+		margin: 0 0 2rem 0;
+		max-width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.highlight {
+		color: #fcbc05;
+	}
+	.manifesto-closing {
+		font-size: 0.95rem;
+		color: rgba(0, 0, 0, 0.5);
+		line-height: 1.8;
+		max-width: 640px;
 		margin: 0 auto;
-	}
-	.statement-quote {
-		font-family: 'Lora', Georgia, serif;
-		font-style: italic;
-		font-size: clamp(1.2rem, 3vw, 1.65rem);
-		line-height: 1.5;
-		color: #2c2a27;
-		margin: 0 0 20px 0;
-		quotes: none;
-	}
-	.statement-highlight {
-		color: #2563eb;
-		font-style: italic;
-		font-weight: 600;
-	}
-	.statement-sub {
-		font-family: 'Inter', sans-serif;
-		font-size: 15px;
-		line-height: 1.75;
-		color: #6b6560;
-		margin: 0;
 	}
 </style>

@@ -1,6 +1,6 @@
 <!-- ==================== MANIFESTO ==================== -->
-<section id="manifesto" class="px-8 py-20 text-center">
-	<div class="reveal mx-auto max-w-[800px]">
+<section id="manifesto" class="px-8 text-center">
+	<div class="reveal mx-auto mt-20 max-w-[800px]">
 		<p class="section-eyebrow section-eyebrow--centered">The Manifesto</p>
 
 		<h2
@@ -51,16 +51,16 @@
 		<div class="mx-auto mb-10 h-px w-full max-w-[800px] bg-black/6"></div>
 
 		<p
-			class="mx-auto mb-8 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(1.3rem,2.5vw,1.65rem)] leading-relaxed text-black/88 italic"
+			class="mx-auto mb-10 max-w-full font-[Newsreader,Georgia,serif] text-[clamp(1.3rem,2.5vw,1.65rem)] leading-relaxed text-black/88 italic"
 		>
-			"We built an editor that treats non-linearity as a
-			<span class="text-[#fcbc05]">feature</span>, not a problem to manage."
+			"What if we treats non-linearity as a
+			<span class="text-[#fcbc05]">feature</span>, not a problem to manage?"
 		</p>
 
-		<p class="mx-auto max-w-[640px] text-[0.95rem] leading-[1.8] text-black/50">
+		<!-- <p class="mx-auto max-w-[640px] text-[0.95rem] leading-[1.8] text-black/50">
 			AI as a second voice in the room — one that annotates rather than interrupts, responds to your
 			text rather than pulling you away from it. Warm. Calm. Focused. Because the writing is the
 			product.
-		</p>
+		</p> -->
 	</div>
 </section>

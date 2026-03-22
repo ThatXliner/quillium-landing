@@ -51,6 +51,7 @@
 	import { onMount } from 'svelte';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
+	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Manifesto from '$lib/components/Manifesto.svelte';
 	import Waitlist from '$lib/components/Waitlist.svelte';
@@ -97,6 +98,8 @@
 
 <Nav />
 <Hero />
+
+<Showcase />
 
 <div class="warm-divider section-divider"></div>
 

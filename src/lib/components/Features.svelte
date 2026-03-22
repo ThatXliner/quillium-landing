@@ -2,7 +2,7 @@
 	import revisionsImg from '$lib/assets/screenshots/revisions.png';
 	import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
 	import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
-	import revisionModal from '$lib/assets/screenshots/revision-modal.png';
+
 </script>
 
 <!-- ==================== FEATURES ==================== -->
@@ -47,11 +47,6 @@
 			</p>
 		</div>
 	</div>
-	<!-- <img
-		src={revisionModal}
-		alt="Quillium AI annotation panel providing inline writing feedback"
-		class="feature-screenshot mx-auto my-5"
-	/> -->
 	<!-- Feature 2: A Second Voice -->
 	<div class="reveal feature-row feature-row--reversed">
 		<div class="feature-text">

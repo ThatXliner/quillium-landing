@@ -19,16 +19,16 @@
 </script>
 
 <nav id="main-nav" class="nav-fixed">
-	<div class="nav-inner">
-		<a href="#" class="nav-logo">
-			<img src="/logo.svg" alt="Quillium" width="32" height="32" />
-			<span class="logo-name">Quillium</span>
+	<div class="max-w-[72rem] mx-auto px-6 flex items-center justify-between">
+		<a href="#" class="flex items-center gap-3 no-underline text-black/88">
+			<img src="/logo.svg" alt="Quillium" width="32" height="32" class="rounded-lg" />
+			<span class="font-semibold text-[0.95rem] tracking-[-0.01em]">Quillium</span>
 		</a>
-		<div class="nav-right">
-			<a href="#features" class="nav-link">Features</a>
-			<a href="#manifesto" class="nav-link">Manifesto</a>
-			<a href="#waitlist" class="nav-link">Waitlist</a>
-			<span class="nav-badge">Public Beta</span>
+		<div class="flex items-center gap-8">
+			<a href="#features" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
+			<a href="#manifesto" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
+			<a href="#waitlist" class="hidden md:inline text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
+			<span class="hidden md:inline text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-[#22c55e] bg-[rgba(34,197,94,0.08)] py-1.5 px-3 rounded-full border border-[rgba(34,197,94,0.15)]">Public Beta</span>
 		</div>
 	</div>
 </nav>
@@ -48,66 +48,5 @@
 		z-index: 100;
 		padding: 1rem 2rem;
 		transition: all 0.3s;
-	}
-	.nav-inner {
-		max-width: 72rem;
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.nav-logo {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		text-decoration: none;
-		color: rgba(0, 0, 0, 0.88);
-	}
-	.nav-logo img {
-		width: 32px;
-		height: 32px;
-		border-radius: 8px;
-	}
-	.logo-name {
-		font-weight: 600;
-		font-size: 0.95rem;
-		letter-spacing: -0.01em;
-	}
-	.nav-right {
-		display: flex;
-		align-items: center;
-		gap: 2rem;
-	}
-	.nav-link {
-		font-size: 0.8rem;
-		font-weight: 500;
-		color: rgba(0, 0, 0, 0.5);
-		text-decoration: none;
-		transition: color 300ms;
-		display: none;
-	}
-	.nav-link:hover {
-		color: rgba(0, 0, 0, 0.88);
-	}
-	@media (min-width: 768px) {
-		.nav-link {
-			display: inline;
-		}
-	}
-	.nav-badge {
-		font-size: 0.65rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: #22c55e;
-		background: rgba(34, 197, 94, 0.08);
-		padding: 0.3rem 0.75rem;
-		border-radius: 100px;
-		border: 1px solid rgba(34, 197, 94, 0.15);
-	}
-	@media (max-width: 768px) {
-		.nav-badge {
-			display: none;
-		}
 	}
 </style>

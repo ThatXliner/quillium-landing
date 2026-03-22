@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* ── Fonts ── */
+/* ── Base ── */
 body {
 	background-color: #e5e7eb;
 	color: rgba(0, 0, 0, 0.88);
@@ -9,15 +9,6 @@ body {
 }
 html {
 	scroll-behavior: smooth;
-}
-* {
-	box-sizing: border-box;
-}
-*::before {
-	box-sizing: border-box;
-}
-*::after {
-	box-sizing: border-box;
 }
 
 /* ── Shared ── */
@@ -49,14 +40,6 @@ html {
 	color: rgba(0, 0, 0, 0.88);
 	margin: 0;
 }
-.status-dot {
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background: #22c55e;
-	display: inline-block;
-	flex-shrink: 0;
-}
 
 /* ── Scroll reveal ── */
 .reveal {
@@ -70,20 +53,12 @@ html {
 	opacity: 1;
 	transform: translateY(0);
 }
-.reveal-delay-1 {
-	transition-delay: 0.1s;
-}
-.reveal-delay-2 {
-	transition-delay: 0.2s;
-}
-.reveal-delay-3 {
-	transition-delay: 0.3s;
-}
-.reveal-delay-4 {
-	transition-delay: 0.45s;
-}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.45s; }
 
-/* ── Buttons ── */
+/* ── Buttons (shared across components) ── */
 .btn-primary {
 	display: inline-flex;
 	align-items: center;
@@ -105,29 +80,8 @@ html {
 	transform: translateY(-2px);
 	box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
-.btn-large {
-	padding: 14px 28px;
-	font-size: 15px;
-}
-.btn-ghost {
-	color: #3b82f6;
-	font-weight: 500;
-	font-size: 15px;
-	text-decoration: none;
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	transition: color 0.2s;
-}
-.btn-ghost:hover {
-	color: #2563eb;
-}
-.btn-ghost:hover .arrow-icon {
-	transform: translateX(4px);
-}
-.arrow-icon {
-	transition: transform 0.2s;
-}
+
+/* ── Feature mock buttons (used in Features.svelte carousels) ── */
 .btn-accept {
 	background: #a855f7;
 	color: white;
@@ -140,9 +94,7 @@ html {
 	font-family: 'Inter', sans-serif;
 	transition: background 0.15s;
 }
-.btn-accept:hover {
-	background: #9333ea;
-}
+.btn-accept:hover { background: #9333ea; }
 .btn-dismiss {
 	background: transparent;
 	color: rgba(0, 0, 0, 0.28);
@@ -164,10 +116,4 @@ html {
 	font-family: 'Inter', sans-serif;
 	margin-left: auto;
 	cursor: pointer;
-}
-.hidden {
-	display: none;
-}
-.flex-1 {
-	flex: 1;
 }

@@ -1,39 +1,11 @@
 <!-- ==================== FOOTER ==================== -->
-<footer>
-	<div class="footer-links">
-		<a href="#features">Features</a>
-		<a href="#manifesto">Manifesto</a>
-		<a href="#waitlist">Waitlist</a>
-		<a href="mailto:thatxliner@gmail.com">Contact</a>
-		<a href="/privacy">Privacy</a>
+<footer class="py-12 px-8 text-center border-t border-black/4">
+	<div class="flex justify-center gap-8 mb-6">
+		<a href="#features" class="text-[0.75rem] text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
+		<a href="#manifesto" class="text-[0.75rem] text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
+		<a href="#waitlist" class="text-[0.75rem] text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
+		<a href="mailto:thatxliner@gmail.com" class="text-[0.75rem] text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Contact</a>
+		<a href="/privacy" class="text-[0.75rem] text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Privacy</a>
 	</div>
-	<p class="footer-copy">&copy; 2026 Quillium</p>
+	<p class="text-[0.7rem] text-black/28 m-0">&copy; 2026 Quillium</p>
 </footer>
-
-<style>
-	footer {
-		padding: 3rem 2rem;
-		text-align: center;
-		border-top: 1px solid rgba(0, 0, 0, 0.04);
-	}
-	.footer-links {
-		display: flex;
-		justify-content: center;
-		gap: 2rem;
-		margin-bottom: 1.5rem;
-	}
-	.footer-links a {
-		font-size: 0.75rem;
-		color: rgba(0, 0, 0, 0.5);
-		text-decoration: none;
-		transition: color 300ms;
-	}
-	.footer-links a:hover {
-		color: rgba(0, 0, 0, 0.88);
-	}
-	.footer-copy {
-		font-size: 0.7rem;
-		color: rgba(0, 0, 0, 0.28);
-		margin: 0;
-	}
-</style>

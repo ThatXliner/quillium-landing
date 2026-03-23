@@ -3,46 +3,32 @@
 	import posthog from 'posthog-js';
 
 	let displayedText = $state('');
-	let variant = $state('control');
+	const fullText = 'Prose for ';
 	const typingSpeed = 100;
 	let showPros = $state(false);
 	let showPeriod = $state(false);
 	let showCursor = $state(true);
-	let ready = $state(false);
-
-	const headlines = {
-		control: { text: 'Prose for ', suffix: 'Pros', suffixItalic: true },
-		'element-of-thought': { text: 'The Element of ', suffix: 'Thought', suffixItalic: true }
-	};
 
 	onMount(() => {
-		posthog.onFeatureFlags(() => {
-			variant = posthog.getFeatureFlag('hero-headline-copy') || 'control';
-			ready = true;
-
-			const { text: fullText } = headlines[variant] || headlines.control;
-			let i = 0;
-			const interval = setInterval(() => {
-				if (i < fullText.length) {
-					displayedText = fullText.slice(0, i + 1);
-					i++;
-				} else {
-					showPros = true;
-					clearInterval(interval);
+		let i = 0;
+		const interval = setInterval(() => {
+			if (i < fullText.length) {
+				displayedText = fullText.slice(0, i + 1);
+				i++;
+			} else {
+				showPros = true;
+				clearInterval(interval);
+				setTimeout(() => {
+					showPeriod = true;
 					setTimeout(() => {
-						showPeriod = true;
-						setTimeout(() => {
-							showCursor = false;
-						}, 600);
-					}, typingSpeed);
-				}
-			}, typingSpeed);
+						showCursor = false;
+					}, 600);
+				}, typingSpeed);
+			}
+		}, typingSpeed);
 
-			return () => clearInterval(interval);
-		});
+		return () => clearInterval(interval);
 	});
-
-	const headline = $derived(headlines[variant] || headlines.control);
 </script>
 
 <!-- ==================== HERO ==================== -->
@@ -58,7 +44,7 @@
 	<h1
 		class="reveal reveal-delay-1 mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,4.5rem)] leading-[1.15] font-normal tracking-[-0.03em] text-black/88"
 	>
-		{displayedText}{#if showPros}<span class:italic={headline.suffixItalic}>{headline.suffix}</span>{/if}{#if showPeriod}.{/if}<span
+		{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span
 			class="typing-cursor"
 			class:hidden={!showCursor}>|</span
 		>
@@ -73,7 +59,7 @@
 		<a
 			href="#waitlist"
 			class="btn-primary"
-			onclick={() => posthog.capture('cta_clicked', { cta: 'join_waitlist', location: 'hero', headline_variant: variant })}
+			onclick={() => posthog.capture('cta_clicked', { cta: 'join_waitlist', location: 'hero' })}
 			>Join the Waitlist</a
 		>
 		<a

@@ -76,7 +76,8 @@
 						</p>
 						<p class="m-0 font-[Inter,sans-serif] text-[12px] leading-[1.55] text-black/50">
 							This is an unstable beta. Features may change or be removed at any time. Not intended
-							for production or critical work.
+							for production or critical work. We will collect anonymous analytics but you may
+							opt-out anytime.
 						</p>
 					</div>
 				</div>

@@ -6,7 +6,9 @@ export async function init() {
 	posthog.init(PUBLIC_POSTHOG_PROJECT_TOKEN, {
 		api_host: PUBLIC_POSTHOG_HOST,
 		defaults: '2026-01-30',
-		capture_exceptions: true
+		capture_exceptions: true,
+		persistence: 'localStorage+cookie',
+		cookieless_mode: 'on_reject'
 	});
 }
 

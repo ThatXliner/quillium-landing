@@ -49,7 +49,7 @@ jobs:
         env:
           # Use input base if provided, otherwise default to /<repo-name>/ which works well for project pages.
           GH_PAGES_BASE: "${{ github.event.inputs.base || format('/{0}/', github.event.repository.name) }}"
-          PUBLIC_POSTHOG_KEY: ${{ vars.PUBLIC_POSTHOG_KEY }}
+          PUBLIC_POSTHOG_PROJECT_TOKEN: ${{ vars.PUBLIC_POSTHOG_KEY }}
           PUBLIC_POSTHOG_HOST: ${{ vars.PUBLIC_POSTHOG_HOST }}
         run: bun run build
 

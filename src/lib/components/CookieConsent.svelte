@@ -7,8 +7,8 @@
 
 	onMount(() => {
 		if (!posthog.has_opted_in_capturing() && !posthog.has_opted_out_capturing()) {
-			// Start cookieless capturing immediately while waiting for consent
-			posthog.opt_out_capturing();
+			// Show consent banner — PostHog continues capturing in cookieless mode
+			// via the `cookieless_mode: 'on_reject'` config until user decides
 			visible = true;
 		}
 	});

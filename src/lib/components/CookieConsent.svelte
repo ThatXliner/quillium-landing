@@ -31,23 +31,23 @@
 
 {#if visible}
 	<div
-		class="fixed bottom-6 right-6 z-[200] max-w-md rounded-2xl border border-black/[0.04] bg-white/80 px-6 py-5 shadow-lg backdrop-blur-xl"
+		class="fixed bottom-0 left-0 right-0 z-[200] border-t border-black/[0.04] bg-white/90 px-5 py-4 shadow-lg backdrop-blur-xl sm:bottom-6 sm:left-auto sm:right-6 sm:max-w-md sm:rounded-2xl sm:border sm:px-6 sm:py-5"
 		transition:fly={{ y: 40, duration: 300 }}
 	>
-		<p class="m-0 mb-4 text-[0.8rem] leading-relaxed text-black/60">
+		<p class="m-0 mb-4 text-sm leading-relaxed text-black/60 sm:text-[0.8rem]">
 			We use cookies only for anonymous analytics — no tracking, no profiling, no personalized ads. Ever.
 			<a href="/privacy" class="text-[#3b82f6] no-underline hover:underline">Privacy policy</a>
 		</p>
 		<div class="flex gap-2">
 			<button
 				onclick={accept}
-				class="rounded-full bg-black/88 px-5 py-2 text-[0.75rem] font-medium text-white transition-colors hover:bg-black"
+				class="min-h-[44px] rounded-full bg-black/88 px-5 py-2 text-[0.75rem] font-medium text-white transition-colors hover:bg-black sm:min-h-0"
 			>
 				Accept
 			</button>
 			<button
 				onclick={decline}
-				class="rounded-full bg-black/[0.04] px-5 py-2 text-[0.75rem] font-medium text-black/50 transition-colors hover:bg-black/[0.08] hover:text-black/70"
+				class="min-h-[44px] rounded-full bg-black/[0.04] px-5 py-2 text-[0.75rem] font-medium text-black/50 transition-colors hover:bg-black/[0.08] hover:text-black/70 sm:min-h-0"
 			>
 				Decline
 			</button>

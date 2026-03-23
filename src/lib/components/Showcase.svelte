@@ -4,15 +4,14 @@
 	import editorImg from '$lib/assets/screenshots/01-editor.png';
 	// import revisionsImg from '$lib/assets/screenshots/revisions.png';
 	import revisionModalImg from '$lib/assets/screenshots/revision-modal.png';
+	import annotationsImg from '$lib/assets/screenshots/03-annotations.png';
 	// import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
 	// import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
 
 	const slides = [
 		{ src: editorImg, alt: 'The Quillium editor — a clean, focused writing environment' },
-		// { src: revisionsImg, alt: 'Inline revision branches for prose' },
-		{ src: revisionModalImg, alt: 'Revision modal with AI feedback and context sidebar' }
-		// { src: aiAnnotationsImg, alt: 'AI-powered inline annotations and suggestions' },
-		// { src: annotationsBelongImg, alt: 'Comments and annotations anchored beside the text' },
+		{ src: revisionModalImg, alt: 'Revision modal with AI feedback and context sidebar' },
+		{ src: annotationsImg, alt: 'All annotations' }
 	];
 
 	let current = 0;

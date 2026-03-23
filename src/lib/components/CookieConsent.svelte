@@ -2,11 +2,12 @@
 	import posthog from 'posthog-js';
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import { dev } from '$app/environment';
 
 	let visible = $state(false);
 
 	onMount(() => {
-		if (!posthog.has_opted_in_capturing() && !posthog.has_opted_out_capturing()) {
+		if (dev || (!posthog.has_opted_in_capturing() && !posthog.has_opted_out_capturing())) {
 			// Show consent banner — PostHog continues capturing in cookieless mode
 			// via the `cookieless_mode: 'on_reject'` config until user decides
 			visible = true;

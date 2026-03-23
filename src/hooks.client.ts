@@ -14,6 +14,7 @@ export async function init() {
 		cookieless_mode: 'on_reject'
 	});
 	posthog.register({ app: 'landing' });
+	console.log('[PostHog] Initialized successfully');
 }
 
 export const handleError: HandleClientError = async ({ error, status, message }) => {

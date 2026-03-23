@@ -7,7 +7,7 @@
 	let visible = $state(false);
 
 	onMount(() => {
-		if (!dev && !posthog.has_opted_in_capturing() && !posthog.has_opted_out_capturing()) {
+		if (!dev && !localStorage.getItem('cookie_consent')) {
 			visible = true;
 		}
 
@@ -17,11 +17,13 @@
 	});
 
 	function accept() {
+		localStorage.setItem('cookie_consent', 'accepted');
 		posthog.opt_in_capturing();
 		visible = false;
 	}
 
 	function decline() {
+		localStorage.setItem('cookie_consent', 'declined');
 		posthog.opt_out_capturing();
 		visible = false;
 	}

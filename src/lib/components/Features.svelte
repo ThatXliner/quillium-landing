@@ -2,7 +2,6 @@
 	import revisionsImg from '$lib/assets/screenshots/revisions.png';
 	import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
 	import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
-
 </script>
 
 <!-- ==================== FEATURES ==================== -->
@@ -41,7 +40,7 @@
 				mistakes.
 			</p>
 			<p class="feature-body">
-				No more "draft 1," "draft 2," "draft FINAL." Your branches live in the document itself —
+				No more "draft 1," "draft 2," "draft FINAL." Your ideas live in the document itself:
 				visible, selectable, alive. Switch between them instantly. The one you didn't choose is
 				still there when you need it.
 			</p>
@@ -66,9 +65,9 @@
 				without leaving your flow.
 			</p>
 			<p class="feature-body">
-				It isn't a chatbot in the corner. It responds to your text right where you are — flagging a
-				passive construction, offering a sharper phrasing, or just confirming that the sentence you
-				struggled over is, actually, right.
+				It isn't a chatbot in the corner. It responds to your text right where you are, giving
+				suggestions as you write. Note that this feature is completely optional and currently
+				requires that you provide your own API key.
 			</p>
 			<div class="tag-list">
 				<span class="tag tag--green">Review &amp; revise</span>
@@ -128,9 +127,8 @@
 				sidebar. Not lost in a thread.
 			</p>
 			<p class="feature-body">
-				Every note is anchored to the exact phrase it concerns — spatial and immediate. Scroll past
-				it, and it moves with the text. Resolve it, and it disappears cleanly. The document stays
-				the document.
+				Every note is anchored to the exact phrase it concerns. Scroll past it, and it moves with
+				the text. Resolve it, and it disappears cleanly.
 			</p>
 		</div>
 	</div>

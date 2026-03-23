@@ -91,7 +91,7 @@
 						</p>
 						<p class="m-0 font-[Inter,sans-serif] text-[12px] leading-[1.55] text-black/50">
 							The Service is provided "as-is" with no warranties. Data loss is possible — back up
-							important content. We are not liable for any damages arising from beta use.
+							important content. We are not liable for any damages arising from use.
 						</p>
 					</div>
 				</div>
@@ -163,7 +163,11 @@
 						class="rounded-lg border border-black/10 bg-white px-3.5 py-2.5 font-[Inter,sans-serif] text-sm text-black/88 transition-[border-color] duration-200 placeholder:text-black/28 focus:border-[#3b82f6] focus:ring-[3px] focus:ring-[rgba(59,130,246,0.1)] focus:outline-none"
 						aria-label="Email address"
 					/>
-					<button type="submit" class="btn-primary" disabled={!hasAgreedToTerms || !email || submitting}>
+					<button
+						type="submit"
+						class="btn-primary"
+						disabled={!hasAgreedToTerms || !email || submitting}
+					>
 						{submitting ? 'Signing up…' : 'Sign me up!'}
 					</button>
 				</div>
@@ -188,12 +192,15 @@
 				</p>
 			{/if}
 		{:else}
-			<div class="rounded-xl border border-[rgba(34,197,94,0.25)] bg-[rgba(34,197,94,0.08)] px-6 py-4.5">
+			<div
+				class="rounded-xl border border-[rgba(34,197,94,0.25)] bg-[rgba(34,197,94,0.08)] px-6 py-4.5"
+			>
 				<p class="m-0 font-[Newsreader,Georgia,serif] text-base text-[#15803d] italic">
 					You're on the waitlist. Check your email when it's time to join the beta.
 				</p>
 			</div>
 		{/if}
+	</div>
 </section>
 
 <style>

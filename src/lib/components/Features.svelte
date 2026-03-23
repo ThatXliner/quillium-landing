@@ -59,15 +59,16 @@
 					/>
 				</svg>
 			</div>
-			<h3 class="feature-heading">A Second Voice</h3>
+			<h3 class="feature-heading">A Second Set of Eyes</h3>
 			<p class="feature-lead">
-				AI that annotates, not interrupts. Ask for feedback, find the right word, get clarity — all
-				without leaving your flow.
+				Not everyone is free to review your work. Now, you don't have to wait. Ask for feedback,
+				find the right word, get clarity — all without leaving your flow.
 			</p>
 			<p class="feature-body">
 				It isn't a chatbot in the corner. It responds to your text right where you are, giving
-				suggestions as you write. Note that this feature is completely optional and currently
-				requires that you provide your own API key.
+				suggestions as you write. Note that this feature is <b class="font-bold"
+					>completely optional</b
+				> and currently requires that you provide your own API key.
 			</p>
 			<div class="tag-list">
 				<span class="tag tag--green">Review &amp; revise</span>
@@ -121,7 +122,7 @@
 					/>
 				</svg>
 			</div>
-			<h3 class="feature-heading">Annotations That Belong</h3>
+			<h3 class="feature-heading">Put Great Minds Together</h3>
 			<p class="feature-lead">
 				Comments, revisions, and suggestions float beside the text they're about. Not buried in a
 				sidebar. Not lost in a thread.

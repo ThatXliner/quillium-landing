@@ -10,6 +10,7 @@ export async function init() {
 		persistence: 'localStorage+cookie',
 		cookieless_mode: 'on_reject'
 	});
+	posthog.register({ app: 'landing' });
 }
 
 export const handleError: HandleClientError = async ({ error, status, message }) => {

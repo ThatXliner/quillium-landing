@@ -5,6 +5,7 @@
 	const fullText = 'Prose for ';
 	const typingSpeed = 100;
 	let showPros = $state(false);
+	let showPeriod = $state(false);
 	let showCursor = $state(true);
 
 	onMount(() => {
@@ -17,8 +18,11 @@
 				showPros = true;
 				clearInterval(interval);
 				setTimeout(() => {
-					showCursor = false;
-				}, 600);
+					showPeriod = true;
+					setTimeout(() => {
+						showCursor = false;
+					}, 600);
+				}, typingSpeed);
 			}
 		}, typingSpeed);
 
@@ -39,7 +43,7 @@
 	<h1
 		class="reveal reveal-delay-1 mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,4.5rem)] leading-[1.15] font-normal tracking-[-0.03em] text-black/88"
 	>
-		{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}<span class="typing-cursor" class:hidden={!showCursor}>|</span>
+		{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span class="typing-cursor" class:hidden={!showCursor}>|</span>
 	</h1>
 
 	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50">
@@ -56,6 +60,10 @@
 			See how it works
 		</a>
 	</div>
+
+	<p class="reveal reveal-delay-4 mt-6 text-[0.85rem] font-medium tracking-wide text-black/40">
+		Coming April 2nd
+	</p>
 
 	<div
 		class="reveal reveal-delay-4 mt-16 flex items-center gap-8 border-t border-black/4 pt-12 max-md:flex-col max-md:gap-4"

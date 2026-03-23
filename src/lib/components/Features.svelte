@@ -191,13 +191,13 @@
 	}
 	.feature-lead {
 		font-size: 15.5px;
-		color: rgba(0, 0, 0, 0.5);
+		color: rgba(0, 0, 0, 0.6);
 		line-height: 1.8;
 		margin: 0 0 16px 0;
 	}
 	.feature-body {
 		font-size: 14px;
-		color: rgba(0, 0, 0, 0.35);
+		color: rgba(0, 0, 0, 0.5);
 		line-height: 1.75;
 		margin: 0;
 	}

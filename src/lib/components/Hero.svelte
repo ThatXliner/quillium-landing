@@ -1,3 +1,31 @@
+<script>
+	import { onMount } from 'svelte';
+
+	let displayedText = $state('');
+	const fullText = 'Prose for ';
+	const typingSpeed = 100;
+	let showPros = $state(false);
+	let showCursor = $state(true);
+
+	onMount(() => {
+		let i = 0;
+		const interval = setInterval(() => {
+			if (i < fullText.length) {
+				displayedText = fullText.slice(0, i + 1);
+				i++;
+			} else {
+				showPros = true;
+				clearInterval(interval);
+				setTimeout(() => {
+					showCursor = false;
+				}, 600);
+			}
+		}, typingSpeed);
+
+		return () => clearInterval(interval);
+	});
+</script>
+
 <!-- ==================== HERO ==================== -->
 <section
 	class="flex min-h-screen flex-col items-center justify-center px-8 pt-32 pb-24 text-center"
@@ -11,7 +39,7 @@
 	<h1
 		class="reveal reveal-delay-1 mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,4.5rem)] leading-[1.15] font-normal tracking-[-0.03em] text-black/88"
 	>
-		Prose for <span class="italic">Pros</span>
+		{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}<span class="typing-cursor" class:hidden={!showCursor}>|</span>
 	</h1>
 
 	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50">
@@ -40,3 +68,16 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.typing-cursor {
+		font-weight: 300;
+		animation: blink 0.6s step-end infinite;
+	}
+	.typing-cursor.hidden {
+		display: none;
+	}
+	@keyframes blink {
+		50% { opacity: 0; }
+	}
+</style>

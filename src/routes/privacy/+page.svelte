@@ -314,7 +314,7 @@
 		font-size: 0.8rem;
 		font-weight: 500;
 		font-family: 'Inter', sans-serif;
-		color: rgba(0, 0, 0, 0.5);
+		color: rgba(0, 0, 0, 0.6);
 		cursor: pointer;
 		transition: all 0.2s;
 	}
@@ -349,7 +349,7 @@
 	}
 	.legal-content p {
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.5);
+		color: rgba(0, 0, 0, 0.6);
 		line-height: 1.75;
 		margin: 0 0 12px 0;
 	}
@@ -359,7 +359,7 @@
 	}
 	.legal-content li {
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.5);
+		color: rgba(0, 0, 0, 0.6);
 		line-height: 1.75;
 		margin-bottom: 4px;
 	}

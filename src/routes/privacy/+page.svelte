@@ -39,7 +39,7 @@
 			<h1 class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.02em] text-black/88 italic">
 				Privacy Policy
 			</h1>
-			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: March 16, 2026 · Quillium Beta</p>
+			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: March 23, 2026 · Quillium Beta</p>
 
 			<div class="inline-flex gap-0.5 rounded-full bg-white/50 p-1 shadow-sm backdrop-blur-md">
 				<button
@@ -118,7 +118,7 @@
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Your rights</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Since we don't collect personal data, there's no profile to delete. You can opt out of analytics entirely in the app settings. If you're in the EU/UK, GDPR applies. In California, CCPA applies.</p>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">Since we don't collect personal data, there's no profile to delete. You can opt out of analytics at any time using the <strong class="text-black/88">Cookie Settings</strong> link in the footer. California residents have additional rights under the CCPA.</p>
 						</div>
 					</div>
 
@@ -158,7 +158,7 @@
 				<section>
 					<h2>1. Introduction</h2>
 					<p>Quillium ("we," "us," or "our") operates quillium.bryanhu.com (the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the beta version of the Service. Please read this policy carefully. By accessing or using the Service, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy.</p>
-					<p>This policy is designed to comply with applicable data protection laws, including the General Data Protection Regulation (GDPR) for users in the European Economic Area and United Kingdom, and the California Consumer Privacy Act (CCPA) for California residents.</p>
+					<p>This policy is designed to comply with applicable data protection laws, including the California Consumer Privacy Act (CCPA) for California residents.</p>
 				</section>
 
 				<section>
@@ -194,13 +194,7 @@
 				</section>
 
 				<section>
-					<h2>3. Legal Basis for Processing (GDPR)</h2>
-					<p>For users in the EEA or UK, our legal basis for processing analytics data is our <strong>legitimate interest</strong> (Article 6(1)(f) GDPR) in understanding usage patterns to improve the Service. This interest is not overridden by your fundamental rights, given that the data is anonymous and cannot be used to identify you.</p>
-					<p>Where required by law or where legitimate interest does not apply, we will seek your consent before processing.</p>
-				</section>
-
-				<section>
-					<h2>4. How We Use Your Information</h2>
+					<h2>3. How We Use Your Information</h2>
 					<p>We use the analytics data we collect solely to:</p>
 					<ul>
 						<li>Understand how users interact with the Service</li>
@@ -213,48 +207,34 @@
 				</section>
 
 				<section>
-					<h2>5. Disclosure of Information</h2>
+					<h2>4. Disclosure of Information</h2>
 					<p>We do not sell, trade, rent, or otherwise transfer your information to third parties for their own commercial purposes.</p>
-					<p>We share anonymous analytics data with <strong>PostHog, Inc.</strong> solely for the purpose of providing analytics services to us. PostHog processes data under a Data Processing Agreement consistent with GDPR requirements. For more information, see <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">PostHog's Privacy Policy</a>.</p>
+					<p>We share anonymous analytics data with <strong>PostHog, Inc.</strong> solely for the purpose of providing analytics services to us. For more information, see <a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer">PostHog's Privacy Policy</a>.</p>
 					<p>We may disclose information if required to do so by law or in response to valid requests by public authorities.</p>
 				</section>
 
 				<section>
-					<h2>6. Cookies and Tracking Technologies</h2>
+					<h2>5. Cookies and Tracking Technologies</h2>
 					<p>PostHog may set a first-party cookie on your device to distinguish between sessions and avoid counting the same visit multiple times. This cookie:</p>
 					<ul>
 						<li>Contains a randomly generated, non-personal identifier</li>
 						<li>Does not contain personally identifiable information</li>
 						<li>Is used solely for analytics session management</li>
 					</ul>
-					<p>We do not use marketing, advertising, or cross-site tracking cookies.</p>
+					<p>We do not use marketing, advertising, or cross-site tracking cookies. You can manage your cookie preferences at any time using the "Cookie Settings" link in the footer.</p>
 				</section>
 
 				<section>
-					<h2>7. Data Retention</h2>
-					<p>Anonymous analytics data is retained for up to <strong>24 months</strong>, after which it is aggregated or deleted. Because the data is anonymous, retention periods under GDPR/CCPA for personal data do not apply; however, we apply the same standards as a matter of good practice.</p>
+					<h2>6. Data Retention</h2>
+					<p>Anonymous analytics data is retained for up to <strong>24 months</strong>, after which it is aggregated or deleted. Because the data is anonymous, retention periods under CCPA for personal data do not apply; however, we apply the same standards as a matter of good practice.</p>
 				</section>
 
 				<section>
-					<h2>8. Your Rights</h2>
-					<h3>8.1 All Users — Opt-Out</h3>
-					<p>You may opt out of analytics data collection at any time via the app settings. Once opted out, no new analytics events will be sent from your device.</p>
+					<h2>7. Your Rights</h2>
+					<h3>7.1 All Users — Opt-Out</h3>
+					<p>You may opt out of analytics data collection at any time using the "Cookie Settings" link in the footer. Once opted out, no new analytics events will be sent from your device.</p>
 
-					<h3>8.2 EEA and UK Users (GDPR)</h3>
-					<p>Under the GDPR, you have the right to:</p>
-					<ul>
-						<li><strong>Access</strong> — request a copy of personal data we hold about you</li>
-						<li><strong>Rectification</strong> — correct inaccurate personal data</li>
-						<li><strong>Erasure</strong> — request deletion of your personal data</li>
-						<li><strong>Restriction</strong> — restrict processing of your personal data</li>
-						<li><strong>Portability</strong> — receive your data in a structured, machine-readable format</li>
-						<li><strong>Objection</strong> — object to processing based on legitimate interests</li>
-						<li><strong>Withdraw consent</strong> — where processing is based on consent</li>
-					</ul>
-					<p>Because we only collect anonymous data at this stage, many of these rights may not be applicable in practice, as we are unable to link analytics data to a specific individual. To exercise any of these rights, contact us at <a href="mailto:thatxliner@gmail.com">thatxliner@gmail.com</a>.</p>
-					<p>You also have the right to lodge a complaint with your local supervisory authority (e.g., the ICO in the UK, or your national DPA in the EU).</p>
-
-					<h3>8.3 California Residents (CCPA / CPRA)</h3>
+					<h3>7.2 California Residents (CCPA / CPRA)</h3>
 					<p>Under the California Consumer Privacy Act, California residents have the right to:</p>
 					<ul>
 						<li>Know what personal information is collected, used, shared, or sold</li>
@@ -266,27 +246,22 @@
 				</section>
 
 				<section>
-					<h2>9. Data Security</h2>
+					<h2>8. Data Security</h2>
 					<p>We implement reasonable administrative, technical, and physical safeguards to protect the data we process. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
 				</section>
 
 				<section>
-					<h2>10. Children's Privacy</h2>
-					<p>The Service is not directed to individuals under the age of 13 (or 16 in the EEA). We do not knowingly collect personal information from children. If you believe a child has provided us personal information, please contact us and we will take steps to delete it.</p>
+					<h2>9. Children's Privacy</h2>
+					<p>The Service is not directed to individuals under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us personal information, please contact us and we will take steps to delete it.</p>
 				</section>
 
 				<section>
-					<h2>11. International Data Transfers</h2>
-					<p>PostHog may process analytics data on servers located outside your country of residence, including in the United States. PostHog provides appropriate safeguards for such transfers, including Standard Contractual Clauses where required by GDPR.</p>
-				</section>
-
-				<section>
-					<h2>12. Changes to This Policy</h2>
+					<h2>10. Changes to This Policy</h2>
 					<p>We may update this Privacy Policy from time to time. Material changes will be indicated by updating the "Last Updated" date at the top of this policy. We encourage you to review this policy periodically. Continued use of the Service after changes constitutes acceptance of the revised policy.</p>
 				</section>
 
 				<section>
-					<h2>13. Contact Us</h2>
+					<h2>11. Contact Us</h2>
 					<p>If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
 					<p><strong>Quillium</strong><br />
 					Email: <a href="mailto:thatxliner@gmail.com">thatxliner@gmail.com</a></p>

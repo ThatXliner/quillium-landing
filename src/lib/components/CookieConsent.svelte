@@ -7,11 +7,13 @@
 	let visible = $state(false);
 
 	onMount(() => {
-		if (dev || (!posthog.has_opted_in_capturing() && !posthog.has_opted_out_capturing())) {
-			// Show consent banner — PostHog continues capturing in cookieless mode
-			// via the `cookieless_mode: 'on_reject'` config until user decides
+		if (!dev && !posthog.has_opted_in_capturing() && !posthog.has_opted_out_capturing()) {
 			visible = true;
 		}
+
+		window.addEventListener('open-cookie-consent', () => {
+			visible = true;
+		});
 	});
 
 	function accept() {

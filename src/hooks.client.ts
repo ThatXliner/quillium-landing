@@ -10,8 +10,7 @@ export async function init() {
 		defaults: '2026-01-30',
 		opt_out_capturing_by_default: false,
 		capture_exceptions: true,
-		persistence: 'localStorage+cookie',
-		cookieless_mode: 'on_reject'
+		persistence: 'localStorage+cookie'
 	});
 	posthog.register({ app: 'landing' });
 }

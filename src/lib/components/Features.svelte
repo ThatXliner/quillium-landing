@@ -57,55 +57,9 @@
 			</p>
 		</div>
 	</div>
-	<!-- Feature 2: A Second Voice -->
-	{#if showAiSection}
-		<div class="reveal feature-row feature-row--reversed">
-			<div class="feature-text">
-				<div class="feature-icon-wrap" style="background:rgba(34,197,94,0.08);">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path
-							d="M12 3L13.8 8.1L19.2 8.1L14.7 11.4L16.2 16.5L12 13.4L7.8 16.5L9.3 11.4L4.8 8.1L10.2 8.1L12 3Z"
-							stroke="#22c55e"
-							stroke-width="1.5"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</div>
-				<h3 class="feature-heading">A Second Set of Eyes</h3>
-				<p class="feature-lead">
-					Not everyone is free to review your work. Now, you don't have to wait. Ask for feedback,
-					find the right word, get clarity — all without leaving your flow.
-				</p>
-				<p class="feature-body">
-					It isn't a chatbot in the corner. It responds to your text right where you are, giving
-					suggestions as you write. Note that this feature is <b class="font-bold"
-						>completely optional</b
-					> and currently requires that you provide your own API key.
-				</p>
-				<div class="tag-list">
-					<span class="tag tag--green">Review &amp; revise</span>
-					<span class="tag tag--green">Find the right word</span>
-					<span class="tag tag--green">Tone feedback</span>
-					<span class="tag tag--green">Clarity &amp; conciseness</span>
-				</div>
-			</div>
 
-			<img
-				src={aiAnnotationsImg}
-				alt="Quillium AI annotation panel providing inline writing feedback"
-				class="feature-screenshot"
-			/>
-		</div>
-	{/if}
-
-	<!-- Feature 3: Annotations -->
-	<div class="reveal feature-row">
-		<img
-			src={annotationsBelongImg}
-			alt="Quillium annotations and comments anchored beside the text they reference"
-			class="feature-screenshot"
-		/>
-
+	<!-- Feature 2: Annotations -->
+	<div class="reveal feature-row feature-row--reversed">
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(252,188,5,0.1);">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -145,7 +99,54 @@
 				the text. Resolve it, and it disappears cleanly.
 			</p>
 		</div>
+
+		<img
+			src={annotationsBelongImg}
+			alt="Quillium annotations and comments anchored beside the text they reference"
+			class="feature-screenshot"
+		/>
 	</div>
+
+	<!-- Feature 3: A Second Voice -->
+	{#if showAiSection}
+		<div class="reveal feature-row">
+			<img
+				src={aiAnnotationsImg}
+				alt="Quillium AI annotation panel providing inline writing feedback"
+				class="feature-screenshot"
+			/>
+
+			<div class="feature-text">
+				<div class="feature-icon-wrap" style="background:rgba(34,197,94,0.08);">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+						<path
+							d="M12 3L13.8 8.1L19.2 8.1L14.7 11.4L16.2 16.5L12 13.4L7.8 16.5L9.3 11.4L4.8 8.1L10.2 8.1L12 3Z"
+							stroke="#22c55e"
+							stroke-width="1.5"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				</div>
+				<h3 class="feature-heading">A Second Set of Eyes</h3>
+				<p class="feature-lead">
+					Not everyone is free to review your work. Now, you don't have to wait. Ask for feedback,
+					find the right word, get clarity — all without leaving your flow.
+				</p>
+				<p class="feature-body">
+					It isn't a chatbot in the corner. It responds to your text right where you are, giving
+					suggestions as you write. Note that this feature is <b class="font-bold"
+						>completely optional</b
+					> and currently requires that you provide your own API key.
+				</p>
+				<div class="tag-list">
+					<span class="tag tag--green">Review &amp; revise</span>
+					<span class="tag tag--green">Find the right word</span>
+					<span class="tag tag--green">Tone feedback</span>
+					<span class="tag tag--green">Clarity &amp; conciseness</span>
+				</div>
+			</div>
+		</div>
+	{/if}
 
 	<!-- Feature 4: Offline-First -->
 	<div class="reveal feature-row feature-row--full">

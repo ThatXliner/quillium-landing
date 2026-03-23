@@ -1,0 +1,22 @@
+[
+  {
+    "event": "waitlist_signup_submitted",
+    "description": "User submitted the waitlist signup form",
+    "file": "src/lib/components/Waitlist.svelte"
+  },
+  {
+    "event": "waitlist_signup_succeeded",
+    "description": "User was successfully added to the waitlist",
+    "file": "src/lib/components/Waitlist.svelte"
+  },
+  {
+    "event": "waitlist_signup_failed",
+    "description": "Waitlist signup failed (e.g., duplicate email or DB error)",
+    "file": "src/lib/components/Waitlist.svelte"
+  },
+  {
+    "event": "cta_clicked",
+    "description": "User clicked a primary CTA button (e.g., Join the Waitlist in the hero)",
+    "file": "src/lib/components/Hero.svelte"
+  }
+]

@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import posthog from 'posthog-js';
 
 	let displayedText = $state('');
 	const fullText = 'Prose for ';
@@ -43,7 +44,10 @@
 	<h1
 		class="reveal reveal-delay-1 mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,4.5rem)] leading-[1.15] font-normal tracking-[-0.03em] text-black/88"
 	>
-		{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span class="typing-cursor" class:hidden={!showCursor}>|</span>
+		{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span
+			class="typing-cursor"
+			class:hidden={!showCursor}>|</span
+		>
 	</h1>
 
 	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50">
@@ -52,7 +56,12 @@
 	</p>
 
 	<div class="reveal reveal-delay-3 flex items-center gap-4">
-		<a href="#waitlist" class="btn-primary">Join the Waitlist</a>
+		<a
+			href="#waitlist"
+			class="btn-primary"
+			onclick={() => posthog.capture('cta_clicked', { cta: 'join_waitlist', location: 'hero' })}
+			>Join the Waitlist</a
+		>
 		<a
 			href="#features"
 			class="inline-flex items-center gap-2 rounded-[10px] bg-white/50 px-6 py-3 text-[0.95rem] font-medium text-black/88 no-underline shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-50/30"
@@ -86,6 +95,8 @@
 		display: none;
 	}
 	@keyframes blink {
-		50% { opacity: 0; }
+		50% {
+			opacity: 0;
+		}
 	}
 </style>

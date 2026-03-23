@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabase';
+	import posthog from 'posthog-js';
 
 	let email = $state('');
 	let hasAgreedToTerms = $state(false);
@@ -14,16 +15,26 @@
 		submitting = true;
 		error = '';
 
-		const { error: dbError } = await supabase.from('waitlist').insert({ email });
+		posthog.capture('waitlist_signup_submitted', { email });
 
-		if (dbError) {
-			if (dbError.code === '23505') {
-				error = "You're already on the waitlist!";
+		try {
+			const { error: dbError } = await supabase.from('waitlist').insert({ email });
+
+			if (dbError) {
+				if (dbError.code === '23505') {
+					error = "You're already on the waitlist!";
+				} else {
+					error = 'Something went wrong. Please try again.';
+				}
+				posthog.capture('waitlist_signup_failed', { email, error_code: dbError.code });
 			} else {
-				error = 'Something went wrong. Please try again.';
+				posthog.identify(email, { email });
+				posthog.capture('waitlist_signup_succeeded', { email });
+				submitted = true;
 			}
-		} else {
-			submitted = true;
+		} catch (err) {
+			error = 'Something went wrong. Please try again.';
+			posthog.captureException(err);
 		}
 
 		submitting = false;

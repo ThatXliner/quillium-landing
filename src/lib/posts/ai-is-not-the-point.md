@@ -1,6 +1,6 @@
 ---
 title: "AI Is Not the Point"
-description: "Writers are right to be suspicious of AI. But there's a version of it that might actually help...if it knows its place."
+description: "Why Quillium's AI features are off by default, and why writers are right to be suspicious of AI in the first place."
 date: "2026-03-23"
 author: "Bryan Hu"
 ---
@@ -51,6 +51,22 @@ It reads what you wrote. It doesn't try to replace it. The words stay yours. The
 This is the kind of AI that respects the craft. It's not trying to make you faster. It's trying to make you more aware of what's already on the page.
 
 Full disclosure: this is exactly the kind of thing I built into Quillium, and I use it myself. It's mostly for essays, college applications, program applications, etc.—the kind of writing where you *need* a second opinion but it's 2am and no one's awake. For that context, it's genuinely useful. But I also know that my use case isn't everyone's, and for the writers I'm building Quillium for (the ones who care about craft, who revise obsessively, who treat every word choice as a decision), it's clearly not the main draw. And that's fine.
+
+## Why AI is off by default
+
+If you're here because you clicked that little info icon in settings: yes, AI features are off by default. That's not a bug—it's a design decision.
+
+Most writing tools shove AI into every surface: autocomplete as you type, unsolicited suggestions, "improve this" buttons on every paragraph. They assume you *want* a machine involved. We don't make that assumption.
+
+Quillium is a writing tool first. The core experience—non-linear editing, branching, revision—doesn't need AI. It works beautifully without it. AI is an add-on for people who actively want it, not a default that people have to actively escape.
+
+Turning it off by default means:
+
+- **No surprise AI behavior.** You'll never open your editor and find generated text you didn't ask for.
+- **You opt in with intent.** When you enable it, you know what you're getting: a reader, not a co-writer.
+- **Respect for the writing process.** The tool stays out of your way until you decide otherwise.
+
+If you want it, flip the switch. If you don't, nothing changes. That's how tools should work.
 
 ## Writing tools should be about writing
 

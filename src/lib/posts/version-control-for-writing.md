@@ -47,9 +47,23 @@ It's not because the idea is too complex for non-programmers. It's because nobod
 
 That's what I'm building with Quillium. A writing tool where branching is native. You can fork a sentence, a paragraph, an entire section—try a different direction without losing the one you were on. Every version stays alive, and you choose which path to follow. It's the Git model, but for people who think in paragraphs, not pull requests. Infinitely.
 
+## Actually, it's even better
+
+Git is the inspiration, but Quillium isn't just "Git for prose." In some important ways, it goes further.
+
+In Git, a branch is all-or-nothing. You check out one branch at a time, and that branch represents a single state of the entire project. If you want your new opening paragraph from branch A but the conclusion from branch B, you're looking at a merge—and merges in Git are about *lines*, not *ideas*. Any programmer can tell you how nasty a merge conflict can be.
+
+Quillium doesn't work like that. "Branches" are *per-fragment*. You can branch a single sentence, a paragraph, or a whole section independently. And because each branch is scoped to the piece of text it belongs to, you can mix and match: take the formal opening from version one, the conversational middle from version two, and the punchy ending from version three. All in the same document, without merging anything. We call each section a revision, and each version a, well, *version*.
+
+This is something Git genuinely can't do. In Git, you pick a branch and live with all of its changes. In Quillium, you pick and choose *per decision*. Every fork in the text is its own independent choice.
+
+That's closer to how writing actually works. You don't want to choose between "draft A" and "draft B" wholesale; you want the best pieces of each, assembled the way *you* see fit.
+
+Version control for writing should be better than Git, because prose demands it.
+
 ## Writing deserves better tools
 
-Writers iterate as much as programmers do. Probably more—code either works or it doesn't, but prose has infinite valid variations. The difference is that programmers have tools that embrace iteration, and writers have tools that punish it.
+Writers iterate as much as programmers do. Probably more, actually: code either works or it doesn't, but prose has infinite valid variations. The difference is that programmers have tools that embrace iteration, and writers have tools that punish it.
 
 That should change.
 

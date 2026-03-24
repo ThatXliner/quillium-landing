@@ -1,7 +1,7 @@
 ---
 title: "How to Manage Multiple Drafts Without Losing Your Mind"
 description: "Writers juggle versions constantly. Here's why it's so hard to manage multiple drafts—and what a better system actually looks like."
-date: "2026-03-05"
+date: "2026-03-23"
 author: "Bryan Hu"
 ---
 

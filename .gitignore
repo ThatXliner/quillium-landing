@@ -3,6 +3,7 @@ package-lock.json
 
 # Output
 .output
+/static/og
 .vercel
 .netlify
 .wrangler

@@ -9,6 +9,45 @@
 <svelte:head>
 	<title>{data.meta.title} — Quillium</title>
 	<meta name="description" content={data.meta.description} />
+	<link rel="canonical" href="https://quillium.bryanhu.com/blog/{data.slug}" />
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="https://quillium.bryanhu.com/blog/{data.slug}" />
+	<meta property="og:title" content="{data.meta.title} — Quillium" />
+	<meta property="og:description" content={data.meta.description} />
+	<meta property="og:site_name" content="Quillium" />
+	<meta property="og:image" content="https://quillium.bryanhu.com/og/{data.slug}.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="article:published_time" content={data.meta.date} />
+	{#if data.meta.author}<meta property="article:author" content={data.meta.author} />{/if}
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="{data.meta.title} — Quillium" />
+	<meta name="twitter:description" content={data.meta.description} />
+	<meta name="twitter:image" content="https://quillium.bryanhu.com/og/{data.slug}.png" />
+
+	<!-- Structured Data -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": data.meta.title,
+		"description": data.meta.description,
+		"datePublished": data.meta.date,
+		"author": {
+			"@type": "Person",
+			"name": data.meta.author ?? "Quillium"
+		},
+		"publisher": {
+			"@type": "Organization",
+			"name": "Quillium",
+			"url": "https://quillium.bryanhu.com"
+		},
+		"url": `https://quillium.bryanhu.com/blog/${data.slug}`,
+		"mainEntityOfPage": `https://quillium.bryanhu.com/blog/${data.slug}`
+	})}</script>`}
 </svelte:head>
 
 <Nav />

@@ -8,6 +8,23 @@
 <svelte:head>
 	<title>Blog — Quillium</title>
 	<meta name="description" content="Thoughts on writing, collaboration, and building Quillium." />
+	<link rel="canonical" href="https://quillium.bryanhu.com/blog" />
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://quillium.bryanhu.com/blog" />
+	<meta property="og:title" content="Blog — Quillium" />
+	<meta property="og:description" content="Thoughts on writing, collaboration, and building Quillium." />
+	<meta property="og:site_name" content="Quillium" />
+	<meta property="og:image" content="https://quillium.bryanhu.com/og-image.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Blog — Quillium" />
+	<meta name="twitter:description" content="Thoughts on writing, collaboration, and building Quillium." />
+	<meta name="twitter:image" content="https://quillium.bryanhu.com/og-image.png" />
 </svelte:head>
 
 <Nav />

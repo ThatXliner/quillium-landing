@@ -13,8 +13,9 @@ export async function load({ params }) {
 	try {
 		const post = await import(`../../../lib/posts/${params.slug}.md`);
 		return {
+			slug: params.slug,
 			content: post.default,
-			meta: post.metadata as { title: string; description: string; date: string }
+			meta: post.metadata as { title: string; description: string; date: string; author?: string }
 		};
 	} catch {
 		error(404, 'Post not found');

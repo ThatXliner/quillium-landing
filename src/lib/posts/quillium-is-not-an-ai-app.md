@@ -53,7 +53,7 @@ But that message can't land if people never get past "oh, another AI writing thi
 
 ## What I'm doing about it
 
-Because of these incidents, I've changed the landing page so that it now leads with "writing app" in the meta descriptions instead of anything that could be read as ambiguous, and there's a line in the hero section that says it plainly: *No AI ghostwriting. No autocomplete. Just a better place to write.*
+Because of these incidents, I've changed the landing page so that it now leads with "writing app" in the meta descriptions instead of anything that could be read as ambiguous. There's a line in the hero section that says it plainly: *No AI ghostwriting. No autocomplete. Just a better place to write.*
 
 It feels a little silly to have to disclaim what your product *isn't*, but if that's what it takes for people to actually see what it *is*, then fine. I'd rather over-clarify than be permanently miscategorized.
 

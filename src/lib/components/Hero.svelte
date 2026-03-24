@@ -42,7 +42,7 @@
 	</div>
 
 	<p class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/35 uppercase">
-		The Non-Linear Writing App
+		The Non-Linear Writing Canvas
 	</p>
 
 	<h1
@@ -59,7 +59,7 @@
 		know the thesis until page three. Quillium keeps every version, so nothing is ever lost.
 	</p>
 
-	<div class="reveal reveal-delay-3 flex flex-wrap justify-center items-center gap-4">
+	<div class="reveal reveal-delay-3 flex flex-wrap items-center justify-center gap-4">
 		<a
 			href="#waitlist"
 			class="btn-primary"

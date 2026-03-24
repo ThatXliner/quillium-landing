@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>Quillium — The Non-Linear Writing App</title>
+	<title>Quillium — The Non-Linear Writing Canvas</title>
 	<meta
 		name="description"
 		content="The world's first non-linear editor for prose. Write in branches and keep every version alive."
@@ -58,7 +58,7 @@
 	<!-- Open Graph -->
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://quillium.bryanhu.com/" />
-	<meta property="og:title" content="Quillium — The Non-Linear Writing App" />
+	<meta property="og:title" content="Quillium — The Non-Linear Writing Canvas" />
 	<meta
 		property="og:description"
 		content="The world's first non-linear editor for prose. Write in branches and keep every version alive."
@@ -70,7 +70,7 @@
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Quillium — The Non-Linear Writing App" />
+	<meta name="twitter:title" content="Quillium — The Non-Linear Writing Canvas" />
 	<meta
 		name="twitter:description"
 		content="The world's first non-linear editor for prose. Write in branches and keep every version alive."

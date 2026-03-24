@@ -36,7 +36,7 @@
 <Nav />
 
 <main class="mx-auto max-w-[48rem] px-6 pt-32 pb-24">
-	<h1 class="mb-2 text-3xl font-semibold tracking-tight">Blog</h1>
+	<h1 class="mb-2 text-3xl font-semibold tracking-tight" style="view-transition-name: blog-title">Blog</h1>
 	<p class="mb-12 text-black/50">Thoughts on writing, collaboration, and building Quillium.</p>
 
 	{#each data.posts as post, i}

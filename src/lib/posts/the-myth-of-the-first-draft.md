@@ -1,6 +1,6 @@
 ---
 title: "The Myth of the First Draft"
-description: "\"Just finish the first draft\" assumes writing is linear. It's not. Good writing is exploratory, and your tools should be too."
+description: "\"Just finish the first draft\" assumes writing is linear. It's not: the writing process is exploratory, and your tools should reflect that."
 date: "2026-03-23"
 author: "Bryan Hu"
 ---

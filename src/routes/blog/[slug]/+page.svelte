@@ -74,6 +74,7 @@
 	:global(.prose) {
 		line-height: 1.75;
 		color: rgba(0, 0, 0, 0.75);
+		overflow-wrap: break-word;
 	}
 	:global(.prose h2) {
 		font-size: 1.25rem;

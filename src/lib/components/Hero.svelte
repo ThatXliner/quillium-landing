@@ -59,7 +59,7 @@
 		know the thesis until page three. Quillium keeps every version, so nothing is ever lost.
 	</p>
 
-	<div class="reveal reveal-delay-3 flex items-center gap-4">
+	<div class="reveal reveal-delay-3 flex flex-wrap justify-center items-center gap-4">
 		<a
 			href="#waitlist"
 			class="btn-primary"

@@ -3,6 +3,7 @@ title: "Hello from Quillium"
 description: "Why I built a non-linear prose editor."
 date: "2026-03-23"
 author: "Bryan Hu"
+featured: true
 ---
 
 Writing is thinking. That means editing is a *core* part of it.

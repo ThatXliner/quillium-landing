@@ -22,10 +22,11 @@ I'm in early development and things are still rough around the edges. If this re
 
 I'll be writing more about the ideas behind Quillium on this blog. Here's a reading order if you want to go deeper:
 
-1. **[The Myth of the First Draft](/blog/the-myth-of-the-first-draft)** — Why "just finish the draft" is bad advice, and why writing is exploration, not a pipeline.
-2. **[Why the Undo Button Is a Lie](/blog/why-the-undo-button-is-a-lie)** — The technical argument: undo is a stack, and stacks are the wrong data structure for revision.
-3. **[Why Version Control for Writing Should Work Like Git](/blog/version-control-for-writing)** — How programmers solved this problem decades ago, and why writers deserve the same tools.
-4. **[How to Manage Multiple Drafts Without Losing Your Mind](/blog/manage-multiple-drafts)** — The specific pain point that pushed me to build Quillium.
-5. **[Writing Tools That Support Non-Linear Thinking](/blog/writing-tools-that-support-non-linear-thinking)** — A survey of what's out there and what's still missing.
-6. **[The Best Alternatives to Google Docs for Serious Writers](/blog/best-alternatives-to-google-docs-for-serious-writers)** — An honest look at Scrivener, Ulysses, Notion, iA Writer, and where Quillium fits.
-7. **[Branching Narrative Writing Software](/blog/branching-narrative-writing-software)** — What exists, what doesn't, and what writers actually need.
+1. **[AI Is Not the Point](/blog/ai-is-not-the-point)** — Why Quillium's AI features are off by default, and why writers are right to be suspicious.
+2. **[The Myth of the First Draft](/blog/the-myth-of-the-first-draft)** — Why "just finish the draft" is bad advice, and why writing is exploration, not a pipeline.
+3. **[Why the Undo Button Is a Lie](/blog/why-the-undo-button-is-a-lie)** — The technical argument: undo is a stack, and stacks are the wrong data structure for revision.
+4. **[Why Version Control for Writing Should Work Like Git](/blog/version-control-for-writing)** — How programmers solved this problem decades ago, and why writers deserve the same tools.
+5. **[How to Manage Multiple Drafts Without Losing Your Mind](/blog/manage-multiple-drafts)** — The specific pain point that pushed me to build Quillium.
+6. **[Writing Tools That Support Non-Linear Thinking](/blog/writing-tools-that-support-non-linear-thinking)** — A survey of what's out there and what's still missing.
+7. **[The Best Alternatives to Google Docs for Serious Writers](/blog/best-alternatives-to-google-docs-for-serious-writers)** — An honest look at Scrivener, Ulysses, Notion, iA Writer, and where Quillium fits.
+8. **[Branching Narrative Writing Software](/blog/branching-narrative-writing-software)** — What exists, what doesn't, and what writers actually need.

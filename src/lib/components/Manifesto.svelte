@@ -53,7 +53,7 @@
 		<p
 			class="mx-auto mb-10 max-w-full font-[Newsreader,Georgia,serif] text-[clamp(1.3rem,2.5vw,1.65rem)] leading-relaxed text-black/88 italic"
 		>
-			"What if we treats non-linearity as a
+			"What if we treat non-linearity as a
 			<span class="text-[#fcbc05]">feature</span>, not a problem to manage?"
 		</p>
 

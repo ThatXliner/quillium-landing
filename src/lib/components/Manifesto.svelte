@@ -10,7 +10,7 @@
 		</h2>
 
 		<p class="mb-8 text-[1.05rem] leading-relaxed text-black/28">
-			They don't. Neither do you. That's not a flaw.
+			Writing is thinking, and thinking is inherently non-linear
 		</p>
 
 		<div class="mb-10 grid grid-cols-1 gap-5 text-left md:grid-cols-2">
@@ -21,7 +21,7 @@
 					The Problem
 				</h3>
 				<p class="text-[0.95rem] leading-[1.75] text-black/50">
-					Writing is a web of attempts — a tangle of better and worse, a conversation between
+					Writing is a web of attempts—a tangle of better and worse, a conversation between
 					drafts. Every blank page pretending otherwise is lying to you.
 				</p>
 			</div>

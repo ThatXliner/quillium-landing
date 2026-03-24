@@ -42,7 +42,7 @@
 	</div>
 
 	<p class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/35 uppercase">
-		Non-Linear Writing Editor
+		The Non-Linear Writing App
 	</p>
 
 	<h1

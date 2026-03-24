@@ -10,7 +10,7 @@
 		</h2>
 
 		<p class="mb-8 text-[1.05rem] leading-relaxed text-black/28">
-			Writing is thinking, and thinking is inherently non-linear
+			But writing is thinking, and thinking is inherently non-linear
 		</p>
 
 		<div class="mb-10 grid grid-cols-1 gap-5 text-left md:grid-cols-2">

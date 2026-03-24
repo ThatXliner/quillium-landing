@@ -50,7 +50,8 @@
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Memoirist</h3>
-					<p class="writer-bio">You rewrite sentences until 2am and still aren't sure you've gotten it. Memory is approximate, and the sentence has to hold the approximation without collapsing it. Quillium's AI doesn't correct you — it works alongside you, noting a verb that's too hard, a clause that's closing too soon. The words remain yours.</p>
+					<!-- <p class="writer-bio">You rewrite sentences until 2am and still aren't sure you've gotten it. Memory is approximate, and the sentence has to hold the approximation without collapsing it. Quillium's AI doesn't correct you — it works alongside you, noting a verb that's too hard, a clause that's closing too soon. The words remain yours.</p> -->
+					<p class="writer-bio">You rewrite sentences until 2am and still aren't sure you've gotten it. Memory is approximate, and the sentence has to hold the approximation without collapsing it. Quillium lets you hold every version side by side — noting a verb that's too hard, a clause that's closing too soon. The words remain yours.</p>
 				</div>
 			</div>
 		</div>

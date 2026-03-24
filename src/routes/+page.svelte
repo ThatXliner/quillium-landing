@@ -51,7 +51,7 @@
 	<title>Quillium — The Non-Linear Writing App</title>
 	<meta
 		name="description"
-		content="The world's first non-linear editor for prose. Write in branches and keep every version alive."
+		content="A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft."
 	/>
 	<link rel="canonical" href="https://quillium.bryanhu.com/" />
 
@@ -61,7 +61,7 @@
 	<meta property="og:title" content="Quillium — The Non-Linear Writing App" />
 	<meta
 		property="og:description"
-		content="The world's first non-linear editor for prose. Write in branches and keep every version alive."
+		content="A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft."
 	/>
 	<meta property="og:site_name" content="Quillium" />
 	<meta property="og:image" content="https://quillium.bryanhu.com/og-image.png" />
@@ -73,7 +73,7 @@
 	<meta name="twitter:title" content="Quillium — The Non-Linear Writing App" />
 	<meta
 		name="twitter:description"
-		content="The world's first non-linear editor for prose. Write in branches and keep every version alive."
+		content="A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft."
 	/>
 	<meta name="twitter:image" content="https://quillium.bryanhu.com/og-image.png" />
 
@@ -83,7 +83,7 @@
 		'@type': 'SoftwareApplication',
 		name: 'Quillium',
 		description:
-			"The world's first non-linear editor for prose. Write in branches and keep every version alive.",
+			'A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft.',
 		url: 'https://quillium.bryanhu.com',
 		applicationCategory: 'ProductivityApplication',
 		operatingSystem: 'Web',

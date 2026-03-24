@@ -19,7 +19,7 @@ The last two years have flooded the internet with AI-generated slop: blog posts 
 
 "AI-powered" has become a red flag, a shorthand for *this product will try to write for you whether you asked or not*. It's a signal aimed at executives and VCs, a buzzword to increase stakeholder value and stock shares. It was never about the user. *Nobody asked for AI.*
 
-Writers especially have reason to be wary. Writing *is* thinking. It's the one creative act where the process *is* the product. If a tool is doing the writing, you're not writing anymore; you're just approving, outsourcing your thinking.
+Writers especially have reason to be wary because writing *is* thinking. It's the one creative act where the process *is* the product. If a tool is doing the writing, you're not writing anymore; you're just approving, outsourcing your thinking.
 
 ## The Grammarly problem
 

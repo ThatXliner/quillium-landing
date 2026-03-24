@@ -1,6 +1,6 @@
 ---
 title: "Why Version Control for Writing Should Work Like Git"
-description: "Writers lose drafts or drown in filenames. Version control for writing should work like Git — with branches, not just undo."
+description: "Writers lose drafts or drown in filenames. Version control for writing should work like Git, because drafts aren't enough."
 date: "2026-03-23"
 author: "Bryan Hu"
 ---

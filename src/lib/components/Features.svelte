@@ -91,8 +91,7 @@
 			</div>
 			<h3 class="feature-heading">Put Great Minds Together</h3>
 			<p class="feature-lead">
-				Comments, revisions, and suggestions float beside the text they're about. Not buried in a
-				sidebar. Not lost in a thread.
+				Comments, revisions, and suggestions float beside the text they're about.
 			</p>
 			<p class="feature-body">
 				Every note is anchored to the exact phrase it concerns. Scroll past it, and it moves with

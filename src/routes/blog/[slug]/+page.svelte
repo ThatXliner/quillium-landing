@@ -3,7 +3,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 	let { data } = $props();
-	const Content = data.content;
+	const Content = $derived(data.content);
 </script>
 
 <svelte:head>

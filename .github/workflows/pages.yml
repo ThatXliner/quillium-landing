@@ -45,6 +45,9 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Generate OG images
+        run: bun run prebuild
+
       - name: Build static site
         env:
           # Use input base if provided, otherwise default to /<repo-name>/ which works well for project pages.

@@ -79,8 +79,11 @@
 	</p>
 
 	<div
-		class="reveal reveal-delay-4 mt-16 flex items-center gap-8 border-t border-black/4 pt-12 max-md:flex-col max-md:gap-4"
+		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"
 	>
+		<a href="/blog/quillium-is-not-an-ai-app" class="text-[0.75rem] tracking-wide text-black/25 underline hover:text-black/40 transition-colors duration-300 m-0">
+			No AI ghostwriting. No autocomplete. Just a better place to write.
+		</a>
 		<div class="flex gap-2">
 			<span class="h-2 w-2 rounded-full bg-[#3b82f6]"></span>
 			<span class="h-2 w-2 rounded-full bg-[#a855f7]"></span>

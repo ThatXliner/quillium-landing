@@ -130,7 +130,7 @@
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Cookies</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">PostHog may set a cookie to distinguish sessions. It contains no personal info. No marketing or tracking cookies are used.</p>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">PostHog assigns a random identifier to track usage behavior. On the website, this only persists if you accept cookies — if you decline, no identifier is stored. In the desktop app, the identifier persists for the lifetime of your install. Either way, it contains no personal information and cannot be linked back to you. No marketing or tracking cookies are used.</p>
 						</div>
 					</div>
 
@@ -215,12 +215,14 @@
 
 				<section>
 					<h2>5. Cookies and Tracking Technologies</h2>
-					<p>PostHog may set a first-party cookie on your device to distinguish between sessions and avoid counting the same visit multiple times. This cookie:</p>
+					<p>PostHog assigns a randomly generated identifier to track usage behavior. This identifier:</p>
 					<ul>
-						<li>Contains a randomly generated, non-personal identifier</li>
-						<li>Does not contain personally identifiable information</li>
+						<li>Is a random UUID with no personal information attached</li>
+						<li>Persists across sessions to stitch together usage behavior over time</li>
+						<li>Cannot be linked back to you — no name, email, or account is associated with it</li>
 						<li>Is used solely for analytics session management</li>
 					</ul>
+					<p>On the website, the identifier is only stored if you accept cookies; declining puts PostHog into cookieless mode with no persistent ID. In the desktop app, the identifier persists for the lifetime of your install (until you uninstall or clear app data).</p>
 					<p>We do not use marketing, advertising, or cross-site tracking cookies. You can manage your cookie preferences at any time using the "Cookie Settings" link in the footer.</p>
 				</section>
 

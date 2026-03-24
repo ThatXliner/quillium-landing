@@ -28,8 +28,7 @@
 				}
 				posthog.capture('waitlist_signup_failed', { email, error_code: dbError.code });
 			} else {
-				posthog.identify(email, { email });
-				posthog.capture('waitlist_signup_succeeded', { email });
+				posthog.capture('waitlist_signup_succeeded');
 				submitted = true;
 			}
 		} catch (err) {

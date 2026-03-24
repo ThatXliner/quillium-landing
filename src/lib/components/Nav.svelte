@@ -36,7 +36,7 @@
 
 <style>
 	:global(#main-nav.scrolled) {
-		background: rgba(229, 231, 235, 0.75);
+		background: rgba(245, 244, 241, 0.75);
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
 		border-bottom: 1px solid rgba(255, 255, 255, 0.3);

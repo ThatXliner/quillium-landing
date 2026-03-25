@@ -39,7 +39,7 @@ No text is generated for you. No sentences are autocompleted. No grammar is "cor
 
 ## Then why did people mention AI?
 
-Because we *do* have an optional AI feature—emphasis on *optional*. It's off by default, and it's a feedback tool rather than a generation tool: it reads what you wrote and leaves notes, like a workshop partner. Think "this paragraph shifts tone—was that intentional?" not "here's a better version of your paragraph."
+Because we *do* have an optional AI feature—emphasis on *optional*. It's off by default, and it's a feedback tool rather than a generation tool: it reads what you wrote and leaves notes, like a workshop partner. Think "this paragraph shifts tone—was that intentional?" not "here's a better version of your paragraph" (because AI can never accurately know your intent and replicate your tone).
 
 I wrote about this at length in [AI Is Not the Point](/blog/ai-is-not-the-point). The short version: it's a feature for people who want it, hidden from people who don't, and it requires you to bring your own API key. By every measure, it's a footnote.
 

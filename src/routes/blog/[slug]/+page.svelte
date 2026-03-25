@@ -58,11 +58,11 @@
 	<article class="mt-8">
 		<header class="mb-10">
 			<time class="text-xs text-black/40 font-mono">{data.meta.date}</time>
-			<h1 class="text-3xl font-semibold tracking-tight mt-2">{data.meta.title}</h1>
+			<h1 class="text-3xl font-semibold tracking-tight mt-2" style="view-transition-name: blog-title">{data.meta.title}</h1>
 			<p class="text-black/50 mt-2">{data.meta.description}</p>
 		</header>
 
-		<div class="prose prose-neutral max-w-none">
+		<div class="prose prose-neutral max-w-none" style="view-transition-name: blog-content">
 			<Content />
 		</div>
 	</article>

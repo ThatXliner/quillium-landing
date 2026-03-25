@@ -5,7 +5,7 @@ date: "2026-03-23"
 author: "Bryan Hu"
 ---
 
-Ctrl+Z is the most reassuring shortcut in computing. Made a mistake? Undo. Go back. Pretend it never happened.
+Ctrl+Z is the most reassuring shortcut in computing. Made a mistake? Undo, go back; pretend it never happened.
 
 Except that's not what's actually going on, and if you've ever lost a paragraph you loved because you undid too far and then typed something new, you already know this intuitively. You just haven't had the vocabulary for why it felt so broken.
 
@@ -13,7 +13,7 @@ Here's the vocabulary: **undo is a stack.**
 
 ## A stack is not a revision system
 
-A stack is a data structure. Last in, first out. Every action you take gets pushed onto the stack. Ctrl+Z pops the most recent one off. Ctrl+Shift+Z pushes it back.
+A stack is a data structure: last in, first out. Every action you take gets pushed onto the stack, ctrl+Z pops the most recent one off, and Ctrl+Shift+Z pushes it back.
 
 That works fine for correcting typos, but it's *completely wrong* for revision.
 

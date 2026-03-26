@@ -31,12 +31,18 @@
 		content="Thoughts on writing, collaboration, and building Quillium."
 	/>
 	<meta name="twitter:image" content="https://quillium.bryanhu.com/og-image.png" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
+	/>
 </svelte:head>
 
 <Nav />
 
 <main class="mx-auto max-w-[48rem] px-6 pt-32 pb-24">
-	<h1 class="mb-2 text-3xl font-semibold tracking-tight">Blog</h1>
+	<h1 class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-black/88 italic">Blog</h1>
 	<p class="mb-12 text-black/50">Thoughts on writing, collaboration, and building Quillium.</p>
 
 	{#each data.posts as post, i}

@@ -47,6 +47,7 @@
 			<a href="/#manifesto" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
 			<a href="/#waitlist" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
 			<a href="/blog" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Blog</a>
+			<a href="/pricing" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Pricing</a>
 			<a href="/#waitlist" class="text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-[#22c55e]/70 no-underline hover:text-[#22c55e]">Public Beta</a>
 		</div>
 
@@ -74,6 +75,7 @@
 			<a href="/#manifesto" class="mobile-link" onclick={closeMenu}>Manifesto</a>
 			<a href="/#waitlist" class="mobile-link" onclick={closeMenu}>Waitlist</a>
 			<a href="/blog" class="mobile-link" onclick={closeMenu}>Blog</a>
+			<a href="/pricing" class="mobile-link" onclick={closeMenu}>Pricing</a>
 			<a href="/#waitlist" class="mobile-link mobile-link--beta" onclick={closeMenu}>Public Beta</a>
 		</div>
 	{/if}

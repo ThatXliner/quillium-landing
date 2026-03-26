@@ -2,14 +2,18 @@
 	import { onMount, onDestroy } from 'svelte';
 
 	import editorImg from '$lib/assets/screenshots/01-editor.png';
-	// import revisionsImg from '$lib/assets/screenshots/revisions.png';
-	import revisionModalImg from '$lib/assets/screenshots/revision-modal.png';
-	// import annotationsImg from '$lib/assets/screenshots/03-annotations.png';
-	// import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
-	// import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
+	import commentActiveImg from '$lib/assets/screenshots/04-comment-active.png';
+	import revisionActiveImg from '$lib/assets/screenshots/05-revision-active.png';
+	import libraryImg from '$lib/assets/screenshots/06-library.png';
+	import revisionModalImg from '$lib/assets/screenshots/07-revision-modal.png';
+	import dictionaryImg from '$lib/assets/screenshots/10-dictionary.png';
 
 	const slides = [
 		{ src: editorImg, alt: 'The Quillium editor — a clean, focused writing environment' },
+		{ src: commentActiveImg, alt: 'An active comment thread in the annotation sidebar' },
+		{ src: revisionActiveImg, alt: 'An active revision thread in the annotation sidebar' },
+		{ src: libraryImg, alt: 'The library sidebar, showing all documents in the library' },
+		{ src: dictionaryImg, alt: 'The dictionary sidebar, showing definitions for a selected word' },
 		{ src: revisionModalImg, alt: 'Revision modal with the context sidebar' }
 		// { src: annotationsImg, alt: 'All annotations' }
 	];

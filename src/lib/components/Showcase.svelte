@@ -63,7 +63,6 @@
 	.showcase {
 		margin: 0 auto;
 		padding: 0 24px 64px;
-		/* width driven by image height: 50vh × 8/5 aspect ratio + padding */
 		max-width: calc(70vh * 8 / 5 + 48px);
 	}
 	@media (max-width: 1200px) {
@@ -81,18 +80,20 @@
 	}
 	.carousel-track {
 		display: flex;
+		width: 100%;
 		transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 	.carousel-slide {
-		min-width: 100%;
-		min-height: 100%;
-		flex-shrink: 0;
+		width: 100%;
+		flex: 0 0 100%;
+		line-height: 0;
 	}
 	.carousel-slide img {
 		max-height: 70vh;
-		width: auto;
+		width: 100%;
+		aspect-ratio: 8 / 5;
+		object-fit: cover;
 		display: block;
-		margin: 0 auto;
 	}
 	.carousel-dots {
 		display: flex;

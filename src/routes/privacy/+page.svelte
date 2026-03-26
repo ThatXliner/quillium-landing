@@ -104,7 +104,7 @@
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">What we collect</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
-								Anonymous usage analytics only — things like which features you use, session length,
+								Anonymous usage analytics only—things like which features you use, session length,
 								and device type. We use PostHog for this. <strong class="text-black/88"
 									>No names, emails, or login info.</strong
 								>
@@ -214,10 +214,10 @@
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Cookies</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
 								PostHog assigns a random identifier to track usage behavior. On the website, this
-								only persists if you accept cookies — if you decline, no identifier is stored. In
-								the desktop app, the identifier persists for the lifetime of your install. Either
-								way, it contains no personal information and cannot be linked back to you. No
-								marketing or tracking cookies are used.
+								only persists if you accept cookies: if you decline, no identifier is stored. In the
+								desktop app, the identifier persists for the lifetime of your install. Either way,
+								it contains no personal information and cannot be linked back to you. No marketing
+								or tracking cookies are used.
 							</p>
 						</div>
 					</div>

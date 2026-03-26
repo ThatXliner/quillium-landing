@@ -1,20 +1,29 @@
+<script lang="ts">
+	import Nav from '$lib/components/Nav.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+</script>
+
 <svelte:head>
 	<title>Pricing – Quillium</title>
-	<meta name="description" content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this." />
+	<meta
+		name="description"
+		content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this."
+	/>
 	<link rel="canonical" href="https://quillium.bryanhu.com/pricing" />
-
-	<!-- Open Graph -->
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://quillium.bryanhu.com/pricing" />
 	<meta property="og:title" content="Pricing – Quillium" />
-	<meta property="og:description" content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this." />
+	<meta
+		property="og:description"
+		content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this."
+	/>
 	<meta property="og:site_name" content="Quillium" />
-
-	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="Pricing – Quillium" />
-	<meta name="twitter:description" content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this." />
-
+	<meta
+		name="twitter:description"
+		content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this."
+	/>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
@@ -23,90 +32,77 @@
 	/>
 </svelte:head>
 
-<script lang="ts">
-	import Nav from '$lib/components/Nav.svelte';
-	import Footer from '$lib/components/Footer.svelte';
-</script>
-
 <Nav />
 
 <main class="min-h-screen px-6 pt-32 pb-24">
-	<div class="mx-auto max-w-[720px]">
-
+	<div class="mx-auto max-w-170">
 		<!-- Header -->
-		<header class="mb-16">
+		<header>
 			<p class="section-eyebrow">Pricing</p>
-			<h1 class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.75rem)] font-normal leading-[1.15] tracking-[-0.02em] text-black/88 italic">
-				Quillium is free.
+			<h1
+				class="mb-3 font-[Newsreader,Georgia,serif] text-[clamp(2rem,5vw,3rem)] leading-[1.1] font-normal tracking-[-0.02em] text-black/88"
+			>
+				Quillium is <span class="italic">free</span>.
 			</h1>
-			<p class="text-[1rem] leading-relaxed text-black/50 max-w-[520px]">
-				No tiers. No paywalls. No features locked behind a subscription. Here's what that means in practice, and how we plan to keep the lights on.
+			<p class="max-w-lg text-[0.9rem] leading-relaxed text-black/45">
+				No tiers. No locked features. One optional add-on, someday, if you want it.
 			</p>
 		</header>
 
 		<!-- Beta notice -->
-		<div class="mb-12 flex items-start gap-3 rounded-xl border border-amber-400/20 bg-amber-400/6 px-5 py-4">
-			<span class="shrink-0 rounded bg-amber-400/15 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-amber-600">Public Beta</span>
-			<p class="m-0 text-[0.875rem] leading-relaxed text-black/70">
-				We're still in public beta. Everything below describes our <strong class="text-black/88">future plans</strong>, not current offerings. Right now, Quillium is simply free with no strings attached.
+		<div
+			class="my-6 flex items-center gap-3 rounded-lg border border-amber-400/20 bg-amber-400/6 px-4 py-3"
+		>
+			<span
+				class="shrink-0 rounded bg-amber-400/15 px-2 py-0.5 text-[0.6rem] font-bold tracking-[0.08em] text-amber-600 uppercase"
+				>Beta</span
+			>
+			<p class="m-0 text-[0.8rem] text-black/55">
+				These are <strong class="text-black/75">future plans</strong>. Right now everything is
+				simply free, no strings attached.
 			</p>
 		</div>
 
-		<!-- What's always free -->
-		<section class="mb-14">
-			<h2 class="mb-1 font-[Newsreader,Georgia,serif] text-[1.35rem] font-normal italic text-black/88">What will always be free</h2>
-			<p class="mb-6 text-[0.8rem] text-black/35">Not "free tier" free. Just free.</p>
-
-			<div class="grid gap-3">
-				<div class="promise-card">
-					<div class="promise-icon" style="background:rgba(59,130,246,0.08);">
-						<svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-							<path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8Z" stroke="#3b82f6" stroke-width="1.5" />
-							<path d="M7 10l2 2 4-4" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-						</svg>
-					</div>
+		<!-- Promises: 2×2 grid -->
+		<section>
+			<p class="mb-4 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+				What will always be free
+			</p>
+			<div
+				class="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-black/6 sm:grid-cols-2"
+			>
+				<div class="promise-cell">
+					<span class="promise-glyph">✦</span>
 					<div>
-						<h3 class="promise-title">The full editor</h3>
-						<p class="promise-body">Branches, annotations, the AI assistant — everything. We don't believe in crippling the core product to push upgrades.</p>
+						<p class="promise-title">The full editor</p>
+						<p class="promise-body">Branches, annotations—everything. We don't gate features.</p>
 					</div>
 				</div>
-
-				<div class="promise-card">
-					<div class="promise-icon" style="background:rgba(59,130,246,0.08);">
-						<svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-							<rect x="3" y="3" width="14" height="14" rx="3" stroke="#3b82f6" stroke-width="1.5" />
-							<path d="M7 10h6M10 7v6" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-						</svg>
-					</div>
+				<div class="promise-cell">
+					<span class="promise-glyph">✦</span>
 					<div>
-						<h3 class="promise-title">Local-first, offline, and private</h3>
-						<p class="promise-body">Your writing lives on your machine. Not on our servers. Not in the cloud unless you choose it. No internet required to open, edit, or save.</p>
+						<p class="promise-title">Local-first &amp; offline</p>
+						<p class="promise-body">
+							Your writing lives on your machine. No internet required; fully private.
+						</p>
 					</div>
 				</div>
-
-				<div class="promise-card">
-					<div class="promise-icon" style="background:rgba(59,130,246,0.08);">
-						<svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-							<path d="M4 4h12v9H4z" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round" />
-							<path d="M8 17h4M10 13v4" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-						</svg>
-					</div>
+				<div class="promise-cell">
+					<span class="promise-glyph">✦</span>
 					<div>
-						<h3 class="promise-title">Your data is yours to leave with</h3>
-						<p class="promise-body">Text export, anytime. We will never make it hard to leave. Switching costs are how bad software keeps users — we'd rather earn yours.</p>
+						<p class="promise-title">Your data, your exit</p>
+						<p class="promise-body">
+							Text export, anytime. Switching costs are how bad software traps you.
+						</p>
 					</div>
 				</div>
-
-				<div class="promise-card">
-					<div class="promise-icon" style="background:rgba(59,130,246,0.08);">
-						<svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-							<circle cx="10" cy="10" r="7.5" stroke="#3b82f6" stroke-width="1.5" />
-							<path d="M10 6v4l2.5 2.5" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-						</svg>
-					</div>
+				<div class="promise-cell">
+					<span class="promise-glyph">✦</span>
 					<div>
-						<h3 class="promise-title">No forced payments, ever</h3>
-						<p class="promise-body">We will never put a gate between you and your own writing. If you never pay us, the app still works completely.</p>
+						<p class="promise-title">No forced payments</p>
+						<p class="promise-body">
+							Never pay us a cent and the app works the same. That's the point.
+						</p>
 					</div>
 				</div>
 			</div>
@@ -115,126 +111,292 @@
 		<!-- Divider -->
 		<div class="my-12 border-t border-black/6"></div>
 
-		<!-- Coming: Sync -->
-		<section class="mb-14">
-			<div class="mb-1 flex items-center gap-2">
-				<h2 class="font-[Newsreader,Georgia,serif] text-[1.35rem] font-normal italic text-black/88">Optional cloud sync</h2>
-				<span class="rounded-full bg-black/5 px-2.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.08em] text-black/35">Coming later</span>
+		<!-- Cards: Sync + Custom -->
+		<section class="mb-12">
+			<div class="mb-5 flex items-baseline gap-2">
+				<p class="text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+					What you can pay for, eventually
+				</p>
+				<span
+					class="rounded-full border border-black/8 px-2 py-0.5 text-[0.6rem] font-medium text-black/30"
+					>Coming later</span
+				>
 			</div>
-			<p class="mb-6 text-[0.8rem] text-black/35">Not a tier. Just an add-on service, if you want it.</p>
 
-			<div class="rounded-xl border border-black/6 bg-white/50 p-6 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md">
-				<p class="mb-4 text-[0.875rem] leading-relaxed text-black/60">
-					The only reasonable way to fund an app like this — without ads, without selling your data, without VC pressure to monetize everything — is to offer an optional service on top of the free product. That's cloud sync.
-				</p>
-				<p class="mb-5 text-[0.875rem] leading-relaxed text-black/60">
-					If you write across multiple devices and want them to stay in sync seamlessly, that will eventually be available as a paid add-on. It will be the same app — just with your documents following you everywhere.
-				</p>
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-start">
+				<!-- Sync card -->
+				<div
+					class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/50 shadow-sm backdrop-blur-md"
+				>
+					<div class="border-b border-black/5 px-5 py-4">
+						<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
+							Quillium Sync
+						</p>
+						<p
+							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/70 italic"
+						>
+							~$20<span class="text-[0.85rem] text-black/35">/month</span>
+						</p>
+						<p class="mt-1 text-[0.7rem] text-black/30">
+							Price TBD. The more users, the cheaper it gets.
+						</p>
+					</div>
+					<div class="flex flex-1 flex-col px-5 py-4">
+						<ul class="space-y-2">
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								Sync your documents everywhere, including mobile
+							</li>
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								Real-time collaboration. Invite anyone, even non-paying users
+							</li>
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								Cancel anytime; local data unaffected
+							</li>
+						</ul>
+						<p class="mt-auto pt-3 text-[0.7rem] text-black/28">
+							Mobile is free for everyone: sync just works better with a plan.
+						</p>
+					</div>
+				</div>
 
-				<div class="mb-5 rounded-lg bg-black/3 px-4 py-3">
-					<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
-						<strong class="text-black/70">Price TBD.</strong> Probably around $20/month — but the more users Quillium has, the cheaper it can get. We'd rather have a small margin on a large number of happy users than squeeze individuals.
+				<!-- Custom build card -->
+				<div
+					class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/50 shadow-sm backdrop-blur-md"
+				>
+					<div class="border-b border-black/5 px-5 py-4">
+						<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
+							Custom Build
+						</p>
+						<p
+							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/70 italic"
+						>
+							~$1k <span class="text-[0.85rem] text-black/35"> one-time</span>
+						</p>
+						<p class="mt-1 text-[0.7rem] text-black/30">Rough estimate. Depends on scope.</p>
+					</div>
+					<div class="flex flex-1 flex-col px-5 py-4">
+						<ul class="space-y-2">
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								Quillium tuned to your exact workflow
+							</li>
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								For studios, publishers, writing programs
+							</li>
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								Custom features, branding, integrations
+							</li>
+							<li class="flex items-start gap-2 text-[0.8rem] text-black/55">
+								<svg
+									class="mt-0.5 shrink-0 text-black/25"
+									width="12"
+									height="12"
+									viewBox="0 0 14 14"
+									fill="none"
+									><path
+										d="M2.5 7l3 3 6-6"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/></svg
+								>
+								<span
+									><a
+										href="mailto:thatxliner@gmail.com"
+										class="text-[#3b82f6] no-underline hover:underline">Email us</a
+									> to discuss</span
+								>
+							</li>
+						</ul>
+						<p class="mt-auto pt-3 text-[0.7rem] text-black/28">
+							Not sure if this fits? Just ask — we'll tell you honestly.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Why this model: scannable -->
+		<section class="mb-14">
+			<p class="mb-5 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+				Why this model
+			</p>
+			<div class="space-y-5">
+				<div class="why-row">
+					<p class="why-label">No VC pressure</p>
+					<p class="why-text">
+						We're not funded. No one can pressure us to add paywalls or sell your data.
 					</p>
 				</div>
-
-				<div class="grid gap-2.5 sm:grid-cols-2">
-					<div class="flex items-start gap-2.5">
-						<span class="mt-0.5 shrink-0 text-[#3b82f6]">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-								<path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-							</svg>
-						</span>
-						<span class="text-[0.8rem] text-black/55">Seamless multi-device sync</span>
-					</div>
-					<div class="flex items-start gap-2.5">
-						<span class="mt-0.5 shrink-0 text-[#3b82f6]">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-								<path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-							</svg>
-						</span>
-						<span class="text-[0.8rem] text-black/55">Encrypted in transit and at rest</span>
-					</div>
-					<div class="flex items-start gap-2.5">
-						<span class="mt-0.5 shrink-0 text-[#3b82f6]">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-								<path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-							</svg>
-						</span>
-						<span class="text-[0.8rem] text-black/55">Cancel anytime — your local copy is unaffected</span>
-					</div>
-					<div class="flex items-start gap-2.5">
-						<span class="mt-0.5 shrink-0 text-[#3b82f6]">
-							<svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-								<path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-							</svg>
-						</span>
-						<span class="text-[0.8rem] text-black/55">Foundation for future collaboration features</span>
-					</div>
+				<div class="why-row">
+					<p class="why-label">Survives us shutting down</p>
+					<p class="why-text">
+						The app works whether or not we exist. Your writing doesn't depend on our servers.
+					</p>
+				</div>
+				<div class="why-row">
+					<p class="why-label">Sync is the right trade</p>
+					<p class="why-text">
+						It's an extra service, not a toll on things you already have. Skip it entirely if you
+						want.
+					</p>
+				</div>
+				<div class="why-row">
+					<p class="why-label">Have a better idea?</p>
+					<p class="why-text">
+						Genuinely, <a
+							href="mailto:thatxliner@gmail.com"
+							class="text-[#3b82f6] no-underline hover:underline">email us</a
+						>.
+					</p>
 				</div>
 			</div>
 		</section>
-
-		<!-- Why section -->
-		<section class="mb-14">
-			<h2 class="mb-6 font-[Newsreader,Georgia,serif] text-[1.35rem] font-normal italic text-black/88">Why this model</h2>
-			<div class="space-y-4 text-[0.875rem] leading-[1.8] text-black/55">
-				<p>
-					The writing tool market is full of apps that start free, build a following, then slowly lock features behind subscriptions until the free version is barely usable. We think that's a bad deal, and we refuse to do it.
-				</p>
-				<p>
-					Local-first software solves a real problem: your writing doesn't disappear if we shut down, raise prices, or get acquired. The app works whether or not we exist. We think that's the only honest way to build a tool people trust with years of their work.
-				</p>
-				<p>
-					The sync service is the only monetization option that doesn't compromise this. It's an additional service, not a tax on existing functionality. You can skip it entirely — or even roll your own sync if you're technically inclined (though fair warning: SQLite binary files and conflict resolution make that genuinely tricky).
-				</p>
-				<p class="text-black/40 text-[0.8rem]">
-					Have a suggestion or think there's a better model? We'd genuinely like to hear it — <a href="mailto:thatxliner@gmail.com" class="text-[#3b82f6] no-underline hover:underline">email us</a>.
-				</p>
-			</div>
-		</section>
-
-		<!-- Custom build callout -->
-		<section class="rounded-xl border border-black/6 bg-white/40 px-6 py-5 backdrop-blur-md">
-			<p class="mb-1 text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-black/30">Something else?</p>
-			<p class="mb-0 text-[0.875rem] leading-relaxed text-black/55">
-				If you're a studio, publisher, or just someone with very specific workflow needs, we're open to building a custom version of Quillium tuned exactly to how you work. <a href="mailto:thatxliner@gmail.com" class="text-[#3b82f6] no-underline hover:underline">Reach out</a> and we can talk.
-			</p>
-		</section>
-
 	</div>
 </main>
 
 <Footer />
 
 <style>
-	.promise-card {
+	/* Promise grid */
+	.promise-cell {
 		display: flex;
-		gap: 16px;
-		border-radius: 12px;
-		background: rgba(255, 255, 255, 0.5);
+		align-items: flex-start;
+		gap: 12px;
 		padding: 18px 20px;
-		box-shadow: 0 2px 8px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+		background: rgba(255, 255, 255, 0.5);
 		backdrop-filter: blur(8px);
 	}
-	.promise-icon {
+	.promise-glyph {
+		font-size: 0.55rem;
+		color: rgba(0, 0, 0, 0.2);
+		margin-top: 4px;
 		flex-shrink: 0;
-		width: 36px;
-		height: 36px;
-		border-radius: 9px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		letter-spacing: 0;
 	}
 	.promise-title {
-		font-size: 0.875rem;
+		font-size: 0.825rem;
 		font-weight: 600;
-		color: rgba(0,0,0,0.88);
-		margin: 0 0 4px 0;
+		color: rgba(0, 0, 0, 0.8);
+		margin: 0 0 3px 0;
 	}
 	.promise-body {
-		font-size: 0.8rem;
-		color: rgba(0,0,0,0.5);
-		line-height: 1.7;
+		font-size: 0.775rem;
+		color: rgba(0, 0, 0, 0.42);
+		line-height: 1.6;
 		margin: 0;
+	}
+
+	/* Why rows */
+	.why-row {
+		display: grid;
+		grid-template-columns: 140px 1fr;
+		gap: 16px;
+		align-items: baseline;
+	}
+	@media (max-width: 480px) {
+		.why-row {
+			grid-template-columns: 1fr;
+			gap: 2px;
+		}
+	}
+	.why-label {
+		font-size: 0.775rem;
+		font-weight: 600;
+		color: rgba(0, 0, 0, 0.65);
+		margin: 0;
+	}
+	.why-text {
+		font-size: 0.8rem;
+		color: rgba(0, 0, 0, 0.45);
+		line-height: 1.65;
+		margin: 0;
+	}
+	.why-text a {
+		color: #3b82f6;
 	}
 </style>

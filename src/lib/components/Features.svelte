@@ -89,7 +89,7 @@
 					/>
 				</svg>
 			</div>
-			<h3 class="feature-heading">Put Great Minds Together</h3>
+			<h3 class="feature-heading">Great Minds Think Together</h3>
 			<p class="feature-lead">
 				Comments, revisions, and suggestions float beside the text they're about.
 			</p>

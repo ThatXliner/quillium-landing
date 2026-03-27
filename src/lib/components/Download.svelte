@@ -97,13 +97,14 @@
 
 			{#if detected === 'windows'}
 				<p class="mb-3 text-[0.65rem] leading-relaxed text-amber-600/70">
-					Windows may show a security warning because this app isn't code-signed yet. It's safe to proceed.
+					Windows may show a security warning because this app isn't code-signed yet. It's safe to
+					proceed.
 				</p>
 			{/if}
 		{/if}
 
-		<!-- Fine print: beta + version + ToS + other platforms -->
-		<p class="mb-1 text-[0.7rem] leading-relaxed text-black/30">
+		<!-- Fine print -->
+		<p class="mb-0 text-[0.7rem] leading-relaxed text-black/30">
 			<span class="inline-flex items-center gap-1.5 align-middle">
 				<span
 					class="rounded-full border border-amber-400/30 bg-amber-400/10 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] text-amber-600 uppercase"
@@ -112,9 +113,11 @@
 				v{release.version}
 			</span>
 			&middot; Features may change. Back up your work.
-		</p>
-		<p class="mb-0 text-[0.65rem] text-black/25">
-			By downloading, you agree to our <a href="/terms" class="text-black/35 underline decoration-black/15 underline-offset-2 hover:text-black/55">Terms of Service</a>.
+			<a
+				href="/terms"
+				class="text-black/35 underline decoration-black/15 underline-offset-2 hover:text-black/55"
+				>Terms Of Service</a
+			>
 		</p>
 
 		<!-- All platforms toggle -->
@@ -130,14 +133,20 @@
 				{#each platformOrder as key}
 					{@const platform = downloads[key]}
 					<div
-						class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected === key ? 'ring-2 ring-blue-400/20' : ''}"
+						class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected ===
+						key
+							? 'ring-2 ring-blue-400/20'
+							: ''}"
 					>
 						<p
 							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase"
 						>
 							{platform.label}
 							{#if detected === key}
-								<span class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case">(detected)</span>
+								<span
+									class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
+									>(detected)</span
+								>
 							{/if}
 						</p>
 						<a

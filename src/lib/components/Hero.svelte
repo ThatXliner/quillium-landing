@@ -61,10 +61,10 @@
 
 	<div class="reveal reveal-delay-3 flex flex-wrap justify-center items-center gap-4">
 		<a
-			href="#waitlist"
+			href="#download"
 			class="btn-primary"
-			onclick={() => posthog.capture('cta_clicked', { cta: 'join_waitlist', location: 'hero' })}
-			>Join the Waitlist</a
+			onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
+			>Download Now</a
 		>
 		<a
 			href="#features"
@@ -73,10 +73,6 @@
 			See how it works
 		</a>
 	</div>
-
-	<p class="reveal reveal-delay-4 mt-6 text-[0.85rem] font-medium tracking-wide text-black/40">
-		Coming April 2nd
-	</p>
 
 	<div
 		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"

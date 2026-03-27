@@ -39,4 +39,4 @@ The real benefit is more psychological than organizational. When you know nothin
 
 That's the writing experience I wanted and couldn't find, so I'm building it.
 
-If this sounds like a problem you've been fighting, [join the waitlist](/#waitlist). Quillium is still early, but the core idea—branching for prose—is already changing how I write, and I think it'll change how you write too.
+If this sounds like a problem you've been fighting, [get notified when we launch](/#waitlist). Quillium is still early, but the core idea—branching for prose—is already changing how I write, and I think it'll change how you write too.

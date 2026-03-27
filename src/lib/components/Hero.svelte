@@ -63,8 +63,8 @@
 		<a
 			href="#waitlist"
 			class="btn-primary"
-			onclick={() => posthog.capture('cta_clicked', { cta: 'join_waitlist', location: 'hero' })}
-			>Join the Waitlist</a
+			onclick={() => posthog.capture('cta_clicked', { cta: 'get_notified', location: 'hero' })}
+			>Get Notified at Launch</a
 		>
 		<a
 			href="#features"

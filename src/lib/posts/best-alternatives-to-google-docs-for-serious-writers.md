@@ -53,4 +53,4 @@ This is why I'm building [Quillium](/#waitlist). The core idea is that you shoul
 
 It's a fundamentally different model from anything above, and it won't be for everyone. But if you've ever lost a draft you liked because you wrote over it, or maintained a folder of files named `intro_v2_alt_MAYBE.md`, it might be worth a look.
 
-I'm still in early development. If this sounds like the tool you've been waiting for, [join the waitlist](/#waitlist).
+I'm still in early development. If this sounds like the tool you've been waiting for, [get notified when we launch](/#waitlist).

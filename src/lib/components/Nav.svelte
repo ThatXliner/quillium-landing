@@ -45,7 +45,7 @@
 		<div class="hidden md:flex items-center gap-8">
 			<a href="/#features" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
 			<a href="/#manifesto" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
-			<a href="/#waitlist" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Waitlist</a>
+			<a href="/#waitlist" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Get Notified</a>
 			<a href="/blog" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Blog</a>
 			<a href="/pricing" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Pricing</a>
 			<a href="/#waitlist" class="text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-[#22c55e]/70 no-underline hover:text-[#22c55e]">Public Beta</a>
@@ -73,7 +73,7 @@
 		<div class="mobile-menu flex flex-col gap-1 md:hidden" transition:slide={{ duration: 250 }}>
 			<a href="/#features" class="mobile-link" onclick={closeMenu}>Features</a>
 			<a href="/#manifesto" class="mobile-link" onclick={closeMenu}>Manifesto</a>
-			<a href="/#waitlist" class="mobile-link" onclick={closeMenu}>Waitlist</a>
+			<a href="/#waitlist" class="mobile-link" onclick={closeMenu}>Get Notified</a>
 			<a href="/blog" class="mobile-link" onclick={closeMenu}>Blog</a>
 			<a href="/pricing" class="mobile-link" onclick={closeMenu}>Pricing</a>
 			<a href="/#waitlist" class="mobile-link mobile-link--beta" onclick={closeMenu}>Public Beta</a>

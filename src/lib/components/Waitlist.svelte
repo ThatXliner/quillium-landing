@@ -22,7 +22,7 @@
 
 			if (dbError) {
 				if (dbError.code === '23505') {
-					error = "You're already on the waitlist!";
+					error = "You're already signed up! We'll notify you at launch.";
 				} else {
 					error = 'Something went wrong. Please try again.';
 				}
@@ -53,11 +53,11 @@
 		</p>
 
 		<p class="mb-3 text-left font-[Inter,sans-serif] text-[13px] font-semibold text-black/88">
-			Waitlist Terms
+			Beta Terms
 		</p>
 		<div
 			class="mb-5 rounded-[14px] border border-black/8 bg-white/50 p-4 text-left backdrop-blur-md"
-			aria-label="Waitlist terms"
+			aria-label="Beta terms"
 		>
 			<div class="grid grid-cols-1 gap-0.5 min-[480px]:grid-cols-2">
 				<div class="flex gap-3 rounded-lg p-3 transition-colors">
@@ -207,7 +207,7 @@
 				class="rounded-xl border border-[rgba(34,197,94,0.25)] bg-[rgba(34,197,94,0.08)] px-6 py-4.5"
 			>
 				<p class="m-0 font-[Newsreader,Georgia,serif] text-base text-[#15803d] italic">
-					You're on the waitlist. Check your email when it's time to join the beta.
+					You're in. We'll email you when it's time to join the beta.
 				</p>
 			</div>
 		{/if}

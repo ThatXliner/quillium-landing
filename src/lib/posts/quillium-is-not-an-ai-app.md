@@ -59,4 +59,4 @@ It feels a little silly to have to disclaim what your product *isn't*, but if th
 
 If you've read this far and you're a writer who revises obsessively, who keeps five versions of the same paragraph, who treats every word choice as a decision—Quillium is for you. No AI required.
 
-[Come try it.](/#waitlist)
+[Come try it.](/#download)

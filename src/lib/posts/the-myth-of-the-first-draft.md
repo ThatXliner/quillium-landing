@@ -41,4 +41,4 @@ Here's better advice than "just finish the first draft": **write more than one f
 
 And if your current tool makes that hard—if it forces you into a single linear sequence and punishes you for changing your mind—maybe the tool is the problem.
 
-I'm building Quillium for writers who think this way. If that sounds like you, [join the waitlist](/#waitlist).
+I'm building Quillium for writers who think this way. If that sounds like you, [try it out](/#download).

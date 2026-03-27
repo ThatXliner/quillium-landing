@@ -16,7 +16,7 @@ So I built Quillium. The core idea is simple: **what if you could fork a sentenc
 
 Great writing needs two things: **space to think** and **tools to refine**, not forms to fill out or approval chains to navigate. Quillium is my attempt at building both.
 
-I'm in early development and things are still rough around the edges. If this resonates, [come try it](/#waitlist).
+I'm in early development and things are still rough around the edges. If this resonates, [come try it](/#download).
 
 ## What to read next
 

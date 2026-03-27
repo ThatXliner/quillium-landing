@@ -39,4 +39,4 @@ This is exactly the problem I'm working on with **Quillium**. The core idea is s
 
 I'm not building Twine for novelists or Git with a pretty face. I'm building a writing environment where branching is so natural you don't think about it, where exploring an alternative phrasing is as easy as typing it and both versions just... exist. Keyboard first!
 
-Writing is already non-linear in your head, and it's time your tools caught up. If this resonates, [join the waitlist](/#waitlist).
+Writing is already non-linear in your head, and it's time your tools caught up. If this resonates, [try it out](/#download).

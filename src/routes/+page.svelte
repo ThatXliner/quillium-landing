@@ -5,8 +5,10 @@
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Manifesto from '$lib/components/Manifesto.svelte';
-	import Waitlist from '$lib/components/Waitlist.svelte';
+	import Download from '$lib/components/Download.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+
+	let { data } = $props();
 
 	onMount(() => {
 		// Scroll reveal with Intersection Observer
@@ -91,7 +93,7 @@
 			'@type': 'Offer',
 			price: '0',
 			priceCurrency: 'USD',
-			availability: 'https://schema.org/PreOrder'
+			availability: 'https://schema.org/InStock'
 		}
 	})}</script>`}
 
@@ -118,6 +120,6 @@
 
 <div class="warm-divider"></div>
 
-<Waitlist />
+<Download release={data.release} />
 
 <Footer />

@@ -7,6 +7,7 @@
 	import libraryImg from '$lib/assets/screenshots/06-library.png';
 	import revisionModalImg from '$lib/assets/screenshots/07-revision-modal.png';
 	import dictionaryImg from '$lib/assets/screenshots/10-dictionary.png';
+	import inlineImg from '$lib/assets/screenshots/13-inline-nested-revision.png';
 
 	const slides = [
 		{ src: editorImg, alt: 'The Quillium editor — a clean, focused writing environment' },
@@ -14,8 +15,8 @@
 		{ src: revisionActiveImg, alt: 'An active revision thread in the annotation sidebar' },
 		{ src: libraryImg, alt: 'The library sidebar, showing all documents in the library' },
 		{ src: dictionaryImg, alt: 'The dictionary sidebar, showing definitions for a selected word' },
-		{ src: revisionModalImg, alt: 'Revision modal with the context sidebar' }
-		// { src: annotationsImg, alt: 'All annotations' }
+		{ src: revisionModalImg, alt: 'Revision modal with the context sidebar' },
+		{ src: inlineImg, alt: 'Inline revisions in a revision modal!' }
 	];
 
 	let current = 0;

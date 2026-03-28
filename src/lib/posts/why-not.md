@@ -45,7 +45,7 @@ Write a rough draft however you want—by hand, with AI assistance, by dictation
 
 This one is for the developers reading this. You already know Git. You use it every day. You know branching works, you know the value of keeping every version, you know what it feels like to have a history you can actually navigate.
 
-So why aren't you using it for your writing? Probably because you've tried it, and it's painful.
+So why aren't you using it for your writing?
 
 Git is built for code. That means it's built around files, commits, and diffs—three concepts that map awkwardly onto prose. But a commit message for "rewrote the second paragraph three times" is meaningless. A diff that shows you what changed line-by-line across a 4,000-word essay isn't useful when the line breaks are arbitrary. Merge conflicts in prose produce output that reads like noise. And the discipline of writing good commit messages, staging changes, maintaining branch names—it's overhead that makes sense when you're shipping software, but it's dead weight when you're trying to think on the page.
 

@@ -53,14 +53,6 @@ Git's granularity is the commit. Quillium's is the sentence. Or word, or phrase.
 
 The other thing Git doesn't give you is a prose-native interface. Reading a branching history in Quillium looks like reading a document, just with some annotations. Reading a branching history in Git looks like a terminal or subway system. One of those feels like writing; the other feels like engineering.
 
-Git solved the conceptual problem–nonlinear history, branching, nothing gets lost. Quillium takes that solution and builds it for writers instead of programmers.
-
-## Conclusion
-
-Google Docs tracks what you ended up with, not what you explored. AI tools are for generating text, which is a completely different problem. Git gets the concept right but was built for code, and it shows.
-
-Quillium is for writers who revise obsessively, who keep five versions of the same paragraph, who want to explore without losing anything.
-
-The alternatives aren't bad. They just weren't built for this.
+Git solved the conceptual problem—nonlinear history, branching, nothing gets lost. Quillium takes that solution and builds it for writers instead of programmers.
 
 [Get notified when we launch.](/#waitlist)

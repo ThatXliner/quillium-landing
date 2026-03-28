@@ -42,7 +42,10 @@
 			{/if}
 			<button
 				class="demo-toggle"
-				onclick={() => (showRevisionsDemo = !showRevisionsDemo)}
+				onclick={() => {
+					showRevisionsDemo = !showRevisionsDemo;
+					posthog.capture('demo_toggle_clicked', { feature: 'revisions', showing_demo: showRevisionsDemo });
+				}}
 			>
 				{#if showRevisionsDemo}
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

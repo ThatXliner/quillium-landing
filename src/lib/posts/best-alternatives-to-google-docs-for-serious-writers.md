@@ -49,7 +49,7 @@ The thing I kept noticing is that they all assume writing is linear. You start a
 
 Real writing doesn't work like that. You write a paragraph three different ways, try a different opening, explore a tangent that might become the actual point. And in every tool above, doing this means either destroying previous work or managing a chaos of duplicated files and copy-pasted paragraphs.
 
-This is why I'm building [Quillium](/#waitlist). The core idea is that you should be able to **fork** any sentence or paragraph—like a Git branch—and keep every version alive simultaneously, not as a mess of tabs but as a structured tree you can navigate. Write three different openings, keep all of them, and decide later—or don't decide at all and let them coexist.
+This is why I'm building [Quillium](/#waitlist). The core idea is that you should be able to fork any sentence or paragraph—like a Git branch—and keep every version alive simultaneously, not as a mess of tabs but as a structured tree you can navigate. Write three different openings, keep all of them, and decide later—or don't decide at all and let them coexist.
 
 It's a fundamentally different model from anything above, and it won't be for everyone. But if you've ever lost a draft you liked because you wrote over it, or maintained a folder of files named `intro_v2_alt_MAYBE.md`, it might be worth a look.
 

@@ -2,10 +2,12 @@
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
 	import revisionsImg from '$lib/assets/screenshots/revisions.png';
+	import revisionsGif from '$lib/assets/QuilliumShortDemo.gif';
 	import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
 	import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
 
 	let showAiSection = $state(true);
+	let showRevisionsDemo = $state(false);
 
 	onMount(() => {
 		posthog.onFeatureFlags(() => {
@@ -24,11 +26,38 @@
 
 	<!-- Feature 1: Branches / Revisions -->
 	<div class="reveal feature-row">
-		<img
-			src={revisionsImg}
-			alt="Quillium revision branches UI showing inline version control for prose"
-			class="feature-screenshot"
-		/>
+		<div class="feature-media">
+			{#if showRevisionsDemo}
+				<img
+					src={revisionsGif}
+					alt="Quillium revision branches demo showing inline version control in action"
+					class="feature-screenshot"
+				/>
+			{:else}
+				<img
+					src={revisionsImg}
+					alt="Quillium revision branches UI showing inline version control for prose"
+					class="feature-screenshot"
+				/>
+			{/if}
+			<button
+				class="demo-toggle"
+				onclick={() => (showRevisionsDemo = !showRevisionsDemo)}
+			>
+				{#if showRevisionsDemo}
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="3" width="18" height="18" rx="2"/>
+						<rect x="8" y="8" width="8" height="8" rx="1"/>
+					</svg>
+					Show screenshot
+				{:else}
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<polygon points="6,3 20,12 6,21"/>
+					</svg>
+					See it in action
+				{/if}
+			</button>
+		</div>
 
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(168,85,247,0.08);">
@@ -280,6 +309,31 @@
 	.feature-row--full {
 		grid-template-columns: 1fr;
 		max-width: 36rem;
+	}
+
+	/* ── Demo toggle ── */
+	.feature-media {
+		position: relative;
+	}
+	.demo-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: 12px;
+		padding: 6px 14px;
+		font-size: 13px;
+		font-family: 'Inter', sans-serif;
+		font-weight: 500;
+		color: #7c3aed;
+		background: rgba(168, 85, 247, 0.08);
+		border: 1px solid rgba(168, 85, 247, 0.2);
+		border-radius: 9999px;
+		cursor: pointer;
+		transition: background 0.2s, border-color 0.2s;
+	}
+	.demo-toggle:hover {
+		background: rgba(168, 85, 247, 0.14);
+		border-color: rgba(168, 85, 247, 0.35);
 	}
 
 	/* ── Screenshot images ── */

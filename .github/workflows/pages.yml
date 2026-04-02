@@ -10,6 +10,10 @@ on:
   push:
     branches: ['main']
 
+  # Rebuild weekly to pick up new release download URLs
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9am UTC
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:

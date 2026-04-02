@@ -11,17 +11,12 @@
 		url: string;
 	}
 
-	interface ReleaseData {
-		version: string;
-		assets: ReleaseAsset[];
-	}
-
-	let { release }: { release: ReleaseData } = $props();
+	let { release }: { release: { assets: ReleaseAsset[] } } = $props();
 
 	function findAsset(pattern: string): string {
 		const match = release.assets.find((a) => a.url.includes(pattern));
 		if (match) return match.url;
-		return `https://github.com/${REPO}/releases/download/v${release.version}/${pattern}`;
+		return `https://github.com/${REPO}/releases/latest`;
 	}
 
 	const downloads = $derived({
@@ -56,7 +51,7 @@
 	});
 
 	function trackDownload(url: string) {
-		posthog.capture('download_clicked', { url, version: release.version, platform: detected });
+		posthog.capture('download_clicked', { url, platform: detected });
 	}
 
 	const platformOrder: ('mac' | 'windows' | 'linux')[] = ['mac', 'windows', 'linux'];
@@ -110,7 +105,6 @@
 					class="rounded-full border border-amber-400/30 bg-amber-400/10 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] text-amber-600 uppercase"
 					>Beta</span
 				>
-				v{release.version}
 			</span>
 			&middot; Features may change. Back up your work.
 			<a

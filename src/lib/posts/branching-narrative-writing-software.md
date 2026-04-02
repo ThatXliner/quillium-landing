@@ -15,11 +15,9 @@ This is a branching problem, and despite decades of software development, writer
 
 A few tools touch on this idea, but none of them quite nail it.
 
-**Twine** is probably the closest thing to branching writing software that exists today. It was built for interactive fiction—the "choose your own path" kind of stories—and it does that well. You create nodes, connect them with links, and build a graph of narrative paths.
+**Twine** is probably the closest thing to branching writing software that exists today. It was built for interactive fiction—the "choose your own path" kind of stories—and it does that well. You create nodes, connect them with links, and build a graph of narrative paths. But Twine is designed for the *reader's* branching experience, not the *writer's*. You're authoring a final product that branches. You're not exploring multiple drafts of the same passage.
 
-But Twine is designed for the *reader's* branching experience, not the *writer's*. You're authoring a final product that branches; you're not exploring multiple drafts of the same passage.
-
-**Scrivener** is the go-to for long-form writing project management. It gives you a binder, index cards, split views, and you can organize chapters and scenes with real flexibility. But at the sentence and paragraph level, Scrivener is still linear—there's no concept of "here are three versions of this paragraph, and I haven't decided which one I want yet." You'd have to manage that yourself with duplicate documents or duplicate paragraphs on the same page, and it's easy to lose track of which is the "best version" or the "cleanest one" versus the "most engaging one."
+**Scrivener** is the go-to for long-form writing project management. It gives you a binder, index cards, split views, and you can organize chapters and scenes with real flexibility. But at the sentence and paragraph level, Scrivener is still linear—there's no concept of "here are three versions of this paragraph, and I haven't decided which one I want yet." You'd have to manage that yourself with duplicate documents or duplicate paragraphs on the same page, and it's easy to lose track of which is the "best version" versus the "most engaging one."
 
 **Git** solves the branching problem elegantly...for code. Branch, commit, merge, diff—it's exactly the mental model writers need. But Git was built for developers, and the interface reflects that. Asking a novelist to run `git checkout -b chapter-3-darker-tone` is not a serious suggestion. The concepts are right, but the UX isn't.
 
@@ -27,9 +25,9 @@ But Twine is designed for the *reader's* branching experience, not the *writer's
 
 ## The gap
 
-Here's what's missing: a writing tool that treats prose branching as a first-class feature. A tool specifically designed for *writers*: people who think in drafts, who want to explore without committing, who need to keep multiple versions of a sentence alive because they genuinely don't know which one is better yet.
+What's missing is a writing tool that treats prose branching as a first-class feature. A tool specifically designed for *writers*: people who think in drafts, who want to explore without committing, who need to keep multiple versions of a sentence alive because they genuinely don't know which one is better yet.
 
-The ideal tool would let you fork at any point—a word, a sentence, a paragraph, an entire chapter. You'd see your branches visually, navigate between them without losing context, and merge the pieces that work back together when you're ready. The versions you're unsure about wouldn't disappear into some version history graveyard; they'd stay right there, accessible, part of your working document.
+The ideal tool would let you fork at any point—a word, a sentence, a paragraph, an entire chapter. You'd see your branches visually, navigate between them without losing context, and merge the pieces that work back together when you're ready. The versions you're unsure about wouldn't disappear into some version history graveyard. They'd stay right there, accessible, part of your working document.
 
 Think of it less like version control and more like version *exploration*. The difference matters: version control implies a main branch and a history, while version exploration implies that all branches are alive until you decide otherwise.
 

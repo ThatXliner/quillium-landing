@@ -31,13 +31,13 @@ The "just finish the first draft" advice is really saying: stop exploring and co
 
 The real unlock isn't writing faster or forcing yourself through a linear draft. It's being able to explore multiple paths at once without losing any of them. This matters especially for writing that demands precision: college application essays, short fiction, anything where every sentence carries weight.
 
-Imagine being able to write a sentence, and then forking it into two or three different versions in parallel. Not as separate documents you have to juggle, but as branches of the same piece, visible and navigable, the way a developer might branch code.
+Imagine writing a sentence, then forking it into two or three different versions in parallel. Not as separate documents you have to juggle, but as branches of the same piece, visible and navigable, the way a developer might branch code.
 
 That's what I'm building with Quillium: a writing tool where exploration is a first-class operation rather than a workaround. You can fork any sentence or paragraph, follow divergent paths, and converge when you're ready—or not. Every version stays alive, and nothing gets lost to the delete key.
 
 ## The real advice
 
-Here's better advice than "just finish the first draft": **write more than one first draft.** Explore the possibility space. Follow the thread that surprises you, not just the first one you found.
+Write more than one first draft. Explore the possibility space. Follow the thread that surprises you, not just the first one you found.
 
 And if your current tool makes that hard—if it forces you into a single linear sequence and punishes you for changing your mind—maybe the tool is the problem.
 

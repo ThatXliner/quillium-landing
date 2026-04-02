@@ -9,17 +9,17 @@ Ctrl+Z is the most reassuring shortcut in computing. Made a mistake? Undo, go ba
 
 Except that's not what's actually going on, and if you've ever lost a paragraph you loved because you undid too far and then typed something new, you already know this intuitively. You just haven't had the vocabulary for why it felt so broken.
 
-Here's the vocabulary: **undo is a stack.**
+Here it is: it's because the undo is a stack.
 
 ## A stack is not a revision system
 
-A stack is a data structure: last in, first out. Every action you take gets pushed onto the stack, ctrl+Z pops the most recent one off, and Ctrl+Shift+Z pushes it back.
+A stack is a data structure: last in, first out. Every action you take gets pushed onto the stack, Ctrl+Z pops the most recent one off, and Ctrl+Shift+Z pushes it back.
 
 That works fine for correcting typos, but it's *completely wrong* for revision.
 
 Think about how you actually revise a piece of writing. You write a draft, rewrite paragraph two, then rewrite it again. Then you realize the first rewrite was actually better—but the *current* version of paragraph four is the one you want to keep. You want to go back to version 3 of one section, keep version 5 of another, and try something entirely new for a third.
 
-A stack literally cannot represent this operation. The moment you undo back to version 3 and start typing, versions 4 and 5 are gone, destroyed, the stack overwritten. That's not a revision system; it's a single-timeline illusion with a convenient keyboard shortcut.
+A stack literally cannot represent this operation. The moment you undo back to version 3 and start typing, versions 4 and 5 are gone. Destroyed. The stack overwritten. It's a single-timeline illusion with a convenient keyboard shortcut, not a way to reliably test different versions.
 
 ## Every writing tool gets this wrong
 

@@ -4,7 +4,6 @@ import { RESEND_API_KEY } from '$env/static/private';
 import type { RequestHandler } from './$types';
 
 const resend = new Resend(RESEND_API_KEY);
-const AUDIENCE_ID = '5627d275-9674-4dd4-937c-c3f2d2a00ec7';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const { email } = await request.json();
@@ -14,10 +13,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		const { error } = await resend.contacts.create({
-			email,
-			audienceId: AUDIENCE_ID
-		});
+		const { error } = await resend.contacts.create({ email });
 
 		if (error) {
 			if (error.message?.includes('already exists')) {

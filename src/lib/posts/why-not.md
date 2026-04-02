@@ -55,4 +55,4 @@ The other thing Git doesn't give you is a prose-native interface. Reading a bran
 
 Git solved the conceptual problem—nonlinear history, branching, nothing gets lost. Quillium takes that solution and builds it for writers instead of programmers.
 
-[Get notified when we launch.](/#waitlist)
+[Try Quillium today.](/#download)

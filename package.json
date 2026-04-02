@@ -5,7 +5,6 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"prebuild": "node scripts/generate-og.js",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -17,8 +16,6 @@
 	"devDependencies": {
 		"@eslint/compat": "^1.4.1",
 		"@eslint/js": "^9.39.4",
-		"@resvg/resvg-js": "^2.6.2",
-		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.55.0",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.2.2",
@@ -31,7 +28,6 @@
 		"prettier": "^3.8.1",
 		"prettier-plugin-svelte": "^3.5.1",
 		"prettier-plugin-tailwindcss": "^0.7.2",
-		"satori": "^0.26.0",
 		"svelte": "^5.55.0",
 		"svelte-check": "^4.4.5",
 		"tailwindcss": "^4.2.2",
@@ -41,6 +37,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-vercel": "^6.3.3",
+		"@vercel/og": "^0.11.1",
 		"posthog-js": "^1.363.3",
 		"resend": "^6.10.0"
 	}

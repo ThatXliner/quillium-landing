@@ -42,6 +42,7 @@
 
 	let detected: Platform = $state('unknown');
 	let showAllPlatforms = $state(false);
+	let agreedToTos = $state(false);
 
 	onMount(() => {
 		const ua = navigator.userAgent.toLowerCase();
@@ -73,9 +74,12 @@
 		{#if detected !== 'unknown'}
 			{@const platform = downloads[detected]}
 			<a
-				href={platform.primary.url}
-				class="btn-primary mb-4 inline-flex items-center gap-2"
+				href={agreedToTos ? platform.primary.url : undefined}
+				class="btn-primary mb-4 inline-flex items-center gap-2 {!agreedToTos
+					? 'pointer-events-none opacity-40'
+					: ''}"
 				onclick={() => trackDownload(platform.primary.url)}
+				aria-disabled={!agreedToTos}
 			>
 				<svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="shrink-0">
 					<path
@@ -98,6 +102,17 @@
 			{/if}
 		{/if}
 
+		<!-- ToS agreement -->
+		<label
+			class="mb-4 flex cursor-pointer items-center justify-center gap-2 text-[0.8rem] text-black/55 select-none"
+		>
+			<input type="checkbox" bind:checked={agreedToTos} class="accent-[#3b82f6]" />
+			I agree to the
+			<a href="/terms" class="text-[#3b82f6] underline underline-offset-2 hover:text-[#3b82f6]/80"
+				>Terms of Service</a
+			>
+		</label>
+
 		<!-- Fine print -->
 		<p class="mb-0 text-[0.7rem] leading-relaxed text-black/30">
 			<span class="inline-flex items-center gap-1.5 align-middle">
@@ -107,11 +122,6 @@
 				>
 			</span>
 			&middot; Features may change. Back up your work.
-			<a
-				href="/terms"
-				class="text-black/35 underline decoration-black/15 underline-offset-2 hover:text-black/55"
-				>Terms Of Service</a
-			>
 		</p>
 
 		<!-- All platforms toggle -->
@@ -144,17 +154,23 @@
 							{/if}
 						</p>
 						<a
-							href={platform.primary.url}
-							class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
+							href={agreedToTos ? platform.primary.url : undefined}
+							class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline {!agreedToTos
+								? 'pointer-events-none opacity-40'
+								: ''}"
 							onclick={() => trackDownload(platform.primary.url)}
+							aria-disabled={!agreedToTos}
 						>
 							{platform.primary.name}
 						</a>
 						{#each platform.alt as alt}
 							<a
-								href={alt.url}
-								class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55"
+								href={agreedToTos ? alt.url : undefined}
+								class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 {!agreedToTos
+									? 'pointer-events-none opacity-40'
+									: ''}"
 								onclick={() => trackDownload(alt.url)}
+								aria-disabled={!agreedToTos}
 							>
 								{alt.name}
 							</a>

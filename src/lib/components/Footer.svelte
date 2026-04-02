@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabase';
 	import posthog from 'posthog-js';
 
 	let email = $state('');
@@ -17,15 +16,20 @@
 		posthog.capture('updates_signup_submitted', { email });
 
 		try {
-			const { error: dbError } = await supabase.from('waitlist').insert({ email });
+			const res = await fetch('/api/subscribe', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email })
+			});
 
-			if (dbError) {
-				if (dbError.code === '23505') {
+			if (!res.ok) {
+				const data = await res.json();
+				if (data.error === 'already_subscribed') {
 					error = "You're already signed up!";
 				} else {
 					error = 'Something went wrong. Please try again.';
 				}
-				posthog.capture('updates_signup_failed', { email, error_code: dbError.code });
+				posthog.capture('updates_signup_failed', { email, error: data.error });
 			} else {
 				posthog.capture('updates_signup_succeeded');
 				submitted = true;

@@ -225,7 +225,7 @@
 							</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
 								Quillium is local-first. Your writing stays on your machine. We never access,
-								collect, or store your documents. See our
+								collect, or store your documents without your consent. See our
 								<a href="/privacy" class="text-[#3b82f6] no-underline hover:underline"
 									>Privacy Policy</a
 								> for details on what we do collect.

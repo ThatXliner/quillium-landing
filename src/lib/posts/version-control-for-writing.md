@@ -61,4 +61,4 @@ That's much closer to how writing actually works. You don't want to choose betwe
 
 Writers iterate as much as programmers do—probably more, actually, since code either works or it doesn't while prose has infinite valid variations. The difference is that programmers have tools built to embrace iteration, and writers have tools that punish it.
 
-If you're tired of `draft_v7_FINAL_REAL.docx` and want to write the way you actually think—in branches, not in lines—[get notified when we launch](/#waitlist).
+If you're tired of `draft_v7_FINAL_REAL.docx` and want to write the way you actually think—in branches, not in lines—[try it out](/#download).

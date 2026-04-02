@@ -31,7 +31,7 @@ Programmers solved this problem decades ago with version control. You write some
 
 The same idea works for prose, it just needs a different interface. You shouldn't need a terminal to fork a paragraph. You should be able to look at a sentence, branch it into two versions, and keep writing down both paths. When you're ready, pick the one that works, or keep both. Every version stays alive until you decide otherwise.
 
-This is exactly what I'm building with [Quillium](/#waitlist). Instead of managing a graveyard of `_v2` files, you branch at the sentence or paragraph level. Every fork is visible, navigable, and preserved. You stop managing drafts and start writing them.
+This is exactly what I'm building with [Quillium](/#download). Instead of managing a graveyard of `_v2` files, you branch at the sentence or paragraph level. Every fork is visible, navigable, and preserved. You stop managing drafts and start writing them.
 
 ## The shift that matters
 
@@ -39,4 +39,4 @@ The real benefit is more psychological than organizational. When you know nothin
 
 That's the writing experience I wanted and couldn't find, so I'm building it.
 
-If this sounds like a problem you've been fighting, [get notified when we launch](/#waitlist). Quillium is still early, but the core idea—branching for prose—is already changing how I write, and I think it'll change how you write too.
+If this sounds like a problem you've been fighting, [try it out](/#download). Quillium is still early, but the core idea—branching for prose—is already changing how I write, and I think it'll change how you write too.

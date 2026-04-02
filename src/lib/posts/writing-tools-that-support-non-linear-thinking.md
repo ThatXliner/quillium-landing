@@ -37,4 +37,4 @@ It's writing with the freedom to think non-linearly *while* you write, not just 
 
 ## Try it
 
-If you've ever felt like your writing tool is fighting the way you think, I'd love for you to [get notified when we launch](/#waitlist). Quillium is still early, but the core idea is working and I think it changes how writing feels.
+If you've ever felt like your writing tool is fighting the way you think, I'd love for you to [try it out](/#download). Quillium is still early, but the core idea is working and I think it changes how writing feels.

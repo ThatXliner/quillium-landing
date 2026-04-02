@@ -41,4 +41,4 @@ Imagine selecting a paragraph and forking it. The original stays, and your new v
 
 That's what I'm building with Quillium: a writing tool where history branches instead of stacking, where revision is a first-class operation rather than an afterthought bolted on with Ctrl+Z.
 
-You shouldn't have to choose between the paragraph you wrote Tuesday and the one you wrote Thursday. You should be able to keep both, see both, and decide later—or never. If that sounds like the way you already think about writing, and you're tired of fighting tools that don't, [get notified when we launch](/#waitlist).
+You shouldn't have to choose between the paragraph you wrote Tuesday and the one you wrote Thursday. You should be able to keep both, see both, and decide later—or never. If that sounds like the way you already think about writing, and you're tired of fighting tools that don't, [try it out](/#download).

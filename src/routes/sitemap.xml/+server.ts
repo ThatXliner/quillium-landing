@@ -41,6 +41,11 @@ export const GET: RequestHandler = () => {
 		<changefreq>monthly</changefreq>
 		<priority>0.3</priority>
 	</url>
+	<url>
+		<loc>${site}/terms</loc>
+		<changefreq>monthly</changefreq>
+		<priority>0.3</priority>
+	</url>
 ${posts.map((post) => `	<url>
 		<loc>${site}/blog/${post.slug}</loc>
 		<lastmod>${post.date}</lastmod>

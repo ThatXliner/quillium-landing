@@ -41,4 +41,4 @@ Write more than one first draft. Explore the possibility space. Follow the threa
 
 And if your current tool makes that hard—if it forces you into a single linear sequence and punishes you for changing your mind—maybe the tool is the problem.
 
-I'm building Quillium for writers who think this way. If that sounds like you, [get notified when we launch](/#waitlist).
+I'm building Quillium for writers who think this way. If that sounds like you, [try it out](/#download).

@@ -172,7 +172,14 @@
 						>
 							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
 								<path
-									d="M3 3l12 12M15 3L3 15"
+									d="M9 2v5M6.5 4.5L9 7l2.5-2.5"
+									stroke="#10b981"
+									stroke-width="1.4"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="M3 9a6 6 0 1012 0"
 									stroke="#10b981"
 									stroke-width="1.4"
 									stroke-linecap="round"
@@ -180,10 +187,10 @@
 							</svg>
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">No Replication</h3>
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Privacy & Updates</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
-								You may not use insights from the beta to build competing products or replicate
-								Quillium's features, design, or workflows.
+								We collect minimal analytics to improve the product. Terms may be updated during
+								beta; continued use means you accept changes.
 							</p>
 						</div>
 					</div>
@@ -297,10 +304,6 @@
 					<h2>5. Restrictions</h2>
 					<p>You agree not to:</p>
 					<ul>
-						<li>
-							Use insights gained from the Service to build competing products or replicate
-							Quillium's features, design, or workflows
-						</li>
 						<li>Reverse-engineer, decompile, or disassemble the Service</li>
 						<li>Remove or alter any proprietary notices or labels on the Service</li>
 						<li>Use the Service for any purpose that is unlawful or prohibited by these Terms</li>

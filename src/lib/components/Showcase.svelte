@@ -10,9 +10,9 @@
 	import inlineImg from '$lib/assets/screenshots/13-inline-nested-revision.png';
 
 	const slides = [
+		{ src: revisionActiveImg, alt: 'An active revision thread in the annotation sidebar' },
 		{ src: editorImg, alt: 'The Quillium editor — a clean, focused writing environment' },
 		{ src: commentActiveImg, alt: 'An active comment thread in the annotation sidebar' },
-		{ src: revisionActiveImg, alt: 'An active revision thread in the annotation sidebar' },
 		{ src: libraryImg, alt: 'The library sidebar, showing all documents in the library' },
 		{ src: dictionaryImg, alt: 'The dictionary sidebar, showing definitions for a selected word' },
 		{ src: revisionModalImg, alt: 'Revision modal with the context sidebar' },

@@ -32,7 +32,8 @@
 			.then((res) => res.json())
 			.then((data) => {
 				downloadCount = data.count ?? 0;
-			});
+			})
+			.catch(() => {});
 
 		return () => clearInterval(interval);
 	});
@@ -67,8 +68,12 @@
 	</p>
 
 	{#if downloadCount > 0}
-		<p class="reveal reveal-delay-2 mb-4 text-[0.85rem] font-medium text-black/40">
-			Join {downloadCount.toLocaleString()}+ writers
+		<p class="mb-4 text-[0.85rem] font-medium text-black/40">
+			{#if downloadCount < 50}
+				Be one of the first to try it
+			{:else}
+				Join {downloadCount.toLocaleString()}+ writers
+			{/if}
 		</p>
 	{/if}
 

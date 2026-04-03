@@ -80,7 +80,11 @@
 
 		{#if downloadCount > 0}
 			<p class="mb-4 text-[0.85rem] font-medium text-black/40">
-				Join {downloadCount.toLocaleString()}+ writers
+				{#if downloadCount < 50}
+					Be one of the first to try it
+				{:else}
+					Join {downloadCount.toLocaleString()}+ writers
+				{/if}
 			</p>
 		{/if}
 

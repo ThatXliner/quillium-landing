@@ -6,7 +6,7 @@ author: "Bryan Hu"
 featured: true
 ---
 
-After ~4 months of work, Quillium ahs finally achieved public beta stability! It could not have gotten to this point without countless rounds of testing and feedback from private beta testers—Nicole Chin, [Evan Zhou](https://x.com/evanzhoudev), and many others—it's ready for the world.
+After ~4 months of work, Quillium has finally achieved public beta stability! It could not have gotten to this point without countless rounds of testing and feedback from private beta testers—Nicole Chin, [Evan Zhou](https://x.com/evanzhoudev), and many others—it's ready for the world.
 
 As a writing app, I know that stability is paramount and any data loss is a total catastrophe. Actually, half of the months spent was on reliability and predictabilty *alone*: it's *that* crucial to what we do.
 

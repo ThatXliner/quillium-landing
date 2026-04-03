@@ -1,6 +1,6 @@
 ---
 title: "Quillium Is Now in Public Beta"
-description: "After four months of development and private testing, Quillium is ready for everyone."
+description: "Huge thanks to our private beta testers!"
 date: "2026-04-02"
 author: "Bryan Hu"
 featured: true

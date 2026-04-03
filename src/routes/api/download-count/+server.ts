@@ -1,4 +1,3 @@
-// src/routes/api/download-count/+server.ts
 import { json } from '@sveltejs/kit';
 import { POSTHOG_PERSONAL_API_KEY } from '$env/static/private';
 import { PUBLIC_POSTHOG_HOST } from '$env/static/public';
@@ -32,7 +31,8 @@ export const GET: RequestHandler = async ({ fetch }) => {
 				query: {
 					kind: 'TrendsQuery',
 					series: [{ kind: 'EventsNode', event: 'download_clicked', math: 'total' }],
-					dateRange: { date_from: 'all' }
+					dateRange: { date_from: 'all' },
+					trendsFilter: { display: 'BoldNumber' }
 				}
 			})
 		});

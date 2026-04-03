@@ -43,12 +43,20 @@
 	let detected: Platform = $state('unknown');
 	let showAllPlatforms = $state(false);
 	let agreedToTos = $state(false);
+	let downloadCount = $state(0);
 
 	onMount(() => {
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
 		else if (ua.includes('win')) detected = 'windows';
 		else if (ua.includes('linux')) detected = 'linux';
+
+		fetch('/api/download-count')
+			.then((r) => r.json())
+			.then((data) => {
+				if (data.count) downloadCount = data.count;
+			})
+			.catch(() => {});
 	});
 
 	function trackDownload(url: string) {
@@ -69,6 +77,12 @@
 		<p class="mb-8 text-[0.95rem] leading-[1.7] text-black/50">
 			Download Quillium and start writing. Free, offline, yours.
 		</p>
+
+		{#if downloadCount > 0}
+			<p class="mb-4 text-[0.85rem] font-medium text-black/40">
+				Join {downloadCount.toLocaleString()}+ writers
+			</p>
+		{/if}
 
 		<!-- Primary download button -->
 		{#if detected !== 'unknown'}

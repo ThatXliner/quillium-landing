@@ -8,6 +8,7 @@
 	let showPros = $state(false);
 	let showPeriod = $state(false);
 	let showCursor = $state(true);
+	let downloadCount = $state(0);
 
 	onMount(() => {
 		let i = 0;
@@ -26,6 +27,12 @@
 				}, typingSpeed);
 			}
 		}, typingSpeed);
+
+		fetch('/api/download-count')
+			.then((res) => res.json())
+			.then((data) => {
+				downloadCount = data.count ?? 0;
+			});
 
 		return () => clearInterval(interval);
 	});
@@ -58,6 +65,12 @@
 		For the novelist who writes the same chapter four different ways. For the essayist who doesn't
 		know the thesis until page three. Quillium keeps every version, so nothing is ever lost.
 	</p>
+
+	{#if downloadCount > 0}
+		<p class="reveal reveal-delay-2 mb-4 text-[0.85rem] font-medium text-black/40">
+			Join {downloadCount.toLocaleString()}+ writers
+		</p>
+	{/if}
 
 	<div class="reveal reveal-delay-3 flex flex-wrap justify-center items-center gap-4">
 		<a

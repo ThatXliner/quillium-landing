@@ -43,7 +43,6 @@
 	let detected: Platform = $state('unknown');
 	let showAllPlatforms = $state(false);
 	let agreedToTos = $state(false);
-
 	onMount(() => {
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';

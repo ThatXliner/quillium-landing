@@ -106,7 +106,7 @@
 </svelte:head>
 
 <Nav />
-<Hero />
+<Hero release={data.release} />
 
 <Showcase />
 

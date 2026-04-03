@@ -1,6 +1,24 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
+
+	const REPO = 'ThatXliner/quillium-releases';
+
+	let { release }: { release: { assets: { name: string; url: string }[] } } = $props();
+
+	function findAsset(pattern: string): string {
+		const match = release.assets.find((a: { url: string }) => a.url.includes(pattern));
+		if (match) return match.url;
+		return `https://github.com/${REPO}/releases/latest`;
+	}
+
+	let detected = $state('unknown');
+	let downloadUrl = $derived.by(() => {
+		if (detected === 'mac') return findAsset('_aarch64.dmg');
+		if (detected === 'windows') return findAsset('_x64-setup.exe');
+		if (detected === 'linux') return findAsset('_amd64.deb');
+		return '#download';
+	});
 
 	let displayedText = $state('');
 	const fullText = 'Prose for ';
@@ -11,6 +29,10 @@
 	let downloadCount = $state(0);
 
 	onMount(() => {
+		const ua = navigator.userAgent.toLowerCase();
+		if (ua.includes('mac')) detected = 'mac';
+		else if (ua.includes('win')) detected = 'windows';
+		else if (ua.includes('linux')) detected = 'linux';
 		let i = 0;
 		const interval = setInterval(() => {
 			if (i < fullText.length) {
@@ -77,19 +99,26 @@
 		</p>
 	{/if}
 
-	<div class="reveal reveal-delay-3 flex flex-wrap justify-center items-center gap-4">
-		<a
-			href="#download"
-			class="btn-primary"
-			onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
-			>Download Now</a
-		>
-		<a
-			href="#features"
-			class="inline-flex items-center gap-2 rounded-[10px] bg-white/50 px-6 py-3 text-[0.95rem] font-medium text-black/88 no-underline shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-50/30"
-		>
-			See how it works
-		</a>
+	<div class="reveal reveal-delay-3 flex flex-col items-center gap-3">
+		<div class="flex flex-wrap justify-center items-center gap-4">
+			<a
+				href={downloadUrl}
+				class="btn-primary inline-flex items-center gap-2"
+				onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
+			>
+				Download Now
+				<span class="rounded-full border border-white/25 bg-white/15 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] uppercase">Beta</span>
+			</a>
+			<a
+				href="#features"
+				class="inline-flex items-center gap-2 rounded-[10px] bg-white/50 px-6 py-3 text-[0.95rem] font-medium text-black/88 no-underline shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-50/30"
+			>
+				See how it works
+			</a>
+		</div>
+		<p class="text-[0.7rem] text-black/30">
+			By downloading, you agree to the <a href="/terms" class="text-black/40 underline underline-offset-2 hover:text-black/55">Terms of Service</a>
+		</p>
 	</div>
 
 	<div

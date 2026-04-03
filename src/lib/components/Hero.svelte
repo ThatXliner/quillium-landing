@@ -92,7 +92,7 @@
 	{#if downloadCount > 0}
 		<p class="mb-4 text-[0.85rem] font-medium text-black/40">
 			{#if downloadCount < 50}
-				Be one of the first to try it
+				Be one of the first to try it, no account needed
 			{:else}
 				Join {downloadCount.toLocaleString()}+ writers
 			{/if}
@@ -100,14 +100,17 @@
 	{/if}
 
 	<div class="reveal reveal-delay-3 flex flex-col items-center gap-3">
-		<div class="flex flex-wrap justify-center items-center gap-4">
+		<div class="flex flex-wrap items-center justify-center gap-4">
 			<a
 				href={downloadUrl}
 				class="btn-primary inline-flex items-center gap-2"
 				onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
 			>
 				Download Now
-				<span class="rounded-full border border-white/25 bg-white/15 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] uppercase">Beta</span>
+				<span
+					class="rounded-full border border-white/25 bg-white/15 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] uppercase"
+					>Beta</span
+				>
 			</a>
 			<a
 				href="#features"
@@ -117,14 +120,20 @@
 			</a>
 		</div>
 		<p class="text-[0.7rem] text-black/30">
-			By downloading, you agree to the <a href="/terms" class="text-black/40 underline underline-offset-2 hover:text-black/55">Terms of Service</a>
+			By downloading, you agree to the <a
+				href="/terms"
+				class="text-black/40 underline underline-offset-2 hover:text-black/55">Terms of Service</a
+			>
 		</p>
 	</div>
 
 	<div
 		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"
 	>
-		<a href="/blog/quillium-is-not-an-ai-app" class="text-[0.75rem] tracking-wide text-black/25 underline hover:text-black/40 transition-colors duration-300 m-0">
+		<a
+			href="/blog/quillium-is-not-an-ai-app"
+			class="m-0 text-[0.75rem] tracking-wide text-black/25 underline transition-colors duration-300 hover:text-black/40"
+		>
 			No AI ghostwriting. No autocomplete. Just a better place to write.
 		</a>
 		<div class="flex gap-2">

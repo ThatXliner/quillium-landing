@@ -2,12 +2,12 @@
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
 	import revisionsImg from '$lib/assets/screenshots/revisions.png';
-	import revisionsGif from '$lib/assets/QuilliumShortDemo.gif';
 	import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
 	import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
 
 	let showAiSection = $state(true);
 	let showRevisionsDemo = $state(false);
+	let revisionsGif = $state('');
 
 	onMount(() => {
 		posthog.onFeatureFlags(() => {
@@ -27,7 +27,7 @@
 	<!-- Feature 1: Branches / Revisions -->
 	<div class="reveal feature-row">
 		<div class="feature-media">
-			{#if showRevisionsDemo}
+			{#if showRevisionsDemo && revisionsGif}
 				<img
 					src={revisionsGif}
 					alt="Quillium revision branches demo showing inline version control in action"
@@ -38,11 +38,16 @@
 					src={revisionsImg}
 					alt="Quillium revision branches UI showing inline version control for prose"
 					class="feature-screenshot"
+					loading="lazy"
 				/>
 			{/if}
 			<button
 				class="demo-toggle"
-				onclick={() => {
+				onclick={async () => {
+					if (!revisionsGif) {
+						const mod = await import('$lib/assets/QuilliumShortDemo.gif');
+						revisionsGif = mod.default;
+					}
 					showRevisionsDemo = !showRevisionsDemo;
 					posthog.capture('demo_toggle_clicked', { feature: 'revisions', showing_demo: showRevisionsDemo });
 				}}
@@ -135,6 +140,7 @@
 			src={annotationsBelongImg}
 			alt="Quillium annotations and comments anchored beside the text they reference"
 			class="feature-screenshot"
+			loading="lazy"
 		/>
 	</div>
 
@@ -145,6 +151,7 @@
 				src={aiAnnotationsImg}
 				alt="Quillium AI annotation panel providing inline writing feedback"
 				class="feature-screenshot"
+				loading="lazy"
 			/>
 
 			<div class="feature-text">

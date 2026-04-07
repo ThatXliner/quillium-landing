@@ -43,7 +43,7 @@
 		<div class="carousel-track" style="transform: translateX(-{current * 100}%)">
 			{#each slides as slide}
 				<div class="carousel-slide">
-					<img src={slide.src} alt={slide.alt} />
+					<img src={slide.src} alt={slide.alt} loading="lazy" />
 				</div>
 			{/each}
 		</div>

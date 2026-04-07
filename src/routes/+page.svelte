@@ -53,6 +53,10 @@
 	<title>Quillium — The Non-Linear Writing App</title>
 	<meta name="msvalidate.01" content="64D60FCC52EFEF1A4B0D43527C8FB4C3" />
 	<meta
+		name="keywords"
+		content="non-linear writing, writing app, branching text editor, version control for writing, writing in branches, revision branches, draft management, writing tool, distraction-free writing, prose editor"
+	/>
+	<meta
 		name="description"
 		content="A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft."
 	/>

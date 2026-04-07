@@ -12,20 +12,17 @@ Every AI feature in Quillium follows one rule: the AI creates structured annotat
 Everything runs BYOK (bring your own key), fully client-side. No Quillium servers are involved at any point. Your API keys live in the OS keychain via Tauri, never in localStorage. We support OpenAI, Anthropic Claude, and Google Gemini.
 
 
-
 ## 1. AI Sidebar — three specialized modes
 
-A resizable floating panel (Cmd+Shift+1 through 4) with three distinct AI assistants:
+A resizable floating panel with three distinct AI assistants:
 
 **Chat** is general writing Q&A. Plain conversational AI, no tool calls. Good for brainstorming, asking "does this paragraph work?", stuff like that.
 
-**Feedback** is an editorial reviewer. The system prompt forces all feedback into `createComment` and `createRevision` tool calls. The LLM is literally told that writing suggestions in prose is "a failure." It focuses on big picture issues: structure, voice, argument, pacing. Each revision includes 2 to 3 labeled alternatives with tradeoff explanations.
+**Feedback** is an editorial reviewer. The system prompt forces all feedback into `createSuggestion` and `createRevision` tool calls. It focuses on big picture issues: structure, voice, argument, pacing. Each revision includes 2 to 3 labeled alternatives with tradeoff explanations.
 
-**Revise** is the line editor. It scans in reading order, creates `createSuggestion` tool calls for every rewrite (each with 2+ replacement options and rationales), then ends with a short summary of patterns it noticed.
+**Revise** is the line editor. It scans in reading order, creates `createSuggestion` tool calls for every rewrite (each with 2+ replacement options and rationales), then ends with a short summary of patterns it noticed. This is for more word-level execution fixes, while Feedback is for more high-level suggestions.
 
-The tool-calling enforcement is what makes this work. You don't get a wall of text to manually apply. Each piece of AI output lands as an annotation in the editor. Accept it, reject it, or just ignore it.
-
-
+The tool-calling enforcement is what makes this work. You don't get a wall of text to manually copy+paste; each piece of AI output lands as an annotation in the editor. Accept it, reject it, or just ignore it.
 
 ## 2. AutoAI — autonomous background reviewer
 
@@ -43,23 +40,17 @@ You can also configure the persona. Rename the reviewer to "Editor", "Critic", "
 
 Think of it as a tireless editor reading over your shoulder. Inline comments and revision suggestions just appear as you write. (The rainbow-spinning border animation while it's thinking is a nice touch too.)
 
-
-
 ## 3. Comment thread AI suggestions
 
 Every annotation thread (comments, revisions) has a "Suggest" button. Hit it and the AI reads the full thread history plus the highlighted text, then drops a contextual response into the thread as an "AI" authored message.
 
 So annotations become conversations. Disagree with a comment? Ask the AI to elaborate or counter-argue, right there in the thread.
 
-
-
 ## 4. Document context — AI-generated writing briefs
 
 A panel where you describe your document's purpose, audience, tone, and constraints. That context gets injected into every AI call, so the feedback is calibrated to what you're actually trying to write, not generic writing advice.
 
-There's also an "AI generate" button: paste in a raw writing prompt or assignment brief and it produces structured context notes for you. We're currently A/B testing two formats (freeform prose vs. structured fields) via PostHog feature flags.
-
-
+There's also an "AI generate" button: paste in a raw writing prompt or assignment brief and it produces structured context notes for you. We're currently A/B testing two formats (freeform prose vs. structured fields) via PostHog feature flags, this way we can ensure that this AI feature is optimized.
 
 ## 5. Writing style characterizer
 
@@ -67,29 +58,20 @@ Inside the Writing Statistics modal, an AI analyzes your prose across 7 dimensio
 
 The results show up as visual progress bars. Basically: self-awareness about your writing tendencies, from someone who won't sugarcoat it.
 
-
-
 ## 6. Dictionary popover AI mode
 
 Cmd-B on a selected word opens a popover with an AI "describe, then find word" mode. Describe a concept ("the feeling of nostalgia for a place you've never been") and the AI suggests matching words with nuance and connotation notes. If you want to keep going, you can bridge the conversation into the full Chat panel with history preserved.
 
 A reverse thesaurus, basically. You describe the idea, the AI finds the word. Good for that tip-of-the-tongue problem where you *know* the word exists but can't quite reach it.
 
-
-
 ## 7. Custom quick actions
 
 User-configurable entries (label, prompt, panel) that appear as chips in the Chat, Feedback, and Revise panels. Define your own: "Check academic citations", "Tighten this paragraph", whatever you need.
 
-
 ## What makes this architecture different
 
-**Annotation bus pattern.** All AI output (chat tools, AutoAI, comment threads) flows through the same `createComment` / `createSuggestion` / `createRevision` functions. AI never touches editor text directly.
+**Annotation bus pattern.** All AI output (chat tools, AutoAI, comment threads) flows through the same annotation functions and never touches editor text directly.
 
 **Everything is undoable.** Because annotations use CodeMirror's transaction system, every AI action is Cmd-Z reversible.
-
-**Tool-calling as a design constraint.** The system prompts don't just suggest using tools. They declare that prose-based suggestions are a "failure." This forces structured, actionable output.
-
-**`generateObject` for AutoAI, `streamText` for interactive.** The right streaming strategy for each use case. AutoAI needs atomic batch processing; interactive panels need real time feedback.
 
 **Keychain-first security.** API keys never touch localStorage or disk. They're lazy-loaded from the OS keychain only on first actual AI interaction, which avoids macOS permission prompts at startup.

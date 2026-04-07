@@ -115,20 +115,22 @@
 </svelte:head>
 
 <Nav />
-<Hero release={data.release} />
+<main>
+	<Hero release={data.release} />
 
-<Showcase />
+	<Showcase />
 
-<div class="warm-divider section-divider"></div>
+	<div class="warm-divider section-divider"></div>
 
-<Features />
+	<Features />
 
-<div class="warm-divider section-divider"></div>
+	<div class="warm-divider section-divider"></div>
 
-<Manifesto />
+	<Manifesto />
 
-<div class="warm-divider"></div>
+	<div class="warm-divider"></div>
 
-<Download release={data.release} />
+	<Download release={data.release} />
+</main>
 
 <Footer />

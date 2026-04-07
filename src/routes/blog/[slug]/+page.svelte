@@ -91,6 +91,20 @@
 		margin-bottom: 0.25rem;
 		color: rgba(0, 0, 0, 0.88);
 	}
+	:global(.prose h2),
+	:global(.prose h3) {
+		scroll-margin-top: 6rem;
+	}
+	:global(.prose h2 > a),
+	:global(.prose h3 > a) {
+		color: inherit;
+		text-decoration: none;
+	}
+	:global(.prose h2 > a:hover::after),
+	:global(.prose h3 > a:hover::after) {
+		content: ' #';
+		color: rgba(0, 0, 0, 0.25);
+	}
 	:global(.prose p) {
 		margin-bottom: 1.25rem;
 	}

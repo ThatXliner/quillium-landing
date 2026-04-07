@@ -39,6 +39,8 @@
 		"@sveltejs/adapter-vercel": "^6.3.3",
 		"@vercel/og": "^0.11.1",
 		"posthog-js": "^1.363.3",
+		"rehype-autolink-headings": "^7.1.0",
+		"rehype-slug": "^6.0.0",
 		"resend": "^6.10.0"
 	}
 }

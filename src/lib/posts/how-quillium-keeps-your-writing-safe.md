@@ -129,4 +129,4 @@ Half the development time for Quillium's [public beta](./public-beta) was spent 
 
 It's about reliability. Because a writing tool that loses your writing isn't a tool—it's a liability.
 
-Your words are safe here. [Try it out.](/#download)
+Your words are safe here. [Try it out now.](/#download)

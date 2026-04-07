@@ -27,8 +27,11 @@
 	let showPeriod = $state(false);
 	let showCursor = $state(true);
 	let downloadCount = $state(0);
+	let heroVariant = $state('control');
 
 	onMount(() => {
+		const variant = posthog.getFeatureFlag('hero-subtext-variant');
+		if (variant) heroVariant = variant as string;
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
 		else if (ua.includes('win')) detected = 'windows';
@@ -85,8 +88,13 @@
 	</h1>
 
 	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50">
-		For the novelist who writes the same chapter four different ways. For the essayist who doesn't
-		know the thesis until page three. Quillium keeps every version, so nothing is ever lost.
+		{#if heroVariant === 'test'}
+			Write a sentence three different ways, and decide which to pick later. Branch any phrase
+			without losing a single word.
+		{:else}
+			For the novelist who writes the same chapter four different ways. For the essayist who doesn't
+			know the thesis until page three. Quillium keeps every version, so nothing is ever lost.
+		{/if}
 	</p>
 
 	{#if downloadCount > 0}

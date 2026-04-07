@@ -51,6 +51,7 @@
 
 <svelte:head>
 	<title>Quillium — The Non-Linear Writing App</title>
+	<meta name="msvalidate.01" content="64D60FCC52EFEF1A4B0D43527C8FB4C3" />
 	<meta
 		name="description"
 		content="A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft."

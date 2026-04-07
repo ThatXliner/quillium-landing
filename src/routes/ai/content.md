@@ -1,78 +1,72 @@
 ---
 title: "Quillium AI — The Complete Rundown"
-description: "Everything Quillium's AI can do, how it works, and why it's built the way it is."
+description: "Everything Quillium's AI can do and why it's built the way it is."
 date: "2026-04-06"
 author: "Bryan Hu"
 ---
 
 ## The core philosophy
 
-Every AI feature in Quillium follows one rule: the AI creates structured annotations, [never raw text edits](/blog/ai-is-not-the-point#what-ai-could-actually-be). All suggestions are reversible, non-destructive, and flow through the same annotation system the human editor uses. You stay in control. The AI doesn't get to touch your words.
+Every AI feature in Quillium follows one rule: the AI creates structured annotations, [never raw text edits](/blog/ai-is-not-the-point#what-ai-could-actually-be). Every suggestion is reversible and non-destructive. You stay in control. The AI doesn't get to touch your words.
 
-Everything runs BYOK (bring your own key), fully client-side. No Quillium servers are involved at any point. Your API keys live in the OS keychain via Tauri, never in localStorage. We support OpenAI, Anthropic Claude, and Google Gemini.
+Everything runs BYOK (bring your own key), fully client-side. No Quillium servers are involved at any point. Your API keys stay in the OS keychain, never in localStorage. We support OpenAI, Anthropic Claude, and Google Gemini.
 
-## 1. AI Sidebar — three specialized modes
+## 1. AI Sidebar — three modes
 
-A resizable floating panel with three distinct AI assistants:
+A floating panel with three AI assistants, each good at different things:
 
-**Chat** is general writing Q&A. Plain conversational AI, no tool calls. Good for brainstorming, asking "does this paragraph work?", stuff like that.
+**Chat** is open-ended writing Q&A. Brainstorm ideas, ask "does this paragraph work?", bounce thoughts around.
 
-**Feedback** is an editorial reviewer. The system prompt forces all feedback into `createSuggestion` and `createRevision` tool calls. It focuses on big picture issues: structure, voice, argument, pacing. Each revision includes 2 to 3 labeled alternatives with tradeoff explanations.
+**Feedback** is your big-picture reviewer. It looks at structure, voice, argument, and pacing, then gives you 2-3 labeled alternatives with tradeoff explanations for each issue.
 
-**Revise** is the line editor. It scans in reading order, creates `createSuggestion` tool calls for every rewrite (each with 2+ replacement options and rationales), then ends with a short summary of patterns it noticed. This is for more word-level execution fixes, while Feedback is for more high-level suggestions.
+**Revise** is the line editor. It walks through your text in reading order and suggests word-level rewrites, each with multiple replacement options. At the end you get a short summary of patterns it noticed across the document.
 
-The tool-calling enforcement is what makes this work. You don't get a wall of text to manually copy+paste; each piece of AI output lands as an annotation in the editor. Accept it, reject it, or just ignore it.
+None of this shows up as a wall of text you have to copy-paste. Every piece of AI output lands as an annotation in the editor. Accept, reject, or ignore. The sidebar glows with a rainbow border while AI is running so you always know when it's costing you tokens.
 
-This is the core of all AI features: this sidebar glows with a rainbow border when AI is running so you are always aware of your costs.
+## 2. AutoAI — background reviewer
 
-## 2. AutoAI — autonomous background reviewer
+This one is unusual. A small morphing bubble sits in your editor and runs editorial review continuously while you write. You don't ask it to. It just does.
 
-Probably the most unusual feature. A morphing bubble widget sits in your editor and runs continuous, unprompted editorial review while you write. You don't ask it to. It just... does.
+It waits until you've written enough new material, thinks for a bit, then drops inline comments and revision suggestions directly into your document. If you've edited a section since it started thinking, it throws away any suggestions that no longer apply. No stale feedback.
 
-Under the hood: it watches for content changes (20+ character delta threshold), debounces for 10 seconds, then fires a single `generateObject()` call with a Zod schema. Back comes a typed JSON array of comments, suggestions, and revisions. Before applying anything, it validates that each `targetText` is still a literal substring of the document. If you've edited that part since the AI started thinking, it throws the suggestion away. If a suggestion would overlap an existing annotation, it downgrades to a comment.
-
-Three conservativeness levels:
+Three levels of intensity:
 
 - **Conservative** — only flags glaring issues
 - **Balanced** — the default
-- **Thorough** — comprehensive feedback on everything
+- **Thorough** — feedback on everything
 
-You can also configure the persona. Rename the reviewer to "Editor", "Critic", "Devil's Advocate", whatever. That name becomes the author field on all created annotations.
+You can rename the reviewer persona to whatever you want: "Editor", "Critic", "Devil's Advocate". That name shows up as the author on all its annotations.
 
-Think of it as a tireless editor reading over your shoulder. Inline comments and revision suggestions just appear as you write. (The rainbow-spinning border animation while it's thinking is a nice touch too.)
+It's like having someone read over your shoulder, except they actually have useful things to say. (The rainbow-spinning border while it thinks is a nice touch too.)
 
-## 3. Comment thread AI suggestions
+## 3. Comment thread AI
 
-Every annotation thread (comments, revisions) has a "Suggest" button. Hit it and the AI reads the full thread history plus the highlighted text, then drops a contextual response into the thread as an "AI" authored message.
+Every annotation thread has a "Suggest" button. Hit it and the AI reads the full thread history plus the highlighted text, then drops a response into the thread.
 
-So annotations become conversations. Disagree with a comment? Ask the AI to elaborate or counter-argue, right there in the thread.
+Annotations become conversations. Disagree with a comment? Ask the AI to push back, right there in the thread.
 
-## 4. Document context — AI-generated writing briefs
+## 4. Document context
 
-A panel where you describe your document's purpose, audience, tone, and constraints. That context gets injected into every AI call, so the feedback is calibrated to what you're actually trying to write, not generic writing advice.
+A panel where you describe your document's purpose, audience, tone, and constraints. That context feeds into every AI call, so feedback is calibrated to what you're actually trying to write instead of generic writing advice.
 
-There's also an "AI generate" button: paste in a raw writing prompt or assignment brief and it produces structured context notes for you. We're currently A/B testing two formats (freeform prose vs. structured fields) via PostHog feature flags, this way we can ensure that this AI feature is optimized.
+There's also an "AI generate" button: paste a raw writing prompt or assignment brief and it produces structured context notes for you.
 
-## 5. Writing style characterizer
+## 5. Writing style analysis
 
-Inside the Writing Statistics modal, an AI analyzes your prose across 7 dimensions (formality, clarity, conciseness, vocabulary, tone, pacing, descriptiveness) on a 1 to 10 scale, plus tone descriptors and a style summary. The prompt explicitly tells the model to "be honest — avoid giving everything high scores."
+Inside the Writing Statistics modal, an AI scores your prose across 7 dimensions (formality, clarity, conciseness, vocabulary, tone, pacing, descriptiveness) on a 1-10 scale, plus tone descriptors and a style summary.
 
-The results show up as visual progress bars. Basically: self-awareness about your writing tendencies, from someone who won't sugarcoat it.
+We tell the model to be honest and avoid giving everything high scores. The results show up as progress bars. Self-awareness about your writing tendencies, from someone who won't sugarcoat it.
 
-## 6. Dictionary popover AI mode
+## 6. Reverse dictionary
 
-Cmd-B on a selected word opens a popover with an AI "describe, then find word" mode. Describe a concept ("the feeling of nostalgia for a place you've never been") and the AI suggests matching words with nuance and connotation notes. If you want to keep going, you can bridge the conversation into the full Chat panel with history preserved.
+Cmd-B on a selected word opens a popover where you can describe a concept ("the feeling of nostalgia for a place you've never been") and get back matching words with nuance and connotation notes. If you want to keep going, the conversation carries over into the full Chat panel.
 
-A reverse thesaurus, basically. You describe the idea, the AI finds the word. Good for that tip-of-the-tongue problem where you *know* the word exists but can't quite reach it.
+Good for that tip-of-the-tongue problem where you *know* the word exists but can't reach it.
 
 ## 7. Custom quick actions
 
-User-configurable entries (label, prompt, panel) that appear as chips in the Chat, Feedback, and Revise panels. Define your own: "Check academic citations", "Tighten this paragraph", whatever you need.
+Define your own reusable prompts — "Check academic citations", "Tighten this paragraph", whatever — and they show up as chips in the Chat, Feedback, and Revise panels.
 
-## What makes this architecture different
+## How we handle your keys and data
 
-**Annotation bus pattern.** All AI output (chat tools, AutoAI, comment threads) flows through the same annotation functions and never touches editor text directly.
-
-**Everything is undoable.** Because annotations use CodeMirror's transaction system, every AI action is Cmd-Z reversible.
-
-**Keychain-first security.** API keys never touch localStorage or disk. They're lazy-loaded from the OS keychain only on first actual AI interaction, which avoids macOS permission prompts at startup.
+Your API keys never touch localStorage or disk. They live in the OS keychain. Every AI action is Cmd-Z reversible, same as any other edit. And all AI output goes through the same annotation system the rest of the editor uses, so nothing can silently modify your text.

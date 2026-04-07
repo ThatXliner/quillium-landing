@@ -7,10 +7,9 @@ author: "Bryan Hu"
 
 ## The core philosophy
 
-Every AI feature in Quillium follows one rule: the AI creates structured annotations, never raw text edits. All suggestions are reversible, non-destructive, and flow through the same annotation system the human editor uses. You stay in control. The AI doesn't get to touch your words.
+Every AI feature in Quillium follows one rule: the AI creates structured annotations, [never raw text edits](./ai-is-not-the-point#what-ai-could-actually-be). All suggestions are reversible, non-destructive, and flow through the same annotation system the human editor uses. You stay in control. The AI doesn't get to touch your words.
 
 Everything runs BYOK (bring your own key), fully client-side. No Quillium servers are involved at any point. Your API keys live in the OS keychain via Tauri, never in localStorage. We support OpenAI, Anthropic Claude, and Google Gemini.
-
 
 ## 1. AI Sidebar — three specialized modes
 
@@ -23,6 +22,8 @@ A resizable floating panel with three distinct AI assistants:
 **Revise** is the line editor. It scans in reading order, creates `createSuggestion` tool calls for every rewrite (each with 2+ replacement options and rationales), then ends with a short summary of patterns it noticed. This is for more word-level execution fixes, while Feedback is for more high-level suggestions.
 
 The tool-calling enforcement is what makes this work. You don't get a wall of text to manually copy+paste; each piece of AI output lands as an annotation in the editor. Accept it, reject it, or just ignore it.
+
+This is the core of all AI features: this sidebar glows with a rainbow border when AI is running so you are always aware of your costs.
 
 ## 2. AutoAI — autonomous background reviewer
 

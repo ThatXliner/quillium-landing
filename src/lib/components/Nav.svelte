@@ -16,19 +16,6 @@
 	}
 
 	onMount(() => {
-		const nav = document.getElementById('main-nav');
-		let scrolled = false;
-		window.addEventListener(
-			'scroll',
-			() => {
-				const shouldBeScrolled = window.scrollY > 20;
-				if (shouldBeScrolled !== scrolled) {
-					scrolled = shouldBeScrolled;
-					nav?.classList.toggle('scrolled', scrolled);
-				}
-			},
-			{ passive: true }
-		);
 		document.addEventListener('click', handleClickOutside);
 		return () => document.removeEventListener('click', handleClickOutside);
 	});
@@ -82,12 +69,6 @@
 </nav>
 
 <style>
-	:global(#main-nav.scrolled) {
-		background: rgba(245, 244, 241, 0.75);
-		backdrop-filter: blur(20px);
-		-webkit-backdrop-filter: blur(20px);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-	}
 	.nav-fixed {
 		position: fixed;
 		top: 0;
@@ -95,7 +76,10 @@
 		right: 0;
 		z-index: 100;
 		padding: 1rem 2rem;
-		transition: all 0.3s;
+		background: rgba(245, 244, 241, 0.75);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 	}
 	.mobile-menu-btn {
 		background: none;

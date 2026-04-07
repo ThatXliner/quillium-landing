@@ -7,7 +7,7 @@ author: "Bryan Hu"
 
 ## The core philosophy
 
-Every AI feature in Quillium follows one rule: the AI creates structured annotations, [never raw text edits](./ai-is-not-the-point#what-ai-could-actually-be). All suggestions are reversible, non-destructive, and flow through the same annotation system the human editor uses. You stay in control. The AI doesn't get to touch your words.
+Every AI feature in Quillium follows one rule: the AI creates structured annotations, [never raw text edits](/blog/ai-is-not-the-point#what-ai-could-actually-be). All suggestions are reversible, non-destructive, and flow through the same annotation system the human editor uses. You stay in control. The AI doesn't get to touch your words.
 
 Everything runs BYOK (bring your own key), fully client-side. No Quillium servers are involved at any point. Your API keys live in the OS keychain via Tauri, never in localStorage. We support OpenAI, Anthropic Claude, and Google Gemini.
 

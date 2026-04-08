@@ -1,7 +1,7 @@
 ---
 title: "Your Writing Stays on Your Computer"
-description: "Quillium is local-first. No cloud, no accounts, no sync. Here's what that means for your privacy."
-date: "2026-04-07"
+description: "Quillium is local-first by default. Here's what that means for your privacy."
+date: "2026-04-08"
 author: "Bryan Hu"
 ---
 
@@ -57,17 +57,16 @@ Most apps do the opposite: collect everything by default and let you opt out lat
 
 Why? If nothing is broken in our app (as one should reaonably expect), we have no reason to collect your document information. This policy also makes GDPR/CCPA compliance much easier to implement.
 
-## No accounts, no cloud, no tracking IDs
+## The default is private
 
 I want to state this plainly because it's easy to miss how unusual it is:
 
-- There is no account system. No login. No signup. Of course, accounts are in the far future but they are completely optional and you would have to explicitly *pay for it*.
-- There is no cloud storage by default. No sync. No upload. (Cloud sync will be an optional paid add-on if you want it.)
+- There is no account system today. No login, no signup. When we add accounts for cloud sync down the road, they'll be entirely optional—you'll have to go out of your way to create one.
+- There is no cloud storage today. Again: no sync, no upload. When cloud sync arrives, it'll be a paid add-on you explicitly enable, not something that happens by default.
 - There is no user ID tied to your identity.
-- There is no server that ever sees your documents.
-- There is no server that ever sees your AI conversations.
+- There is no server that sees your documents or your AI conversations.
 
-Quillium is a desktop app that runs on your machine, stores data on your machine, and talks to the internet only when *you* explicitly tell it to—and even then, it talks to *your* provider, not ours.
+Quillium is a desktop app that runs on your machine, stores data on your machine, and talks to the internet only when *you* explicitly tell it to. That's the default today, and it will remain the default.
 
 ## Why this matters
 

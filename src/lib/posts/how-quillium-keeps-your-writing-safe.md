@@ -1,6 +1,6 @@
 ---
 title: "How Quillium Keeps Your Writing Safe"
-description: "Every keystroke is saved. Every crash is caught. Here's how Quillium's robustness guarantees actually work."
+description: "Every keystroke is saved. Every crash is caught. Here's how we approach robustness."
 date: "2026-04-07"
 author: "Bryan Hu"
 ---

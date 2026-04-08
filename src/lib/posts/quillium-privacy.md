@@ -55,7 +55,7 @@ The key word is *was*. By the time you see the notification, the content is alre
 
 Most apps do the opposite: collect everything by default and let you opt out later (if you can find the setting). We collect nothing by default and ask you to opt in if you choose.
 
-Why? If nothing is broken in our app (as one should reaonably expect), we have no reason to collect your document information. This policy also makes GDPR/CCPA compliance much easier to implement.
+Why? If nothing is broken in our app (as one should reasonably expect), we have no reason to collect your document information. This policy also makes GDPR/CCPA compliance much easier to implement. For the full legal details, see our [privacy policy](/privacy).
 
 ## The default is private
 

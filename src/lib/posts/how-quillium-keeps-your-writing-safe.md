@@ -80,17 +80,7 @@ During event replay, each event is processed in a try/catch. If a single event t
 
 </details>
 
-### 3. The error UI must outlive the error
-
-If Quillium crashes, three independent error handlers make sure nothing slips through. If one fails, the others still fire. All of them do the same thing: save an emergency backup, report the error, and show a recovery banner.
-
-The whole app is wrapped in a rendering-level error boundary—if any part of the interface breaks, the boundary catches it. But here's the key: **the crash banner is rendered *outside* that boundary.** If the app's interface is completely broken, the recovery UI still works. It survives the thing it's recovering from.
-
-The crash banner gives you multiple recovery options: restore directly into the editor, download as `.txt` or `.json`, jump to version history, or reload the app. If storage is nearly full, Quillium tries seven progressively smaller backup sizes—75%, 50%, 25%, 10% of your text, then fixed caps of 100k, 10k, and 1k characters—before giving up.
-
-Even on a device with almost no free space (AAA games sure take up a lot of space these days), it fights to save as much of your work as it can.
-
-### 4. Restore should heal, not just paste
+### 3. Restore should heal, not just paste
 
 Restoring from a backup isn't just dumping text back in. Just in case, Quillium performs a "healing restore" that recovers your annotations—revisions, comments, suggestions—along with the text.
 
@@ -98,7 +88,7 @@ It works by remembering the actual text content at each annotation's position, n
 
 One subtle detail: the restore is specially tagged so the suspicious change detector *doesn't* trigger on it. Without this, restoring a backup would look like a massive deletion and create a circular loop of warnings.
 
-### 5. Time travel is always available
+### 4. Time travel is always available
 
 Between automatic snapshots (every 50 changes or 2 minutes), checkpoints you name yourself, and safety snapshots created before suspicious changes, Quillium is constantly building a timeline of your document. You can always go back.
 

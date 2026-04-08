@@ -97,13 +97,9 @@
 		{/if}
 	</p>
 
-	{#if downloadCount > 0}
+	{#if downloadCount > 100}
 		<p class="mb-4 text-[0.85rem] font-medium text-black/40">
-			{#if downloadCount < 50}
-				Be one of the first to try it, no account needed
-			{:else}
-				Join {downloadCount.toLocaleString()}+ writers
-			{/if}
+			Join {downloadCount.toLocaleString()}+ writers
 		</p>
 	{/if}
 
@@ -138,21 +134,60 @@
 	<div
 		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"
 	>
-		<p class="m-0 flex flex-wrap items-center justify-center gap-x-3 text-[0.75rem] tracking-wide text-black/25">
+		<p
+			class="m-0 flex flex-wrap items-center justify-center gap-x-3 text-[0.75rem] tracking-wide text-black/25"
+		>
 			<a
 				href="/blog/quillium-is-not-an-ai-app"
 				class="inline-flex items-center gap-1 text-black/25 underline transition-colors duration-300 hover:text-black/40"
-				><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>You write every word.</a
+				><svg
+					width="12"
+					height="12"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="opacity-50"
+					><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" /><path d="m15 5 4 4" /></svg
+				>You write every word.</a
 			>
 			<a
 				href="/blog/quillium-privacy"
 				class="inline-flex items-center gap-1 text-black/25 underline transition-colors duration-300 hover:text-black/40"
-				><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Fully private.</a
+				><svg
+					width="12"
+					height="12"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="opacity-50"
+					><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path
+						d="M7 11V7a5 5 0 0 1 10 0v4"
+					/></svg
+				>Fully private.</a
 			>
 			<a
 				href="/blog/how-quillium-keeps-your-writing-safe"
 				class="inline-flex items-center gap-1 text-black/25 underline transition-colors duration-300 hover:text-black/40"
-				><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>As robust as we can make it.</a
+				><svg
+					width="12"
+					height="12"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="opacity-50"
+					><path
+						d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+					/><path d="m9 12 2 2 4-4" /></svg
+				>As robust as we can make it.</a
 			>
 		</p>
 		<div class="flex gap-2">

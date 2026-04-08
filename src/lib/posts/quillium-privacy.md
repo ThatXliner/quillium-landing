@@ -25,7 +25,7 @@ Quillium has [optional AI features](./ai-is-not-the-point) that are off by defau
 
 You provide your own API key from whichever provider you want—OpenAI, Anthropic, or Google. When the AI reads your writing, that request goes directly from your machine to your chosen provider. It does not pass through Quillium's servers. There is no proxy, no relay, no middleware. We literally don't have a server for it to go through.
 
-This is called BYOK—bring your own key. It means Quillium never sees your API key, never sees the text you send to AI, and never sees the response. The relationship is between you and your AI provider, and Quillium is just the interface.
+This is called BYOK—bring your own key. It means Quillium never sees your API key, never sees the text you send to AI, and never sees the response. The relationship is between you and your AI provider, and Quillium is just the interface. Obviously, by using AI features, you agree to your chosen provider's terms of service and privacy policy—the app links to these when you configure your API key.
 
 ## Your API keys are stored in the OS keychain
 
@@ -43,7 +43,9 @@ That said, let me be specific about what these analytics are, because "analytics
 
 **We don't track you.** There are no accounts, no login, no user ID tied to your identity. PostHog assigns its own anonymous IDs, and we don't call any identify function with personal information. The only context we attach to events is the app version and that you're on the desktop app. That's it.
 
-**Your document content is never in analytics by default.** The analytics system actively strips document-related properties—words, synonyms, original text—from every event before sending. If you watch a session replay of your app (which would only happen if we're debugging with your consent), the actual text you're writing is masked with asterisks. We can't read your writing even if we wanted to.
+**Your document content is never in analytics by default.** The analytics system actively strips document-related properties—words, synonyms, original text—from every event before sending. our internal session replay telemetry mask the actual text you're writing with asterisks—we can't read your writing even if we wanted to. (There is an optional "Share document analytics" setting, off by default, that removes this masking if you want to help us debug editor-specific issues. You have to explicitly opt in.)
+
+Note that this is separate from AI features. Again, obviously if you use those, your text is sent directly to your chosen AI provider, subject to their Terms of Service and Privacy Policy.
 
 ## We tell you when we *can't* see your data
 
@@ -64,7 +66,7 @@ I want to state this plainly because it's easy to miss how unusual it is:
 - There is no account system today. No login, no signup. When we add accounts for cloud sync down the road, they'll be entirely optional—you'll have to go out of your way to create one.
 - There is no cloud storage today. Again: no sync, no upload. When cloud sync arrives, it'll be a paid add-on you explicitly enable, not something that happens by default.
 - There is no user ID tied to your identity.
-- There is no server that sees your documents or your AI conversations.
+- There is no *Quillium* server that sees your documents or your AI conversations. When you use AI features, requests go directly from your machine to your provider.
 
 Quillium is a desktop app that runs on your machine, stores data on your machine, and talks to the internet only when *you* explicitly tell it to. That's the default today, and it will remain the default.
 

@@ -50,7 +50,7 @@
 			>
 				Privacy Policy
 			</h1>
-			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: March 23, 2026 · Quillium Beta</p>
+			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: April 8, 2026 · Quillium Beta</p>
 
 			<div class="inline-flex gap-0.5 rounded-full bg-white/50 p-1 shadow-sm backdrop-blur-md">
 				<button
@@ -84,8 +84,9 @@
 						>TL;DR</span
 					>
 					<p class="m-0 text-[0.875rem] leading-relaxed text-black/88">
-						We only collect anonymous usage analytics. We don't know who you are, and we never sell
-						your data.
+						We collect anonymous usage analytics and send error reports automatically. If you use AI
+						features, your text goes directly to your chosen AI provider—never through us. We don't
+						know who you are, and we never sell your data.
 					</p>
 				</div>
 
@@ -104,10 +105,10 @@
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">What we collect</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
-								Anonymous usage analytics only—things like which features you use, session length,
-								and device type. We use PostHog for this. <strong class="text-black/88"
-									>No names, emails, or login info.</strong
-								>
+								Anonymous usage analytics—things like which features you use, session length, and
+								device type. We also collect anonymous session recordings of UI interactions (your
+								editor text is masked by default) and automatic error reports. We use PostHog for
+								all of this. <strong class="text-black/88">No names, emails, or login info.</strong>
 							</p>
 						</div>
 					</div>
@@ -163,8 +164,10 @@
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Who can see it</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
-								Only us, via PostHog. The data is anonymized and cannot be linked back to you. We
-								don't sell or share it with third parties for their own use.
+								Analytics go to PostHog only—anonymized and not linked to you. If you use AI
+								features, your text goes directly to your chosen provider (OpenAI, Anthropic, or
+								Google)—we never see it. Dictionary lookups are sent to an external dictionary
+								service. We don't sell or share data with third parties for their own use.
 							</p>
 						</div>
 					</div>
@@ -187,10 +190,11 @@
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Your rights</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
-								Since we don't collect personal data, there's no profile to delete. You can opt out
-								of analytics at any time using the <strong class="text-black/88"
-									>Cookie Settings</strong
-								> link in the footer. California residents have additional rights under the CCPA.
+								Since we don't collect personal data, there's no profile to delete. On the website,
+								opt out via the <strong class="text-black/88">Cookie Settings</strong>
+								link in the footer. In the desktop app, disable analytics via the toggle in
+								<strong class="text-black/88">Settings &gt; Privacy &gt; "Usage analytics"</strong>.
+								California residents have additional rights under the CCPA.
 							</p>
 						</div>
 					</div>
@@ -295,7 +299,26 @@
 						deduplication (which is anonymized).
 					</p>
 
-					<h3>2.2 Email for Beta Signups</h3>
+					<h3>2.2 Session Recordings</h3>
+					<p>
+						PostHog session recording is enabled in the desktop app, which captures UI interactions
+						such as clicks, scrolls, and navigation. <strong
+							>Editor text content is masked by default</strong
+						> — your writing appears as asterisks in recordings. Session recordings help us understand
+						how users navigate the app and diagnose UI issues. See Section 2.7 for the optional setting
+						that controls content masking.
+					</p>
+
+					<h3>2.3 Error and Exception Reports</h3>
+					<p>
+						The desktop app automatically reports JavaScript errors and stack traces to PostHog when
+						they occur. These reports help us identify and fix bugs. Stack traces may occasionally
+						contain fragments of data that was being processed when the error occurred, but we do
+						not intentionally collect user content through this mechanism. Error reporting is
+						disabled when you turn off analytics entirely (see Section 7.1).
+					</p>
+
+					<h3>2.4 Email for Beta Signups</h3>
 					<p>When you join the beta, we collect your email address. We use it solely to:</p>
 					<ul>
 						<li>Send you the app link and access instructions</li>
@@ -307,14 +330,94 @@
 						You can unsubscribe from non-critical emails at any time.
 					</p>
 
-					<h3>2.3 Information We Do Not Collect</h3>
-					<p>At this beta stage, we do not collect:</p>
+					<h3>2.5 Information We Do Not Collect</h3>
+					<p>We do not collect:</p>
 					<ul>
 						<li>Account credentials or social login data</li>
 						<li>Payment or financial information</li>
-						<li>User-generated content from within the editor</li>
+						<li>
+							User-generated content from within the editor with two exceptions: (a) if you enable
+							the optional "Share document analytics" setting (see Section 2.7), some
+							document-related properties may appear in analytics events and session recordings; and
+							(b) if you use AI features, your text is sent directly to your chosen AI provider (see
+							Section 2.6)
+						</li>
 						<li>Precise geolocation data</li>
 					</ul>
+
+					<h3>2.6 AI Features and Third-Party AI Providers</h3>
+					<p>
+						Quillium offers optional AI features that are off by default. When enabled, your
+						document text is sent directly from your device to your chosen AI provider — OpenAI,
+						Anthropic, or Google Gemini. <strong
+							>This data does not pass through Quillium's servers.</strong
+						> We do not see, store, or have access to the text you send or the responses you receive.
+					</p>
+					<p>
+						Your API keys are stored in your operating system's secure keychain and are never stored
+						in the app's local storage. Quillium never transmits your API keys to any server we
+						operate.
+					</p>
+					<p>
+						Each AI provider has its own terms of service, privacy policy, and data retention
+						practices. By using AI features in Quillium, you agree to the terms of your chosen
+						provider. We encourage you to review your provider's policies:
+					</p>
+					<ul>
+						<li>
+							<a
+								href="https://openai.com/policies/privacy-policy"
+								target="_blank"
+								rel="noopener noreferrer">OpenAI Privacy Policy</a
+							>
+						</li>
+						<li>
+							<a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer"
+								>Anthropic Privacy Policy</a
+							>
+						</li>
+						<li>
+							<a
+								href="https://policies.google.com/privacy"
+								target="_blank"
+								rel="noopener noreferrer">Google Privacy Policy</a
+							>
+						</li>
+					</ul>
+
+					<h3>2.7 Two-Tier Privacy Controls (Desktop App)</h3>
+					<p>The desktop app provides two independent privacy settings:</p>
+					<ul>
+						<li>
+							<strong>Usage analytics</strong> (Settings &gt; Privacy) — controls whether any analytics
+							events, session recordings, or error reports are sent to PostHog. When off, all telemetry
+							stops immediately.
+						</li>
+						<li>
+							<strong>Share document analytics</strong> (Settings &gt; Privacy) — an additional, separate
+							opt-in that is off by default. When enabled, it removes editor content masking from session
+							recordings and stops redacting document-related properties (such as words looked up, synonyms
+							selected, and original text) from analytics events. This setting exists so you can help
+							us debug document-specific issues if you choose. It has no effect when usage analytics is
+							off.
+						</li>
+					</ul>
+
+					<h3>2.8 Dictionary and Thesaurus Lookups</h3>
+					<p>
+						When you use the built-in dictionary or thesaurus, the word you look up is sent to an
+						external dictionary API to retrieve definitions and synonyms. These lookups happen
+						directly between your device and the dictionary service — they do not pass through
+						Quillium's servers. We do not store or log the words you look up.
+					</p>
+
+					<h3>2.9 Update Checks</h3>
+					<p>
+						The desktop app periodically contacts our update server to check whether a newer version
+						is available and to download updates. These requests include your current app version
+						and operating system. No personal information or document content is transmitted during
+						update checks.
+					</p>
 				</section>
 
 				<section>
@@ -343,13 +446,28 @@
 						We do not sell, trade, rent, or otherwise transfer your information to third parties for
 						their own commercial purposes.
 					</p>
-					<p>
-						We share anonymous analytics data with <strong>PostHog, Inc.</strong> solely for the
-						purpose of providing analytics services to us. For more information, see
-						<a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer"
-							>PostHog's Privacy Policy</a
-						>.
-					</p>
+					<p>The following third-party services may receive data from the app:</p>
+					<ul>
+						<li>
+							<strong>PostHog, Inc.</strong> — receives anonymous analytics data, session
+							recordings, and error reports. See
+							<a href="https://posthog.com/privacy" target="_blank" rel="noopener noreferrer"
+								>PostHog's Privacy Policy</a
+							>.
+						</li>
+						<li>
+							<strong>AI providers (OpenAI, Anthropic, Google)</strong> — receive document text only when
+							you actively use AI features. Requests go directly from your device to the provider. See
+							Section 2.6.
+						</li>
+						<li>
+							<strong>Dictionary API</strong> — receives individual words when you use dictionary or thesaurus
+							lookups.
+						</li>
+						<li>
+							<strong>Update server</strong> — receives your app version and OS when checking for updates.
+						</li>
+					</ul>
 					<p>
 						We may disclose information if required to do so by law or in response to valid requests
 						by public authorities.
@@ -374,18 +492,26 @@
 						persists for the lifetime of your install (until you uninstall or clear app data).
 					</p>
 					<p>
-						We do not use marketing, advertising, or cross-site tracking cookies. You can manage
-						your cookie preferences at any time using the "Cookie Settings" link in the footer.
+						We do not use marketing, advertising, or cross-site tracking cookies. On the website,
+						you can manage your cookie preferences using the "Cookie Settings" link in the footer.
+						In the desktop app, you can disable analytics entirely via the toggle in Settings &gt;
+						Privacy.
 					</p>
 				</section>
 
 				<section>
 					<h2>6. Data Retention</h2>
 					<p>
-						Anonymous analytics data is retained for up to <strong>24 months</strong>, after which
-						it is aggregated or deleted. Because the data is anonymous, retention periods under CCPA
-						for personal data do not apply; however, we apply the same standards as a matter of good
-						practice.
+						Anonymous analytics data, including session recordings and error reports, is retained in
+						PostHog for up to <strong>24 months</strong>, after which it is aggregated or deleted.
+						Because the data is anonymous, retention periods under CCPA for personal data do not
+						apply; however, we apply the same standards as a matter of good practice.
+					</p>
+					<p>
+						Data sent to third-party AI providers when you use AI features is subject to each
+						provider's own retention policy. Quillium does not control or have access to data held
+						by AI providers. We encourage you to review your provider's data retention practices
+						(see Section 2.6).
 					</p>
 				</section>
 
@@ -393,9 +519,10 @@
 					<h2>7. Your Rights</h2>
 					<h3>7.1 All Users — Opt-Out</h3>
 					<p>
-						You may opt out of analytics data collection at any time using the "Cookie Settings"
-						link in the footer. Once opted out, no new analytics events will be sent from your
-						device.
+						You may opt out of analytics data collection at any time. On the website, use the
+						"Cookie Settings" link in the footer. In the desktop app, use the toggle in Settings
+						&gt; Privacy &gt; "Usage analytics." Once opted out, no new analytics events, session
+						recordings, or error reports will be sent from your device.
 					</p>
 
 					<h3>7.2 California Residents (CCPA / CPRA)</h3>

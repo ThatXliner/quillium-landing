@@ -49,20 +49,6 @@
 			</p>
 		</header>
 
-		<!-- Beta notice -->
-		<div
-			class="my-6 flex items-center gap-3 rounded-lg border border-amber-400/20 bg-amber-400/6 px-4 py-3"
-		>
-			<span
-				class="shrink-0 rounded bg-amber-400/15 px-2 py-0.5 text-[0.6rem] font-bold tracking-[0.08em] text-amber-600 uppercase"
-				>Beta</span
-			>
-			<p class="m-0 text-[0.8rem] text-black/55">
-				These are <strong class="text-black/75">future plans</strong>. Right now everything is
-				simply free, no strings attached.
-			</p>
-		</div>
-
 		<!-- Promises: 2×2 grid -->
 		<section>
 			<p class="mb-4 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
@@ -110,7 +96,19 @@
 
 		<!-- Divider -->
 		<div class="my-12 border-t border-black/6"></div>
-
+		<!-- Beta notice -->
+		<div
+			class="mb-6 flex items-center gap-3 rounded-lg border border-amber-400/20 bg-amber-400/6 px-4 py-3"
+		>
+			<span
+				class="shrink-0 rounded bg-amber-400/15 px-2 py-0.5 text-[0.6rem] font-bold tracking-[0.08em] text-amber-600 uppercase"
+				>Beta</span
+			>
+			<p class="m-0 text-[0.8rem] text-black/55">
+				These are <strong class="text-black/75">future plans</strong>. Right now everything is
+				simply free, no strings attached.
+			</p>
+		</div>
 		<!-- Cards: Sync + Custom -->
 		<section class="mb-12">
 			<div class="mb-5 flex items-baseline gap-2">

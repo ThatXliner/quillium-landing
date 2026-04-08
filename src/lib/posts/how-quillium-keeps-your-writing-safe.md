@@ -98,9 +98,13 @@ Yeah: it's just like Google Docs. Named checkpoints are never auto-pruned—only
 
 The result: it's not just "we recover from crashes." It's that **you can browse and preview any point in your document's history**, and the system is quietly creating recovery points for you in the background.
 
-## Undo that actually works
+## Undo
 
-I've written before about [why the undo button is a lie](./why-the-undo-button-is-a-lie). But this blog post is about reliability, so it's kind of different. But, for completion, it's good to know that Quillium's undo and redo work across annotation changes, version switches, and even implicit deletions.
+One of the biggest responses to reliability is "why not just use undo?" We all know undo is ephmeral, meaning that once you leave (or accidentally crash out of a document), there is no more history. Except for Quillium: you can undo as much as you want.
+
+But most importantly, if you're using undo for what most artists use undo for, you don't need to with Quillium. I've written before about [why the undo button is a lie](./why-the-undo-button-is-a-lie), but that's more of a philosophical angle; this blog post is about reliability.
+
+It's just good to know that Quillium's undo and redo work across annotation changes, version switches, and even implicit deletions.
 
 <details>
 <summary>How annotation undo works</summary>

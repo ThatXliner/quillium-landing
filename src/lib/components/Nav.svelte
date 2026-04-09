@@ -5,7 +5,9 @@
 	let menuOpen = $state(false);
 
 	function closeMenu() {
-		setTimeout(() => { menuOpen = false; }, 0);
+		setTimeout(() => {
+			menuOpen = false;
+		}, 0);
 	}
 
 	function handleClickOutside(e: MouseEvent) {
@@ -22,20 +24,44 @@
 </script>
 
 <nav id="main-nav" class="nav-fixed">
-	<div class="max-w-[72rem] mx-auto px-6 flex items-center justify-between">
-		<a href="/" class="flex items-center gap-3 no-underline text-black/88">
+	<div class="mx-auto flex max-w-[72rem] items-center justify-between px-6">
+		<a href="/" class="flex items-center gap-3 text-black/88 no-underline">
 			<img src="/logo.svg" alt="Quillium" width="32" height="32" class="rounded-lg" />
-			<span class="font-semibold text-[0.95rem] tracking-[-0.01em]">Quillium</span>
+			<span class="text-[0.95rem] font-semibold tracking-[-0.01em]">Quillium</span>
 		</a>
 
 		<!-- Desktop links -->
-		<div class="hidden md:flex items-center gap-8">
-			<a href="/#features" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
-			<a href="/#manifesto" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
-			<a href="/#download" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Download</a>
-			<a href="/blog" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Blog</a>
-			<a href="/pricing" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Pricing</a>
-			<a href="/#download" class="text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-[#15803d] no-underline hover:text-[#166534]">Public Beta</a>
+		<div class="hidden items-center gap-8 md:flex">
+			<a
+				href="/#features"
+				class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				>Features</a
+			>
+			<a
+				href="/#manifesto"
+				class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				>Manifesto</a
+			>
+			<a
+				href="/#download"
+				class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				>Download</a
+			>
+			<a
+				href="/blog"
+				class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				>Blog</a
+			>
+			<a
+				href="/pricing"
+				class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				>Pricing</a
+			>
+			<a
+				href="/#download"
+				class="text-[0.6rem] font-bold tracking-[0.1em] text-[#22c55e]/70 uppercase no-underline hover:text-[#22c55e]"
+				>Public Beta</a
+			>
 		</div>
 
 		<!-- Mobile hamburger -->
@@ -47,9 +73,19 @@
 		>
 			<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
 				{#if menuOpen}
-					<path d="M6 6l10 10M16 6L6 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+					<path
+						d="M6 6l10 10M16 6L6 16"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+					/>
 				{:else}
-					<path d="M4 6h14M4 11h14M4 16h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+					<path
+						d="M4 6h14M4 11h14M4 16h14"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+					/>
 				{/if}
 			</svg>
 		</button>
@@ -116,9 +152,9 @@
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		color: #15803d;
+		color: rgba(34, 197, 94, 1);
 	}
 	.mobile-link--beta:hover {
-		color: #166534;
+		color: #22c55e;
 	}
 </style>

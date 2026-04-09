@@ -7,7 +7,7 @@
 	<title>Pricing – Quillium</title>
 	<meta
 		name="description"
-		content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this."
+		content="Quillium is free. With no tiers and no paywalls, here's how we plan to sustain this."
 	/>
 	<link rel="canonical" href="https://quillium.bryanhu.com/pricing" />
 	<meta property="og:type" content="website" />
@@ -15,14 +15,14 @@
 	<meta property="og:title" content="Pricing – Quillium" />
 	<meta
 		property="og:description"
-		content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this."
+		content="Quillium is free. With no tiers and no paywalls, here's how we plan to sustain this."
 	/>
 	<meta property="og:site_name" content="Quillium" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content="Pricing – Quillium" />
 	<meta
 		name="twitter:description"
-		content="Quillium is free. No tiers, no paywalls. Here's how we plan to sustain this."
+		content="Quillium is free. With no tiers and no paywalls, here's how we plan to sustain this."
 	/>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />

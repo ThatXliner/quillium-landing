@@ -6,6 +6,7 @@ interface GitHubAsset {
 }
 
 export interface ReleaseData {
+	version: string | null;
 	assets: { name: string; url: string }[];
 }
 
@@ -19,7 +20,7 @@ export async function load({ fetch }): Promise<{ release: ReleaseData }> {
 				url: a.browser_download_url
 			}));
 			if (assets.length) {
-				return { release: { assets } };
+				return { release: { version: data.tag_name ?? null, assets } };
 			}
 		}
 	} catch {
@@ -28,6 +29,7 @@ export async function load({ fetch }): Promise<{ release: ReleaseData }> {
 
 	return {
 		release: {
+			version: null,
 			assets: []
 		}
 	};

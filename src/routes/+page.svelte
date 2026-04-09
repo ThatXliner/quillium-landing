@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import posthog from 'posthog-js';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
@@ -11,6 +12,9 @@
 	let { data } = $props();
 
 	onMount(() => {
+		if (data.release.version) {
+			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
+		}
 		// Scroll reveal with Intersection Observer
 		const revealEls = document.querySelectorAll('.reveal');
 		const revealObserver = new IntersectionObserver(

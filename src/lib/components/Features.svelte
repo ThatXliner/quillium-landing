@@ -284,7 +284,7 @@
 	}
 	.feature-body {
 		font-size: 14px;
-		color: rgba(0, 0, 0, 0.5);
+		color: rgba(0, 0, 0, 0.58);
 		line-height: 1.75;
 		margin: 0;
 	}

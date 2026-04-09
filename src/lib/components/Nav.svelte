@@ -30,12 +30,12 @@
 
 		<!-- Desktop links -->
 		<div class="hidden md:flex items-center gap-8">
-			<a href="/#features" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
-			<a href="/#manifesto" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
-			<a href="/#download" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Download</a>
-			<a href="/blog" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Blog</a>
-			<a href="/pricing" class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88">Pricing</a>
-			<a href="/#download" class="text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-[#22c55e]/70 no-underline hover:text-[#22c55e]">Public Beta</a>
+			<a href="/#features" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Features</a>
+			<a href="/#manifesto" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Manifesto</a>
+			<a href="/#download" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Download</a>
+			<a href="/blog" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Blog</a>
+			<a href="/pricing" class="text-[0.8rem] font-medium text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Pricing</a>
+			<a href="/#download" class="text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-[#15803d] no-underline hover:text-[#166534]">Public Beta</a>
 		</div>
 
 		<!-- Mobile hamburger -->
@@ -85,7 +85,7 @@
 		background: none;
 		border: none;
 		cursor: pointer;
-		color: rgba(0, 0, 0, 0.6);
+		color: rgba(0, 0, 0, 0.7);
 		padding: 4px;
 	}
 	.mobile-menu {
@@ -104,7 +104,7 @@
 		padding: 8px 0;
 		font-size: 0.85rem;
 		font-weight: 500;
-		color: rgba(0, 0, 0, 0.5);
+		color: rgba(0, 0, 0, 0.6);
 		text-decoration: none;
 		transition: color 0.2s;
 	}
@@ -116,9 +116,9 @@
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		color: rgba(34, 197, 94, 0.7);
+		color: #15803d;
 	}
 	.mobile-link--beta:hover {
-		color: #22c55e;
+		color: #166534;
 	}
 </style>

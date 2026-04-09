@@ -9,7 +9,7 @@
 			Writing tools have always assumed you know where you're going.
 		</h2>
 
-		<p class="mb-8 text-[1.05rem] leading-relaxed text-black/28">
+		<p class="mb-8 text-[1.05rem] leading-relaxed text-black/55">
 			But writing is thinking, and thinking is inherently non-linear
 		</p>
 
@@ -20,7 +20,7 @@
 				<h3 class="mb-5 text-[0.65rem] font-bold tracking-[0.12em] text-black/88 uppercase">
 					The Problem
 				</h3>
-				<p class="text-[0.95rem] leading-[1.75] text-black/50">
+				<p class="text-[0.95rem] leading-[1.75] text-black/60">
 					Writing is a web of attempts—a tangle of better and worse, a conversation between
 					drafts. Every blank page pretending otherwise is lying to you.
 				</p>
@@ -32,15 +32,15 @@
 					Who It's For
 				</h3>
 				<ul class="m-0 flex list-none flex-col gap-4 p-0">
-					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50">
+					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/60">
 						<span class="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcbc05]"></span>
 						Novelists writing the same chapter four different ways
 					</li>
-					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50">
+					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/60">
 						<span class="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcbc05]"></span>
 						Essayists testing three theses before committing to one
 					</li>
-					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50">
+					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/60">
 						<span class="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcbc05]"></span>
 						Memoirists still reshaping sentences at 2am
 					</li>
@@ -57,7 +57,7 @@
 			<span class="text-[#fcbc05]">feature</span>, not a problem to manage?"
 		</p>
 
-		<!-- <p class="mx-auto max-w-[640px] text-[0.95rem] leading-[1.8] text-black/50">
+		<!-- <p class="mx-auto max-w-[640px] text-[0.95rem] leading-[1.8] text-black/60">
 			AI as a second voice in the room — one that annotates rather than interrupts, responds to your
 			text rather than pulling you away from it. Warm. Calm. Focused. Because the writing is the
 			product.

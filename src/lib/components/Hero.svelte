@@ -27,11 +27,9 @@
 	let showPeriod = $state(false);
 	let showCursor = $state(true);
 	let downloadCount = $state(0);
-	let heroVariant = $state('control');
+
 
 	onMount(() => {
-		const variant = posthog.getFeatureFlag('hero-subtext-variant');
-		if (variant) heroVariant = variant as string;
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
 		else if (ua.includes('win')) detected = 'windows';
@@ -88,13 +86,8 @@
 	</h1>
 
 	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/60">
-		{#if heroVariant === 'test'}
-			Write a sentence three different ways, and decide which to pick later. Branch any phrase
-			without losing a single word.
-		{:else}
-			For the novelist who writes the same chapter four different ways. For the essayist who doesn't
-			know the thesis until page three. Quillium keeps every version, so nothing is ever lost.
-		{/if}
+		Write a sentence three different ways, and decide which to pick later. Branch any phrase
+		without losing a single word.
 	</p>
 
 	{#if downloadCount > 100}
@@ -132,17 +125,17 @@
 	</div>
 
 	<div
-		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"
+		class="reveal reveal-delay-4 mt-24 flex flex-col items-center gap-4 border-t border-black/4 pt-16 max-md:gap-3"
 	>
 		<p
-			class="m-0 flex flex-wrap items-center justify-center gap-x-3 text-[0.75rem] tracking-wide text-black/50"
+			class="m-0 flex flex-wrap items-center justify-center gap-x-5 text-[0.9rem] tracking-wide text-black/50"
 		>
 			<a
 				href="/blog/quillium-is-not-an-ai-app"
 				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
 				><svg
-					width="12"
-					height="12"
+					width="15"
+					height="15"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -157,8 +150,8 @@
 				href="/blog/quillium-privacy"
 				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
 				><svg
-					width="12"
-					height="12"
+					width="15"
+					height="15"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -175,8 +168,8 @@
 				href="/blog/how-quillium-keeps-your-writing-safe"
 				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
 				><svg
-					width="12"
-					height="12"
+					width="15"
+					height="15"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -190,12 +183,6 @@
 				>For your peace of mind.</a
 			>
 		</p>
-		<div class="flex gap-2">
-			<span class="h-2 w-2 rounded-full bg-[#3b82f6]"></span>
-			<span class="h-2 w-2 rounded-full bg-[#a855f7]"></span>
-			<span class="h-2 w-2 rounded-full bg-[#22c55e]"></span>
-			<span class="h-2 w-2 rounded-full bg-[#fcbc05]"></span>
-		</div>
 	</div>
 </section>
 

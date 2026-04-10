@@ -27,7 +27,7 @@ Google Docs is built for transcription. You know what you want to say, you type 
 
 ## Why not AI?
 
-What?? Quillium's not an AI writing app. It's not even remotely close to AI. This question is a category error, and Quillium not a real alternative nor competitor.
+What?? Quillium's not an AI writing app. It's not even remotely close to AI. This question is a category error, and Quillium not a real alternative *nor* competitor.
 
 AI writing tools—ChatGPT, Claude, Jasper, Grammarly's "rewrite" features—are *generation* tools. You give them a prompt or a rough draft and they produce text. The output is words you didn't write. That's the whole point.
 

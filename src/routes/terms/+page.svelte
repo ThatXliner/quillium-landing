@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { CircleAlert, CircleX, CircleCheck, Download, Lock } from '@lucide/svelte';
 
 	let activeTab: 'plain' | 'legal' = $state('plain');
 </script>
@@ -90,15 +91,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-400/10"
 						>
-							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path d="M9 2a7 7 0 100 14A7 7 0 009 2z" stroke="#f59e0b" stroke-width="1.4" />
-								<path
-									d="M9 6v4M9 12v.5"
-									stroke="#f59e0b"
-									stroke-width="1.4"
-									stroke-linecap="round"
-								/>
-							</svg>
+							<CircleAlert size={18} strokeWidth={1.4} color="#f59e0b" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Beta Status</h3>
@@ -114,16 +107,7 @@
 						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-400/10">
-							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path d="M3 9a6 6 0 1012 0A6 6 0 003 9z" stroke="#ef4444" stroke-width="1.4" />
-								<path
-									d="M9 6v3.5M11.5 12L9 9.5"
-									stroke="#ef4444"
-									stroke-width="1.4"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<CircleX size={18} strokeWidth={1.4} color="#ef4444" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">No Liability</h3>
@@ -140,20 +124,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path
-									d="M9 2C5.134 2 2 5.134 2 9s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z"
-									stroke="#3b82f6"
-									stroke-width="1.4"
-								/>
-								<path
-									d="M6 9l2 2 4-4"
-									stroke="#3b82f6"
-									stroke-width="1.4"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<CircleCheck size={18} strokeWidth={1.4} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Feedback</h3>
@@ -170,21 +141,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-400/10"
 						>
-							<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-								<path
-									d="M9 2v5M6.5 4.5L9 7l2.5-2.5"
-									stroke="#10b981"
-									stroke-width="1.4"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M3 9a6 6 0 1012 0"
-									stroke="#10b981"
-									stroke-width="1.4"
-									stroke-linecap="round"
-								/>
-							</svg>
+							<Download size={18} strokeWidth={1.4} color="#10b981" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Privacy & Updates</h3>
@@ -201,23 +158,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<rect
-									x="3"
-									y="8"
-									width="14"
-									height="10"
-									rx="2"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-								/>
-								<path
-									d="M7 8V6a3 3 0 016 0v2"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-									stroke-linecap="round"
-								/>
-							</svg>
+							<Lock size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">

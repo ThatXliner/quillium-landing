@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { Clock, Star, Lock, Globe, AlignLeft, Mail } from '@lucide/svelte';
 
 	let activeTab: 'plain' | 'legal' = $state('plain');
 </script>
@@ -97,10 +98,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<circle cx="10" cy="10" r="8" stroke="#3b82f6" stroke-width="1.5" />
-								<path d="M10 6v4l3 2" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-							</svg>
+							<Clock size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">What we collect</h3>
@@ -119,14 +117,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<path
-									d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<Star size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Why we collect it</h3>
@@ -143,23 +134,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<rect
-									x="3"
-									y="8"
-									width="14"
-									height="10"
-									rx="2"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-								/>
-								<path
-									d="M7 8V6a3 3 0 016 0v2"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-									stroke-linecap="round"
-								/>
-							</svg>
+							<Lock size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Who can see it</h3>
@@ -178,14 +153,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<path
-									d="M10 17C13.866 17 17 13.866 17 10C17 6.134 13.866 3 10 3C6.134 3 3 6.134 3 10C3 13.866 6.134 17 10 17Z"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-								/>
-								<path d="M10 7v3l2 2" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" />
-							</svg>
+							<Globe size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Your rights</h3>
@@ -205,14 +173,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<path
-									d="M3 5h14M3 10h14M3 15h8"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-									stroke-linecap="round"
-								/>
-							</svg>
+							<AlignLeft size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Cookies</h3>
@@ -232,19 +193,7 @@
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
 						>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<path
-									d="M16 4H4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-								/>
-								<path
-									d="M8 10h4M10 8v4"
-									stroke="#3b82f6"
-									stroke-width="1.5"
-									stroke-linecap="round"
-								/>
-							</svg>
+							<Mail size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Questions?</h3>

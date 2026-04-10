@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
+	import { GitBranch, MessageSquare, Star, CircleCheck, Play, Monitor } from '@lucide/svelte';
 	import revisionsImg from '$lib/assets/screenshots/revisions.png';
 	import aiAnnotationsImg from '$lib/assets/screenshots/ai-annotations.png';
 	import annotationsBelongImg from '$lib/assets/screenshots/annotations-belong.png';
@@ -56,33 +57,10 @@
 				}}
 			>
 				{#if showRevisionsDemo}
-					<svg
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<rect x="3" y="3" width="18" height="18" rx="2" />
-						<rect x="8" y="8" width="8" height="8" rx="1" />
-					</svg>
+					<Monitor size={16} strokeWidth={2} />
 					Show screenshot
 				{:else}
-					<svg
-						width="16"
-						height="16"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<polygon points="6,3 20,12 6,21" />
-					</svg>
+					<Play size={16} strokeWidth={2} />
 					See it in action
 				{/if}
 			</button>
@@ -90,18 +68,7 @@
 
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(168,85,247,0.08);">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-					<circle cx="5" cy="5" r="2.5" stroke="#a855f7" stroke-width="1.5" />
-					<circle cx="5" cy="19" r="2.5" stroke="#a855f7" stroke-width="1.5" />
-					<circle cx="19" cy="12" r="2.5" stroke="#a855f7" stroke-width="1.5" />
-					<path d="M5 7.5V16.5" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" />
-					<path
-						d="M5 10C5 10 5 12 8.5 12H16.5"
-						stroke="#a855f7"
-						stroke-width="1.5"
-						stroke-linecap="round"
-					/>
-				</svg>
+				<GitBranch size={24} strokeWidth={1.5} color="#a855f7" />
 			</div>
 			<h3 class="feature-heading">Write in Branches</h3>
 			<p class="feature-lead">
@@ -115,32 +82,7 @@
 	<div class="reveal feature-row feature-row--reversed">
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(252,188,5,0.1);">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-					<path
-						d="M4 5C4 4.45 4.45 4 5 4H19C19.55 4 20 4.45 20 5V15C20 15.55 19.55 16 19 16H14L10 20.5V16H5C4.45 16 4 15.55 4 15V5Z"
-						stroke="#d97706"
-						stroke-width="1.5"
-						stroke-linejoin="round"
-					/>
-					<line
-						x1="8"
-						y1="9"
-						x2="16"
-						y2="9"
-						stroke="#d97706"
-						stroke-width="1.3"
-						stroke-linecap="round"
-					/>
-					<line
-						x1="8"
-						y1="12"
-						x2="14"
-						y2="12"
-						stroke="#d97706"
-						stroke-width="1.3"
-						stroke-linecap="round"
-					/>
-				</svg>
+				<MessageSquare size={24} strokeWidth={1.5} color="#d97706" />
 			</div>
 			<h3 class="feature-heading">Great Minds Think Together</h3>
 			<p class="feature-lead">
@@ -169,14 +111,7 @@
 
 			<div class="feature-text">
 				<div class="feature-icon-wrap" style="background:rgba(34,197,94,0.08);">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-						<path
-							d="M12 3L13.8 8.1L19.2 8.1L14.7 11.4L16.2 16.5L12 13.4L7.8 16.5L9.3 11.4L4.8 8.1L10.2 8.1L12 3Z"
-							stroke="#22c55e"
-							stroke-width="1.5"
-							stroke-linejoin="round"
-						/>
-					</svg>
+					<Star size={24} strokeWidth={1.5} color="#22c55e" />
 				</div>
 				<h3 class="feature-heading">A Second Set of Eyes</h3>
 				<p class="feature-lead">
@@ -197,20 +132,7 @@
 	<div class="reveal feature-row feature-row--full">
 		<div class="feature-text">
 			<div class="feature-icon-wrap" style="background:rgba(59,130,246,0.08);">
-				<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-					<path
-						d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Z"
-						stroke="#3b82f6"
-						stroke-width="1.5"
-					/>
-					<path
-						d="M8 12l3 3 5-6"
-						stroke="#3b82f6"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
+				<CircleCheck size={24} strokeWidth={1.5} color="#3b82f6" />
 			</div>
 			<h3 class="feature-heading">Never Lose Your Work</h3>
 			<p class="feature-lead">

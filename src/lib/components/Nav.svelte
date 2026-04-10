@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import { Menu, X } from '@lucide/svelte';
 
 	let menuOpen = $state(false);
 
@@ -71,23 +72,11 @@
 			aria-label="Toggle menu"
 			aria-expanded={menuOpen}
 		>
-			<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-				{#if menuOpen}
-					<path
-						d="M6 6l10 10M16 6L6 16"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-					/>
-				{:else}
-					<path
-						d="M4 6h14M4 11h14M4 16h14"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-					/>
-				{/if}
-			</svg>
+			{#if menuOpen}
+				<X size={22} strokeWidth={1.5} />
+			{:else}
+				<Menu size={22} strokeWidth={1.5} />
+			{/if}
 		</button>
 	</div>
 

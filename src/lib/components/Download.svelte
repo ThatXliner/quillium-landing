@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
+	import { Download } from '@lucide/svelte';
 
 	const REPO = 'ThatXliner/quillium-releases';
 
@@ -76,16 +77,7 @@
 				class="btn-primary mb-4 inline-flex items-center gap-2"
 				onclick={() => trackDownload(platform.primary.url)}
 			>
-				<svg width="18" height="18" viewBox="0 0 18 18" fill="none" class="shrink-0">
-					<path
-						d="M9 2v10M9 12L5 8M9 12l4-4"
-						stroke="currentColor"
-						stroke-width="1.5"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-					<path d="M3 14h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-				</svg>
+				<Download size={18} strokeWidth={1.5} class="shrink-0" />
 				{platform.primary.cta}
 			</a>
 

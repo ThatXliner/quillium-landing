@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { BookOpen, PenLine, Clock } from '@lucide/svelte';
+</script>
+
 <!-- ==================== WHO IT'S FOR ==================== -->
 <section id="for-writers" class="writers-section">
 	<div class="writers-inner">
@@ -10,11 +14,7 @@
 		<div class="writers-list">
 			<div class="reveal writer-card">
 				<div class="writer-icon-wrap">
-					<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-						<path d="M11 5C11 5 8 4 4 4.5V17C8 16.5 11 17.5 11 17.5" stroke="#5a554f" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-						<path d="M11 5C11 5 14 4 18 4.5V17C14 16.5 11 17.5 11 17.5" stroke="#5a554f" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-						<line x1="11" y1="5" x2="11" y2="17.5" stroke="#5a554f" stroke-width="1.2" stroke-linecap="round" />
-					</svg>
+					<BookOpen size={22} strokeWidth={1.4} color="#5a554f" />
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Novelist</h3>
@@ -26,11 +26,7 @@
 
 			<div class="reveal reveal-delay-1 writer-card">
 				<div class="writer-icon-wrap">
-					<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-						<path d="M14 4L18 8L8 18L4 18L4 14L14 4Z" stroke="#5a554f" stroke-width="1.4" stroke-linejoin="round" />
-						<line x1="11" y1="7" x2="15" y2="11" stroke="#5a554f" stroke-width="1.2" stroke-linecap="round" />
-						<line x1="4" y1="21" x2="18" y2="21" stroke="#5a554f" stroke-width="1.3" stroke-linecap="round" />
-					</svg>
+					<PenLine size={22} strokeWidth={1.4} color="#5a554f" />
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Essayist</h3>
@@ -42,11 +38,7 @@
 
 			<div class="reveal reveal-delay-2 writer-card">
 				<div class="writer-icon-wrap">
-					<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-						<circle cx="11" cy="11" r="7.5" stroke="#5a554f" stroke-width="1.4" />
-						<path d="M11 7V11L13.5 13.5" stroke="#5a554f" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-						<line x1="8" y1="3" x2="14" y2="3" stroke="#5a554f" stroke-width="1.3" stroke-linecap="round" />
-					</svg>
+					<Clock size={22} strokeWidth={1.4} color="#5a554f" />
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Memoirist</h3>

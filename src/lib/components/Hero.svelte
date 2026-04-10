@@ -125,17 +125,17 @@
 	</div>
 
 	<div
-		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"
+		class="reveal reveal-delay-4 mt-24 flex flex-col items-center gap-4 border-t border-black/4 pt-16 max-md:gap-3"
 	>
 		<p
-			class="m-0 flex flex-wrap items-center justify-center gap-x-3 text-[0.75rem] tracking-wide text-black/25 contrast-more:text-black/50"
+			class="m-0 flex flex-wrap items-center justify-center gap-x-5 text-[0.9rem] tracking-wide text-black/50"
 		>
 			<a
 				href="/blog/quillium-is-not-an-ai-app"
-				class="inline-flex items-center gap-1 text-black/25 contrast-more:text-black/50 underline transition-colors duration-300 hover:text-black/40 contrast-more:hover:text-black/70"
+				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
 				><svg
-					width="12"
-					height="12"
+					width="15"
+					height="15"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -148,10 +148,10 @@
 			>
 			<a
 				href="/blog/quillium-privacy"
-				class="inline-flex items-center gap-1 text-black/25 contrast-more:text-black/50 underline transition-colors duration-300 hover:text-black/40 contrast-more:hover:text-black/70"
+				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
 				><svg
-					width="12"
-					height="12"
+					width="15"
+					height="15"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -166,10 +166,10 @@
 			>
 			<a
 				href="/blog/how-quillium-keeps-your-writing-safe"
-				class="inline-flex items-center gap-1 text-black/25 contrast-more:text-black/50 underline transition-colors duration-300 hover:text-black/40 contrast-more:hover:text-black/70"
+				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
 				><svg
-					width="12"
-					height="12"
+					width="15"
+					height="15"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"

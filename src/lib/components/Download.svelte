@@ -64,7 +64,7 @@
 		>
 			Start writing sideways.
 		</h2>
-		<p class="mb-8 text-[0.95rem] leading-[1.7] text-black/60">
+		<p class="mb-8 text-[0.95rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
 			Download Quillium and start writing. Free, offline, yours.
 		</p>
 
@@ -97,9 +97,9 @@
 			{/if}
 		{/if}
 
-		<p class="mb-4 text-[0.7rem] text-black/50">
+		<p class="mb-4 text-[0.7rem] text-black/30 contrast-more:text-black/50">
 			By downloading, you agree to the
-			<a href="/terms" class="text-black/55 underline underline-offset-2 hover:text-black/70"
+			<a href="/terms" class="text-black/40 contrast-more:text-black/55 underline underline-offset-2 hover:text-black/55 contrast-more:hover:text-black/70"
 				>Terms of Service</a
 			>
 		</p>
@@ -117,7 +117,7 @@
 
 		<!-- All platforms toggle -->
 		<button
-			class="mt-6 text-[0.75rem] text-black/50 underline decoration-black/25 underline-offset-2 transition-colors hover:text-black/70"
+			class="mt-6 text-[0.75rem] text-black/35 contrast-more:text-black/50 underline decoration-black/15 contrast-more:decoration-black/25 underline-offset-2 transition-colors hover:text-black/55 contrast-more:hover:text-black/70"
 			onclick={() => (showAllPlatforms = !showAllPlatforms)}
 		>
 			{showAllPlatforms ? 'Hide' : 'Show'} all platforms
@@ -134,7 +134,7 @@
 							: ''}"
 					>
 						<p
-							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/60 uppercase"
+							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 contrast-more:text-black/60 uppercase"
 						>
 							{platform.label}
 							{#if detected === key}
@@ -154,7 +154,7 @@
 						{#each platform.alt as alt}
 							<a
 								href={alt.url}
-								class="block text-[0.72rem] text-black/50 no-underline hover:text-black/70"
+								class="block text-[0.72rem] text-black/35 contrast-more:text-black/50 no-underline hover:text-black/55 contrast-more:hover:text-black/70"
 								onclick={() => trackDownload(alt.url)}
 							>
 								{alt.name}

@@ -72,7 +72,7 @@
 		<img src="/logo.svg" alt="Quillium mark" width="96" height="96" />
 	</div>
 
-	<p class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/55 uppercase">
+	<p class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/35 contrast-more:text-black/55 uppercase">
 		The Non-Linear Writing App
 	</p>
 
@@ -85,13 +85,13 @@
 		>
 	</h1>
 
-	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/60">
+	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
 		Write a sentence three different ways, and decide which to pick later. Branch any phrase
 		without losing a single word.
 	</p>
 
 	{#if downloadCount > 100}
-		<p class="mb-4 text-[0.85rem] font-medium text-black/55">
+		<p class="mb-4 text-[0.85rem] font-medium text-black/40 contrast-more:text-black/55">
 			Join {downloadCount.toLocaleString()}+ writers
 		</p>
 	{/if}
@@ -116,26 +116,26 @@
 				See how it works
 			</a>
 		</div>
-		<p class="text-[0.7rem] text-black/50">
+		<p class="text-[0.7rem] text-black/30 contrast-more:text-black/50">
 			By downloading, you agree to the <a
 				href="/terms"
-				class="text-black/55 underline underline-offset-2 hover:text-black/70">Terms of Service</a
+				class="text-black/40 contrast-more:text-black/55 underline underline-offset-2 hover:text-black/55 contrast-more:hover:text-black/70">Terms of Service</a
 			>
 		</p>
 	</div>
 
 	<div
-		class="reveal reveal-delay-4 mt-24 flex flex-col items-center gap-4 border-t border-black/4 pt-16 max-md:gap-3"
+		class="reveal reveal-delay-4 mt-16 flex flex-col items-center gap-4 border-t border-black/4 pt-12 max-md:gap-3"
 	>
 		<p
-			class="m-0 flex flex-wrap items-center justify-center gap-x-5 text-[0.9rem] tracking-wide text-black/50"
+			class="m-0 flex flex-wrap items-center justify-center gap-x-3 text-[0.75rem] tracking-wide text-black/25 contrast-more:text-black/50"
 		>
 			<a
 				href="/blog/quillium-is-not-an-ai-app"
-				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
+				class="inline-flex items-center gap-1 text-black/25 contrast-more:text-black/50 underline transition-colors duration-300 hover:text-black/40 contrast-more:hover:text-black/70"
 				><svg
-					width="15"
-					height="15"
+					width="12"
+					height="12"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -148,10 +148,10 @@
 			>
 			<a
 				href="/blog/quillium-privacy"
-				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
+				class="inline-flex items-center gap-1 text-black/25 contrast-more:text-black/50 underline transition-colors duration-300 hover:text-black/40 contrast-more:hover:text-black/70"
 				><svg
-					width="15"
-					height="15"
+					width="12"
+					height="12"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"
@@ -166,10 +166,10 @@
 			>
 			<a
 				href="/blog/how-quillium-keeps-your-writing-safe"
-				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
+				class="inline-flex items-center gap-1 text-black/25 contrast-more:text-black/50 underline transition-colors duration-300 hover:text-black/40 contrast-more:hover:text-black/70"
 				><svg
-					width="15"
-					height="15"
+					width="12"
+					height="12"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"

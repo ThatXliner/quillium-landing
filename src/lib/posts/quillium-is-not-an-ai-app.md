@@ -7,7 +7,7 @@ author: "Bryan Hu"
 
 I keep having the same conversation.
 
-Someone sees Quillium for the first time, glances at the name, maybe skims the tagline, and their first question is: "So how is this different from ChatGPT?"
+"How is this different from Grammarly?" That's what a friend replied when I posted about Quillium on my Instagram story. He didn't even look at the website—he saw "writing tool" and assumed the worst. Someone else glanced at the name, skimmed the tagline, and asked: "So how is this different from ChatGPT?"
 
 It's not different from ChatGPT—it's not even *related* to ChatGPT. Quillium is a writing app. You open it, you type words, you edit those words. The thing that makes it interesting is that you can *branch* those words: fork a sentence, try it three different ways, keep every version alive. A better editor, that's the whole pitch.
 
@@ -39,11 +39,11 @@ No text is generated for you. No sentences are autocompleted. No grammar is "cor
 
 ## Then why did people mention AI?
 
-Because we *do* have an optional AI feature—emphasis on *optional*. It's off by default, and it's a feedback tool rather than a generation tool: it reads what you wrote and leaves notes, like a workshop partner. Think "this paragraph shifts tone—was that intentional?" not "here's a better version of your paragraph" (because AI can never accurately know your intent and replicate your tone).
+Because we *do* have an optional AI feature—emphasis on *optional*. It's off by default, it's a feedback tool rather than a generation tool, and it requires you to bring your own API key. By every measure, it's a footnote. I wrote about the philosophy behind it in [AI Is Not the Point](/blog/ai-is-not-the-point).
 
-I wrote about this at length in [AI Is Not the Point](/blog/ai-is-not-the-point). The short version: it's a feature for people who want it, hidden from people who don't, and it requires you to bring your own API key. By every measure, it's a footnote.
+But even a footnote about AI can become the headline. A friend shared Quillium with her creative writing club. She described it exactly right: non-linear writing, branching sentences, keeping multiple versions alive. The club liked the editing concept. But the AI part—mentioned at the very end as a "completely optional feature"—they were not too fond of. AI stealing art, the environmental costs, AI controversy in general—they didn't want it anywhere *near* their writing.
 
-But even a footnote about AI can become the headline. I learned that the hard way, which is why the landing page now has zero mention of it.
+That's the problem. The interesting work gets lost in the noise, and a feature that barely exists becomes the only thing people see. Which is why the landing page now has zero mention of it.
 
 ## The real problem is category collapse
 
@@ -53,7 +53,7 @@ But that message can't land if people never get past "oh, another AI writing thi
 
 ## What I'm doing about it
 
-Because of these incidents, I've changed the landing page so that it now leads with "writing app" in the meta descriptions instead of anything that could be read as ambiguous. There's a line in the hero section that says it plainly: *No AI ghostwriting. No autocomplete. Just a better place to write.*
+Because of these incidents, I've changed the landing page so that it now leads with "writing app" in the meta descriptions instead of anything that could be read as ambiguous. There's a line in the hero section that says it plainly: *No AI ghostwriting. No autocomplete. Just a better place to write.* (although that's probably been changed by now, after many iterations of the landing page)
 
 It feels a little silly to have to disclaim what your product *isn't*, but if that's what it takes for people to actually see what it *is*, fine. I'd rather over-clarify than be permanently miscategorized.
 

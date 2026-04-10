@@ -1,25 +1,15 @@
 ---
 title: "AI Is Not the Point"
-description: "Why Quillium's AI features are off by default, and why writers are right to be suspicious of AI in the first place."
+description: "What AI in a writing tool should actually look like, and why Quillium's AI features are off by default."
 date: "2026-03-23"
 author: "Bryan Hu"
 ---
 
-"How is this different from Grammarly?"
+A friend shared Quillium with her creative writing club. She described it exactly right: non-linear writing, branching sentences, keeping multiple versions alive. The club liked the editing concept. But the AI part—which was mentioned at the very end as a "completely optional feature"—they were not too fond of. AI stealing art, the environmental costs, AI controversy in general—they didn't want it anywhere *near* their writing.
 
-That's what a friend replied when I posted about Quillium on my Instagram story. He didn't even look at the website: he saw "writing tool" and assumed the worst.
+And honestly, I can't blame them. Writers are right to be suspicious of AI. Writing *is* thinking—it's the one creative act where the process *is* the product. If a tool is doing the writing, you're not writing anymore; you're just approving, outsourcing your thinking.
 
-Around the same time, another friend shared Quillium with her creative writing club. She described it exactly right: non-linear writing, branching sentences, keeping multiple versions alive. The club liked the editing concept. But the AI part—which was mentioned at the very end as a "completely optional feature"—they were not too fond of. AI stealing art, the environmental costs, AI controversy in general—they didn't want it anywhere *near* their writing.
-
-Two different people, two different contexts, same reaction. And honestly, I can't blame either of them.
-
-## The suspicion is earned
-
-The last two years have flooded the internet with AI-generated slop: blog posts that say nothing, marketing copy that reads like a fever dream, dead vocabulary, that unmistakable "AI accent" that shows up everywhere something has been artificially generated.
-
-"AI-powered" has become a red flag, a shorthand for *this product will try to write for you whether you asked or not*. It's a signal aimed at executives and VCs, a buzzword to increase stakeholder value and stock shares. It was never about the user. *Nobody asked for AI.*
-
-Writers especially have reason to be wary because writing *is* thinking. It's the one creative act where the process *is* the product. If a tool is doing the writing, you're not writing anymore; you're just approving, outsourcing your thinking.
+I've [written separately](/blog/quillium-is-not-an-ai-app) about why people keep assuming Quillium is an AI product and how that assumption buries the actual innovation. This post is about something different: what AI in a writing tool *should* look like, and why Quillium's approach is deliberately minimal.
 
 ## The Grammarly problem
 
@@ -59,8 +49,4 @@ That's how tools should work.
 
 The best tools disappear into the work: a good pen doesn't tell you what to write, and a good notebook doesn't rearrange your pages.
 
-That's why Quillium is a non-linear editor first. The ability to branch a sentence, hold five versions of a paragraph side by side, and keep every draft alive—that's the point. That's what makes revision feel like exploration instead of destruction. Everything else is secondary, and if a feature doesn't serve the writing, it doesn't belong in the foreground.
-
 Writers have been burned enough by tools that promise to "help" and end up taking over. The bar is simple: does this make me a better writer, or does it make writing less mine?
-
-P.S. yes, it was due to this incident that now the main landing page has absolutely zero mention of artificial intelligence or generative technology. Not even the "second set of eyes" because that's *still* hard to market, especially to the creative bunch.

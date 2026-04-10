@@ -21,8 +21,12 @@
 					The Problem
 				</h3>
 				<p class="text-[0.95rem] leading-[1.75] text-black/50 contrast-more:text-black/60">
-					Writing is a web of attempts—a tangle of better and worse, a conversation between
-					drafts. Every blank page pretending otherwise is lying to you.
+					You've been here before: <code
+						class="rounded bg-black/5 px-1.5 py-0.5 font-mono text-[0.85em]"
+						>draft_v3_FINAL_real.docx</code
+					>. Writing requires editing, and editing is thinking. If thinking isn't linear, your
+					writing isn't either. With only one document and one timeline, every alternate version is
+					a hack you have to manage yourself.
 				</p>
 			</div>
 			<div
@@ -32,15 +36,21 @@
 					Who It's For
 				</h3>
 				<ul class="m-0 flex list-none flex-col gap-4 p-0">
-					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50 contrast-more:text-black/60">
+					<li
+						class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50 contrast-more:text-black/60"
+					>
 						<span class="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcbc05]"></span>
 						Novelists writing the same chapter four different ways
 					</li>
-					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50 contrast-more:text-black/60">
+					<li
+						class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50 contrast-more:text-black/60"
+					>
 						<span class="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcbc05]"></span>
 						Essayists testing three theses before committing to one
 					</li>
-					<li class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50 contrast-more:text-black/60">
+					<li
+						class="flex items-baseline gap-2.5 text-[0.95rem] leading-relaxed text-black/50 contrast-more:text-black/60"
+					>
 						<span class="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#fcbc05]"></span>
 						Memoirists still reshaping sentences at 2am
 					</li>

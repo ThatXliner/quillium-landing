@@ -51,7 +51,7 @@
 
 		<!-- Promises: 2×2 grid -->
 		<section>
-			<p class="mb-4 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+			<p class="my-4 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
 				What will always be free
 			</p>
 			<div

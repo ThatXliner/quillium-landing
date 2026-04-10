@@ -117,3 +117,18 @@ html {
 	margin-left: auto;
 	cursor: pointer;
 }
+
+@media (prefers-contrast: more) {
+	.section-eyebrow {
+		color: rgba(0, 0, 0, 0.55);
+	}
+	.btn-dismiss {
+		color: rgba(0, 0, 0, 0.55);
+	}
+	.btn-dismiss:hover {
+		color: rgba(0, 0, 0, 0.7);
+	}
+	.btn-branch-instead {
+		color: rgba(0, 0, 0, 0.55);
+	}
+}

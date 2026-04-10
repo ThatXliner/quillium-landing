@@ -87,11 +87,6 @@
 				Fork any sentence. Keep every version. Navigate your creative decisions like chapters, not
 				mistakes.
 			</p>
-			<p class="feature-body">
-				No more "draft 1," "draft 2," "draft FINAL." Your ideas live in the document itself:
-				visible, selectable, alive. Switch between them instantly. The one you didn't choose is
-				still there when you need it.
-			</p>
 		</div>
 	</div>
 
@@ -130,10 +125,6 @@
 			<p class="feature-lead">
 				Comments, revisions, and suggestions float beside the text they're about.
 			</p>
-			<p class="feature-body">
-				Every note is anchored to the exact phrase it concerns. Scroll past it, and it moves with
-				the text. Resolve it, and it disappears cleanly.
-			</p>
 		</div>
 
 		<img
@@ -170,12 +161,6 @@
 					Not everyone is free to review your work. Now, you don't have to wait. Ask for feedback,
 					find the right word, get clarity — all without leaving your flow.
 				</p>
-				<p class="feature-body">
-					It isn't a chatbot in the corner. It responds to your text right where you are, giving
-					suggestions as you write. Note that this feature is <b class="font-bold"
-						>completely optional</b
-					> and currently requires that you provide your own API key.
-				</p>
 				<div class="tag-list">
 					<span class="tag tag--green">Review &amp; revise</span>
 					<span class="tag tag--green">Find the right word</span>
@@ -210,9 +195,6 @@
 				Your work is saved locally. It's durable, reliable, instant, and no internet connection is
 				required. A database with 25+ years of experience means even if your computer crashes
 				mid-sentence, nothing is lost.
-			</p>
-			<p class="feature-body italic">
-				Beware that the current beta may not hold up to our reliability standards
 			</p>
 			<div class="tag-list">
 				<span class="tag tag--blue">Offline-first</span>
@@ -281,12 +263,6 @@
 		color: rgba(0, 0, 0, 0.6);
 		line-height: 1.8;
 		margin: 0 0 16px 0;
-	}
-	.feature-body {
-		font-size: 14px;
-		color: rgba(0, 0, 0, 0.5);
-		line-height: 1.75;
-		margin: 0;
 	}
 	.tag-list {
 		display: flex;

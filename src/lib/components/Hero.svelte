@@ -114,7 +114,7 @@
 			>
 				Download Now
 				<span
-					class="rounded-full border border-white/25 bg-white/15 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] uppercase"
+					class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
 					>Beta</span
 				>
 			</a>

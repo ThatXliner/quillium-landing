@@ -77,8 +77,11 @@
 				class="btn-primary mb-4 inline-flex items-center gap-2"
 				onclick={() => trackDownload(platform.primary.url)}
 			>
-				<Download size={18} strokeWidth={1.5} class="shrink-0" />
 				{platform.primary.cta}
+				<span
+					class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
+					>Beta</span
+				>
 			</a>
 
 			{#if detected === 'windows'}
@@ -89,27 +92,21 @@
 			{/if}
 		{/if}
 
-		<p class="mb-4 text-[0.7rem] text-black/30 contrast-more:text-black/50">
+		<p class=" text-[0.75rem] text-black/22 contrast-more:text-black/45">
 			By downloading, you agree to the
-			<a href="/terms" class="text-black/40 contrast-more:text-black/55 underline underline-offset-2 hover:text-black/55 contrast-more:hover:text-black/70"
+			<a
+				href="/terms"
+				class="text-black/30 underline underline-offset-2 hover:text-black/45 contrast-more:text-black/50 contrast-more:hover:text-black/65"
 				>Terms of Service</a
 			>
 		</p>
-
-		<!-- Fine print -->
-		<p class="mb-0 text-[0.7rem] leading-relaxed text-black/30">
-			<span class="inline-flex items-center gap-1.5 align-middle">
-				<span
-					class="rounded-full border border-amber-400/30 bg-amber-400/10 px-1.5 py-px text-[0.55rem] font-bold tracking-[0.06em] text-amber-600 uppercase"
-					>Beta</span
-				>
-			</span>
-			&middot; Features may change. Back up your work.
+		<p class="my-2 text-[0.75rem] leading-relaxed text-black/22 contrast-more:text-black/45">
+			In public beta status: Features may change. Back up your work.
 		</p>
 
 		<!-- All platforms toggle -->
 		<button
-			class="mt-6 text-[0.75rem] text-black/35 contrast-more:text-black/50 underline decoration-black/15 contrast-more:decoration-black/25 underline-offset-2 transition-colors hover:text-black/55 contrast-more:hover:text-black/70"
+			class="mt-6 text-[0.75rem] text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"
 			onclick={() => (showAllPlatforms = !showAllPlatforms)}
 		>
 			{showAllPlatforms ? 'Hide' : 'Show'} all platforms
@@ -126,7 +123,7 @@
 							: ''}"
 					>
 						<p
-							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 contrast-more:text-black/60 uppercase"
+							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
 						>
 							{platform.label}
 							{#if detected === key}
@@ -146,7 +143,7 @@
 						{#each platform.alt as alt}
 							<a
 								href={alt.url}
-								class="block text-[0.72rem] text-black/35 contrast-more:text-black/50 no-underline hover:text-black/55 contrast-more:hover:text-black/70"
+								class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
 								onclick={() => trackDownload(alt.url)}
 							>
 								{alt.name}

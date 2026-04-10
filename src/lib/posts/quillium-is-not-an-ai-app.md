@@ -1,6 +1,6 @@
 ---
 title: "Quillium Is Not an AI App"
-description: "Why everyone assumes every new writing tool is AI-powered, and why Quillium isn't."
+description: "How AI hype swallowed the 'writing tool' category, and why Quillium's actual innovation keeps getting buried under it."
 date: "2026-03-23"
 author: "Bryan Hu"
 ---

@@ -22,7 +22,7 @@ I'm in early development and things are still rough around the edges. If this re
 
 I'll be writing more about the ideas behind Quillium on this blog. Here's a reading order if you want to go deeper:
 
-1. **[Quillium Is Not an AI App](/blog/quillium-is-not-an-ai-app)** — Why everyone assumes every new writing tool is AI-powered, and why Quillium isn't.
+1. **[Quillium Is Not an AI App](/blog/quillium-is-not-an-ai-app)** — Why everyone assumes every new writing tool is AI-powered,and why Quillium's actual innovation keeps getting buried under it.
     - More in depth: **[AI Is Not the Point](/blog/ai-is-not-the-point)** — What AI in a writing tool should actually look like, and why Quillium's is off by default.
 2. **[The Myth of the First Draft](/blog/the-myth-of-the-first-draft)** — Why "just finish the draft" is bad advice, and why writing is exploration, not a pipeline.
 3. **[Why the Undo Button Is a Lie](/blog/why-the-undo-button-is-a-lie)** — The technical argument: undo is a stack, and stacks are the wrong data structure for revision.

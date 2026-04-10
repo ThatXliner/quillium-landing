@@ -27,9 +27,13 @@
 	let showPeriod = $state(false);
 	let showCursor = $state(true);
 	let downloadCount = $state(0);
-
+	let showNoAiBadge = $state(true);
 
 	onMount(() => {
+		posthog.onFeatureFlags(() => {
+			const variant = posthog.getFeatureFlag('no-ai-bs-badge');
+			showNoAiBadge = variant !== 'hide-badge';
+		});
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
 		else if (ua.includes('win')) detected = 'windows';
@@ -72,7 +76,9 @@
 		<img src="/logo.svg" alt="Quillium mark" width="96" height="96" />
 	</div>
 
-	<p class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/35 contrast-more:text-black/55 uppercase">
+	<p
+		class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/35 uppercase contrast-more:text-black/55"
+	>
 		The Non-Linear Writing App
 	</p>
 
@@ -85,9 +91,11 @@
 		>
 	</h1>
 
-	<p class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
-		Write a sentence three different ways, and decide which to pick later. Branch any phrase
-		without losing a single word.
+	<p
+		class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50 contrast-more:text-black/60"
+	>
+		Write a sentence three different ways, and decide which to pick later. Branch any phrase without
+		losing a single word.
 	</p>
 
 	{#if downloadCount > 100}
@@ -119,7 +127,8 @@
 		<p class="text-[0.7rem] text-black/30 contrast-more:text-black/50">
 			By downloading, you agree to the <a
 				href="/terms"
-				class="text-black/40 contrast-more:text-black/55 underline underline-offset-2 hover:text-black/55 contrast-more:hover:text-black/70">Terms of Service</a
+				class="text-black/40 underline underline-offset-2 hover:text-black/55 contrast-more:text-black/55 contrast-more:hover:text-black/70"
+				>Terms of Service</a
 			>
 		</p>
 	</div>
@@ -144,7 +153,7 @@
 					stroke-linejoin="round"
 					class="opacity-50"
 					><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" /><path d="m15 5 4 4" /></svg
-				>You write every word.</a
+				>Write every word{showNoAiBadge ? ' (No AI bs)' : ''}.</a
 			>
 			<a
 				href="/blog/quillium-privacy"
@@ -180,7 +189,7 @@
 					><path
 						d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
 					/><path d="m9 12 2 2 4-4" /></svg
-				>For your peace of mind.</a
+				>Safe and secure.</a
 			>
 		</p>
 	</div>

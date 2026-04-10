@@ -10,8 +10,13 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 	let { data } = $props();
+	let showManifesto = $state(true);
 
 	onMount(() => {
+		posthog.onFeatureFlags(() => {
+			const variant = posthog.getFeatureFlag('show-manifesto-section');
+			showManifesto = variant !== 'hide-manifesto';
+		});
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
 		}
@@ -134,9 +139,11 @@
 
 	<div class="warm-divider section-divider"></div>
 
-	<Manifesto />
+	{#if showManifesto}
+		<Manifesto />
 
-	<div class="warm-divider"></div>
+		<div class="warm-divider"></div>
+	{/if}
 
 	<Download release={data.release} />
 </main>

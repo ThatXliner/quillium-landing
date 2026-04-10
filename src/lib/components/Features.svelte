@@ -49,18 +49,39 @@
 						revisionsGif = mod.default;
 					}
 					showRevisionsDemo = !showRevisionsDemo;
-					posthog.capture('demo_toggle_clicked', { feature: 'revisions', showing_demo: showRevisionsDemo });
+					posthog.capture('demo_toggle_clicked', {
+						feature: 'revisions',
+						showing_demo: showRevisionsDemo
+					});
 				}}
 			>
 				{#if showRevisionsDemo}
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<rect x="3" y="3" width="18" height="18" rx="2"/>
-						<rect x="8" y="8" width="8" height="8" rx="1"/>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<rect x="3" y="3" width="18" height="18" rx="2" />
+						<rect x="8" y="8" width="8" height="8" rx="1" />
 					</svg>
 					Show screenshot
 				{:else}
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<polygon points="6,3 20,12 6,21"/>
+					<svg
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<polygon points="6,3 20,12 6,21" />
 					</svg>
 					See it in action
 				{/if}
@@ -84,8 +105,8 @@
 			</div>
 			<h3 class="feature-heading">Write in Branches</h3>
 			<p class="feature-lead">
-				Fork any sentence. Keep every version. Navigate your creative decisions like chapters, not
-				mistakes.
+				Fork any sentence. Keep every version. Navigate your creative decisions freely and try what
+				might work.
 			</p>
 		</div>
 	</div>
@@ -124,6 +145,7 @@
 			<h3 class="feature-heading">Great Minds Think Together</h3>
 			<p class="feature-lead">
 				Comments, revisions, and suggestions float beside the text they're about.
+				<a href="/pricing" class="text-black/40 underline underline-offset-2 hover:text-black/55">Collaboration and sync in the future</a>.
 			</p>
 		</div>
 
@@ -315,7 +337,9 @@
 		border: 1px solid rgba(168, 85, 247, 0.2);
 		border-radius: 9999px;
 		cursor: pointer;
-		transition: background 0.2s, border-color 0.2s;
+		transition:
+			background 0.2s,
+			border-color 0.2s;
 	}
 	.demo-toggle:hover {
 		background: rgba(168, 85, 247, 0.14);

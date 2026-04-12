@@ -15,21 +15,29 @@ export function initReveal() {
 						? 0.45
 						: 0;
 
-		gsap.fromTo(
-			el,
-			{ opacity: 0, y: 48 },
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.9,
-				delay,
-				ease: 'power3.out',
-				scrollTrigger: {
-					trigger: el,
-					start: 'top 95%',
-					once: true
+		const rect = el.getBoundingClientRect();
+		const alreadyVisible = rect.top < window.innerHeight;
+
+		if (alreadyVisible) {
+			// Already in viewport on load — animate immediately, no ScrollTrigger
+			gsap.fromTo(el, { opacity: 0, y: 48 }, { opacity: 1, y: 0, duration: 0.9, delay, ease: 'power3.out' });
+		} else {
+			gsap.fromTo(
+				el,
+				{ opacity: 0, y: 48 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.9,
+					delay,
+					ease: 'power3.out',
+					scrollTrigger: {
+						trigger: el,
+						start: 'top 95%',
+						once: true
+					}
 				}
-			}
-		);
+			);
+		}
 	});
 }

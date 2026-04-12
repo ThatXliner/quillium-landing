@@ -59,15 +59,24 @@
 
 <!-- ==================== DOWNLOAD ==================== -->
 <section id="download" class="px-8 py-16 text-center">
-	<div class="reveal mx-auto max-w-[36rem]">
+	<div class="mx-auto max-w-[36rem]">
 		<h2
 			class="mb-3 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
 		>
 			Start writing sideways.
 		</h2>
-		<p class="mb-8 text-[0.95rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
+		<p class="mb-4 text-[0.95rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
 			Download Quillium and start writing. Free, offline, yours.
 		</p>
+		<div
+			class="mx-auto mb-6 flex w-fit items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/8 px-3.5 py-2 text-left text-[0.73rem] text-black/60 contrast-more:border-amber-500/50 contrast-more:text-black/75"
+		>
+			<span class="shrink-0 text-[0.9rem]">⚠️</span>
+			<span
+				>Public beta{#if release.version}&nbsp; ({release.version}){/if}: features may change. Back
+				up your work.</span
+			>
+		</div>
 
 		<!-- Primary download button -->
 		{#if detected !== 'unknown'}
@@ -78,7 +87,7 @@
 					class="btn-primary inline-flex items-center gap-2"
 					onclick={() => trackDownload(platform.primary.url)}
 				>
-					{platform.primary.cta}{#if release.version}&nbsp;|&nbsp;{release.version}{/if}
+					{platform.primary.cta}
 					<span
 						class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
 						>Beta</span
@@ -110,7 +119,7 @@
 			{/if}
 		{/if}
 
-		<p class=" text-[0.75rem] text-black/22 contrast-more:text-black/45">
+		<p class="text-[0.75rem] text-black/22 contrast-more:text-black/45">
 			By downloading, you agree to the
 			<a
 				href="/terms"
@@ -118,13 +127,6 @@
 				>Terms of Service</a
 			>
 		</p>
-		<div
-			class="mx-auto my-2 flex max-w-[22rem] items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/8 px-3.5 py-2 text-left text-[0.73rem] text-black/60 contrast-more:border-amber-500/50 contrast-more:text-black/75"
-		>
-			<span class="shrink-0 text-[0.9rem]">⚠️</span>
-			<span>Public beta: features may change. Back up your work.</span>
-		</div>
-
 		<!-- All platforms toggle -->
 		<button
 			class="mt-6 text-[0.75rem] text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"

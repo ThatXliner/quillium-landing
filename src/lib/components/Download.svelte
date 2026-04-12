@@ -66,11 +66,11 @@
 			Start writing sideways.
 		</h2>
 
-		<!-- Primary download button with dropdown -->
+		<!-- Primary download button with dropdown toggle -->
 		{#if detected !== 'unknown'}
 			{@const platform = downloads[detected]}
 			<div class="mb-4 flex items-center justify-center">
-				<div class="relative inline-flex">
+				<div class="inline-flex">
 					<a
 						href={platform.primary.url}
 						class="btn-primary inline-flex items-center gap-2"
@@ -83,55 +83,10 @@
 						class="btn-primary border-l border-white/20 px-2"
 						style="border-radius: 0 10px 10px 0;"
 						onclick={() => (dropdownOpen = !dropdownOpen)}
-						onblur={() => setTimeout(() => (dropdownOpen = false), 150)}
 						aria-label="Show all platforms"
 					>
 						<ChevronDown size={14} />
 					</button>
-
-					{#if dropdownOpen}
-						<div
-							class="absolute top-full right-0 left-0 z-10 mt-1 rounded-xl border border-black/6 bg-white p-3 text-left shadow-lg"
-						>
-							{#each platformOrder as key}
-								{@const p = downloads[key]}
-								<div class="mb-2 last:mb-0">
-									<p
-										class="m-0 mb-1 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
-									>
-										{p.label}
-										{#if detected === key}
-											<span
-												class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
-												>(detected)</span
-											>
-										{/if}
-									</p>
-									<a
-										href={p.primary.url}
-										class="mb-0.5 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
-										onclick={() => trackDownload(p.primary.url)}
-									>
-										{p.primary.name}
-									</a>
-									{#each p.alt as alt}
-										<a
-											href={alt.url}
-											class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
-											onclick={() => trackDownload(alt.url)}
-										>
-											{alt.name}
-										</a>
-									{/each}
-									{#if key === 'windows'}
-										<p class="m-0 mt-1 text-[0.6rem] leading-relaxed text-amber-600/60">
-											Not code-signed. Windows may show a warning.
-										</p>
-									{/if}
-								</div>
-							{/each}
-						</div>
-					{/if}
 				</div>
 			</div>
 
@@ -152,4 +107,51 @@
 			>
 		</p>
 	</div>
+
+	{#if dropdownOpen}
+		<div class="mx-auto mt-2 max-w-[36rem] grid grid-cols-1 gap-3 text-left min-[480px]:grid-cols-3">
+			{#each platformOrder as key}
+				{@const p = downloads[key]}
+				<div
+					class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected ===
+					key
+						? 'ring-2 ring-blue-400/20'
+						: ''}"
+				>
+					<p
+						class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
+					>
+						{p.label}
+						{#if detected === key}
+							<span
+								class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
+								>(detected)</span
+							>
+						{/if}
+					</p>
+					<a
+						href={p.primary.url}
+						class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
+						onclick={() => trackDownload(p.primary.url)}
+					>
+						{p.primary.name}
+					</a>
+					{#each p.alt as alt}
+						<a
+							href={alt.url}
+							class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
+							onclick={() => trackDownload(alt.url)}
+						>
+							{alt.name}
+						</a>
+					{/each}
+					{#if key === 'windows'}
+						<p class="m-0 mt-2 text-[0.6rem] leading-relaxed text-amber-600/60">
+							Not code-signed. Windows may show a warning.
+						</p>
+					{/if}
+				</div>
+			{/each}
+		</div>
+	{/if}
 </section>

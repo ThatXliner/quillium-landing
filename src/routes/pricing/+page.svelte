@@ -176,7 +176,7 @@
 							<li class="check-item">Custom features, branding, integrations</li>
 							<li class="check-item">
 								<a
-									href="mailto:thatxliner@gmail.com"
+									href="mailto:support@quillium.bryanhu.com"
 									class="text-[#3b82f6] no-underline hover:underline">Email us</a
 								> to discuss
 							</li>
@@ -218,7 +218,7 @@
 					<p class="why-label">Have a better idea?</p>
 					<p class="why-text">
 						Genuinely, <a
-							href="mailto:thatxliner@gmail.com"
+							href="mailto:support@quillium.bryanhu.com"
 							class="text-[#3b82f6] no-underline hover:underline">email us</a
 						>.
 					</p>

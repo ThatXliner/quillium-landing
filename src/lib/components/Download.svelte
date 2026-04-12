@@ -77,13 +77,7 @@
 				class="btn-primary mb-4 inline-flex items-center gap-2"
 				onclick={() => trackDownload(platform.primary.url)}
 			>
-				{platform.primary.cta}
-				{#if release.version}
-					<span
-						class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] opacity-70"
-						>{release.version}</span
-					>
-				{/if}
+				{platform.primary.cta}{#if release.version} {release.version}{/if}
 				<span
 					class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
 					>Beta</span

@@ -199,8 +199,8 @@
 							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Questions?</h3>
 							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
 								Email us at <a
-									href="mailto:thatxliner@gmail.com"
-									class="text-[#3b82f6] no-underline hover:underline">thatxliner@gmail.com</a
+									href="mailto:support@quillium.bryanhu.com"
+									class="text-[#3b82f6] no-underline hover:underline">support@quillium.bryanhu.com</a
 								>. We're a small team and we'll respond personally.
 							</p>
 						</div>
@@ -486,7 +486,7 @@
 						We do not sell or share personal information as defined under the CCPA. The analytics
 						data we collect is anonymous and does not constitute "personal information" under
 						California law. To submit a CCPA request, contact us at <a
-							href="mailto:thatxliner@gmail.com">thatxliner@gmail.com</a
+							href="mailto:support@quillium.bryanhu.com">support@quillium.bryanhu.com</a
 						>.
 					</p>
 				</section>
@@ -527,7 +527,7 @@
 					</p>
 					<p>
 						<strong>Quillium</strong><br />
-						Email: <a href="mailto:thatxliner@gmail.com">thatxliner@gmail.com</a>
+						Email: <a href="mailto:support@quillium.bryanhu.com">support@quillium.bryanhu.com</a>
 					</p>
 					<p>We aim to respond to all inquiries within 30 days.</p>
 				</section>

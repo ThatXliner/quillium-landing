@@ -290,7 +290,7 @@
 					<h2>10. Contact</h2>
 					<p>
 						Questions about these Terms? Email us at
-						<a href="mailto:thatxliner@gmail.com">thatxliner@gmail.com</a>.
+						<a href="mailto:support@quillium.bryanhu.com">support@quillium.bryanhu.com</a>.
 					</p>
 				</section>
 

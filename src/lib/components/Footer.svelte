@@ -75,7 +75,7 @@
 	</div>
 
 	<div class="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-6">
-		<a href="mailto:thatxliner@gmail.com" class="text-[0.75rem] text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Contact</a>
+		<a href="mailto:support@quillium.bryanhu.com" class="text-[0.75rem] text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Contact</a>
 		<a href="/terms" class="text-[0.75rem] text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Terms</a>
 		<a href="/privacy" class="text-[0.75rem] text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88">Privacy</a>
 		<button onclick={() => window.dispatchEvent(new Event('open-cookie-consent'))} class="text-[0.75rem] text-black/50 contrast-more:text-black/60 bg-transparent border-none cursor-pointer p-0 transition-colors duration-300 hover:text-black/88">Cookie Settings</button>

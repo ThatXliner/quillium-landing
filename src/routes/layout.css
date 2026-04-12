@@ -41,22 +41,11 @@ html {
 	margin: 0;
 }
 
-/* ── Scroll reveal ── */
+/* ── Scroll reveal (initial state, animated by GSAP) ── */
 .reveal {
 	opacity: 0;
 	transform: translateY(24px);
-	transition:
-		opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-		transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal.visible {
-	opacity: 1;
-	transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.45s; }
 
 /* ── Buttons (shared across components) ── */
 .btn-primary {

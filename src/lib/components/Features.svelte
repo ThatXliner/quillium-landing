@@ -20,7 +20,7 @@
 
 <!-- ==================== FEATURES ==================== -->
 <section id="features" class="features-section">
-	<div class="features-header reveal">
+	<div class="reveal features-header">
 		<p class="section-eyebrow">What makes it different</p>
 		<h2 class="section-heading">The tools your writing actually needs.</h2>
 	</div>

@@ -59,7 +59,7 @@
 
 <!-- ==================== DOWNLOAD ==================== -->
 <section id="download" class="px-8 py-16 text-center">
-	<div class="mx-auto max-w-[36rem]">
+	<div class="reveal mx-auto max-w-[36rem]">
 		<h2
 			class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
 		>
@@ -74,14 +74,14 @@
 					<a
 						href={platform.primary.url}
 						class="btn-primary inline-flex items-center gap-2"
-					style="border-radius: 10px 0 0 10px;"
+						style="border-radius: 10px 0 0 10px;"
 						onclick={() => trackDownload(platform.primary.url)}
 					>
 						{platform.primary.cta}
 					</a>
 					<button
 						class="btn-primary border-l border-white/20 px-2"
-					style="border-radius: 0 10px 10px 0;"
+						style="border-radius: 0 10px 10px 0;"
 						onclick={() => (dropdownOpen = !dropdownOpen)}
 						onblur={() => setTimeout(() => (dropdownOpen = false), 150)}
 						aria-label="Show all platforms"
@@ -143,7 +143,7 @@
 			{/if}
 		{/if}
 
-		<p class="mt-8 text-[0.75rem] text-black/22 contrast-more:text-black/45">
+		<p class="mt-8 text-xs text-black/22 contrast-more:text-black/45">
 			By downloading, you agree to the
 			<a
 				href="/terms"

@@ -17,11 +17,11 @@ export function initReveal() {
 
 		gsap.fromTo(
 			el,
-			{ opacity: 0, y: 24 },
+			{ opacity: 0, y: 48 },
 			{
 				opacity: 1,
 				y: 0,
-				duration: 0.7,
+				duration: 0.9,
 				delay,
 				ease: 'power3.out',
 				scrollTrigger: {

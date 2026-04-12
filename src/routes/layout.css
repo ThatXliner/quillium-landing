@@ -44,7 +44,7 @@ html {
 /* ── Scroll reveal (initial state, animated by GSAP) ── */
 .reveal {
 	opacity: 0;
-	transform: translateY(24px);
+	transform: translateY(48px);
 }
 
 /* ── Buttons (shared across components) ── */

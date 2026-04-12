@@ -72,17 +72,35 @@
 		<!-- Primary download button -->
 		{#if detected !== 'unknown'}
 			{@const platform = downloads[detected]}
-			<a
-				href={platform.primary.url}
-				class="btn-primary mb-4 inline-flex items-center gap-2"
-				onclick={() => trackDownload(platform.primary.url)}
-			>
-				{platform.primary.cta}{#if release.version} {release.version}{/if}
-				<span
-					class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
-					>Beta</span
+			<div class="mb-4 flex flex-wrap items-center justify-center gap-3">
+				<a
+					href={platform.primary.url}
+					class="btn-primary inline-flex items-center gap-2"
+					onclick={() => trackDownload(platform.primary.url)}
 				>
-			</a>
+					{platform.primary.cta}{#if release.version}&nbsp;|&nbsp;{release.version}{/if}
+					<span
+						class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
+						>Beta</span
+					>
+				</a>
+
+				{#if detected === 'mac'}
+					<span class="text-[0.75rem] text-black/25">or</span>
+					<a
+						href="#"
+						class="transition-opacity hover:opacity-80"
+						onclick={() => trackDownload('#')}
+					>
+						<img
+							src="/download-on-mas-black.svg"
+							alt="Download on the Mac App Store"
+							width="156"
+							height="40"
+						/>
+					</a>
+				{/if}
+			</div>
 
 			{#if detected === 'windows'}
 				<p class="mb-3 text-[0.65rem] leading-relaxed text-amber-600/70">

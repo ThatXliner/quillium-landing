@@ -31,17 +31,9 @@
 					}
 				});
 			},
-			{ threshold: 0, rootMargin: '0px 0px -20px 0px' }
+			{ threshold: 0.01 }
 		);
-		revealEls.forEach((el) => {
-			const rect = el.getBoundingClientRect();
-			// Already in or above the viewport — show immediately
-			if (rect.bottom > 0 && rect.top < window.innerHeight) {
-				el.classList.add('visible');
-			} else {
-				revealObserver.observe(el);
-			}
-		});
+		revealEls.forEach((el) => revealObserver.observe(el));
 
 		// Smooth scroll for anchor links
 		document.querySelectorAll('a[href^="#"]').forEach((link) => {

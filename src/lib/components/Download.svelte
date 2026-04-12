@@ -58,7 +58,7 @@
 
 <!-- ==================== DOWNLOAD ==================== -->
 <section id="download" class="px-8 py-16 text-center">
-	<div class="reveal mx-auto max-w-[36rem]">
+	<div class="mx-auto max-w-[36rem]">
 		<h2
 			class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
 		>

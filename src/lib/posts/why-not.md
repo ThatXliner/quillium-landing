@@ -47,7 +47,12 @@ This one is for the developers reading this. You already know Git. You use it ev
 
 So why aren't you using it for your writing?
 
-Git is built for code. That means it's built around files, commits, and diffs—three concepts that map awkwardly onto prose. But a commit message for "rewrote the second paragraph three times" is meaningless. A diff that shows you what changed line-by-line across a 4,000-word essay isn't useful when the line breaks are arbitrary. Merge conflicts in prose produce output that reads like noise. And the discipline of writing good commit messages, staging changes, maintaining branch names—it's overhead that makes sense when you're shipping software, but it's dead weight when you're trying to think on the page.
+Git is built for code. That means it's built around files, commits, and diffs—three concepts that map awkwardly onto prose.
+
+
+But a commit message for "rewrote the second paragraph three times" is meaningless. A diff that shows you what changed line-by-line across a 4,000-word essay isn't useful when the line breaks are arbitrary. Merge conflicts in prose produce output that reads like noise.
+
+And the discipline of writing good commit messages, staging changes, maintaining branch names...it's overhead that makes sense when you're shipping software, but it's dead weight when you're trying to think on the page.
 
 Git's granularity is the commit. Quillium's is the sentence. Or word, or phrase. That difference matters more than it sounds. You can fork a single clause (like a formal version versus a conversational one) without `git checkout -b`, without switching contexts, and (most importantly) without writing a commit message. You just fork it, both versions exist, and you keep writing.
 

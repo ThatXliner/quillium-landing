@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
-	import { Download } from '@lucide/svelte';
+	import { ChevronDown } from '@lucide/svelte';
 
 	const REPO = 'ThatXliner/quillium-releases';
 
@@ -42,7 +42,7 @@
 	});
 
 	let detected: Platform = $state('unknown');
-	let showAllPlatforms = $state(false);
+	let dropdownOpen = $state(false);
 	onMount(() => {
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
@@ -61,54 +61,78 @@
 <section id="download" class="px-8 py-16 text-center">
 	<div class="mx-auto max-w-[36rem]">
 		<h2
-			class="mb-3 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
+			class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
 		>
 			Start writing sideways.
 		</h2>
-		<p class="mb-4 text-[0.95rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
-			Download Quillium and start writing. Free, offline, yours.
-		</p>
-		<div
-			class="mx-auto mb-6 flex w-fit items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/8 px-3.5 py-2 text-left text-[0.73rem] text-black/60 contrast-more:border-amber-500/50 contrast-more:text-black/75"
-		>
-			<span class="shrink-0 text-[0.9rem]">⚠️</span>
-			<span
-				>Public beta{#if release.version}&nbsp; ({release.version}){/if}: features may change. Back
-				up your work.</span
-			>
-		</div>
 
-		<!-- Primary download button -->
+		<!-- Primary download button with dropdown -->
 		{#if detected !== 'unknown'}
 			{@const platform = downloads[detected]}
-			<div class="mb-4 flex flex-wrap items-center justify-center gap-3">
-				<a
-					href={platform.primary.url}
-					class="btn-primary inline-flex items-center gap-2"
-					onclick={() => trackDownload(platform.primary.url)}
-				>
-					{platform.primary.cta}
-					<span
-						class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
-						>Beta</span
-					>
-				</a>
-
-				{#if detected === 'mac'}
-					<span class="text-[0.75rem] text-black/25">or</span>
+			<div class="mb-4 flex items-center justify-center">
+				<div class="relative inline-flex">
 					<a
-						href="#"
-						class="transition-opacity hover:opacity-80"
-						onclick={() => trackDownload('#')}
+						href={platform.primary.url}
+						class="btn-primary inline-flex items-center gap-2"
+					style="border-radius: 10px 0 0 10px;"
+						onclick={() => trackDownload(platform.primary.url)}
 					>
-						<img
-							src="/download-on-mas-black.svg"
-							alt="Download on the Mac App Store"
-							width="156"
-							height="40"
-						/>
+						{platform.primary.cta}
 					</a>
-				{/if}
+					<button
+						class="btn-primary border-l border-white/20 px-2"
+					style="border-radius: 0 10px 10px 0;"
+						onclick={() => (dropdownOpen = !dropdownOpen)}
+						onblur={() => setTimeout(() => (dropdownOpen = false), 150)}
+						aria-label="Show all platforms"
+					>
+						<ChevronDown size={14} />
+					</button>
+
+					{#if dropdownOpen}
+						<div
+							class="absolute top-full right-0 left-0 z-10 mt-1 rounded-xl border border-black/6 bg-white p-3 text-left shadow-lg"
+						>
+							{#each platformOrder as key}
+								{@const p = downloads[key]}
+								<div class="mb-2 last:mb-0">
+									<p
+										class="m-0 mb-1 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
+									>
+										{p.label}
+										{#if detected === key}
+											<span
+												class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
+												>(detected)</span
+											>
+										{/if}
+									</p>
+									<a
+										href={p.primary.url}
+										class="mb-0.5 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
+										onclick={() => trackDownload(p.primary.url)}
+									>
+										{p.primary.name}
+									</a>
+									{#each p.alt as alt}
+										<a
+											href={alt.url}
+											class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
+											onclick={() => trackDownload(alt.url)}
+										>
+											{alt.name}
+										</a>
+									{/each}
+									{#if key === 'windows'}
+										<p class="m-0 mt-1 text-[0.6rem] leading-relaxed text-amber-600/60">
+											Not code-signed. Windows may show a warning.
+										</p>
+									{/if}
+								</div>
+							{/each}
+						</div>
+					{/if}
+				</div>
 			</div>
 
 			{#if detected === 'windows'}
@@ -119,7 +143,7 @@
 			{/if}
 		{/if}
 
-		<p class="text-[0.75rem] text-black/22 contrast-more:text-black/45">
+		<p class="mt-8 text-[0.75rem] text-black/22 contrast-more:text-black/45">
 			By downloading, you agree to the
 			<a
 				href="/terms"
@@ -127,59 +151,5 @@
 				>Terms of Service</a
 			>
 		</p>
-		<!-- All platforms toggle -->
-		<button
-			class="mt-6 text-[0.75rem] text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"
-			onclick={() => (showAllPlatforms = !showAllPlatforms)}
-		>
-			{showAllPlatforms ? 'Hide' : 'Show'} all platforms
-		</button>
-
-		{#if showAllPlatforms}
-			<div class="mt-4 grid grid-cols-1 gap-3 text-left min-[480px]:grid-cols-3">
-				{#each platformOrder as key}
-					{@const platform = downloads[key]}
-					<div
-						class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected ===
-						key
-							? 'ring-2 ring-blue-400/20'
-							: ''}"
-					>
-						<p
-							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
-						>
-							{platform.label}
-							{#if detected === key}
-								<span
-									class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
-									>(detected)</span
-								>
-							{/if}
-						</p>
-						<a
-							href={platform.primary.url}
-							class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
-							onclick={() => trackDownload(platform.primary.url)}
-						>
-							{platform.primary.name}
-						</a>
-						{#each platform.alt as alt}
-							<a
-								href={alt.url}
-								class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
-								onclick={() => trackDownload(alt.url)}
-							>
-								{alt.name}
-							</a>
-						{/each}
-						{#if key === 'windows'}
-							<p class="m-0 mt-2 text-[0.6rem] leading-relaxed text-amber-600/60">
-								Not code-signed. Windows may show a warning.
-							</p>
-						{/if}
-					</div>
-				{/each}
-			</div>
-		{/if}
 	</div>
 </section>

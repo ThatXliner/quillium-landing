@@ -113,10 +113,6 @@
 				onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
 			>
 				Download Now
-				<span
-					class="rounded-full border border-white/20 bg-white/10 px-1.5 py-px text-[0.55rem] font-medium tracking-[0.06em] uppercase opacity-70"
-					>Beta</span
-				>
 			</a>
 			<a
 				href="#features"

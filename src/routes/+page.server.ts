@@ -1,3 +1,5 @@
+import { env } from '$env/dynamic/private';
+
 const REPO = 'ThatXliner/quillium-releases';
 
 interface GitHubAsset {
@@ -28,7 +30,13 @@ const OS_PATTERNS = [
 
 export async function load({ fetch }): Promise<{ release: ReleaseData }> {
 	try {
-		const latestRes = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`);
+		const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
+		const token = env.GITHUB_PAT;
+		if (token) headers['Authorization'] = `Bearer ${token}`;
+
+		const latestRes = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, {
+			headers
+		});
 		if (!latestRes.ok) throw new Error('Failed to fetch latest release');
 
 		const latest: GitHubRelease = await latestRes.json();
@@ -45,7 +53,9 @@ export async function load({ fetch }): Promise<{ release: ReleaseData }> {
 		}
 
 		// Some OS assets are missing — fetch older releases to fill gaps
-		const listRes = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=3`);
+		const listRes = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=3`, {
+			headers
+		});
 		if (!listRes.ok) throw new Error('Failed to fetch releases list');
 
 		const releases: GitHubRelease[] = await listRes.json();

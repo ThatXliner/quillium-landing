@@ -59,17 +59,14 @@
 
 <!-- ==================== DOWNLOAD ==================== -->
 <section id="download" class="px-8 py-16 text-center">
-	<div class="mx-auto max-w-[36rem]">
+	<div class="reveal mx-auto max-w-[36rem]">
 		<h2
 			class="mb-3 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
 		>
 			Start writing sideways.
 		</h2>
-		<p class="mb-4 text-[0.95rem] leading-[1.7] text-black/50 contrast-more:text-black/60">
-			Download Quillium and start writing. Free, offline, yours.
-		</p>
 		<div
-			class="mx-auto mb-6 flex w-fit items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/8 px-3.5 py-2 text-left text-[0.73rem] text-black/60 contrast-more:border-amber-500/50 contrast-more:text-black/75"
+			class="mx-auto mt-3 mb-6 flex w-fit items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/8 px-3.5 py-2 text-left text-[0.73rem] text-black/60 contrast-more:border-amber-500/50 contrast-more:text-black/75"
 		>
 			<span class="shrink-0 text-[0.9rem]">⚠️</span>
 			<span
@@ -81,7 +78,7 @@
 		<!-- Primary download button -->
 		{#if detected !== 'unknown'}
 			{@const platform = downloads[detected]}
-			<div class="mb-4 flex flex-wrap items-center justify-center gap-3">
+			<div class="my-4 flex flex-wrap items-center justify-center gap-3">
 				<a
 					href={platform.primary.url}
 					class="btn-primary inline-flex items-center gap-2"
@@ -119,7 +116,7 @@
 			{/if}
 		{/if}
 
-		<p class="text-[0.75rem] text-black/22 contrast-more:text-black/45">
+		<p class="text-xs text-black/22 contrast-more:text-black/45">
 			By downloading, you agree to the
 			<a
 				href="/terms"
@@ -129,7 +126,7 @@
 		</p>
 		<!-- All platforms toggle -->
 		<button
-			class="mt-6 text-[0.75rem] text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"
+			class="mt-12 text-xs text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"
 			onclick={() => (showAllPlatforms = !showAllPlatforms)}
 		>
 			{showAllPlatforms ? 'Hide' : 'Show'} all platforms

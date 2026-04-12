@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
+	import { initReveal } from '$lib/reveal';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
@@ -20,20 +21,7 @@
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
 		}
-		// Scroll reveal with Intersection Observer
-		const revealEls = document.querySelectorAll('.reveal');
-		const revealObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('visible');
-						revealObserver.unobserve(entry.target);
-					}
-				});
-			},
-			{ threshold: 0.01 }
-		);
-		revealEls.forEach((el) => revealObserver.observe(el));
+		initReveal();
 
 		// Smooth scroll for anchor links
 		document.querySelectorAll('a[href^="#"]').forEach((link) => {

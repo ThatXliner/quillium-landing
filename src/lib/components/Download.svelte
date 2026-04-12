@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
-	import { ChevronDown } from '@lucide/svelte';
 
 	const REPO = 'ThatXliner/quillium-releases';
 
@@ -66,28 +65,17 @@
 			Start writing sideways.
 		</h2>
 
-		<!-- Primary download button with dropdown toggle -->
+		<!-- Primary download button -->
 		{#if detected !== 'unknown'}
 			{@const platform = downloads[detected]}
-			<div class="mb-4 flex items-center justify-center">
-				<div class="inline-flex">
-					<a
-						href={platform.primary.url}
-						class="btn-primary inline-flex items-center gap-2"
-						style="border-radius: 10px 0 0 10px;"
-						onclick={() => trackDownload(platform.primary.url)}
-					>
-						{platform.primary.cta}
-					</a>
-					<button
-						class="btn-primary border-l border-white/20 px-2"
-						style="border-radius: 0 10px 10px 0;"
-						onclick={() => (dropdownOpen = !dropdownOpen)}
-						aria-label="Show all platforms"
-					>
-						<ChevronDown size={14} />
-					</button>
-				</div>
+			<div class="mb-4">
+				<a
+					href={platform.primary.url}
+					class="btn-primary inline-flex items-center gap-2 px-10 py-4 text-lg"
+					onclick={() => trackDownload(platform.primary.url)}
+				>
+					{platform.primary.cta}
+				</a>
 			</div>
 
 			{#if detected === 'windows'}
@@ -96,6 +84,74 @@
 					proceed.
 				</p>
 			{/if}
+		{/if}
+
+		<button
+			class="mt-2 text-xs text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"
+			onclick={() => (dropdownOpen = !dropdownOpen)}
+		>
+			{dropdownOpen ? 'Hide' : 'Show'} all platforms
+		</button>
+
+		{#if dropdownOpen}
+			<div class="mt-4 grid grid-cols-1 gap-3 text-left min-[480px]:grid-cols-3">
+				{#each platformOrder as key}
+					{@const p = downloads[key]}
+					<div
+						class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected ===
+						key
+							? 'ring-2 ring-blue-400/20'
+							: ''}"
+					>
+						<p
+							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
+						>
+							{p.label}
+							{#if detected === key}
+								<span
+									class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
+									>(detected)</span
+								>
+							{/if}
+						</p>
+						<a
+							href={p.primary.url}
+							class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
+							onclick={() => trackDownload(p.primary.url)}
+						>
+							{p.primary.name}
+						</a>
+						{#each p.alt as alt}
+							<a
+								href={alt.url}
+								class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
+								onclick={() => trackDownload(alt.url)}
+							>
+								{alt.name}
+							</a>
+						{/each}
+						{#if key === 'mac'}
+							<a
+								href="#"
+								class="mt-2 block transition-opacity hover:opacity-80"
+								onclick={() => trackDownload('mac-app-store')}
+							>
+								<img
+									src="/download-on-mas-black.svg"
+									alt="Download on the Mac App Store"
+									width="120"
+									height="30"
+								/>
+							</a>
+						{/if}
+						{#if key === 'windows'}
+							<p class="m-0 mt-2 text-[0.6rem] leading-relaxed text-amber-600/60">
+								Not code-signed. Windows may show a warning.
+							</p>
+						{/if}
+					</div>
+				{/each}
+			</div>
 		{/if}
 
 		<p class="mt-8 text-xs text-black/22 contrast-more:text-black/45">
@@ -107,51 +163,4 @@
 			>
 		</p>
 	</div>
-
-	{#if dropdownOpen}
-		<div class="mx-auto mt-2 max-w-[36rem] grid grid-cols-1 gap-3 text-left min-[480px]:grid-cols-3">
-			{#each platformOrder as key}
-				{@const p = downloads[key]}
-				<div
-					class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected ===
-					key
-						? 'ring-2 ring-blue-400/20'
-						: ''}"
-				>
-					<p
-						class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
-					>
-						{p.label}
-						{#if detected === key}
-							<span
-								class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
-								>(detected)</span
-							>
-						{/if}
-					</p>
-					<a
-						href={p.primary.url}
-						class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
-						onclick={() => trackDownload(p.primary.url)}
-					>
-						{p.primary.name}
-					</a>
-					{#each p.alt as alt}
-						<a
-							href={alt.url}
-							class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
-							onclick={() => trackDownload(alt.url)}
-						>
-							{alt.name}
-						</a>
-					{/each}
-					{#if key === 'windows'}
-						<p class="m-0 mt-2 text-[0.6rem] leading-relaxed text-amber-600/60">
-							Not code-signed. Windows may show a warning.
-						</p>
-					{/if}
-				</div>
-			{/each}
-		</div>
-	{/if}
 </section>

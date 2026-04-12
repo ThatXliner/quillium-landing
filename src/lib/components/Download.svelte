@@ -100,9 +100,12 @@
 				>Terms of Service</a
 			>
 		</p>
-		<p class="my-2 text-[0.75rem] leading-relaxed text-black/22 contrast-more:text-black/45">
-			In public beta status: Features may change. Back up your work.
-		</p>
+		<div
+			class="mx-auto my-2 flex max-w-[22rem] items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/8 px-3.5 py-2 text-left text-[0.73rem] text-black/60 contrast-more:border-amber-500/50 contrast-more:text-black/75"
+		>
+			<span class="shrink-0 text-[0.9rem]">⚠️</span>
+			<span>Public beta: features may change. Back up your work.</span>
+		</div>
 
 		<!-- All platforms toggle -->
 		<button

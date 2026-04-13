@@ -29,11 +29,15 @@
 	let showCursor = $state(true);
 	let downloadCount = $state(0);
 	let showNoAiBadge = $state(true);
+	let gradientDivider = $state(false);
 
 	onMount(() => {
 		posthog.onFeatureFlags(() => {
 			const variant = posthog.getFeatureFlag('no-ai-bs-badge');
 			showNoAiBadge = variant !== 'hide-badge';
+
+			const dividerVariant = posthog.getFeatureFlag('hero-gradient-divider');
+			gradientDivider = dividerVariant === 'gradient';
 		});
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
@@ -131,7 +135,12 @@
 	</div>
 
 	<div
-		class="reveal reveal-delay-4 mt-24 flex flex-col items-center gap-4 border-t border-black/4 pt-16 max-md:gap-3"
+		class="reveal reveal-delay-4 mt-24 flex flex-col items-center gap-4 max-md:gap-3 {gradientDivider
+			? 'pt-4'
+			: 'border-t border-black/4 pt-16'}"
+		style={gradientDivider
+			? 'border-top: 2px solid; border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;'
+			: ''}
 	>
 		<p
 			class="m-0 flex flex-wrap items-center justify-center gap-x-5 text-[0.9rem] tracking-wide text-black/50"
@@ -139,7 +148,9 @@
 			<a
 				href="/blog/quillium-is-not-an-ai-app"
 				class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
-				><Pen size={15} strokeWidth={2} class="opacity-50" />Write every word{showNoAiBadge ? ' (No AI bs)' : ''}.</a
+				><Pen size={15} strokeWidth={2} class="opacity-50" />Write every word{showNoAiBadge
+					? ' (No AI bs)'
+					: ''}.</a
 			>
 			<a
 				href="/blog/quillium-privacy"

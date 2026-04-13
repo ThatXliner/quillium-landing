@@ -32,10 +32,16 @@
 		else if (ua.includes('win')) detected = 'windows';
 		else if (ua.includes('linux')) detected = 'linux';
 
+		posthog.register({ campaign: 'cant-think-straight' });
+
 		posthog.onFeatureFlags(() => {
 			const variant = posthog.getFeatureFlag('campaign-features-style');
 			useFullFeatures = variant === 'full-features';
 		});
+
+		return () => {
+			posthog.unregister('campaign');
+		};
 	});
 </script>
 

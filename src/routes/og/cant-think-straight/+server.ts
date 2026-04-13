@@ -1,9 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url }) => {
-	const logoUrl = `${url.origin}/logo.png`;
-
+export const GET: RequestHandler = async () => {
 	const html = {
 		type: 'div',
 		props: {
@@ -12,8 +10,8 @@ export const GET: RequestHandler = async ({ url }) => {
 				height: '630px',
 				background: '#f5f4f1',
 				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'space-between',
+				flexDirection: 'column',
+				justifyContent: 'center',
 				padding: '80px 100px',
 				fontFamily: 'Inter',
 			},
@@ -23,99 +21,74 @@ export const GET: RequestHandler = async ({ url }) => {
 					props: {
 						style: {
 							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'center',
-							flex: '1',
+							gap: '8px',
+							marginBottom: '48px',
+						},
+						children: [
+							{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#3b82f6' } } },
+							{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#a855f7' } } },
+							{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#22c55e' } } },
+							{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#fcbc05' } } },
+						],
+					},
+				},
+				{
+					type: 'div',
+					props: {
+						style: {
+							display: 'flex',
+							fontSize: '72px',
+							fontFamily: 'Newsreader',
+							fontStyle: 'italic',
+							fontWeight: 400,
+							lineHeight: 1.1,
+							letterSpacing: '-0.03em',
 						},
 						children: [
 							{
-								type: 'div',
+								type: 'span',
 								props: {
-									style: {
-										display: 'flex',
-										gap: '8px',
-										marginBottom: '48px',
-									},
-									children: [
-										{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#3b82f6' } } },
-										{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#a855f7' } } },
-										{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#22c55e' } } },
-										{ type: 'div', props: { style: { width: '14px', height: '14px', borderRadius: '50%', background: '#fcbc05' } } },
-									],
+									style: { color: 'rgba(0,0,0,0.88)' },
+									children: "Can't think\u00a0",
 								},
 							},
 							{
-								type: 'div',
+								type: 'span',
 								props: {
-									style: {
-										display: 'flex',
-										fontSize: '72px',
-										fontFamily: 'Newsreader',
-										fontStyle: 'italic',
-										fontWeight: 400,
-										lineHeight: 1.1,
-										letterSpacing: '-0.03em',
-									},
-									children: [
-										{
-											type: 'span',
-											props: {
-												style: { color: 'rgba(0,0,0,0.88)' },
-												children: "Can't think\u00a0",
-											},
-										},
-										{
-											type: 'span',
-											props: {
-												style: { color: '#3b82f6' },
-												children: 'straight?',
-											},
-										},
-									],
-								},
-							},
-							{
-								type: 'div',
-								props: {
-									style: {
-										fontSize: '28px',
-										color: 'rgba(0,0,0,0.5)',
-										lineHeight: 1.6,
-										marginTop: '20px',
-										fontFamily: 'Inter',
-									},
-									children: 'Quillium works with that. Branch any sentence.',
-								},
-							},
-							{
-								type: 'div',
-								props: {
-									style: {
-										display: 'flex',
-										alignItems: 'center',
-										gap: '8px',
-										marginTop: '48px',
-										fontFamily: 'Newsreader',
-										fontStyle: 'italic',
-										fontSize: '24px',
-										fontWeight: 500,
-										color: 'rgba(0,0,0,0.5)',
-									},
-									children: 'quillium.bryanhu.com',
+									style: { color: '#3b82f6' },
+									children: 'straight?',
 								},
 							},
 						],
 					},
 				},
 				{
-					type: 'img',
+					type: 'div',
 					props: {
-						src: logoUrl,
-						width: 200,
-						height: 200,
 						style: {
-							marginLeft: '60px',
+							fontSize: '28px',
+							color: 'rgba(0,0,0,0.5)',
+							lineHeight: 1.6,
+							marginTop: '20px',
+							fontFamily: 'Inter',
 						},
+						children: 'Quillium works with that. Branch any sentence. Keep every version.',
+					},
+				},
+				{
+					type: 'div',
+					props: {
+						style: {
+							display: 'flex',
+							alignItems: 'center',
+							gap: '8px',
+							marginTop: '48px',
+							fontFamily: 'Inter',
+							fontSize: '20px',
+							fontWeight: 500,
+							color: 'rgba(0,0,0,0.35)',
+						},
+						children: 'quillium.bryanhu.com',
 					},
 				},
 			],

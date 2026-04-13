@@ -118,7 +118,7 @@
 			href="#why"
 			class="inline-flex items-center gap-2 rounded-[10px] bg-white/50 px-7 py-3.5 text-[0.95rem] font-medium text-black/88 shadow-[0_1px_3px_rgba(0,0,0,0.08)] backdrop-blur-[12px] transition-all duration-300 hover:-translate-y-px hover:bg-white/70"
 		>
-			Why
+			Why?
 		</a>
 	</div>
 

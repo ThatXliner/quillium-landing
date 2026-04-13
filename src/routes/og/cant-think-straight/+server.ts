@@ -1,14 +1,11 @@
 import { ImageResponse } from '@vercel/og';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { RequestHandler } from './$types';
 
-const fontsPromise = Promise.all([
-	fetch(
-		'https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwoT-ZA.ttf'
-	).then((r) => r.arrayBuffer()),
-	fetch(
-		'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf'
-	).then((r) => r.arrayBuffer()),
-]);
+const fontsDir = resolve('static/fonts');
+const newsreaderFont = readFileSync(resolve(fontsDir, 'newsreader-italic-400.ttf'));
+const interFont = readFileSync(resolve(fontsDir, 'inter-500.ttf'));
 
 export const GET: RequestHandler = async ({ url }) => {
 	const logoUrl = `${url.origin}/logo.png`;
@@ -130,8 +127,6 @@ export const GET: RequestHandler = async ({ url }) => {
 			],
 		},
 	};
-
-	const [newsreaderFont, interFont] = await fontsPromise;
 
 	return new ImageResponse(html, {
 		width: 1200,

@@ -37,36 +37,25 @@ export const GET: RequestHandler = async () => {
 					props: {
 						style: {
 							display: 'flex',
-							flexDirection: 'column',
-							gap: '0px',
+							fontSize: '72px',
+							fontFamily: 'Newsreader',
+							fontStyle: 'italic',
+							fontWeight: 400,
+							lineHeight: 1.1,
+							letterSpacing: '-0.03em',
 						},
 						children: [
 							{
-								type: 'div',
+								type: 'span',
 								props: {
-									style: {
-										fontSize: '72px',
-										fontFamily: 'Newsreader',
-										fontWeight: 400,
-										lineHeight: 1.1,
-										letterSpacing: '-0.03em',
-										color: 'rgba(0,0,0,0.88)',
-									},
+									style: { color: 'rgba(0,0,0,0.88)' },
 									children: "Can't think ",
 								},
 							},
 							{
-								type: 'div',
+								type: 'span',
 								props: {
-									style: {
-										fontSize: '72px',
-										fontFamily: 'Newsreader',
-										fontStyle: 'italic',
-										fontWeight: 400,
-										lineHeight: 1.1,
-										letterSpacing: '-0.03em',
-										color: '#3b82f6',
-									},
+									style: { color: '#3b82f6' },
 									children: 'straight?',
 								},
 							},
@@ -94,8 +83,8 @@ export const GET: RequestHandler = async () => {
 							alignItems: 'center',
 							gap: '12px',
 							marginTop: '48px',
-							fontFamily: 'Newsreader',
-							fontSize: '24px',
+							fontFamily: 'Inter',
+							fontSize: '22px',
 							fontWeight: 500,
 							color: 'rgba(0,0,0,0.6)',
 						},
@@ -136,14 +125,6 @@ export const GET: RequestHandler = async () => {
 				).then((r) => r.arrayBuffer()),
 				weight: 400,
 				style: 'italic',
-			},
-			{
-				name: 'Newsreader',
-				data: await fetch(
-					'https://fonts.gstatic.com/s/newsreader/v20/cY9qfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsModkEhGkmSTY3jfHW-MJw.ttf'
-				).then((r) => r.arrayBuffer()),
-				weight: 400,
-				style: 'normal',
 			},
 			{
 				name: 'Inter',

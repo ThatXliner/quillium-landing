@@ -130,7 +130,7 @@
 								{alt.name}
 							</a>
 						{/each}
-						{#if key === 'mac'}
+						<!-- {#if key === 'mac'}
 							<a
 								href="#"
 								class="mt-2 block transition-opacity hover:opacity-80"
@@ -143,7 +143,7 @@
 									height="30"
 								/>
 							</a>
-						{/if}
+						{/if} -->
 						{#if key === 'windows'}
 							<p class="m-0 mt-2 text-[0.6rem] leading-relaxed text-amber-600/60">
 								Not code-signed. Windows may show a warning.

@@ -49,7 +49,7 @@ export const GET: RequestHandler = async () => {
 								type: 'span',
 								props: {
 									style: { color: 'rgba(0,0,0,0.88)' },
-									children: "Can't think ",
+									children: "Can't think\u00a0",
 								},
 							},
 							{
@@ -90,20 +90,22 @@ export const GET: RequestHandler = async () => {
 						},
 						children: [
 							{
-								type: 'div',
+								type: 'span',
 								props: {
 									style: {
-										width: '36px',
-										height: '36px',
-										background: 'linear-gradient(135deg, #eceef2, #cdd1d9)',
-										borderRadius: '8px',
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'center',
-										fontSize: '20px',
-										color: 'rgba(0,0,0,0.5)',
+										fontFamily: 'Newsreader',
+										fontStyle: 'italic',
+										fontSize: '26px',
+										color: 'rgba(0,0,0,0.7)',
 									},
-									children: 'Q',
+									children: 'Quillium',
+								},
+							},
+							{
+								type: 'span',
+								props: {
+									style: { color: 'rgba(0,0,0,0.25)', margin: '0 8px' },
+									children: '·',
 								},
 							},
 							{ type: 'span', props: { children: 'quillium.bryanhu.com' } },

@@ -121,7 +121,7 @@ export const GET: RequestHandler = async () => {
 			{
 				name: 'Newsreader',
 				data: await fetch(
-					'https://fonts.gstatic.com/s/newsreader/v20/cY9qfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMoBkElGkmSTY3jfHW-MJw.ttf'
+					'https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwoT-ZA.ttf'
 				).then((r) => r.arrayBuffer()),
 				weight: 400,
 				style: 'italic',
@@ -129,7 +129,7 @@ export const GET: RequestHandler = async () => {
 			{
 				name: 'Inter',
 				data: await fetch(
-					'https://fonts.gstatic.com/s/inter/v18/UcCo3FwrK3iLTcviYwYZ90OhQao.ttf'
+					'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf'
 				).then((r) => r.arrayBuffer()),
 				weight: 500,
 				style: 'normal',

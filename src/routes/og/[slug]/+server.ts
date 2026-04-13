@@ -2,6 +2,15 @@ import { ImageResponse } from '@vercel/og';
 import type { RequestHandler } from './$types';
 import { error } from '@sveltejs/kit';
 
+const fontsPromise = Promise.all([
+	fetch(
+		'https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwoT-ZA.ttf'
+	).then((r) => r.arrayBuffer()),
+	fetch(
+		'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf'
+	).then((r) => r.arrayBuffer()),
+]);
+
 export const GET: RequestHandler = async ({ params }) => {
 	let meta: { title: string; date: string; author?: string };
 
@@ -92,23 +101,24 @@ export const GET: RequestHandler = async ({ params }) => {
 		},
 	};
 
+	const [newsreaderFont, interFont] = await fontsPromise;
+
 	return new ImageResponse(html, {
 		width: 1200,
 		height: 630,
+		headers: {
+			'Cache-Control': 'public, s-maxage=31536000, immutable',
+		},
 		fonts: [
 			{
 				name: 'Newsreader',
-				data: await fetch(
-					'https://fonts.gstatic.com/s/newsreader/v26/cY9kfjOCX1hbuyalUrK439vogqC9yFZCYg7oRZaLP4obnf7fTXglsMwoT-ZA.ttf'
-				).then((r) => r.arrayBuffer()),
+				data: newsreaderFont,
 				weight: 400,
 				style: 'italic',
 			},
 			{
 				name: 'Inter',
-				data: await fetch(
-					'https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf'
-				).then((r) => r.arrayBuffer()),
+				data: interFont,
 				weight: 500,
 				style: 'normal',
 			},

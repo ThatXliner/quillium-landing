@@ -18,7 +18,13 @@ const config = {
 			]
 		})
 	],
-	kit: { adapter: adapter(), paths: { relative: false } },
+	kit: {
+		adapter: adapter(),
+		paths: { relative: false },
+		prerender: {
+			entries: ['*', '/og/cant-think-straight']
+		}
+	},
 	extensions: ['.svelte', '.svx', '.md']
 };
 

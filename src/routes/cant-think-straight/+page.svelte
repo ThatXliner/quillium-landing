@@ -59,8 +59,12 @@
 		property="og:description"
 		content="Your thoughts don't go in a straight line. Quillium works with that. Branch any sentence, keep every version, never lose a revision."
 	/>
+	<meta property="og:image" content="https://quillium.bryanhu.com/og/cant-think-straight" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta property="og:site_name" content="Quillium" />
-	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://quillium.bryanhu.com/og/cant-think-straight" />
 	<meta name="twitter:title" content="Can't Think Straight? — Quillium" />
 	<meta
 		name="twitter:description"

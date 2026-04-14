@@ -8,21 +8,17 @@ featured: false
 
 Writing is thinking. That means editing is a *core* part of it.
 
-Quillium started because I was frustrated with how every existing tool treats revision as an afterthought—or even worse, as damage to undo. Every writing tool I used assumed I knew where I was going, and I didn't. I'd write a sentence, then rewrite it a completely different way, then try a third angle. Each time, I'd either lose the previous version or drown in a mess of copied paragraphs and files named `draft_v3_FINAL_REAL.docx`.
+Quillium started because I was frustrated with how every existing tool treats revision as an afterthought—or even worse, as damage to undo. Every writing tool I used assumed I knew where I was going, but the truth is that I didn't. I'd write a sentence, then rewrite it a completely different way, then try a third angle, and each time I'd either lose the previous version or drown in a mess of copied paragraphs and files named `draft_v3_FINAL_REAL.docx`. The problem isn't that writers revise too much; it's that our tools punish us for it.
 
-The problem isn't that writers revise too much. It's that our tools punish us for it.
+So I built Quillium. The core idea is that you should be able to fork a sentence the way a programmer forks code, keeping every version alive and navigating between them freely. Great writing needs space to think in and tools that help you refine, rather than forms to fill out or approval chains to navigate, and Quillium is my attempt at providing both.
 
-So I built Quillium. The core idea is simple: **what if you could fork a sentence the way a programmer forks code?** Keep every version alive and navigate between them.
-
-Great writing needs space to think and tools to refine—not forms to fill out or approval chains to navigate. Quillium is my attempt at building both.
-
-I'm in early development and things are still rough around the edges. If this resonates, [come try it](/#download).
+The app is still in early development and things are rough around the edges. If any of this resonates, [come try it](/#download).
 
 ## What to read next
 
 I'll be writing more about the ideas behind Quillium on this blog. Here's a reading order if you want to go deeper:
 
-1. **[Quillium Is Not an AI App](/blog/quillium-is-not-an-ai-app)** — Why everyone assumes every new writing tool is AI-powered,and why Quillium's actual innovation keeps getting buried under it.
+1. **[Quillium Is Not an AI App](/blog/quillium-is-not-an-ai-app)** — Why everyone assumes every new writing tool is AI-powered, and why Quillium's actual innovation keeps getting buried under it.
     - More in depth: **[AI Is Not the Point](/blog/ai-is-not-the-point)** — What AI in a writing tool should actually look like, and why Quillium's is off by default.
 2. **[The Myth of the First Draft](/blog/the-myth-of-the-first-draft)** — Why "just finish the draft" is bad advice, and why writing is exploration, not a pipeline.
 3. **[Why the Undo Button Is a Lie](/blog/why-the-undo-button-is-a-lie)** — The technical argument: undo is a stack, and stacks are the wrong data structure for revision.

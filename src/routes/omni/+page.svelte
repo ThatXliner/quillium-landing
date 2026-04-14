@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import posthog from 'posthog-js';
 	import { initReveal } from '$lib/reveal';
 	import Nav from '$lib/components/Nav.svelte';
@@ -59,6 +61,116 @@
 
 	onMount(() => {
 		initReveal();
+
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReducedMotion) return;
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		const demo = document.querySelector('.devices-demo');
+		if (!demo) return;
+
+		const ENDPOINTS: Record<string, { x: number; y: number }> = {
+			laptop: { x: 78, y: 82 },
+			desktop: { x: 222, y: 82 },
+			phone: { x: 150, y: 232 }
+		};
+		const HUB = { x: 150, y: 150 };
+
+		const branches = demo.querySelectorAll<SVGPathElement>('.branch');
+		const rails = demo.querySelectorAll<SVGLineElement>('.rails line');
+		const leaves = demo.querySelectorAll<SVGCircleElement>('.leaf');
+		const packets = demo.querySelectorAll<SVGCircleElement>('.packet');
+
+		const packetTweens: gsap.core.Tween[] = [];
+
+		// GSAP needs explicit initial state for SVG transform animations
+		gsap.set(leaves, { scale: 0, opacity: 0, transformOrigin: 'center center' });
+		gsap.set(branches, { strokeDashoffset: 150, opacity: 0 });
+		gsap.set(rails, { opacity: 0 });
+		gsap.set(packets, { opacity: 0 });
+
+		function flyPacket(el: SVGCircleElement) {
+			const branch = el.dataset.branch as keyof typeof ENDPOINTS;
+			const outbound = el.dataset.dir === 'out';
+			const device = ENDPOINTS[branch];
+			const from = outbound ? HUB : device;
+			const to = outbound ? device : HUB;
+			const duration = gsap.utils.random(1.6, 2.6);
+
+			el.setAttribute('cx', String(from.x));
+			el.setAttribute('cy', String(from.y));
+			gsap.set(el, { opacity: 0 });
+
+			const tl = gsap.timeline({
+				onComplete: () => {
+					gsap.delayedCall(gsap.utils.random(4, 10), () => flyPacket(el));
+				}
+			});
+			tl.to(el, {
+				attr: { cx: to.x, cy: to.y },
+				duration,
+				ease: 'power1.inOut'
+			});
+			tl.to(el, { opacity: 1, duration: duration * 0.15, ease: 'power1.out' }, 0);
+			tl.to(el, { opacity: 0, duration: duration * 0.2, ease: 'power1.in' }, duration * 0.8);
+			packetTweens.push(tl as unknown as gsap.core.Tween);
+		}
+
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: demo,
+				start: 'top 80%',
+				once: true
+			}
+		});
+
+		// Phase 1: branches sprout from hub outward
+		tl.to(branches, {
+			strokeDashoffset: 0,
+			opacity: 1,
+			duration: 0.9,
+			ease: 'power2.out',
+			stagger: 0.18
+		});
+
+		// Leaves pop at endpoints
+		tl.to(
+			leaves,
+			{
+				scale: 1,
+				opacity: 1,
+				duration: 0.4,
+				ease: 'back.out(2.4)',
+				stagger: 0.12
+			},
+			'-=0.3'
+		);
+
+		// Rails fade in underneath
+		tl.to(
+			rails,
+			{
+				opacity: 1,
+				duration: 0.6,
+				ease: 'power1.out'
+			},
+			'-=0.2'
+		);
+
+		// Phase 2: stagger initial packet starts widely so activity isn't clustered
+		tl.call(() => {
+			packets.forEach((el) => {
+				gsap.delayedCall(gsap.utils.random(0, 8), () => flyPacket(el));
+			});
+		});
+
+		return () => {
+			packetTweens.forEach((t) => t.kill());
+			gsap.killTweensOf(packets);
+			tl.scrollTrigger?.kill();
+			tl.kill();
+		};
 	});
 </script>
 
@@ -184,9 +296,29 @@
 			<div class="feature-visual">
 				<div class="devices-demo">
 					<svg class="sync-lines" viewBox="0 0 300 300" aria-hidden="true">
-						<line x1="78" y1="82" x2="150" y2="150" />
-						<line x1="222" y1="82" x2="150" y2="150" />
-						<line x1="150" y1="232" x2="150" y2="150" />
+						<!-- Growing branches (drawn once) -->
+						<g class="branches">
+							<path class="branch branch--laptop" d="M 150 150 L 78 82" />
+							<path class="branch branch--desktop" d="M 150 150 L 222 82" />
+							<path class="branch branch--phone" d="M 150 150 L 150 232" />
+						</g>
+						<!-- Settled rails (dotted) -->
+						<g class="rails">
+							<line x1="78" y1="82" x2="150" y2="150" />
+							<line x1="222" y1="82" x2="150" y2="150" />
+							<line x1="150" y1="232" x2="150" y2="150" />
+						</g>
+						<!-- Leaf pops at device endpoints -->
+						<circle class="leaf leaf--laptop" cx="78" cy="82" r="4" />
+						<circle class="leaf leaf--desktop" cx="222" cy="82" r="4" />
+						<circle class="leaf leaf--phone" cx="150" cy="232" r="4" />
+						<!-- Packet pool: 2 per branch (one each direction) -->
+						<circle class="packet" data-branch="laptop" data-dir="out" cx="150" cy="150" r="3.5" />
+						<circle class="packet" data-branch="laptop" data-dir="in" cx="78" cy="82" r="3" />
+						<circle class="packet" data-branch="desktop" data-dir="out" cx="150" cy="150" r="3.5" />
+						<circle class="packet" data-branch="desktop" data-dir="in" cx="222" cy="82" r="3" />
+						<circle class="packet" data-branch="phone" data-dir="out" cx="150" cy="150" r="3.5" />
+						<circle class="packet" data-branch="phone" data-dir="in" cx="150" cy="232" r="3" />
 					</svg>
 
 					<div class="device device--laptop">
@@ -723,37 +855,46 @@
 		inset: 0;
 		width: 100%;
 		height: 100%;
-		stroke: rgba(59, 130, 246, 0.35);
-		stroke-width: 1.25;
-		stroke-dasharray: 4 4;
 		fill: none;
 		pointer-events: none;
 	}
-	.sync-lines line {
+	.sync-lines .branches path {
+		fill: none;
+		stroke: #3b82f6;
+		stroke-width: 1.6;
+		stroke-linecap: round;
 		stroke-dasharray: 150;
 		stroke-dashoffset: 150;
-		animation: draw-line 600ms ease-out both;
+		opacity: 0;
 	}
-	.sync-lines line:nth-child(1) {
-		animation-delay: 450ms;
+	.sync-lines .rails line {
+		stroke: rgba(59, 130, 246, 0.35);
+		stroke-width: 1.25;
+		stroke-dasharray: 4 4;
+		opacity: 0;
 	}
-	.sync-lines line:nth-child(2) {
-		animation-delay: 630ms;
+	.sync-lines .leaf {
+		fill: #3b82f6;
+		opacity: 0;
 	}
-	.sync-lines line:nth-child(3) {
-		animation-delay: 810ms;
+	.sync-lines .packet {
+		fill: #3b82f6;
+		opacity: 0;
+		filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.6));
 	}
-	@keyframes draw-line {
-		to {
-			stroke-dashoffset: 0;
-			stroke-dasharray: 4 4;
-		}
+	.sync-lines .packet[data-dir='in'] {
+		fill: #60a5fa;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.sync-lines line {
-			animation: none;
-			stroke-dashoffset: 0;
-			stroke-dasharray: 4 4;
+		.sync-lines .branches path {
+			display: none;
+		}
+		.sync-lines .rails line {
+			opacity: 0.35;
+		}
+		.sync-lines .leaf,
+		.sync-lines .packet {
+			display: none;
 		}
 	}
 	.device {

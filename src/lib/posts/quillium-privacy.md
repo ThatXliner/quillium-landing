@@ -5,19 +5,19 @@ date: "2026-04-08"
 author: "Bryan Hu"
 ---
 
-In Google Docs, your draft lives on Google's servers before you've even finished the first sentence. For Notion, and your notes sit in somebody else's database, queryable, indexable, trainable. You use an "AI writing tool," and yet your unfinished paragraphs get sent to a model you didn't choose through a server you don't control.
+In Google Docs, your draft lives on Google's servers before you've even finished the first sentence, and in Notion your notes sit in somebody else's database, indexable and queryable and *potentially trainable on*. When you use an AI writing tool, your unfinished paragraphs travel through a server you don't control.
 
 Quillium doesn't work like that. Your writing stays on your computer. Period. But I know that claim is easy to make and hard to verify (especially when we're closed source, at least for now), so let me walk through the specifics.
 
 ## Local-first means local-only (by default)
 
-Every document you create in Quillium is stored in a local database on your device. Not a cloud database that caches locally. Not a "local-first" system that syncs when you're online. Just local. There is no cloud storage, no sync server, no remote database, no upload endpoint.
+Every document you create in Quillium is stored in a local database on your device. It isn't a cloud database that happens to cache locally, and by default it isn't a "local-first" system that quietly syncs whenever you're online; it's simply local, with no cloud storage, sync server, remote database, or upload endpoint behind the scenes.
 
 Your settings are stored locally. Your [crash backups](./how-quillium-keeps-your-writing-safe) are stored locally. Your version history is stored locally. Everything Quillium needs to work is on your machine, and the app works fully offline—because "offline" and "online" aren't even meaningful distinctions when nothing is on a server.
 
-We do plan to offer cloud sync as an optional paid feature down the line—for people who want to work across devices. But it will be something you explicitly choose and pay for, not something that happens behind your back. The free, default experience is and will always be fully local.
+I do plan to offer cloud sync as an optional paid feature down the line, for people who want to work across devices, but it will be something you *explicitly choose and pay for* rather than something that happens behind your back. The free, default experience is fully local and will stay that way.
 
-I built it this way because I care about durability. Imagine losing hours of work to a network failure. With local storage, a network failure is irrelevant—your data was never on the network.
+I built it this way because I care about durability, and because a network failure should be irrelevant to whether you can open your own draft.
 
 ## If you use AI, the calls go directly to your provider
 
@@ -25,19 +25,13 @@ Quillium has [optional AI features](./ai-is-not-the-point) that are off by defau
 
 You provide your own API key from whichever provider you want—OpenAI, Anthropic, or Google. When the AI reads your writing, that request goes directly from your machine to your chosen provider. It does not pass through Quillium's servers. There is no proxy, no relay, no middleware. We literally don't have a server for it to go through.
 
-This is called BYOK—bring your own key. It means Quillium never sees your API key, never sees the text you send to AI, and never sees the response. The relationship is between you and your AI provider, and Quillium is just the interface. Obviously, by using AI features, you agree to your chosen provider's terms of service and privacy policy—the app links to these when you configure your API key.
+This is called BYOK, or bring your own key. It means Quillium never sees your API key, never sees the text you send to AI, and never sees the response. The relationship is between you and your AI provider, and Quillium is just the interface. Obviously, by using AI features you agree to your chosen provider's terms of service and privacy policy (and the app links to both when you configure your key).
 
-## Your API keys are stored in the OS keychain
 
-This one's more technical, but it matters.
-
-A lot of apps store API keys in the browser's local storage. That's convenient but insecure—any JavaScript running in the app can read it, which means a single security vulnerability could leak your key.
-
-Quillium stores API keys in your operating system's keychain: macOS Keychain, Windows Credential Manager, or Linux Secret Service. These are the same systems that store your passwords, and they require OS-level authentication to access. Your key passes through the app's JavaScript layer only transiently—it's never stored there.
 
 ## Analytics are off if you want them off
 
-Quillium uses PostHog for usage analytics. If that bothers you: there's a single toggle in Settings > Privacy > "Usage analytics." Turn it off, and all analytics stop immediately. The opt-out persists across sessions.
+Quillium uses PostHog for usage analytics. If that bothers you, there's a single toggle in Settings > Privacy > "Usage analytics." Turn it off, and all analytics stop immediately, with the opt-out persisting across sessions.
 
 That said, let me be specific about what these analytics are, because "analytics" is a word that's been poisoned by ad tech.
 
@@ -45,9 +39,9 @@ That said, let me be specific about what these analytics are, because "analytics
 
 **Your document content is never in analytics by default.** The analytics system actively strips document-related properties—words, synonyms, original text—from every event before sending. our internal session replay telemetry mask the actual text you're writing with asterisks—we can't read your writing even if we wanted to. (There is an optional "Share document analytics" setting, off by default, that removes this masking if you want to help us debug editor-specific issues. You have to explicitly opt in.)
 
-Note that this is separate from AI features. Again, obviously if you use those, your text is sent directly to your chosen AI provider, subject to their Terms of Service and Privacy Policy.
+This is separate from AI features. Again, if you use those, your text is sent directly to your chosen AI provider, subject to their Terms of Service and Privacy Policy.
 
-## We tell you when we *can't* see your data
+## We tell you when we can't see your data
 
 Here's a detail I'm genuinely proud of.
 
@@ -55,9 +49,9 @@ When an error occurs and you *haven't* opted into document sharing (off by defau
 
 The key word is *was*. By the time you see the notification, the content is already redacted. We're asking permission for next time, not retroactively sharing what just happened. The notification is a request, not an action.
 
-Most apps do the opposite: collect everything by default and let you opt out later (if you can find the setting). We collect nothing by default and ask you to opt in if you choose.
+Most apps do the opposite, collecting everything by default and letting you opt out later if you can find the setting. Quillium collects nothing by default and asks you to opt in if you want to help.
 
-Why? If nothing is broken in our app (as one should reasonably expect), we have no reason to collect your document information. This policy also makes GDPR/CCPA compliance much easier to implement. For the full legal details, see our [privacy policy](/privacy).
+The reason for this policy is straightforward: if nothing in the app is broken, there's no reason for the app to collect your document information, and the policy also makes GDPR and CCPA compliance much easier to implement. For the full legal details, see the [privacy policy](/privacy).
 
 ## The default is private
 
@@ -72,8 +66,8 @@ Quillium is a desktop app that runs on your machine, stores data on your machine
 
 ## Why this matters
 
-Writers pour unfinished thoughts, half-formed arguments, and vulnerable first attempts into their tools. A journal entry. A personal essay. A scene that's too honest. That kind of writing deserves the same level of protection we give to passwords and medical records, not the level we give to Google search history.
+Writers pour unfinished thoughts, half-formed arguments, and vulnerable first attempts into their tools. A journal entry, a personal essay, a scene that's too honest to share yet—that kind of writing deserves the same level of protection we give to passwords and medical records, rather than the level we give to Google.
 
-I don't think the current generation of writing tools takes this seriously enough. "We encrypt your data" is table stakes. "We don't have your data in the first place" is the actual bar.
+I don't think the current generation of writing tools takes this seriously enough. "We encrypt your data" is table stakes. The actual bar is not having your data in the first place.
 
 [Try it out.](/#download)

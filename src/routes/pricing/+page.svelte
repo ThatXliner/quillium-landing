@@ -97,7 +97,7 @@
 		</section>
 
 		<!-- Paid options -->
-		<section>
+		<section id="paid" class="scroll-mt-28">
 			<!-- Notice -->
 			<div
 				class="mb-8 flex items-center gap-3 rounded-lg border border-amber-400/20 bg-amber-400/6 px-4 py-3"
@@ -285,7 +285,7 @@
 		height: 12px;
 		margin-top: 3px;
 		flex-shrink: 0;
-		background: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 7l3 3 6-6' stroke='rgba(0,0,0,0.25)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;
+		background: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 7l3 3 6-6' stroke='%2316a34a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;
 		background-size: contain;
 	}
 

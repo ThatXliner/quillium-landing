@@ -54,9 +54,7 @@
 			<p class="mb-6 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
 				What will always be free
 			</p>
-			<div
-				class="grid grid-cols-1 gap-4 sm:grid-cols-2"
-			>
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<div class="promise-cell">
 					<PenLine class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
 					<div>
@@ -71,7 +69,8 @@
 						<p class="promise-body">
 							Your writing lives on your machine. No internet required; <a
 								href="/blog/quillium-privacy"
-								class="text-[#3b82f6] no-underline hover:underline">fully private</a>.
+								class="text-[#3b82f6] no-underline hover:underline">fully private</a
+							>.
 						</p>
 					</div>
 				</div>
@@ -85,9 +84,14 @@
 					</div>
 				</div>
 				<div class="promise-cell">
-					<CircleDollarSign class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
+					<CircleDollarSign
+						class="promise-icon"
+						size={24}
+						strokeWidth={1.5}
+						color="rgba(0,0,0,0.25)"
+					/>
 					<div>
-						<p class="promise-title">No forced payments</p>
+						<p class="promise-title">Everything that matters</p>
 						<p class="promise-body">
 							Never pay us a cent and the app works the same. That's the point.
 						</p>
@@ -285,7 +289,8 @@
 		height: 12px;
 		margin-top: 3px;
 		flex-shrink: 0;
-		background: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 7l3 3 6-6' stroke='%2316a34a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;
+		background: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 7l3 3 6-6' stroke='%2316a34a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+			no-repeat center;
 		background-size: contain;
 	}
 

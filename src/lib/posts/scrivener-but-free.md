@@ -43,7 +43,7 @@ Scrivener costs $49 on Mac (or $59.99 if you want it on iOS too) but that's not 
 
 Quillium is free. Like completely free. Not freemium, not free-with-ads, not free-for-30-days. Free.
 
-The core editor—branching, revision, everything that makes it what it is—costs nothing. We've written about [how we plan to sustain this](/pricing): the short version is that the writing app stays free forever, and we charge for optional cloud-based add-ons like Sync and Collab for those who are invested.
+The core editor—branching, revision, everything that makes it what it is—costs nothing. We've written about [how we plan to sustain this](/pricing): the short version is that the writing app stays free forever, and we charge for optional cloud-based add-ons like Omni for those who are invested.
 
 Writing tools should be accessible. The people who need a better revision workflow the most—students working through essays, writers early in their craft, anyone who revises obsessively but can't justify paying for specialized software—shouldn't have to pay for the privilege of keeping their drafts.
 

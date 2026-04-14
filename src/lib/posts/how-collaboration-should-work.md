@@ -1,6 +1,6 @@
 ---
 title: "How We're Thinking About Collaboration"
-description: "Collaboration shouldn't mean compromise. Here's how we're designing Quillium Sync to give writers shared space without shared constraints."
+description: "Collaboration shouldn't mean compromise. Here's how we're designing Quillium Omni to give writers shared space without shared constraints."
 date: "2026-04-09"
 author: "Bryan Hu"
 ---
@@ -19,7 +19,7 @@ That's the gap. The collaboration infrastructure is solid, but it's built on top
 
 ## What we're actually building
 
-Quillium Sync is designed around a different principle: **shared text, independent views**.
+Quillium Omni is designed around a different principle: **shared text, independent views**.
 
 Here's what that means:
 
@@ -28,7 +28,7 @@ Here's what that means:
 - Annotations—comments, revisions, suggestions—sync in real time. When your collaborator leaves a note, you see it immediately, anchored to the exact text it references.
 - If you *want* to see what someone else is doing, you can opt into follow mode (the way Figma does it). Click on a collaborator's avatar, and your view mirrors theirs—their scroll position, their cursor, even which revision version they're looking at. Click away and you're back to your own view.
 
-The key design decision here is that collaboration is additive. Nothing about the core writing experience changes. You still branch text, you still have your revision history, you still write offline. Sync layers on top; it never replaces what's underneath.
+The key design decision here is that collaboration is additive. Nothing about the core writing experience changes. You still branch text, you still have your revision history, you still write offline. Omni layers on top; it never replaces what's underneath.
 
 ## The owner model
 
@@ -56,7 +56,7 @@ We're not building a web client (yet). Collaboration in v1 is desktop-to-desktop
 
 We're not building Google Docs-style simultaneous typing as the primary interaction. You *can* edit at the same time, and those edits will sync correctly. But the product isn't optimized for two people typing into the same paragraph at once. It's optimized for two people *thinking* about the same paragraph in their own time and own way.
 
-We're also *not* building a free tier for collaboration. Quillium Sync will be around $20/month, because running a real-time relay server costs real money and we'd rather charge honestly than mine your data. The writing app itself stays free forever, and collaboration is an upgrade for people who want it. Collaborators don't need to pay—only the document owner does. See our [pricing page](/pricing) for the full picture.
+We're also *not* building a free tier for collaboration. Quillium Omni will be around $20/month, because running a real-time relay server costs real money and we'd rather charge honestly than mine your data. The writing app itself stays free forever, and collaboration is an upgrade for people who want it. Collaborators don't need to pay—only the document owner does. See our [pricing page](/pricing) for the full picture.
 
 ## When?
 

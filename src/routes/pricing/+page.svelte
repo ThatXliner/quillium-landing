@@ -123,13 +123,13 @@
 			</div>
 
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-start">
-				<!-- Sync card -->
+				<!-- Omni card -->
 				<div
 					class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60"
 				>
 					<div class="border-b border-black/5 px-5 py-4">
 						<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
-							Quillium Sync
+							Quillium Omni
 						</p>
 						<p
 							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/65 italic"
@@ -208,7 +208,7 @@
 					</p>
 				</div>
 				<div class="why-row">
-					<p class="why-label">Sync is the right trade</p>
+					<p class="why-label">Omni is the right trade</p>
 					<p class="why-text">
 						It's an extra service, not a toll on things you already have. Skip it entirely if you
 						want.

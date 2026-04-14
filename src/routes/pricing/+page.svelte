@@ -93,7 +93,9 @@
 					<div>
 						<p class="promise-title">Everything that matters</p>
 						<p class="promise-body">
-							Never pay us a cent and the app works the same. That's the point.
+							Never pay us a cent and the app works the same. <a href="/blog/free-isnt-generosity"
+								>That's the point</a
+							>
 						</p>
 					</div>
 				</div>

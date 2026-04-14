@@ -5,9 +5,9 @@ date: "2026-03-23"
 author: "Bryan Hu"
 ---
 
-Every programmer I know would riot if you took away Git. The idea of working on a codebase without branches, without diffs, without the ability to rewind to any point in history—it's unthinkable! Version control isn't just a nice-to-have in software; it's necessary to survive.
+Every programmer I know would riot if you took away Git. The idea of working on a codebase without branches, without diffs, without the ability to rewind to any point in history—it's unthinkable! Version control isn't just a nice-to-have in software; it's necessary to survive in modern engineering workflows.
 
-Meanwhile, writers—people whose entire job is iterating on text—are stuck with the digital equivalent of scribbling in the margins and praying.
+Meanwhile, writers, whose entire job is iterating on text, are stuck with the digital equivalent of scribbling in the margins and praying.
 
 ## The state of "version control" for writers
 
@@ -25,9 +25,9 @@ None of these are actually proper version control. They're coping mechanisms.
 
 Git solved this problem for code in 2005, and the key insight wasn't just "save every version." It was branching.
 
-A branch lets you say: "I want to try something different without destroying what I have." You experiment on a branch, and if it works, you merge it back. If it doesn't, the original is untouched. You can maintain multiple parallel versions of the same thing indefinitely.
+A branch lets you say "I want to try something different without destroying what I have." You experiment on a branch, and if it works you merge it back; if it doesn't, the original is untouched, and you can maintain multiple parallel versions of the same thing indefinitely.
 
-And this isn't just useful for code. It maps almost perfectly onto how creative writing actually works.
+This isn't just useful for code; it maps almost perfectly onto how creative writing actually works.
 
 ## Writing is non-linear, and your tools should be too
 
@@ -53,12 +53,12 @@ In Git, a branch is all-or-nothing. You check out one branch at a time, and that
 
 Quillium doesn't work like that. Branches are *per-fragment*. You can branch a single sentence, a paragraph, or a whole section independently. Because each branch is scoped to the piece of text it belongs to, you can mix and match freely: the formal opening from version one, the conversational middle from version two, the punchy ending from version three, all in the same document, without merging anything. We call each section a revision, and each version a, well, *version*.
 
-This is something Git genuinely can't do. In Git, you pick a branch and live with all of its changes. In Quillium, you pick and choose at the level of each individual decision. Every fork in the text is its own independent choice.
+This is something Git genuinely can't do. In Git, you pick a branch and live with all of its changes. In Quillium, you pick and choose at the level of each individual decision, and every fork in the text is its own independent choice.
 
-That's much closer to how writing actually works. You don't want to choose between "draft A" and "draft B" wholesale. You want the best pieces of each, assembled the way *you* see fit. Version control for writing should be better than Git, because prose demands it.
+That's much closer to how writing actually works, because you don't want to choose between "draft A" and "draft B" wholesale. You want the best pieces of each, assembled the way you see fit. Version control for writing should be better than Git, because prose demands it.
 
 ## Writing deserves better tools
 
-Writers iterate as much as programmers do—probably more, actually, since code either works or it doesn't while prose has infinite valid variations. The difference is that programmers have tools built to embrace iteration, and writers have tools that punish it.
+Writers iterate as much as programmers do, probably more, since code either works or it doesn't while prose has infinite valid variations. The difference is that programmers have tools built to embrace iteration, and writers have tools that punish it.
 
-If you're tired of `draft_v7_FINAL_REAL.docx` and want to write the way you actually think—in branches, not in lines—[try it out](/#download).
+If you're tired of `draft_v7_FINAL_REAL.docx` and want to write the way you actually think, in branches rather than in lines, [try it out](/#download).

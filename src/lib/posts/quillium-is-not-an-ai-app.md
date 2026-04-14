@@ -9,7 +9,7 @@ I keep having the same conversation.
 
 "How is this different from Grammarly?" That's what a friend replied when I posted about Quillium on my Instagram story. He didn't even look at the website—he saw "writing tool" and assumed the worst. Someone else glanced at the name, skimmed the tagline, and asked: "So how is this different from ChatGPT?"
 
-It's not different from ChatGPT—it's not even *related* to ChatGPT. Quillium is a writing app. You open it, you type words, you edit those words. The thing that makes it interesting is that you can *branch* those words: fork a sentence, try it three different ways, keep every version alive. A better editor, that's the whole pitch.
+It's not different from ChatGPT. It's not even *related* to ChatGPT! Quillium is a writing app. You open it, you type words, you edit those words. The thing that makes it interesting is that you can *branch* those words: fork a sentence, try it three different ways, keep every version alive. A better editor, that's the whole pitch.
 
 But I understand why people don't hear that, and it's honestly worth talking about why.
 
@@ -19,7 +19,7 @@ We're living in the aftermath of an AI gold rush. Every product launch in 2025 a
 
 So when someone sees a new writing-adjacent product, the pattern match is instant: *new + writing = AI thing*. It doesn't matter what your landing page says. It doesn't matter that your hero section talks about branching and revision. The category "writing tool" has been so thoroughly colonized by AI marketing that people's brains skip straight to the assumption.
 
-This isn't anyone's fault. It's just what happens when an entire industry spends two years screaming the same word.
+This isn't anyone's fault; it's what happens when an entire industry spends two years screaming the same word.
 
 ## The name doesn't help
 
@@ -35,7 +35,7 @@ You're writing an essay, and you get to the second paragraph where you're not su
 
 It's version control for prose—the same concept programmers have used for decades (Git, branches, forks), applied to the kind of writing where revision *is* the work.
 
-No text is generated for you. No sentences are autocompleted. No grammar is "corrected" without your input. You write every word yourself.
+No text is generated for you, no sentences are autocompleted, and no grammar is "corrected" without your input. You write every word yourself.
 
 ## Then why did people mention AI?
 
@@ -43,7 +43,7 @@ Because we *do* have an optional AI feature—emphasis on *optional*. It's off b
 
 But even a footnote about AI can become the headline. A friend shared Quillium with her creative writing club. She described it exactly right: non-linear writing, branching sentences, keeping multiple versions alive. The club liked the editing concept. But the AI part—mentioned at the very end as a "completely optional feature"—they were not too fond of. AI stealing art, the environmental costs, AI controversy in general—they didn't want it anywhere *near* their writing.
 
-That's the problem. The interesting work gets lost in the noise, and a feature that barely exists becomes the only thing people see. Which is why the landing page now has zero mention of it.
+That's the problem: the interesting work gets lost in the noise, and a feature that barely exists becomes the only thing people see. The landing page now has zero mention of AI for exactly that reason.
 
 ## The real problem is category collapse
 

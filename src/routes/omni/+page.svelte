@@ -499,7 +499,9 @@
 	<section class="mx-auto max-w-2xl">
 		<div class="mb-6">
 			<p class="section-eyebrow">Pricing</p>
-			<h2 class="section-heading">Only owners pay.</h2>
+			<h2 class="section-heading">
+				Bring everyone. <span class="italic">Only owners pay.</span>
+			</h2>
 		</div>
 
 		<div class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60">

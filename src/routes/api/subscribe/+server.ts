@@ -27,6 +27,16 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'Something went wrong' }, { status: 500 });
 		}
 
+		const { error: sendError } = await resend.emails.send({
+			from: 'Quillium <hi@quillium.bryanhu.com>',
+			to: [email],
+			template: { id: 'quillium-updates-initial' }
+		});
+
+		if (sendError) {
+			console.error('Resend template send error:', sendError);
+		}
+
 		return json({ success: true });
 	} catch (err) {
 		console.error('Subscribe endpoint error:', err);

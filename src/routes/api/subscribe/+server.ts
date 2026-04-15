@@ -34,7 +34,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		});
 
 		if (sendError) {
-			console.error('Resend template send error:', sendError);
+			console.error('Resend template send error:', JSON.stringify(sendError));
 		}
 
 		return json({ success: true });

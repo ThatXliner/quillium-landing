@@ -6,18 +6,12 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
-	import Manifesto from '$lib/components/Manifesto.svelte';
 	import Download from '$lib/components/Download.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 
 	let { data } = $props();
-	let showManifesto = $state(true);
 
 	onMount(() => {
-		posthog.onFeatureFlags(() => {
-			const variant = posthog.getFeatureFlag('show-manifesto-section');
-			showManifesto = variant !== 'hide-manifesto';
-		});
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
 		}
@@ -118,12 +112,6 @@
 	<Features />
 
 	<div class="warm-divider section-divider"></div>
-
-	{#if showManifesto}
-		<Manifesto />
-
-		<div class="warm-divider"></div>
-	{/if}
 
 	<Download release={data.release} />
 </main>

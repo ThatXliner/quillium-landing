@@ -39,7 +39,7 @@
 				>Features</a
 			>
 			<a
-				href="/#manifesto"
+				href="/manifesto"
 				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
 				>Manifesto</a
 			>
@@ -84,7 +84,7 @@
 	{#if menuOpen}
 		<div class="mobile-menu flex flex-col gap-1 md:hidden" transition:slide={{ duration: 250 }}>
 			<a href="/#features" class="mobile-link" onclick={closeMenu}>Features</a>
-			<a href="/#manifesto" class="mobile-link" onclick={closeMenu}>Manifesto</a>
+			<a href="/manifesto" class="mobile-link" onclick={closeMenu}>Manifesto</a>
 			<a href="/#download" class="mobile-link" onclick={closeMenu}>Download</a>
 			<a href="/blog" class="mobile-link" onclick={closeMenu}>Blog</a>
 			<a href="/pricing" class="mobile-link" onclick={closeMenu}>Pricing</a>

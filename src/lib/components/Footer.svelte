@@ -25,7 +25,7 @@
 			if (!res.ok) {
 				const data = await res.json();
 				if (data.error === 'already_subscribed') {
-					error = "You're already signed up!";
+					error = "You're already on the list.";
 				} else {
 					error = 'Something went wrong. Please try again.';
 				}

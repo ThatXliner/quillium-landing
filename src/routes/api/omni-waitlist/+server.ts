@@ -14,22 +14,35 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	try {
-		const existingTopics = await resend.contacts.topics.list({ email });
-		const alreadyOptedIn = existingTopics.data?.data?.some(
-			(t) => t.id === TOPIC_ID && t.subscription === 'opt_in'
-		);
-		if (alreadyOptedIn) {
-			return json({ error: 'already_subscribed' }, { status: 409 });
-		}
+		const existingContact = await resend.contacts.get({ email });
+		const contactExists = Boolean(existingContact.data);
 
-		const { error } = await resend.contacts.create({
-			email,
-			topics: [{ id: TOPIC_ID, subscription: 'opt_in' }]
-		});
+		if (contactExists) {
+			const existingTopics = await resend.contacts.topics.list({ email });
+			const alreadyOptedIn = existingTopics.data?.data?.some(
+				(t) => t.id === TOPIC_ID && t.subscription === 'opt_in'
+			);
+			if (alreadyOptedIn) {
+				return json({ error: 'already_subscribed' }, { status: 409 });
+			}
 
-		if (error) {
-			console.error('Resend error:', error);
-			return json({ error: 'Something went wrong' }, { status: 500 });
+			const { error } = await resend.contacts.topics.update({
+				email,
+				topics: [{ id: TOPIC_ID, subscription: 'opt_in' }]
+			});
+			if (error) {
+				console.error('Resend topic update error:', error);
+				return json({ error: 'Something went wrong' }, { status: 500 });
+			}
+		} else {
+			const { error } = await resend.contacts.create({
+				email,
+				topics: [{ id: TOPIC_ID, subscription: 'opt_in' }]
+			});
+			if (error) {
+				console.error('Resend error:', error);
+				return json({ error: 'Something went wrong' }, { status: 500 });
+			}
 		}
 
 		const { error: sendError } = await resend.emails.send({

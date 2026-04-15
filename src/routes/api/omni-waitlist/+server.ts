@@ -30,6 +30,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const { error: sendError } = await resend.emails.send({
 			from: 'Bryan from Quillium <founder@quillium.bryanhu.com>',
 			to: [email],
+			subject: "You're now on the Quillium Omni waitlist",
 			template: { id: 'quillium-omni-waitlist' }
 		});
 

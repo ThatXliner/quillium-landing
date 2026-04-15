@@ -30,6 +30,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const { error: sendError } = await resend.emails.send({
 			from: 'Quillium <hi@quillium.bryanhu.com>',
 			to: [email],
+			subject: "You're now on the Quillium Updates channel",
 			template: { id: 'quillium-updates-initial' }
 		});
 

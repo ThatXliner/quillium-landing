@@ -212,19 +212,16 @@
 <main class="min-h-screen px-6 pt-32 pb-20">
 	<!-- ============ HERO ============ -->
 	<section class="mx-auto max-w-3xl text-center">
-		<p class="eyebrow">
-			<span class="eyebrow-dot"></span>
-			Quillium Omni · Coming soon
-		</p>
 		<h1 class="hero-heading">
 			Write Anywhere.<br /><span class="italic">Think Together.</span>
 		</h1>
 		<p class="hero-lead">
-			Cloud sync across all your devices.<br />Real-time collaboration that just works.
+			Quillium Omni: cloud sync across all your devices.<br />Real-time collaboration that just
+			works.
 		</p>
 
 		<!-- Waitlist form -->
-		<div class="mx-auto mt-10 max-w-[28rem]">
+		<div class="mx-auto mt-10 max-w-lg">
 			{#if !submitted}
 				<form onsubmit={handleSubmit} class="flex gap-2 max-[440px]:flex-col">
 					<input
@@ -233,10 +230,10 @@
 						bind:value={email}
 						required
 						class="waitlist-input"
-						aria-label="Email address"
+						aria-label="Email address w-md"
 					/>
 					<button type="submit" class="btn-primary" disabled={!email || submitting}>
-						{submitting ? 'Joining…' : 'Join the waitlist'}
+						{submitting ? 'Joining…' : 'Join the waitlist for Omni'}
 						{#if !submitting}
 							<ArrowRight size={16} strokeWidth={2} />
 						{/if}
@@ -622,37 +619,6 @@
 
 <style>
 	/* ── Hero ── */
-	.eyebrow {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		padding: 5px 14px;
-		border-radius: 9999px;
-		background: rgba(59, 130, 246, 0.08);
-		border: 1px solid rgba(59, 130, 246, 0.18);
-		font-size: 0.72rem;
-		font-weight: 600;
-		letter-spacing: 0.06em;
-		color: #2563eb;
-		margin-bottom: 28px;
-	}
-	.eyebrow-dot {
-		width: 6px;
-		height: 6px;
-		border-radius: 9999px;
-		background: #3b82f6;
-		box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-		animation: pulse 2s ease-in-out infinite;
-	}
-	@keyframes pulse {
-		0%,
-		100% {
-			opacity: 1;
-		}
-		50% {
-			opacity: 0.4;
-		}
-	}
 	.hero-heading {
 		font-family: 'Newsreader', Georgia, serif;
 		font-size: clamp(2.5rem, 7vw, 4.5rem);

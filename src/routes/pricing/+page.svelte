@@ -158,6 +158,12 @@
 						<p class="mt-auto pt-3 text-[0.7rem] text-black/28">
 							Mobile is free for everyone: sync just works better with a plan.
 						</p>
+						<a
+							href="/omni"
+							class="mt-3 inline-flex items-center gap-1 text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
+						>
+							Join the waitlist <span aria-hidden="true">→</span>
+						</a>
 					</div>
 				</div>
 

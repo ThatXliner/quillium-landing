@@ -9,7 +9,7 @@ I keep having the same conversation.
 
 "How is this different from Grammarly?" That's what a friend replied when I posted about Quillium on my Instagram story. He didn't even look at the website—he saw "writing tool" and assumed the worst. Someone else glanced at the name, skimmed the tagline, and asked: "So how is this different from ChatGPT?"
 
-It's not different from ChatGPT. It's not even *related* to ChatGPT! Quillium is a writing app. You open it, you type words, you edit those words. The thing that makes it interesting is that you can *branch* those words: fork a sentence, try it three different ways, keep every version alive. A better editor, that's the whole pitch.
+It's not different from ChatGPT. It's not even *related* to ChatGPT! Quillium is a writing app. You open it, you type words, you edit those words. That's it. The thing that makes it interesting is that you can *branch* those words: fork a sentence, try it three different ways, keep every version alive. It's just a better way to write.
 
 But I understand why people don't hear that, and it's honestly worth talking about why.
 

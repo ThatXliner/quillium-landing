@@ -135,7 +135,7 @@ export function serializeUpdate(
  * ChangeSet needs to be reconstructed from JSON.
  */
 export function deserializeUpdate(
-    data: { clientID: string; changes: { length: number; sections: number[] } },
+    data: { clientID: string; changes: ReturnType<ChangeSet["toJSON"]> },
     _docLength: number,
 ): Update {
     return {

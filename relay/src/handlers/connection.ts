@@ -100,18 +100,32 @@ export async function handleConnection(io: Server, socket: Socket): Promise<void
 /**
  * Handle socket disconnection.
  * Per D-37: Schedules room cleanup after delay if no clients remain.
+ * Per D-61: Emits ownerLeft when owner disconnects, clientLeft for all disconnects.
  */
-function handleDisconnection(
+export function handleDisconnection(
     io: Server,
     socket: Socket,
     documentId: string,
     reason: string,
 ): void {
     const room = getRoom(documentId);
+    const userId = socket.data.userId as string;
 
     console.log(`[handlers] Socket ${socket.id.slice(0, 8)}... disconnected: ${reason}`);
 
     if (room) {
+        // Notify remaining clients this user left (cursor cleanup)
+        // Emit before socket leaves room so socket.to() reaches others
+        socket.to(documentId).emit("clientLeft", { clientID: userId });
+
+        // If owner disconnects, kick all remaining collaborators (per D-61)
+        if (socket.data.isOwner) {
+            socket.to(documentId).emit("ownerLeft");
+            console.log(
+                `[handlers] Owner left room ${documentId.slice(0, 8)}..., kicking collaborators`,
+            );
+        }
+
         // Check if room is now empty
         const socketCount = io.sockets.adapter.rooms.get(documentId)?.size ?? 0;
 

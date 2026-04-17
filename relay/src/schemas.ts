@@ -31,6 +31,18 @@ export const AuthErrorCode = {
 export type AuthErrorCode = (typeof AuthErrorCode)[keyof typeof AuthErrorCode];
 
 /**
+ * Error codes for persistence failures.
+ * Per D-42: Client receives error code and can retry or surface to user.
+ */
+export const PersistErrorCode = {
+    PERSIST_FAILED: 5001,
+    PERSIST_TIMEOUT: 5002,
+    PERSIST_CONFLICT: 5003,
+} as const;
+
+export type PersistErrorCode = (typeof PersistErrorCode)[keyof typeof PersistErrorCode];
+
+/**
  * ChangeSet structure from @codemirror/state.
  * Minimal schema for validation - actual parsing done by CodeMirror.
  */

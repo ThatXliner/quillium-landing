@@ -49,6 +49,17 @@ export async function handleConnection(io: Server, socket: Socket): Promise<void
         handlePushUpdates(io, socket, room, data, callback);
     });
 
+    // Handle cursor position broadcasts (per D-60)
+    // Relay forwards to all other clients in room -- cursors are ephemeral, not persisted
+    socket.on("cursorUpdate", (data: { pos: number; name: string; color: string }) => {
+        socket.to(documentId).emit("cursorUpdate", {
+            clientID: socket.data.userId,
+            pos: data.pos,
+            name: data.name,
+            color: data.color,
+        });
+    });
+
     // Handle owner initializing room with their document content.
     // Creates a proper update (insert from empty) so version tracking works correctly.
     socket.on("initDocument", async (data: { content: string }, callback) => {

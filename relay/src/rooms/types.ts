@@ -28,6 +28,12 @@ export interface DocumentRoom {
 
     /** Cleanup timer scheduled when last client leaves (per D-37) */
     cleanupTimer: NodeJS.Timeout | null;
+
+    /** Version at last snapshot (for threshold tracking) */
+    lastSnapshotVersion: number;
+
+    /** Timestamp of last snapshot (for time-based threshold) */
+    lastSnapshotTime: number;
 }
 
 /**

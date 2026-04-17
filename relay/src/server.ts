@@ -8,6 +8,8 @@
 import { createServer, type Server as HttpServer } from "http";
 import { Server, type Socket } from "socket.io";
 import { authMiddleware } from "./auth/middleware.js";
+import { handleConnection } from "./handlers/connection.js";
+import { getRoomCount } from "./rooms/manager.js";
 
 /**
  * Create and configure the Socket.io server.
@@ -17,7 +19,13 @@ export function createRelayServer(): { io: Server; httpServer: HttpServer } {
         // Health check endpoint for Fly.io
         if (req.url === "/health") {
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ status: "ok", timestamp: Date.now() }));
+            res.end(
+                JSON.stringify({
+                    status: "ok",
+                    timestamp: Date.now(),
+                    rooms: getRoomCount(),
+                }),
+            );
             return;
         }
         res.writeHead(404);
@@ -51,28 +59,9 @@ export function createRelayServer(): { io: Server; httpServer: HttpServer } {
     // Register auth middleware
     io.use(authMiddleware);
 
-    // Connection handler (handlers added in Plan 03)
+    // Connection handler
     io.on("connection", (socket: Socket) => {
-        const { userId, documentId } = socket.data;
-        console.log(`[server] Socket ${socket.id} joined room ${documentId}`);
-
-        // Join document room
-        socket.join(documentId);
-
-        // Placeholder handlers (implemented in Plan 03)
-        socket.on("pullUpdates", (data, callback) => {
-            console.log("[server] pullUpdates not yet implemented");
-            callback({ error: "NOT_IMPLEMENTED" });
-        });
-
-        socket.on("pushUpdates", (data, callback) => {
-            console.log("[server] pushUpdates not yet implemented");
-            callback({ error: "NOT_IMPLEMENTED" });
-        });
-
-        socket.on("disconnect", (reason) => {
-            console.log(`[server] Socket ${socket.id} disconnected: ${reason}`);
-        });
+        handleConnection(io, socket);
     });
 
     return { io, httpServer };

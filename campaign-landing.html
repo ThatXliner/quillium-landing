@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quillium — Can't Think Straight?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: #f5f4f1;
+    color: rgba(0,0,0,0.88);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(245,244,241,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.15rem; font-weight: 500;
+    color: rgba(0,0,0,0.88);
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #eceef2, #cdd1d9);
+    border-radius: 8px; border: 1px solid rgba(255,255,255,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500;
+    color: rgba(0,0,0,0.5); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: rgba(0,0,0,0.8); }
+  .nav-cta {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+    color: white !important; padding: 0.5rem 1.25rem;
+    border-radius: 8px; font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(59,130,246,0.35); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+  }
+
+  /* Branching lines background */
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 30% 60%, rgba(168,85,247,0.04), transparent),
+      radial-gradient(ellipse 500px 350px at 70% 40%, rgba(59,130,246,0.04), transparent),
+      radial-gradient(ellipse 400px 300px at 50% 80%, rgba(34,197,94,0.03), transparent);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(0,0,0,0.35);
+    margin-bottom: 2rem;
+    position: relative;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .brand-dots {
+    display: flex; gap: 4px;
+  }
+  .brand-dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .dot-blue { background: #3b82f6; }
+  .dot-purple { background: #a855f7; }
+  .dot-green { background: #22c55e; }
+  .dot-gold { background: #fcbc05; }
+
+  .hero h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: rgba(0,0,0,0.88);
+    max-width: 700px;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: #3b82f6;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem; line-height: 1.7;
+    color: rgba(0,0,0,0.5);
+    max-width: 500px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta-group {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    justify-content: center; align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white; padding: 0.85rem 2rem;
+    border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(59,130,246,0.3), 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(59,130,246,0.4), 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(12px);
+    color: rgba(0,0,0,0.88); padding: 0.85rem 1.75rem;
+    border-radius: 10px; font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; border: none; cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.7);
+    transform: translateY(-1px);
+  }
+
+  .hero-trust {
+    font-size: 0.75rem; color: rgba(0,0,0,0.3);
+  }
+  .hero-trust a {
+    color: rgba(0,0,0,0.4); text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── BRANCH VISUAL ── */
+  .branch-visual {
+    margin-top: 4rem;
+    position: relative;
+    width: 100%; max-width: 680px;
+  }
+  .branch-svg {
+    width: 100%; height: auto;
+  }
+
+  /* ── VALUE SECTION ── */
+  .value-section {
+    padding: 5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .value-section .section-eyebrow {
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(0,0,0,0.35);
+    margin-bottom: 1rem;
+  }
+  .value-section h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: rgba(0,0,0,0.88);
+    margin-bottom: 1.5rem;
+  }
+  .value-section p {
+    font-size: 1.05rem; line-height: 1.8;
+    color: rgba(0,0,0,0.5);
+    max-width: 640px;
+  }
+
+  /* ── FEATURE CARDS ── */
+  .features {
+    padding: 2rem 2rem 5rem;
+    max-width: 1000px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  }
+  .feature-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1.25rem;
+  }
+  .feature-card h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.25rem; font-weight: 400;
+    color: rgba(0,0,0,0.88);
+    margin-bottom: 0.5rem;
+  }
+  .feature-card p {
+    font-size: 0.9rem; line-height: 1.65;
+    color: rgba(0,0,0,0.5);
+  }
+
+  /* ── MANIFESTO ── */
+  .manifesto {
+    padding: 5rem 2rem;
+    max-width: 700px; margin: 0 auto;
+    text-align: center;
+  }
+  .manifesto blockquote {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(0,0,0,0.65);
+    border: none; padding: 0;
+    margin-bottom: 2rem;
+  }
+  .manifesto .attribution {
+    font-size: 0.8rem; font-weight: 500;
+    color: rgba(0,0,0,0.35);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    padding: 5rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.04);
+  }
+  .cta-banner h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: rgba(0,0,0,0.88);
+    margin-bottom: 1rem;
+  }
+  .cta-banner p {
+    font-size: 1rem; color: rgba(0,0,0,0.5);
+    margin-bottom: 2rem;
+  }
+
+  /* ── DIVIDER ── */
+  .warm-divider {
+    width: 80px; height: 2px; margin: 0 auto;
+    background: linear-gradient(90deg, #3b82f6, #a855f7, #22c55e, #fcbc05);
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(0,0,0,0.3);
+  }
+  footer a { color: rgba(0,0,0,0.4); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+  .fade-up-1 { animation-delay: 0.1s; }
+  .fade-up-2 { animation-delay: 0.25s; }
+  .fade-up-3 { animation-delay: 0.4s; }
+  .fade-up-4 { animation-delay: 0.55s; }
+  .fade-up-5 { animation-delay: 0.7s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0.75rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .features { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-icon">Q</span>
+    Quillium
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#manifesto">Manifesto</a>
+    <a href="#" class="nav-cta">Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow fade-up fade-up-1">
+    <div class="brand-dots">
+      <span class="dot-blue"></span>
+      <span class="dot-purple"></span>
+      <span class="dot-green"></span>
+      <span class="dot-gold"></span>
+    </div>
+    The Non-Linear Writing App
+  </div>
+
+  <h1 class="fade-up fade-up-2">
+    Can't think <em>straight?</em>
+  </h1>
+
+  <p class="hero-sub fade-up fade-up-3">
+    Quillium works with that. Branch any sentence, keep every version, and never lose a draft. Your thoughts don't go in a straight line — your writing app shouldn't either.
+  </p>
+
+  <div class="hero-cta-group fade-up fade-up-4">
+    <a href="#" class="btn-primary">Download Free</a>
+    <a href="#features" class="btn-secondary">See how it works</a>
+  </div>
+
+  <p class="hero-trust fade-up fade-up-5">
+    Free forever. No account required. <a href="#">Privacy first</a>.
+  </p>
+
+  <!-- Branch visualization -->
+  <div class="branch-visual fade-up fade-up-5">
+    <svg class="branch-svg" viewBox="0 0 680 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main trunk -->
+      <path d="M 40 90 L 200 90" stroke="rgba(0,0,0,0.12)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Branch point -->
+      <circle cx="200" cy="90" r="6" fill="#3b82f6" opacity="0.8"/>
+
+      <!-- Upper branch -->
+      <path d="M 200 90 C 260 90, 280 40, 340 40" stroke="#a855f7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <path d="M 340 40 L 520 40" stroke="#a855f7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+
+      <!-- Middle branch (main) -->
+      <path d="M 200 90 L 520 90" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+
+      <!-- Lower branch -->
+      <path d="M 200 90 C 260 90, 280 140, 340 140" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+      <path d="M 340 140 L 520 140" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+
+      <!-- Second branch point on upper -->
+      <circle cx="420" cy="40" r="4" fill="#a855f7" opacity="0.6"/>
+      <path d="M 420 40 C 450 40, 460 20, 520 20" stroke="#fcbc05" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+
+      <!-- End dots -->
+      <circle cx="520" cy="20" r="3" fill="#fcbc05" opacity="0.5"/>
+      <circle cx="520" cy="40" r="3" fill="#a855f7" opacity="0.5"/>
+      <circle cx="520" cy="90" r="3" fill="#3b82f6" opacity="0.6"/>
+      <circle cx="520" cy="140" r="3" fill="#22c55e" opacity="0.5"/>
+
+      <!-- Text labels -->
+      <text x="530" y="24" font-family="Inter, sans-serif" font-size="11" fill="rgba(0,0,0,0.25)" font-weight="500">draft c</text>
+      <text x="530" y="44" font-family="Inter, sans-serif" font-size="11" fill="rgba(0,0,0,0.25)" font-weight="500">draft b</text>
+      <text x="530" y="94" font-family="Inter, sans-serif" font-size="11" fill="rgba(0,0,0,0.3)" font-weight="600">draft a</text>
+      <text x="530" y="144" font-family="Inter, sans-serif" font-size="11" fill="rgba(0,0,0,0.25)" font-weight="500">draft d</text>
+
+      <!-- Starting label -->
+      <text x="20" y="78" font-family="Inter, sans-serif" font-size="9" fill="rgba(0,0,0,0.2)" font-weight="600" letter-spacing="0.08em" text-transform="uppercase">YOUR IDEA</text>
+    </svg>
+  </div>
+</section>
+
+<!-- WARM DIVIDER -->
+<div style="padding: 0 2rem;"><div class="warm-divider"></div></div>
+
+<!-- VALUE PROP -->
+<section class="value-section" id="features">
+  <p class="section-eyebrow">Why Quillium</p>
+  <h2>Most writing apps assume you know what you want to say.</h2>
+  <p>
+    That your ideas arrive fully formed, in order, ready to be typed out. That's not how it works. Quillium was built for the way writers actually think — in loops, in branches, in "wait, what if I said it this way instead?"
+  </p>
+</section>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature-card">
+    <div class="feature-icon" style="background: rgba(168,85,247,0.1);">
+      <span style="color: #a855f7;">&#x2387;</span>
+    </div>
+    <h3>Write in Branches</h3>
+    <p>Fork any sentence. Explore three different openings. Keep them all. Decide later — or never. Your drafts, your rules.</p>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-icon" style="background: rgba(59,130,246,0.1);">
+      <span style="color: #3b82f6;">&#x270D;</span>
+    </div>
+    <h3>Annotations That Float</h3>
+    <p>Leave notes beside your text, not buried in comments. See your thinking alongside your writing, the way it actually happens in your head.</p>
+  </div>
+
+  <div class="feature-card">
+    <div class="feature-icon" style="background: rgba(34,197,94,0.1);">
+      <span style="color: #22c55e;">&#x1F512;</span>
+    </div>
+    <h3>Never Lose Work</h3>
+    <p>Offline-first. SQLite-backed. Crash-resistant. Every keystroke is saved locally before anything else. Your words are yours.</p>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="manifesto">
+  <div class="warm-divider" style="margin-bottom: 3rem;"></div>
+  <blockquote>
+    "Your thoughts don't go in a straight line. Why should your writing app?"
+  </blockquote>
+  <p class="attribution">The Quillium Manifesto</p>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Ready to think crooked?</h2>
+  <p>Free. Private. No account needed. Just open it and write.</p>
+  <a href="#" class="btn-primary">Download Quillium</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Quillium. Free forever. <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+</footer>
+
+</body>
+</html>

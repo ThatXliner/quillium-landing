@@ -16,6 +16,7 @@ export interface AuthenticatedSocketData {
     userId: string;
     documentId: string;
     isAnonymous: boolean;
+    isOwner: boolean;
 }
 
 /**
@@ -83,6 +84,7 @@ export async function authMiddleware(
         socket.data.userId = user.user.id;
         socket.data.documentId = documentId;
         socket.data.isAnonymous = user.user.is_anonymous ?? false;
+        socket.data.isOwner = isOwner;
 
         console.log(
             `[auth] User ${user.user.id.slice(0, 8)}... connected to document ${documentId.slice(0, 8)}...`,

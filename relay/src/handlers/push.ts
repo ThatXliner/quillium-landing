@@ -35,14 +35,19 @@ export async function handlePushUpdates(
     // Deserialize updates from JSON
     let clientUpdates: Update[];
     try {
-        clientUpdates = rawUpdates.map((u) => deserializeUpdate(u, room.doc.length));
+        clientUpdates = rawUpdates.map((u) => deserializeUpdate(u));
     } catch (err) {
         console.error("[push] Failed to deserialize updates:", err);
         callback({ error: "INVALID_UPDATES" });
         return;
     }
 
-    // Process updates with OT
+    // Snapshot current state for rollback-free processing
+    const prevUpdatesLength = room.updates.length;
+    const prevDoc = room.doc;
+    const prevVersion = room.version;
+
+    // Process updates with OT (mutates room state)
     const result = processUpdates(room, clientVersion, clientUpdates);
 
     if (!result.success) {
@@ -54,13 +59,14 @@ export async function handlePushUpdates(
     // D-40: Persist BEFORE broadcasting
     const persistResult = await persistUpdates(room.documentId, result.updates, result.version);
     if (!persistResult.success) {
-        // D-42: Retry exhausted, reject to client
+        // D-42: Retry exhausted, reject to client and rollback ALL state
         console.error("[push] Persistence failed:", persistResult.error);
         callback({ error: "PERSIST_FAILED", code: PersistErrorCode.PERSIST_FAILED });
-        // Roll back room state: remove updates that weren't persisted
-        room.updates = room.updates.slice(0, -result.updates.length);
-        room.version -= result.updates.length;
-        console.warn(`[push] Rolled back ${result.updates.length} updates from room state`);
+        // Proper rollback: restore entire previous state
+        room.updates = room.updates.slice(0, prevUpdatesLength);
+        room.doc = prevDoc;
+        room.version = prevVersion;
+        console.warn(`[push] Rolled back to v${prevVersion}, doc.length=${prevDoc.length}`);
         return;
     }
 
@@ -69,23 +75,19 @@ export async function handlePushUpdates(
             `(v${clientVersion} -> v${result.version})`,
     );
 
-    // Acknowledge to sender
-    callback({ version: result.version });
+    // Serialize updates for transmission
+    // Version numbers: if client was at v1 and we accepted 2 updates, versions are 2 and 3
+    // But if client was stale and we rebased, prevUpdatesLength is the base
+    const serialized = result.updates.map((u, i) => serializeUpdate(u, prevUpdatesLength + i + 1));
+
+    // Acknowledge to sender WITH their confirmed updates
+    // The client needs to receive updates to advance their synced version via receiveUpdates()
+    callback({ version: result.version, updates: serialized });
 
     // Per RELY-04: Broadcast to all room members except sender
-    const serialized = result.updates.map((u, i) => serializeUpdate(u, clientVersion + i + 1));
-
     socket.to(room.documentId).emit("updates", {
         updates: serialized,
     });
-
-    // Notify pending pullUpdates
-    for (const [pendingId, pendingCallback] of room.pending) {
-        if (pendingId !== socket.id) {
-            pendingCallback(result.updates);
-            room.pending.delete(pendingId);
-        }
-    }
 
     // Check snapshot threshold after successful persist (async, non-blocking)
     maybeCreateSnapshot(room).catch((err) => {

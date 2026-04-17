@@ -96,9 +96,10 @@ export async function loadRoomState(documentId: string): Promise<LoadResult> {
         }
     }
 
-    const currentVersion = rows?.length
-        ? rows[rows.length - 1].version
-        : snapshotVersion;
+    // Version = snapshot version + number of updates replayed.
+    // This ensures room.version matches room.updates.length + snapshotVersion,
+    // which is required for slice-based catchup to work correctly.
+    const currentVersion = snapshotVersion + replayedUpdates.length;
 
     console.log(
         `[persistence] Loaded room ${documentId.slice(0, 8)}... ` +

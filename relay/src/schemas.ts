@@ -44,12 +44,10 @@ export type PersistErrorCode = (typeof PersistErrorCode)[keyof typeof PersistErr
 
 /**
  * ChangeSet structure from @codemirror/state.
- * Minimal schema for validation - actual parsing done by CodeMirror.
+ * CodeMirror's ChangeSet.toJSON() returns an array, not an object.
+ * Skip strict validation here — CodeMirror.fromJSON() does the real parsing.
  */
-export const ChangeSetSchema = z.object({
-    length: z.number().int().nonnegative(),
-    sections: z.array(z.number().int()),
-});
+export const ChangeSetSchema = z.any();
 
 /**
  * Update structure from @codemirror/collab.

@@ -28,23 +28,12 @@ export function handlePullUpdates(
 
     const { version } = parseResult.data;
 
-    // If client is at current version, add to pending list
+    // If client is at current version, return empty array immediately.
+    // Real-time updates are delivered via Socket.io broadcast (not long-poll).
+    // Pull is only for catch-up when client is behind.
     if (version >= room.version) {
-        // Client is up to date, wait for new updates
-        const pendingId = socket.id;
-
-        // Store callback for when new updates arrive
-        room.pending.set(pendingId, (updates) => {
-            const serialized = updates.map((u, i) => serializeUpdate(u, version + i + 1));
-            callback({ updates: serialized });
-        });
-
-        // Clean up on disconnect
-        socket.once("disconnect", () => {
-            room.pending.delete(pendingId);
-        });
-
-        console.log(`[pull] Client ${socket.id.slice(0, 8)}... waiting at v${version}`);
+        console.log(`[pull] Client ${socket.id.slice(0, 8)}... up to date at v${version}`);
+        callback({ updates: [] });
         return;
     }
 

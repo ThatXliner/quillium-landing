@@ -5,9 +5,11 @@
  * Per D-37: Schedules cleanup when last client disconnects.
  */
 import type { Server, Socket } from "socket.io";
+import { Text, ChangeSet } from "@codemirror/state";
 import { getOrCreateRoomAsync, getRoom, scheduleRoomCleanup } from "../rooms/manager.js";
 import { handlePullUpdates } from "./pull.js";
 import { handlePushUpdates } from "./push.js";
+import { persistUpdates } from "../persistence/index.js";
 
 /**
  * Handle new socket connection.
@@ -28,9 +30,14 @@ export async function handleConnection(io: Server, socket: Socket): Promise<void
     );
 
     // Send initial state to client
+    const docString = room.doc.toString();
+    console.log(
+        `[handlers] Sending init: version=${room.version}, doc.length=${docString.length}, ` +
+        `updatesStartVersion=${room.updatesStartVersion}, updates.length=${room.updates.length}`,
+    );
     socket.emit("init", {
         version: room.version,
-        doc: room.doc.toString(),
+        doc: docString,
     });
 
     // Register message handlers
@@ -40,6 +47,48 @@ export async function handleConnection(io: Server, socket: Socket): Promise<void
 
     socket.on("pushUpdates", (data, callback) => {
         handlePushUpdates(io, socket, room, data, callback);
+    });
+
+    // Handle owner initializing room with their document content.
+    // Creates a proper update (insert from empty) so version tracking works correctly.
+    socket.on("initDocument", async (data: { content: string }, callback) => {
+        // Only allow if room is empty (version 0, no content)
+        if (room.version === 0 && room.doc.length === 0) {
+            const content = data.content;
+            // Create a ChangeSet that inserts all content into empty doc (length 0)
+            const changes = ChangeSet.of({ from: 0, insert: content }, 0);
+
+            const update = {
+                clientID: "owner-init",
+                changes: changes,
+            };
+
+            // Apply as a proper update so version tracking works
+            room.doc = changes.apply(room.doc);
+            room.updates.push(update);
+            // Canonical invariant: version === updates.length
+            room.version = room.updates.length;
+
+            // Persist the initial update (same pattern as push.ts)
+            const persistResult = await persistUpdates(documentId, [update], room.version);
+            if (!persistResult.success) {
+                // Rollback on persist failure
+                room.updates.pop();
+                room.doc = Text.of([""]);
+                room.version = 0;
+                console.error(`[handlers] initDocument persist failed:`, persistResult.error);
+                callback({ ok: false, error: "Failed to persist initial content" });
+                return;
+            }
+
+            console.log(
+                `[handlers] Room ${documentId.slice(0, 8)}... initialized with ${room.doc.length} chars at v${room.version}`,
+            );
+            callback({ ok: true, version: room.version });
+        } else {
+            console.warn(`[handlers] initDocument rejected - room already has content (v${room.version})`);
+            callback({ ok: false, error: "Room already initialized" });
+        }
     });
 
     // Handle disconnect

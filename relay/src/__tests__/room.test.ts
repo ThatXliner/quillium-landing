@@ -202,7 +202,7 @@ describe("Serialization", () => {
             changes: serializedChanges,
         };
 
-        const update = deserializeUpdate(data as any, 0);
+        const update = deserializeUpdate(data as any);
 
         expect(update.clientID).toBe("test");
         expect(update.changes).toBeInstanceOf(ChangeSet);

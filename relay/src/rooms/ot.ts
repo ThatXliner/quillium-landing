@@ -1,99 +1,90 @@
 /**
- * ot.ts -- OT transformation wrapper using @codemirror/collab.
+ * ot.ts -- OT transformation following the canonical CodeMirror collab example.
  *
- * Per RELY-03: Relay assigns version numbers and orders changes.
- * Per RESEARCH.md anti-pattern: NEVER reject stale versions, always rebase.
+ * Key invariant: version === updates.length
+ * The document is always the result of applying all updates to the initial empty doc.
  */
 import { rebaseUpdates, type Update } from "@codemirror/collab";
-import { ChangeSet } from "@codemirror/state";
+import { ChangeSet, Text } from "@codemirror/state";
 import type { DocumentRoom } from "./types.js";
 
 /**
  * Result of processing client updates.
  */
 export interface ProcessResult {
-    /** Whether updates were successfully processed */
     success: boolean;
-
-    /** New version after applying updates */
     version: number;
-
-    /** Updates to broadcast (rebased if needed) */
     updates: Update[];
-
-    /** Error message if success is false */
     error?: string;
 }
 
 /**
  * Process client updates with OT transformation.
  *
- * Per RELY-03: Assigns version numbers and orders changes.
- * Per RESEARCH.md: Uses rebaseUpdates for stale versions, never rejects.
- *
- * @param room - Document room with current state
- * @param clientVersion - Client's version number
- * @param clientUpdates - Updates from client
- * @returns ProcessResult with success status and updates to broadcast
+ * Follows the canonical CodeMirror collab example exactly:
+ * - version === updates.length (always)
+ * - If client version doesn't match, rebase their changes over concurrent updates
+ * - Apply rebased changes to doc
  */
 export function processUpdates(
     room: DocumentRoom,
     clientVersion: number,
     clientUpdates: Update[],
 ): ProcessResult {
+    // Log full state for debugging
+    console.log(
+        `[ot] processUpdates: clientVersion=${clientVersion}, ` +
+        `updates.length=${room.updates.length}, doc.length=${room.doc.length}, ` +
+        `clientUpdates[0].changes.length=${clientUpdates[0]?.changes.length}`,
+    );
+
     try {
-        // Validate version is not from the future
-        if (clientVersion > room.version) {
-            return {
-                success: false,
-                version: room.version,
-                updates: [],
-                error: `Client version ${clientVersion} ahead of server ${room.version}`,
-            };
-        }
+        let received = clientUpdates;
 
-        let updatesToApply = clientUpdates;
-
-        // If client is behind, rebase their updates against server changes
-        // Per RESEARCH.md: NEVER reject stale versions, always rebase
-        if (clientVersion < room.version) {
-            const updatesSinceClient = room.updates.slice(clientVersion);
-            updatesToApply = [...rebaseUpdates(clientUpdates, updatesSinceClient)];
+        // Canonical pattern: if (data.version != updates.length)
+        if (clientVersion !== room.updates.length) {
+            if (clientVersion > room.updates.length) {
+                return {
+                    success: false,
+                    version: room.updates.length,
+                    updates: [],
+                    error: `Client version ${clientVersion} ahead of server ${room.updates.length}`,
+                };
+            }
+            // Rebase: received = rebaseUpdates(received, updates.slice(data.version))
+            const concurrent = room.updates.slice(clientVersion);
             console.log(
-                `[ot] Rebased ${clientUpdates.length} updates from v${clientVersion} over ${updatesSinceClient.length} concurrent changes`,
+                `[ot] Rebasing ${received.length} client updates over ${concurrent.length} concurrent updates`,
             );
+            received = [...rebaseUpdates(received, concurrent)];
         }
 
-        // Apply each update to room document
-        const appliedUpdates: Update[] = [];
-        for (const update of updatesToApply) {
-            // Apply changes to document
+        // Apply each update to doc (canonical pattern)
+        for (const update of received) {
+            console.log(
+                `[ot] Applying update: changes.length=${update.changes.length}, doc.length=${room.doc.length}`,
+            );
+            room.updates.push(update);
             room.doc = update.changes.apply(room.doc);
-            room.version++;
-
-            // Store update in history
-            const storedUpdate: Update = {
-                clientID: update.clientID,
-                changes: update.changes,
-            };
-            room.updates.push(storedUpdate);
-            appliedUpdates.push(storedUpdate);
         }
+
+        // Version is always updates.length (canonical invariant)
+        room.version = room.updates.length;
 
         console.log(
-            `[ot] Applied ${appliedUpdates.length} updates, room now at v${room.version}`,
+            `[ot] Applied ${received.length} updates, now at v${room.version}, doc.length=${room.doc.length}`,
         );
 
         return {
             success: true,
             version: room.version,
-            updates: appliedUpdates,
+            updates: received,
         };
     } catch (err) {
-        console.error("[ot] Error processing updates:", err);
+        console.error("[ot] Error:", err);
         return {
             success: false,
-            version: room.version,
+            version: room.updates.length,
             updates: [],
             error: err instanceof Error ? err.message : "Unknown error",
         };
@@ -102,27 +93,22 @@ export function processUpdates(
 
 /**
  * Get updates since a given version.
- * Used by pullUpdates handler.
+ * Canonical pattern: updates.slice(version)
  */
 export function getUpdatesSince(room: DocumentRoom, version: number): Update[] {
-    if (version >= room.version) {
+    if (version >= room.updates.length) {
         return [];
     }
     return room.updates.slice(version);
 }
 
 /**
- * Serialize Update for transmission over WebSocket.
- * ChangeSet needs to be converted to JSON-serializable format.
+ * Serialize Update for transmission.
  */
 export function serializeUpdate(
     update: Update,
     version: number,
-): {
-    version: number;
-    clientID: string;
-    changes: ReturnType<ChangeSet["toJSON"]>;
-} {
+): { version: number; clientID: string; changes: unknown } {
     return {
         version,
         clientID: update.clientID,
@@ -131,12 +117,10 @@ export function serializeUpdate(
 }
 
 /**
- * Deserialize Update from WebSocket message.
- * ChangeSet needs to be reconstructed from JSON.
+ * Deserialize Update from JSON.
  */
 export function deserializeUpdate(
-    data: { clientID: string; changes: ReturnType<ChangeSet["toJSON"]> },
-    _docLength: number,
+    data: { clientID: string; changes: unknown },
 ): Update {
     return {
         clientID: data.clientID,

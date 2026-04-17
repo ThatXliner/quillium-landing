@@ -20,11 +20,15 @@ export interface DocumentRoom {
     /** Current version number (monotonically increasing) */
     version: number;
 
-    /** Update history since room creation */
+    /** Update history since snapshot (not from version 0) */
     updates: Update[];
 
-    /** Pending pullUpdates callbacks waiting for new updates */
-    pending: Map<string, (updates: Update[]) => void>;
+    /**
+     * Version at which updates array starts.
+     * updates[0] is the update from updatesStartVersion to updatesStartVersion+1.
+     * This allows efficient catchup without storing all updates since version 0.
+     */
+    updatesStartVersion: number;
 
     /** Cleanup timer scheduled when last client leaves (per D-37) */
     cleanupTimer: NodeJS.Timeout | null;

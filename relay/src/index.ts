@@ -7,10 +7,23 @@
  *
  * See: .planning/phases/04-relay-core/04-RESEARCH.md for architecture.
  */
+import "dotenv/config";
+import { createRelayServer } from "./server.js";
 
-const PORT = process.env.PORT ?? 3001;
+const PORT = parseInt(process.env.PORT ?? "3001", 10);
 
-console.log(`[relay] Starting on port ${PORT}...`);
+const { httpServer, io } = createRelayServer();
 
-// Placeholder for server implementation (Plan 02/03)
-export {};
+httpServer.listen(PORT, () => {
+    console.log(`[relay] WebSocket relay listening on port ${PORT}`);
+    console.log(`[relay] Health check: http://localhost:${PORT}/health`);
+});
+
+// Graceful shutdown
+process.on("SIGTERM", () => {
+    console.log("[relay] SIGTERM received, closing server...");
+    io.close(() => {
+        console.log("[relay] Server closed");
+        process.exit(0);
+    });
+});

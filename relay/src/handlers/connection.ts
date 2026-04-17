@@ -5,7 +5,7 @@
  * Per D-37: Schedules cleanup when last client disconnects.
  */
 import type { Server, Socket } from "socket.io";
-import { getOrCreateRoom, getRoom, scheduleRoomCleanup } from "../rooms/manager.js";
+import { getOrCreateRoomAsync, getRoom, scheduleRoomCleanup } from "../rooms/manager.js";
 import { handlePullUpdates } from "./pull.js";
 import { handlePushUpdates } from "./push.js";
 
@@ -13,11 +13,11 @@ import { handlePushUpdates } from "./push.js";
  * Handle new socket connection.
  * Called after auth middleware has validated JWT and permissions.
  */
-export function handleConnection(io: Server, socket: Socket): void {
+export async function handleConnection(io: Server, socket: Socket): Promise<void> {
     const { userId, documentId, isAnonymous } = socket.data;
 
-    // Get or create room (cancels any pending cleanup)
-    const room = getOrCreateRoom(documentId);
+    // Get or create room with DB state loading (cancels any pending cleanup)
+    const room = await getOrCreateRoomAsync(documentId);
 
     // Join Socket.io room
     socket.join(documentId);

@@ -7,6 +7,7 @@
 import { Text } from "@codemirror/state";
 import type { Server } from "socket.io";
 import type { DocumentRoom } from "./types.js";
+import { loadRoomState } from "../persistence/index.js";
 
 /** Per D-37: Room cleanup delay (45 seconds, within 30-60s range) */
 const ROOM_CLEANUP_DELAY_MS = 45_000;
@@ -15,9 +16,42 @@ const ROOM_CLEANUP_DELAY_MS = 45_000;
 const rooms = new Map<string, DocumentRoom>();
 
 /**
- * Get or create a document room.
- * Per D-35: Creates room with empty document for Phase 4.
- * Phase 5 will add DB loading on room creation.
+ * Get or create a document room (async for DB loading).
+ * Per D-35: Creates room with document state from DB.
+ * Per RELY-06: Loads state on server restart.
+ */
+export async function getOrCreateRoomAsync(documentId: string): Promise<DocumentRoom> {
+    let room = rooms.get(documentId);
+
+    if (!room) {
+        // Load state from DB per RELY-06
+        const loaded = await loadRoomState(documentId);
+
+        room = {
+            documentId,
+            doc: loaded.doc,
+            version: loaded.version,
+            updates: loaded.updates,
+            pending: new Map(),
+            cleanupTimer: null,
+            lastSnapshotVersion: loaded.snapshotVersion,
+            lastSnapshotTime: Date.now(),
+        };
+        rooms.set(documentId, room);
+        console.log(
+            `[rooms] Created room ${documentId.slice(0, 8)}... with ${loaded.updates.length} updates at v${loaded.version}`,
+        );
+    }
+
+    // Cancel any pending cleanup
+    cancelRoomCleanup(room);
+
+    return room;
+}
+
+/**
+ * Get or create a document room (sync version for tests).
+ * @deprecated Use getOrCreateRoomAsync for DB-backed rooms
  */
 export function getOrCreateRoom(documentId: string): DocumentRoom {
     let room = rooms.get(documentId);
@@ -25,11 +59,13 @@ export function getOrCreateRoom(documentId: string): DocumentRoom {
     if (!room) {
         room = {
             documentId,
-            doc: Text.of([""]), // Empty doc for Phase 4; Phase 5 loads from DB
+            doc: Text.of([""]),
             version: 0,
             updates: [],
             pending: new Map(),
             cleanupTimer: null,
+            lastSnapshotVersion: 0,
+            lastSnapshotTime: Date.now(),
         };
         rooms.set(documentId, room);
         console.log(`[rooms] Created room ${documentId.slice(0, 8)}...`);

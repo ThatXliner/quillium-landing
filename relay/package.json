@@ -12,10 +12,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "socket.io": "^4.8.3",
-    "@supabase/supabase-js": "^2.103.3",
     "@codemirror/collab": "^6.1.1",
     "@codemirror/state": "^6.6.0",
+    "@supabase/supabase-js": "^2.103.3",
+    "socket.io": "^4.8.3",
+    "ws": "^8.20.0",
+    "y-protocols": "^1.0.7",
+    "yjs": "^13.6.30",
     "zod": "^4.3.6"
   },
   "devDependencies": {

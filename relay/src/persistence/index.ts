@@ -1,10 +1,9 @@
 /**
  * persistence/index.ts -- Persistence layer for relay server.
  *
- * Re-exports persistence utilities for update storage and state reconstruction.
+ * Re-exports persistence utilities for Yjs state storage.
+ * OT-based exports (updates.js, snapshots.js, load.js) removed in D-70 migration.
  */
 
 export * from "./retry.js";
-export * from "./updates.js";
-export * from "./snapshots.js";
-export * from "./load.js";
+export * from "./yjsUpdates.js";

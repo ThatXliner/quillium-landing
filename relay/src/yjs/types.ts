@@ -5,6 +5,7 @@
  */
 import type * as Y from "yjs";
 import type { Awareness } from "y-protocols/awareness";
+import type { WebSocket } from "ws";
 
 export interface YjsRoom {
     documentId: string;

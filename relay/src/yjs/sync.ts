@@ -14,7 +14,10 @@ import * as syncProtocol from "y-protocols/sync";
 import * as awarenessProtocol from "y-protocols/awareness";
 import * as encoding from "lib0/encoding";
 import * as decoding from "lib0/decoding";
-import type { WebSocket } from "ws";
+import type { WebSocket as WsWebSocket } from "ws";
+
+// Use ws package WebSocket type
+type WebSocket = WsWebSocket;
 import type { YjsRoom, YjsClientData } from "./types.js";
 
 // Message type constants

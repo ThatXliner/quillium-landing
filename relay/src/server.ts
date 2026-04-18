@@ -1,22 +1,28 @@
 /**
- * server.ts -- Socket.io server setup.
+ * server.ts -- Native WebSocket server with Yjs sync protocol.
  *
- * WebSocket server for Quillium Omni real-time collaboration.
- * Per D-30: Uses Socket.io for built-in rooms, reconnection, fallback.
- * Per RESEARCH.md: perMessageDeflate disabled to prevent memory issues.
+ * Per D-71: Replace Socket.io with native WebSocket + Yjs.
+ * Uses 'ws' package for WebSocket server.
+ *
+ * Connection flow:
+ * 1. HTTP upgrade request with JWT in params
+ * 2. Auth validation in upgrade handler
+ * 3. WebSocket accepted, Yjs sync established
  */
-import { createServer, type Server as HttpServer } from "http";
-import { Server, type Socket } from "socket.io";
-import { authMiddleware } from "./auth/middleware.js";
-import { handleConnection } from "./handlers/connection.js";
-import { getRoomCount } from "./rooms/manager.js";
+import { createServer, type Server as HttpServer, type IncomingMessage } from "http";
+import { WebSocketServer, type WebSocket } from "ws";
+import type { Duplex } from "stream";
+import { authenticateWebSocket } from "./auth/middleware.js";
+import { getOrCreateYjsRoom, scheduleRoomCleanup, getRoomCount } from "./yjs/rooms.js";
+import { setupYjsConnection } from "./yjs/sync.js";
+import { persistYjsUpdate } from "./persistence/yjsUpdates.js";
 
 /**
- * Create and configure the Socket.io server.
+ * Create and configure the Yjs relay server.
  */
-export function createRelayServer(): { io: Server; httpServer: HttpServer } {
+export function createRelayServer(): { wss: WebSocketServer; httpServer: HttpServer } {
     const httpServer = createServer((req, res) => {
-        // Health check endpoint for Fly.io
+        // Health check endpoint
         if (req.url === "/health") {
             res.writeHead(200, { "Content-Type": "application/json" });
             res.end(
@@ -24,6 +30,7 @@ export function createRelayServer(): { io: Server; httpServer: HttpServer } {
                     status: "ok",
                     timestamp: Date.now(),
                     rooms: getRoomCount(),
+                    protocol: "yjs",
                 }),
             );
             return;
@@ -32,40 +39,61 @@ export function createRelayServer(): { io: Server; httpServer: HttpServer } {
         res.end("Not found");
     });
 
-    const io = new Server(httpServer, {
-        cors: {
-            // Tauri app origins
-            origin: [
-                "tauri://localhost",
-                "http://localhost:1420", // Vite dev server
-                "http://localhost:5173", // Alternate Vite port
-            ],
-            credentials: true,
-        },
-        // Per RESEARCH.md pitfall 6: disable perMessageDeflate
-        perMessageDeflate: false,
-        // Socket.io configuration (Claude's discretion per CONTEXT.md)
-        pingInterval: 25000,
-        pingTimeout: 20000,
-        // Connection options
-        connectionStateRecovery: {
-            // Allow client to recover connection within 2 minutes
-            maxDisconnectionDuration: 2 * 60 * 1000,
-            // Skip middleware on recovery (auth already validated)
-            skipMiddlewares: false,
-        },
+    const wss = new WebSocketServer({ noServer: true });
+
+    // Handle WebSocket upgrade with auth
+    httpServer.on("upgrade", async (request: IncomingMessage, socket: Duplex, head: Buffer) => {
+        try {
+            // Parse URL for auth params
+            const url = new URL(request.url!, `http://${request.headers.host}`);
+            const token = url.searchParams.get("auth");
+            const documentId = url.pathname.slice(1); // /docId -> docId
+
+            // Skip non-document paths
+            if (!documentId || documentId === "health") {
+                socket.write("HTTP/1.1 400 Bad Request\r\n\r\n");
+                socket.destroy();
+                return;
+            }
+
+            // Authenticate
+            const authResult = await authenticateWebSocket(token, documentId);
+
+            if (!authResult.success || !authResult.data) {
+                console.log(`[server] Auth failed: ${authResult.error}`);
+                socket.write(`HTTP/1.1 401 Unauthorized\r\n\r\n${authResult.error || ""}`);
+                socket.destroy();
+                return;
+            }
+
+            // Upgrade to WebSocket
+            wss.handleUpgrade(request, socket, head, async (ws: WebSocket) => {
+                const room = await getOrCreateYjsRoom(documentId);
+
+                // Setup Yjs connection with persistence callback
+                setupYjsConnection(ws, room, authResult.data!, (update) => {
+                    // Persist each update for durability
+                    persistYjsUpdate(documentId, update).catch((e) => {
+                        console.warn(`[server] Persist error:`, e);
+                    });
+                });
+
+                // Schedule cleanup when client disconnects
+                ws.on("close", () => {
+                    if (room.clients.size === 0) {
+                        scheduleRoomCleanup(room);
+                    }
+                });
+            });
+        } catch (e) {
+            console.error("[server] Upgrade error:", e);
+            socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n");
+            socket.destroy();
+        }
     });
 
-    // Register auth middleware
-    io.use(authMiddleware);
-
-    // Connection handler
-    io.on("connection", (socket: Socket) => {
-        handleConnection(io, socket);
-    });
-
-    return { io, httpServer };
+    return { wss, httpServer };
 }
 
-// Export types for other modules
-export type { Server, Socket };
+// Export for types
+export type { WebSocketServer, WebSocket };

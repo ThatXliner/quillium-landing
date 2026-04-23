@@ -25,7 +25,7 @@ curl http://localhost:3001/health
 WebSocket URL shape:
 
 ```text
-wss://relay.quillium.ai/<documentId>?auth=<supabase-access-token>
+wss://quillium.bryanhu.com/relay/<documentId>?auth=<supabase-access-token>
 ```
 
 Passing auth in the query string works with browser WebSockets, but it can show up in proxy/access logs. Before wider production use, prefer a short-lived relay token minted for a specific document and session.
@@ -58,7 +58,7 @@ Render is the easiest first production path.
 4. Set the health check path to `/health`.
 5. Add `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ALLOWED_ORIGINS`, and `LOG_LEVEL=warn`.
 6. Keep the service at one instance.
-7. Add a custom domain such as `relay.quillium.ai`.
+7. Add a custom domain/path such as `quillium.bryanhu.com/relay`.
 
 Native commands:
 

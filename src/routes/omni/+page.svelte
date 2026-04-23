@@ -541,9 +541,10 @@
 			<div class="faq-row">
 				<p class="faq-q">When will Omni ship?</p>
 				<p class="faq-a">
-					Soon-ish. Auth, the relay server, and the sync protocol are in progress. We're not giving
+					It's currently available through the waitlist!
+					<!-- Soon-ish. Auth, the relay server, and the sync protocol are in progress. We're not giving
 					a date because we'd miss it, but it's the next major feature after the current round of
-					editor improvements.
+					editor improvements. -->
 				</p>
 			</div>
 			<div class="faq-row">

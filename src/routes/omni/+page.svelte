@@ -507,10 +507,10 @@
 					Quillium Omni
 				</p>
 				<p class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/65 italic">
-					~$5-20<span class="text-[0.85rem] text-black/30">/month</span>
+					~$20<span class="text-[0.85rem] text-black/30">/month</span>
 				</p>
 				<p class="mt-1 text-[0.7rem] text-black/28">
-					Price TBD. The more users we have, the cheaper we can make it.
+					The more users we have, the cheaper we can make it.
 				</p>
 			</div>
 			<div class="flex flex-1 flex-col px-5 py-4">

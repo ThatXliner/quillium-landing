@@ -7,14 +7,16 @@
  * Per D-32: Uses Supabase Admin SDK (@supabase/supabase-js with service_role key)
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createLogger } from "../logger.js";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const logger = createLogger("supabase");
 
 export const supabaseConfigured = !!(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
 
 if (!supabaseConfigured) {
-    console.warn("[supabase] Missing environment variables -- auth features will not work");
+    logger.warn("Missing environment variables -- auth features will not work");
 }
 
 export const supabase: SupabaseClient | null = supabaseConfigured

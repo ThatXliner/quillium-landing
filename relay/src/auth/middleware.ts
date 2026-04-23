@@ -8,6 +8,9 @@ import { supabase, supabaseConfigured } from "./supabase.js";
 import { HandshakeAuthSchema, AuthErrorCode } from "../schemas.js";
 import type { YjsClientData } from "../yjs/types.js";
 import { getYjsRoom } from "../yjs/rooms.js";
+import { createLogger } from "../logger.js";
+
+const logger = createLogger("auth");
 
 /**
  * Extended socket data with user info.
@@ -48,7 +51,7 @@ export async function authenticateWebSocket(
     }
 
     if (!supabaseConfigured || !supabase) {
-        console.error("[auth] Supabase not configured");
+        logger.error("Supabase not configured");
         return { success: false, error: "Server misconfigured" };
     }
 
@@ -102,7 +105,7 @@ export async function authenticateWebSocket(
             },
         };
     } catch (e) {
-        console.error("[auth] Error:", e);
+        logger.error("Error:", e);
         return { success: false, error: "Auth error" };
     }
 }

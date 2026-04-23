@@ -4,6 +4,9 @@
  * Per D-42: Retry up to MAX_RETRIES times with exponential backoff.
  * Non-transient errors (constraint violations) are not retried.
  */
+import { createLogger } from "../logger.js";
+
+const logger = createLogger("persistence");
 
 /** Maximum retry attempts before giving up */
 export const MAX_RETRIES = 3;
@@ -64,18 +67,18 @@ export async function withRetry<T>(
 
         // Don't retry non-transient errors
         if (isNonTransientError(result.error)) {
-            console.error(`[persistence] ${operationName} failed with non-transient error: ${lastError}`);
+            logger.error(`${operationName} failed with non-transient error: ${lastError}`);
             return { success: false, data: null, error: lastError };
         }
 
         // Log retry attempt (except for the last attempt, which logs as error)
         if (attempt < MAX_RETRIES - 1) {
             const delay = Math.min(BASE_DELAY_MS * (2 ** attempt) + Math.random() * 100, MAX_DELAY_MS);
-            console.warn(`[persistence] Retry ${attempt + 1}/${MAX_RETRIES} for ${operationName} after ${Math.round(delay)}ms: ${lastError}`);
+            logger.warn(`Retry ${attempt + 1}/${MAX_RETRIES} for ${operationName} after ${Math.round(delay)}ms: ${lastError}`);
             await sleep(delay);
         }
     }
 
-    console.error(`[persistence] ${operationName} failed after ${MAX_RETRIES} attempts: ${lastError}`);
+    logger.error(`${operationName} failed after ${MAX_RETRIES} attempts: ${lastError}`);
     return { success: false, data: null, error: lastError };
 }

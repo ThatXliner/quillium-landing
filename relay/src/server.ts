@@ -15,7 +15,11 @@ import type { Duplex } from "stream";
 import { authenticateWebSocket } from "./auth/middleware.js";
 import { getOrCreateYjsRoom, scheduleRoomCleanup, getRoomCount } from "./yjs/rooms.js";
 import { setupYjsConnection } from "./yjs/sync.js";
-import { persistYjsUpdate } from "./persistence/yjsUpdates.js";
+import { queueYjsUpdate } from "./persistence/debouncedUpdates.js";
+import { isOriginAllowed } from "./origins.js";
+import { createLogger } from "./logger.js";
+
+const logger = createLogger("server");
 
 /**
  * Create and configure the Yjs relay server.
@@ -44,6 +48,12 @@ export function createRelayServer(): { wss: WebSocketServer; httpServer: HttpSer
     // Handle WebSocket upgrade with auth
     httpServer.on("upgrade", async (request: IncomingMessage, socket: Duplex, head: Buffer) => {
         try {
+            if (!isOriginAllowed(request.headers.origin)) {
+                socket.write("HTTP/1.1 403 Forbidden\r\n\r\nOrigin not allowed");
+                socket.destroy();
+                return;
+            }
+
             // Parse URL for auth params
             const url = new URL(request.url!, `http://${request.headers.host}`);
             const token = url.searchParams.get("auth");
@@ -60,7 +70,7 @@ export function createRelayServer(): { wss: WebSocketServer; httpServer: HttpSer
             const authResult = await authenticateWebSocket(token, documentId);
 
             if (!authResult.success || !authResult.data) {
-                console.log(`[server] Auth failed: ${authResult.error}`);
+                logger.info(`Auth failed: ${authResult.error}`);
                 socket.write(`HTTP/1.1 401 Unauthorized\r\n\r\n${authResult.error || ""}`);
                 socket.destroy();
                 return;
@@ -72,10 +82,7 @@ export function createRelayServer(): { wss: WebSocketServer; httpServer: HttpSer
 
                 // Setup Yjs connection with persistence callback
                 setupYjsConnection(ws, room, authResult.data!, (update) => {
-                    // Persist each update for durability
-                    persistYjsUpdate(documentId, update).catch((e) => {
-                        console.warn(`[server] Persist error:`, e);
-                    });
+                    queueYjsUpdate(documentId, update);
                 });
 
                 // Schedule cleanup when client disconnects
@@ -86,7 +93,7 @@ export function createRelayServer(): { wss: WebSocketServer; httpServer: HttpSer
                 });
             });
         } catch (e) {
-            console.error("[server] Upgrade error:", e);
+            logger.error("Upgrade error:", e);
             socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n");
             socket.destroy();
         }

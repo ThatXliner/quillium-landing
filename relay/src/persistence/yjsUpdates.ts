@@ -10,6 +10,9 @@
  */
 import * as Y from "yjs";
 import { supabase } from "../auth/supabase.js";
+import { createLogger } from "../logger.js";
+
+const logger = createLogger("persistence");
 
 export interface YjsPersistenceResult {
     success: boolean;
@@ -55,18 +58,17 @@ export async function persistYjsState(
         );
 
         if (error) {
-            console.error(`[persistence] Failed to persist Yjs state:`, error);
+            logger.error("Failed to persist Yjs state:", error);
             return { success: false, error: error.message };
         }
 
-        console.log(
-            `[persistence] Persisted Yjs state for ${documentId.slice(0, 8)}..., ` +
-                `update size: ${update.length} bytes`,
+        logger.info(
+            `Persisted Yjs state for ${documentId.slice(0, 8)}..., update size: ${update.length} bytes`,
         );
         return { success: true };
     } catch (e) {
         const error = e instanceof Error ? e.message : String(e);
-        console.error(`[persistence] Error persisting Yjs state:`, error);
+        logger.error("Error persisting Yjs state:", error);
         return { success: false, error };
     }
 }
@@ -100,14 +102,53 @@ export async function persistYjsUpdate(
 
         if (error) {
             // Table might not exist yet, log but don't fail
-            console.warn(`[persistence] Failed to persist Yjs update:`, error.message);
+            logger.warn("Failed to persist Yjs update:", error.message);
             return { success: false, error: error.message };
         }
 
         return { success: true };
     } catch (e) {
         const error = e instanceof Error ? e.message : String(e);
-        console.warn(`[persistence] Error persisting Yjs update:`, error);
+        logger.warn("Error persisting Yjs update:", error);
+        return { success: false, error };
+    }
+}
+
+/**
+ * Persist a batch of incremental updates to Supabase.
+ * This keeps the relay from issuing one HTTP request per keystroke while
+ * still preserving each Yjs update as its own recovery record.
+ */
+export async function persistYjsUpdates(
+    documentId: string,
+    updates: Uint8Array[],
+): Promise<YjsPersistenceResult> {
+    if (!supabase) {
+        return { success: false, error: "Supabase not configured" };
+    }
+
+    if (updates.length === 0) {
+        return { success: true };
+    }
+
+    try {
+        const rows = updates.map((update) => ({
+            document_id: documentId,
+            update_data: Buffer.from(update).toString("base64"),
+            created_at: new Date().toISOString(),
+        }));
+
+        const { error } = await supabase.from("yjs_updates").insert(rows);
+
+        if (error) {
+            logger.warn(`Failed to persist ${updates.length} Yjs updates:`, error.message);
+            return { success: false, error: error.message };
+        }
+
+        return { success: true };
+    } catch (e) {
+        const error = e instanceof Error ? e.message : String(e);
+        logger.warn("Error persisting Yjs updates:", error);
         return { success: false, error };
     }
 }
@@ -135,15 +176,14 @@ export async function loadYjsState(documentId: string): Promise<YjsLoadResult> {
             .maybeSingle();
 
         if (snapshotError) {
-            console.warn(`[persistence] Error loading Yjs snapshot:`, snapshotError.message);
+            logger.warn("Error loading Yjs snapshot:", snapshotError.message);
         }
 
         if (snapshot?.state_update) {
             const update = new Uint8Array(Buffer.from(snapshot.state_update, "base64"));
             Y.applyUpdate(ydoc, update);
-            console.log(
-                `[persistence] Loaded Yjs state for ${documentId.slice(0, 8)}..., ` +
-                    `update size: ${update.length} bytes`,
+            logger.info(
+                `Loaded Yjs state for ${documentId.slice(0, 8)}..., update size: ${update.length} bytes`,
             );
         }
 
@@ -165,14 +205,14 @@ export async function loadYjsState(documentId: string): Promise<YjsLoadResult> {
                 const update = new Uint8Array(Buffer.from(row.update_data, "base64"));
                 Y.applyUpdate(ydoc, update);
             }
-            console.log(
-                `[persistence] Applied ${updates.length} incremental updates for ${documentId.slice(0, 8)}...`,
+            logger.info(
+                `Applied ${updates.length} incremental updates for ${documentId.slice(0, 8)}...`,
             );
         }
 
         return { ydoc, stateVector };
     } catch (e) {
-        console.error(`[persistence] Error loading Yjs state:`, e);
+        logger.error("Error loading Yjs state:", e);
         // Return empty doc on error
         return { ydoc, stateVector: null };
     }
@@ -191,8 +231,8 @@ export async function clearYjsUpdates(documentId: string): Promise<void> {
 
     try {
         await supabase.from("yjs_updates").delete().eq("document_id", documentId);
-        console.log(`[persistence] Cleared incremental updates for ${documentId.slice(0, 8)}...`);
+        logger.info(`Cleared incremental updates for ${documentId.slice(0, 8)}...`);
     } catch (e) {
-        console.warn(`[persistence] Error clearing Yjs updates:`, e);
+        logger.warn("Error clearing Yjs updates:", e);
     }
 }

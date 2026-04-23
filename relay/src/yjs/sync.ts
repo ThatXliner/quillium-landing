@@ -20,6 +20,9 @@ import type { WebSocket as WsWebSocket } from "ws";
 type WebSocket = WsWebSocket;
 import type { YjsRoom, YjsClientData } from "./types.js";
 import { clearRoomState } from "./rooms.js";
+import { createLogger } from "../logger.js";
+
+const logger = createLogger("yjs");
 
 // Message type constants
 export const MESSAGE_SYNC = 0;
@@ -56,8 +59,8 @@ export function setupYjsConnection(
         room.ownerId = clientData.userId;
     }
 
-    console.log(
-        `[yjs] Client ${clientData.userId.slice(0, 8)}... joined room ${room.documentId.slice(0, 8)}...`,
+    logger.info(
+        `Client ${clientData.userId.slice(0, 8)}... joined room ${room.documentId.slice(0, 8)}...`,
     );
 
     // Send sync step 1 (state vector)
@@ -65,7 +68,7 @@ export function setupYjsConnection(
     encoding.writeVarUint(syncEncoder, MESSAGE_SYNC);
     syncProtocol.writeSyncStep1(syncEncoder, ydoc);
     const syncMsg = encoding.toUint8Array(syncEncoder);
-    console.log(`[yjs] Sending sync step 1 to client, ${syncMsg.length} bytes`);
+    logger.debug(`Sending sync step 1 to client, ${syncMsg.length} bytes`);
     ws.send(syncMsg);
 
     // Also send sync step 2 (full doc state) immediately
@@ -74,7 +77,7 @@ export function setupYjsConnection(
     encoding.writeVarUint(sync2Encoder, MESSAGE_SYNC);
     syncProtocol.writeSyncStep2(sync2Encoder, ydoc);
     const sync2Msg = encoding.toUint8Array(sync2Encoder);
-    console.log(`[yjs] Sending sync step 2 to client, ${sync2Msg.length} bytes`);
+    logger.debug(`Sending sync step 2 to client, ${sync2Msg.length} bytes`);
     ws.send(sync2Msg);
 
     // Send current awareness states
@@ -152,7 +155,7 @@ export function setupYjsConnection(
         try {
             handleMessage(ws, room, clientData, new Uint8Array(data));
         } catch (e) {
-            console.error("[yjs] Message handling error:", e);
+            logger.error("Message handling error:", e);
         }
     });
 
@@ -182,15 +185,15 @@ export function setupYjsConnection(
         // Broadcast client left
         broadcastCustomMessage(clients, CUSTOM_CLIENT_LEFT, { userId: clientData.userId });
 
-        console.log(
-            `[yjs] Client ${clientData.userId.slice(0, 8)}... left room ${room.documentId.slice(0, 8)}...`,
+        logger.info(
+            `Client ${clientData.userId.slice(0, 8)}... left room ${room.documentId.slice(0, 8)}...`,
         );
 
         // Handle owner disconnect (D-57, D-61)
         if (clientData.isOwner) {
             room.isOwnerConnected = false;
-            console.log(
-                `[yjs] Owner left, kicking all clients from room ${room.documentId.slice(0, 8)}...`,
+            logger.info(
+                `Owner left, kicking all clients from room ${room.documentId.slice(0, 8)}...`,
             );
 
             // Send ownerLeft message to all remaining clients
@@ -231,16 +234,16 @@ function handleMessage(
             // Wrap in try-catch per T-07.5-07: malformed data mitigation
             try {
                 const messageType = syncProtocol.readSyncMessage(decoder, encoder, ydoc, ws);
-                console.log(`[yjs] Received sync message type ${messageType}, response length: ${encoding.length(encoder)}`);
+                logger.debug(`Received sync message type ${messageType}, response length: ${encoding.length(encoder)}`);
             } catch (e) {
-                console.error("[yjs] Malformed sync message, disconnecting client:", e);
+                logger.error("Malformed sync message, disconnecting client:", e);
                 ws.close(1003, "Malformed sync message");
                 return;
             }
 
             // Send response if any
             if (encoding.length(encoder) > 1) {
-                console.log(`[yjs] Sending sync response, ${encoding.length(encoder)} bytes`);
+                logger.debug(`Sending sync response, ${encoding.length(encoder)} bytes`);
                 ws.send(encoding.toUint8Array(encoder));
             }
             break;
@@ -255,14 +258,14 @@ function handleMessage(
                     ws,
                 );
             } catch (e) {
-                console.error("[yjs] Malformed awareness message:", e);
+                logger.error("Malformed awareness message:", e);
                 // Don't disconnect for awareness issues, just log
             }
             break;
         }
 
         default:
-            console.warn(`[yjs] Unknown message type: ${messageType}`);
+            logger.warn(`Unknown message type: ${messageType}`);
     }
 }
 

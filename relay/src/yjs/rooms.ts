@@ -8,6 +8,10 @@ import * as Y from "yjs";
 import { Awareness, removeAwarenessStates } from "y-protocols/awareness";
 import type { YjsRoom } from "./types.js";
 import { loadYjsState, persistYjsState, clearYjsUpdates } from "../persistence/yjsUpdates.js";
+import { flushDocumentUpdates } from "../persistence/debouncedUpdates.js";
+import { createLogger } from "../logger.js";
+
+const logger = createLogger("yjs/rooms");
 
 /** Per D-37: Room cleanup delay (45 seconds) */
 const ROOM_CLEANUP_DELAY_MS = 45_000;
@@ -40,7 +44,7 @@ export async function getOrCreateYjsRoom(documentId: string): Promise<YjsRoom> {
         };
 
         rooms.set(documentId, room);
-        console.log(`[yjs/rooms] Created room ${documentId.slice(0, 8)}...`);
+        logger.info(`Created room ${documentId.slice(0, 8)}...`);
     }
 
     // Cancel any pending cleanup
@@ -69,6 +73,7 @@ export function scheduleRoomCleanup(room: YjsRoom): void {
         // Verify room is still empty
         if (room.clients.size === 0) {
             // Persist final state before cleanup
+            await flushDocumentUpdates(room.documentId);
             await persistYjsState(room.documentId, room.ydoc);
             await clearYjsUpdates(room.documentId);
 
@@ -77,10 +82,10 @@ export function scheduleRoomCleanup(room: YjsRoom): void {
             room.ydoc.destroy();
 
             rooms.delete(room.documentId);
-            console.log(`[yjs/rooms] Cleaned up room ${room.documentId.slice(0, 8)}...`);
+            logger.info(`Cleaned up room ${room.documentId.slice(0, 8)}...`);
         } else {
-            console.log(
-                `[yjs/rooms] Skipped cleanup for ${room.documentId.slice(0, 8)}... (${room.clients.size} clients)`,
+            logger.info(
+                `Skipped cleanup for ${room.documentId.slice(0, 8)}... (${room.clients.size} clients)`,
             );
         }
     }, ROOM_CLEANUP_DELAY_MS);
@@ -127,7 +132,7 @@ export function clearRoomState(room: YjsRoom): void {
         ymap.clear();
     }, "owner-disconnect");
 
-    console.log(`[yjs/rooms] Cleared state for room ${room.documentId.slice(0, 8)}...`);
+    logger.info(`Cleared state for room ${room.documentId.slice(0, 8)}...`);
 }
 
 /**

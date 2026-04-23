@@ -1,216 +1,39 @@
 /**
- * room.test.ts -- Tests for room management and OT ordering.
- *
- * Covers RELY-03 (version ordering) and RELY-04 (broadcasting).
+ * room.test.ts -- Tests for Yjs room lifecycle management.
  */
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Text } from "@codemirror/state";
-import { ChangeSet } from "@codemirror/state";
-import type { Update } from "@codemirror/collab";
+import * as Y from "yjs";
 
-// Import functions to test
+vi.mock("../persistence/yjsUpdates.js", () => ({
+    loadYjsState: vi.fn(async () => ({ ydoc: new Y.Doc(), stateVector: null })),
+    persistYjsState: vi.fn(async () => ({ success: true })),
+    clearYjsUpdates: vi.fn(async () => undefined),
+}));
+
+vi.mock("../persistence/debouncedUpdates.js", () => ({
+    flushDocumentUpdates: vi.fn(async () => undefined),
+}));
+
 import {
-    getOrCreateRoom,
-    getRoom,
+    getOrCreateYjsRoom,
+    getYjsRoom,
     scheduleRoomCleanup,
     cancelRoomCleanup,
+    getRoomCount,
+    clearRoomState,
     _clearAllRooms,
-} from "../rooms/manager.js";
+} from "../yjs/rooms.js";
 import {
-    processUpdates,
-    getUpdatesSince,
-    serializeUpdate,
-    deserializeUpdate,
-} from "../rooms/ot.js";
+    loadYjsState,
+    persistYjsState,
+    clearYjsUpdates,
+} from "../persistence/yjsUpdates.js";
+import { flushDocumentUpdates } from "../persistence/debouncedUpdates.js";
 
-// Helper to create a mock Update
-function createMockUpdate(clientID: string, fromLen: number, insert: string): Update {
-    return {
-        clientID,
-        changes: ChangeSet.of([{ from: fromLen, insert }], fromLen),
-    };
-}
-
-describe("Room Manager", () => {
+describe("Yjs room manager", () => {
     beforeEach(() => {
-        // Clear rooms between tests
-        _clearAllRooms();
-    });
-
-    afterEach(() => {
-        _clearAllRooms();
-    });
-
-    it("creates room with empty document and version 0", () => {
-        const room = getOrCreateRoom("test-doc-1");
-
-        expect(room.documentId).toBe("test-doc-1");
-        expect(room.doc.toString()).toBe("");
-        expect(room.version).toBe(0);
-        expect(room.updates).toHaveLength(0);
-    });
-
-    it("returns same room on subsequent calls", () => {
-        const room1 = getOrCreateRoom("test-doc-2");
-        const room2 = getOrCreateRoom("test-doc-2");
-
-        expect(room1).toBe(room2);
-    });
-
-    it("getRoom returns undefined for non-existent room", () => {
-        const room = getRoom("non-existent");
-        expect(room).toBeUndefined();
-    });
-});
-
-describe("RELY-03: Version Ordering (rebaseUpdates)", () => {
-    beforeEach(() => {
-        _clearAllRooms();
-    });
-
-    afterEach(() => {
-        _clearAllRooms();
-    });
-
-    it("accepts updates at current version", () => {
-        const room = getOrCreateRoom("rely-03-test-1");
-        room.doc = Text.of(["hello"]);
-        room.version = 0;
-
-        const update = createMockUpdate("client-1", 5, " world");
-        const result = processUpdates(room, 0, [update]);
-
-        expect(result.success).toBe(true);
-        expect(result.version).toBe(1);
-        expect(room.doc.toString()).toBe("hello world");
-    });
-
-    it("rebases updates from stale client version", () => {
-        const room = getOrCreateRoom("rely-03-test-2");
-        room.doc = Text.of(["hello"]);
-        room.version = 0;
-
-        // First client adds " world"
-        const update1 = createMockUpdate("client-1", 5, " world");
-        processUpdates(room, 0, [update1]);
-
-        expect(room.version).toBe(1);
-        expect(room.doc.toString()).toBe("hello world");
-
-        // Second client (stale at v0) adds "!"
-        // Should be rebased to apply after " world"
-        const update2 = createMockUpdate("client-2", 5, "!");
-        const result = processUpdates(room, 0, [update2]);
-
-        expect(result.success).toBe(true);
-        expect(result.version).toBe(2);
-        // The "!" should be rebased to position after "hello world"
-        // Exact position depends on rebaseUpdates behavior
-    });
-
-    it("assigns monotonically increasing version numbers", () => {
-        const room = getOrCreateRoom("rely-03-test-3");
-        room.doc = Text.of([""]);
-
-        const update1 = createMockUpdate("client-1", 0, "a");
-        processUpdates(room, 0, [update1]);
-        expect(room.version).toBe(1);
-
-        const update2 = createMockUpdate("client-1", 1, "b");
-        processUpdates(room, 1, [update2]);
-        expect(room.version).toBe(2);
-
-        const update3 = createMockUpdate("client-1", 2, "c");
-        processUpdates(room, 2, [update3]);
-        expect(room.version).toBe(3);
-    });
-
-    it("rejects updates from future version", () => {
-        const room = getOrCreateRoom("rely-03-test-4");
-        room.version = 5;
-
-        const update = createMockUpdate("client-1", 0, "x");
-        const result = processUpdates(room, 10, [update]); // v10 > v5
-
-        expect(result.success).toBe(false);
-        expect(result.error).toContain("ahead");
-    });
-
-    it("stores updates in room history", () => {
-        const room = getOrCreateRoom("rely-03-test-5");
-        room.doc = Text.of([""]);
-
-        const update = createMockUpdate("client-1", 0, "test");
-        processUpdates(room, 0, [update]);
-
-        expect(room.updates).toHaveLength(1);
-        expect(room.updates[0].clientID).toBe("client-1");
-    });
-});
-
-describe("RELY-04: Update Broadcasting", () => {
-    beforeEach(() => {
-        _clearAllRooms();
-    });
-
-    afterEach(() => {
-        _clearAllRooms();
-    });
-
-    it("getUpdatesSince returns updates after version", () => {
-        const room = getOrCreateRoom("rely-04-test-1");
-        room.doc = Text.of([""]);
-
-        // Add 3 updates
-        processUpdates(room, 0, [createMockUpdate("c1", 0, "a")]);
-        processUpdates(room, 1, [createMockUpdate("c1", 1, "b")]);
-        processUpdates(room, 2, [createMockUpdate("c1", 2, "c")]);
-
-        const updates = getUpdatesSince(room, 1);
-        expect(updates).toHaveLength(2); // v2 and v3
-    });
-
-    it("getUpdatesSince returns empty for current version", () => {
-        const room = getOrCreateRoom("rely-04-test-2");
-        room.version = 5;
-
-        const updates = getUpdatesSince(room, 5);
-        expect(updates).toHaveLength(0);
-    });
-});
-
-describe("Serialization", () => {
-    it("serializeUpdate converts Update to JSON-safe format", () => {
-        const changes = ChangeSet.of([{ from: 0, insert: "hello" }], 0);
-        const update: Update = { clientID: "test", changes };
-
-        const serialized = serializeUpdate(update, 1);
-
-        expect(serialized.version).toBe(1);
-        expect(serialized.clientID).toBe("test");
-        // ChangeSet.toJSON returns an array format [[pos, insert], ...]
-        expect(Array.isArray(serialized.changes)).toBe(true);
-    });
-
-    it("deserializeUpdate reconstructs Update from JSON", () => {
-        // First create a real ChangeSet and serialize it
-        const originalChanges = ChangeSet.of([{ from: 0, insert: "hello" }], 0);
-        const serializedChanges = originalChanges.toJSON();
-
-        const data = {
-            clientID: "test",
-            changes: serializedChanges,
-        };
-
-        const update = deserializeUpdate(data as any);
-
-        expect(update.clientID).toBe("test");
-        expect(update.changes).toBeInstanceOf(ChangeSet);
-    });
-});
-
-describe("Room Lifecycle", () => {
-    beforeEach(() => {
+        vi.clearAllMocks();
+        vi.useRealTimers();
         _clearAllRooms();
     });
 
@@ -219,32 +42,85 @@ describe("Room Lifecycle", () => {
         _clearAllRooms();
     });
 
-    it("creates room on first client connection", () => {
-        const room = getOrCreateRoom("lifecycle-test-1");
-        expect(room).toBeDefined();
-        expect(room.documentId).toBe("lifecycle-test-1");
+    it("creates a Yjs room and loads persisted state once", async () => {
+        const room = await getOrCreateYjsRoom("doc-1");
+
+        expect(room.documentId).toBe("doc-1");
+        expect(room.clients.size).toBe(0);
+        expect(room.isOwnerConnected).toBe(false);
+        expect(getRoomCount()).toBe(1);
+        expect(loadYjsState).toHaveBeenCalledTimes(1);
     });
 
-    it("cancels cleanup when new client joins", () => {
+    it("returns the same in-memory room on repeated calls", async () => {
+        const room1 = await getOrCreateYjsRoom("doc-2");
+        const room2 = await getOrCreateYjsRoom("doc-2");
+
+        expect(room1).toBe(room2);
+        expect(loadYjsState).toHaveBeenCalledTimes(1);
+    });
+
+    it("getYjsRoom returns undefined for unknown rooms", () => {
+        expect(getYjsRoom("missing-doc")).toBeUndefined();
+    });
+
+    it("cancels pending cleanup when the room is reused", async () => {
         vi.useFakeTimers();
+        const room = await getOrCreateYjsRoom("doc-cleanup");
 
-        const room = getOrCreateRoom("lifecycle-test-2");
-
-        // Mock io for scheduleRoomCleanup
-        const mockIo = {
-            sockets: {
-                adapter: {
-                    rooms: new Map(),
-                },
-            },
-        };
-
-        // Schedule cleanup
-        scheduleRoomCleanup(room, mockIo as any);
+        scheduleRoomCleanup(room);
         expect(room.cleanupTimer).not.toBeNull();
 
-        // Cancel cleanup (simulates new client joining)
-        cancelRoomCleanup(room);
+        await getOrCreateYjsRoom("doc-cleanup");
         expect(room.cleanupTimer).toBeNull();
+    });
+
+    it("can cancel cleanup directly", async () => {
+        vi.useFakeTimers();
+        const room = await getOrCreateYjsRoom("doc-cancel");
+
+        scheduleRoomCleanup(room);
+        cancelRoomCleanup(room);
+
+        expect(room.cleanupTimer).toBeNull();
+    });
+
+    it("flushes pending updates, snapshots, clears update log, and removes empty rooms on cleanup", async () => {
+        vi.useFakeTimers();
+        const room = await getOrCreateYjsRoom("doc-empty");
+        room.ydoc.getText("document").insert(0, "hello");
+
+        scheduleRoomCleanup(room);
+        await vi.advanceTimersByTimeAsync(45_000);
+
+        expect(flushDocumentUpdates).toHaveBeenCalledWith("doc-empty");
+        expect(persistYjsState).toHaveBeenCalledWith("doc-empty", room.ydoc);
+        expect(clearYjsUpdates).toHaveBeenCalledWith("doc-empty");
+        expect(getYjsRoom("doc-empty")).toBeUndefined();
+    });
+
+    it("does not remove rooms that receive a client before cleanup fires", async () => {
+        vi.useFakeTimers();
+        const room = await getOrCreateYjsRoom("doc-active");
+        room.clients.add({} as any);
+
+        scheduleRoomCleanup(room);
+        await vi.advanceTimersByTimeAsync(45_000);
+
+        expect(persistYjsState).not.toHaveBeenCalled();
+        expect(getYjsRoom("doc-active")).toBe(room);
+    });
+
+    it("clears document text, annotations, and awareness state", async () => {
+        const room = await getOrCreateYjsRoom("doc-clear");
+        room.ydoc.getText("document").insert(0, "hello");
+        room.ydoc.getMap("annotations").set("a1", { text: "note" });
+        room.awareness.setLocalState({ user: "owner" });
+
+        clearRoomState(room);
+
+        expect(room.ydoc.getText("document").toString()).toBe("");
+        expect(room.ydoc.getMap("annotations").size).toBe(0);
+        expect(room.awareness.getStates().size).toBe(0);
     });
 });

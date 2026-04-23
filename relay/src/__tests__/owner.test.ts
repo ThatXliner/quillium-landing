@@ -1,202 +1,168 @@
 /**
- * owner.test.ts -- Tests for owner disconnect and cursor relay.
- *
- * Covers D-61 (owner disconnect kicks collaborators) and D-60 (cursor broadcast).
+ * owner.test.ts -- Tests for owner disconnect behavior in the Yjs relay.
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { Text } from "@codemirror/state";
+import { describe, it, expect, afterEach } from "vitest";
+import * as Y from "yjs";
+import { Awareness } from "y-protocols/awareness";
+import * as decoding from "lib0/decoding";
+import {
+    setupYjsConnection,
+    MESSAGE_CUSTOM,
+    CUSTOM_CLIENT_LEFT,
+    CUSTOM_OWNER_LEFT,
+} from "../yjs/sync.js";
+import type { YjsClientData, YjsRoom } from "../yjs/types.js";
 
-// Mock the rooms/manager module before importing handlers
-vi.mock("../rooms/manager.js", () => ({
-    getRoom: vi.fn(),
-    scheduleRoomCleanup: vi.fn(),
-    getOrCreateRoomAsync: vi.fn(),
-}));
+class FakeWebSocket {
+    public sent: Uint8Array[] = [];
+    public readyState = 1;
+    public closeCode: number | null = null;
+    public closeReason: string | null = null;
+    private listeners: Record<string, Array<(...args: any[]) => void>> = {};
 
-import { handleDisconnection } from "../handlers/connection.js";
-import { getRoom, scheduleRoomCleanup } from "../rooms/manager.js";
+    send(data: Uint8Array): void {
+        this.sent.push(data);
+    }
 
-// Helper to create mock socket with chained socket.to().emit()
-function createMockSocket(overrides: {
-    isOwner?: boolean;
-    userId?: string;
-    documentId?: string;
-} = {}) {
-    const opts = {
-        isOwner: false,
-        userId: "user-123",
-        documentId: "doc-456",
-        ...overrides,
-    };
+    close(code = 1000, reason = ""): void {
+        this.closeCode = code;
+        this.closeReason = reason;
+        this.readyState = 3;
+        this.emit("close");
+    }
 
-    const emittedTo: Array<{ event: string; payload: unknown }> = [];
-    const toChain = {
-        emit: vi.fn((event: string, payload?: unknown) => {
-            emittedTo.push({ event, payload });
-        }),
-    };
+    on(event: string, cb: (...args: any[]) => void): void {
+        (this.listeners[event] ||= []).push(cb);
+    }
 
-    const socket = {
-        id: "socket-abc123def456",
-        data: {
-            userId: opts.userId,
-            documentId: opts.documentId,
-            isAnonymous: false,
-            isOwner: opts.isOwner,
-        },
-        to: vi.fn(() => toChain),
-        _emittedTo: emittedTo,
-        _toChain: toChain,
-    };
+    off(event: string, cb: (...args: any[]) => void): void {
+        if (!this.listeners[event]) return;
+        this.listeners[event] = this.listeners[event].filter((f) => f !== cb);
+    }
 
-    return socket;
+    emit(event: string, ...args: any[]): void {
+        for (const cb of this.listeners[event] || []) cb(...args);
+    }
 }
 
-// Helper to create mock io with room size
-function createMockIo(roomSize: number) {
+function makeRoom(): YjsRoom {
+    const ydoc = new Y.Doc();
     return {
-        sockets: {
-            adapter: {
-                rooms: new Map([["doc-456", { size: roomSize }]]),
-            },
-        },
-    };
-}
-
-// Helper to create a mock room
-function createMockRoom() {
-    return {
-        documentId: "doc-456",
-        version: 1,
-        doc: Text.of([""]),
-        updates: [],
-        updatesStartVersion: 0,
+        documentId: "test-doc",
+        ydoc,
+        awareness: new Awareness(ydoc),
+        clients: new Set(),
         cleanupTimer: null,
-        lastSnapshotVersion: 0,
-        lastSnapshotTime: Date.now(),
+        isOwnerConnected: false,
+        ownerId: null,
     };
 }
 
-describe("D-61: Owner Disconnect", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
+function makeClient(userId: string, isOwner: boolean): YjsClientData {
+    return {
+        userId,
+        documentId: "test-doc",
+        isAnonymous: false,
+        isOwner,
+    };
+}
+
+function readCustomMessage(message: Uint8Array): { subtype: number; payload: Record<string, unknown> } | null {
+    const decoder = decoding.createDecoder(message);
+    const messageType = decoding.readVarUint(decoder);
+
+    if (messageType !== MESSAGE_CUSTOM) {
+        return null;
+    }
+
+    const subtype = decoding.readVarUint(decoder);
+    const payload = JSON.parse(decoding.readVarString(decoder)) as Record<string, unknown>;
+
+    return { subtype, payload };
+}
+
+function customMessages(ws: FakeWebSocket) {
+    return ws.sent.map(readCustomMessage).filter((message) => message !== null);
+}
+
+describe("owner disconnect", () => {
+    let rooms: YjsRoom[] = [];
 
     afterEach(() => {
-        vi.clearAllMocks();
+        for (const room of rooms) {
+            room.ydoc.destroy();
+            room.awareness.destroy();
+        }
+        rooms = [];
     });
 
-    it("emits ownerLeft to room when owner disconnects", () => {
-        const socket = createMockSocket({ isOwner: true, userId: "owner-id" });
-        const io = createMockIo(1);
-        const mockRoom = createMockRoom();
+    it("tracks owner presence while the owner is connected", () => {
+        const room = makeRoom();
+        rooms.push(room);
+        const owner = new FakeWebSocket();
 
-        vi.mocked(getRoom).mockReturnValue(mockRoom);
+        setupYjsConnection(owner as any, room, makeClient("owner-user", true));
 
-        handleDisconnection(io as any, socket as any, "doc-456", "transport close");
+        expect(room.isOwnerConnected).toBe(true);
+        expect(room.ownerId).toBe("owner-user");
 
-        // Verify socket.to was called with documentId
-        expect(socket.to).toHaveBeenCalledWith("doc-456");
+        owner.close();
 
-        // Verify ownerLeft was emitted
-        const ownerLeftEvent = socket._emittedTo.find(e => e.event === "ownerLeft");
-        expect(ownerLeftEvent).toBeDefined();
+        expect(room.isOwnerConnected).toBe(false);
     });
 
-    it("does NOT emit ownerLeft when non-owner disconnects", () => {
-        const socket = createMockSocket({ isOwner: false, userId: "collab-id" });
-        const io = createMockIo(1);
-        const mockRoom = createMockRoom();
+    it("sends ownerLeft and closes collaborators when the owner disconnects", () => {
+        const room = makeRoom();
+        rooms.push(room);
+        const owner = new FakeWebSocket();
+        const collaborator = new FakeWebSocket();
 
-        vi.mocked(getRoom).mockReturnValue(mockRoom);
+        setupYjsConnection(owner as any, room, makeClient("owner-user", true));
+        setupYjsConnection(collaborator as any, room, makeClient("collaborator-user", false));
+        owner.sent = [];
+        collaborator.sent = [];
 
-        handleDisconnection(io as any, socket as any, "doc-456", "transport close");
+        owner.close();
 
-        // Verify ownerLeft was NOT emitted
-        const ownerLeftEvent = socket._emittedTo.find(e => e.event === "ownerLeft");
-        expect(ownerLeftEvent).toBeUndefined();
+        const messages = customMessages(collaborator);
+        expect(messages.some((message) => message.subtype === CUSTOM_OWNER_LEFT)).toBe(true);
+        expect(messages.some((message) => message.subtype === CUSTOM_CLIENT_LEFT)).toBe(true);
+        expect(collaborator.closeCode).toBe(1000);
+        expect(collaborator.closeReason).toBe("Owner left");
+        expect(room.isOwnerConnected).toBe(false);
     });
 
-    it("always emits clientLeft with correct clientID on any disconnect", () => {
-        const socket = createMockSocket({ isOwner: false, userId: "collab-xyz" });
-        const io = createMockIo(1);
-        const mockRoom = createMockRoom();
+    it("does not close the owner when a collaborator disconnects", () => {
+        const room = makeRoom();
+        rooms.push(room);
+        const owner = new FakeWebSocket();
+        const collaborator = new FakeWebSocket();
 
-        vi.mocked(getRoom).mockReturnValue(mockRoom);
+        setupYjsConnection(owner as any, room, makeClient("owner-user", true));
+        setupYjsConnection(collaborator as any, room, makeClient("collaborator-user", false));
+        owner.sent = [];
 
-        handleDisconnection(io as any, socket as any, "doc-456", "transport close");
+        collaborator.close();
 
-        // Verify clientLeft was emitted with correct clientID
-        const clientLeftEvent = socket._emittedTo.find(e => e.event === "clientLeft");
-        expect(clientLeftEvent).toBeDefined();
-        expect((clientLeftEvent?.payload as { clientID: string })?.clientID).toBe("collab-xyz");
+        const messages = customMessages(owner);
+        expect(messages.some((message) => message.subtype === CUSTOM_CLIENT_LEFT)).toBe(true);
+        expect(messages.some((message) => message.subtype === CUSTOM_OWNER_LEFT)).toBe(false);
+        expect(owner.readyState).toBe(1);
+        expect(room.isOwnerConnected).toBe(true);
     });
 
-    it("emits clientLeft for owner disconnect too", () => {
-        const socket = createMockSocket({ isOwner: true, userId: "owner-abc" });
-        const io = createMockIo(1);
-        const mockRoom = createMockRoom();
+    it("clears shared document state when the owner leaves", () => {
+        const room = makeRoom();
+        rooms.push(room);
+        const owner = new FakeWebSocket();
 
-        vi.mocked(getRoom).mockReturnValue(mockRoom);
+        room.ydoc.getText("document").insert(0, "draft text");
+        room.ydoc.getMap("annotations").set("a1", { text: "note" });
 
-        handleDisconnection(io as any, socket as any, "doc-456", "transport close");
+        setupYjsConnection(owner as any, room, makeClient("owner-user", true));
+        owner.close();
 
-        // Both clientLeft AND ownerLeft should be emitted for owner
-        const clientLeftEvent = socket._emittedTo.find(e => e.event === "clientLeft");
-        const ownerLeftEvent = socket._emittedTo.find(e => e.event === "ownerLeft");
-
-        expect(clientLeftEvent).toBeDefined();
-        expect((clientLeftEvent?.payload as { clientID: string })?.clientID).toBe("owner-abc");
-        expect(ownerLeftEvent).toBeDefined();
-    });
-
-    it("schedules room cleanup when room becomes empty", () => {
-        const socket = createMockSocket({ isOwner: false, userId: "last-user" });
-        const io = createMockIo(0); // No remaining sockets
-        const mockRoom = createMockRoom();
-
-        vi.mocked(getRoom).mockReturnValue(mockRoom);
-
-        handleDisconnection(io as any, socket as any, "doc-456", "transport close");
-
-        expect(scheduleRoomCleanup).toHaveBeenCalledWith(mockRoom, io);
-    });
-
-    it("does not schedule cleanup when room has remaining clients", () => {
-        const socket = createMockSocket({ isOwner: false, userId: "leaving-user" });
-        const io = createMockIo(2); // Still has clients
-        const mockRoom = createMockRoom();
-
-        vi.mocked(getRoom).mockReturnValue(mockRoom);
-
-        handleDisconnection(io as any, socket as any, "doc-456", "transport close");
-
-        expect(scheduleRoomCleanup).not.toHaveBeenCalled();
-    });
-});
-
-describe("D-60: Cursor Update Relay", () => {
-    // Note: cursorUpdate handler is registered in handleConnection, not handleDisconnection.
-    // These tests verify the relay logic by testing the handler's behavior pattern.
-    // Full integration tests would use actual socket connections.
-
-    it("cursorUpdate handler injects clientID from socket.data.userId", () => {
-        // This is a documentation test -- the actual handler is:
-        // socket.on("cursorUpdate", (data) => {
-        //     socket.to(documentId).emit("cursorUpdate", {
-        //         clientID: socket.data.userId, // <-- relay-controlled
-        //         pos: data.pos,
-        //         name: data.name,
-        //         color: data.color,
-        //     });
-        // });
-        //
-        // The key security property is that clientID comes from socket.data.userId
-        // (set by auth middleware), not from the client's payload.
-        // This prevents clientID spoofing (threat T-6.5-01).
-
-        // Verify the implementation matches by checking the source
-        // The actual integration test would verify this at runtime
-        expect(true).toBe(true); // Placeholder -- real test is in handleConnection integration
+        expect(room.ydoc.getText("document").toString()).toBe("");
+        expect(room.ydoc.getMap("annotations").size).toBe(0);
     });
 });

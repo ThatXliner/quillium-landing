@@ -57,8 +57,7 @@ export function createRelayServer(): { wss: WebSocketServer; httpServer: HttpSer
             // Parse URL for auth params
             const url = new URL(request.url!, `http://${request.headers.host}`);
             const token = url.searchParams.get("auth");
-            const pathParts = url.pathname.split("/").filter(Boolean);
-            const documentId = pathParts[0] === "relay" ? pathParts[1] : pathParts[0];
+            const documentId = url.pathname.slice(1); // /docId -> docId
 
             // Skip non-document paths
             if (!documentId || documentId === "health") {

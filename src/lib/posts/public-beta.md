@@ -3,7 +3,7 @@ title: "Quillium Is Now in Public Beta"
 description: "Huge thanks to our private beta testers!"
 date: "2026-04-02"
 author: "Bryan Hu"
-featured: true
+featured: false
 ---
 
 After ~4 months of work, Quillium has finally achieved public beta stability! It could not have gotten to this point without countless rounds of testing and feedback from private beta testers—Nicole Chin, [Evan Zhou](https://x.com/evanzhoudev), and many others whose feedback made the app what it is now. The core is ready for the world, though it remains in beta, so features may still change as the product settles.

@@ -87,7 +87,9 @@
 			<h3 class="feature-heading">Great Minds Think Together</h3>
 			<p class="feature-lead">
 				Comments, revisions, and suggestions float beside the text they're about.
-				<a href="/pricing" class="text-black/40 underline underline-offset-2 hover:text-black/55">Collaboration and sync in the future</a>.
+				<a href="/omni" class="text-black/40 underline underline-offset-2 hover:text-black/55"
+					>Collaborate with your editor, anytime and anywhere</a
+				>.
 			</p>
 		</div>
 

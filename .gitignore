@@ -23,6 +23,9 @@ Thumbs.db
 # Brand
 brand-bible.html
 
+# Campaign experiments
+.campaign/
+
 # Superpowers
 .superpowers/
 

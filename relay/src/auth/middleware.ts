@@ -7,6 +7,7 @@
 import { supabase, supabaseConfigured } from "./supabase.js";
 import { HandshakeAuthSchema, AuthErrorCode } from "../schemas.js";
 import type { YjsClientData } from "../yjs/types.js";
+import { getYjsRoom } from "../yjs/rooms.js";
 
 /**
  * Extended socket data with user info.
@@ -62,7 +63,9 @@ export async function authenticateWebSocket(
             return { success: false, error: "Invalid token" };
         }
 
-        // Check document access
+        // Check document access. This uses the service_role client, so the relay
+        // must enforce the same ownership boundary that Postgres RLS enforces
+        // for browser/desktop clients.
         const { data: doc, error: docError } = await supabase
             .from("sync_documents")
             .select("owner_id")
@@ -73,12 +76,21 @@ export async function authenticateWebSocket(
             return { success: false, error: "Database error" };
         }
 
+        if (!doc) {
+            return { success: false, error: "Permission denied" };
+        }
+
         const isOwner = doc?.owner_id === user.id;
         const isAnonymous = user.is_anonymous ?? false;
 
-        // For now, allow access if document exists or user is creating it
-        // (Per D-57: Live Room mode, owner must be connected)
-        // TODO: Check shares table for non-owner access
+        if (!isOwner) {
+            const room = getYjsRoom(documentId);
+            const ownerIsLive = room?.isOwnerConnected === true && room.ownerId === doc.owner_id;
+
+            if (!ownerIsLive) {
+                return { success: false, error: "Permission denied" };
+            }
+        }
 
         return {
             success: true,

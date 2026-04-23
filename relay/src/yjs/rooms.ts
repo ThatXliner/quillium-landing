@@ -5,7 +5,7 @@
  * Per D-37: Room cleanup delay (45 seconds after last client leaves).
  */
 import * as Y from "yjs";
-import { Awareness } from "y-protocols/awareness";
+import { Awareness, removeAwarenessStates } from "y-protocols/awareness";
 import type { YjsRoom } from "./types.js";
 import { loadYjsState, persistYjsState, clearYjsUpdates } from "../persistence/yjsUpdates.js";
 
@@ -101,6 +101,33 @@ export function cancelRoomCleanup(room: YjsRoom): void {
  */
 export function getRoomCount(): number {
     return rooms.size;
+}
+
+/**
+ * Clear room state (Y.Doc content and awareness).
+ * Per D-55/D-57: Live Room mode — owner's local SQLite is source of truth.
+ * Called when owner disconnects to prevent stale state on reconnect.
+ */
+export function clearRoomState(room: YjsRoom): void {
+    const { ydoc, awareness } = room;
+
+    // Clear all awareness states (removes ghost cursors)
+    const allClientIds = Array.from(awareness.getStates().keys());
+    if (allClientIds.length > 0) {
+        removeAwarenessStates(awareness, allClientIds, "owner-disconnect");
+    }
+
+    // Clear Y.Doc content — owner will reseed on reconnect
+    ydoc.transact(() => {
+        const ytext = ydoc.getText("document");
+        if (ytext.length > 0) {
+            ytext.delete(0, ytext.length);
+        }
+        const ymap = ydoc.getMap("annotations");
+        ymap.clear();
+    }, "owner-disconnect");
+
+    console.log(`[yjs/rooms] Cleared state for room ${room.documentId.slice(0, 8)}...`);
 }
 
 /**

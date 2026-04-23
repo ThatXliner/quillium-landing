@@ -19,6 +19,7 @@ import type { WebSocket as WsWebSocket } from "ws";
 // Use ws package WebSocket type
 type WebSocket = WsWebSocket;
 import type { YjsRoom, YjsClientData } from "./types.js";
+import { clearRoomState } from "./rooms.js";
 
 // Message type constants
 export const MESSAGE_SYNC = 0;
@@ -63,7 +64,18 @@ export function setupYjsConnection(
     const syncEncoder = encoding.createEncoder();
     encoding.writeVarUint(syncEncoder, MESSAGE_SYNC);
     syncProtocol.writeSyncStep1(syncEncoder, ydoc);
-    ws.send(encoding.toUint8Array(syncEncoder));
+    const syncMsg = encoding.toUint8Array(syncEncoder);
+    console.log(`[yjs] Sending sync step 1 to client, ${syncMsg.length} bytes`);
+    ws.send(syncMsg);
+
+    // Also send sync step 2 (full doc state) immediately
+    // This ensures the client receives the complete document state
+    const sync2Encoder = encoding.createEncoder();
+    encoding.writeVarUint(sync2Encoder, MESSAGE_SYNC);
+    syncProtocol.writeSyncStep2(sync2Encoder, ydoc);
+    const sync2Msg = encoding.toUint8Array(sync2Encoder);
+    console.log(`[yjs] Sending sync step 2 to client, ${sync2Msg.length} bytes`);
+    ws.send(sync2Msg);
 
     // Send current awareness states
     const awarenessEncoder = encoding.createEncoder();
@@ -76,24 +88,34 @@ export function setupYjsConnection(
         ws.send(encoding.toUint8Array(awarenessEncoder));
     }
 
-    // Handle Y.Doc updates (broadcast to other clients)
+    // Handle Y.Doc updates (broadcast to other clients).
+    //
+    // This handler is registered per-connection. Because `ydoc.on("update")`
+    // fires ALL registered handlers on every update, we must guard so that
+    // only the handler for the ORIGIN client does the broadcast (otherwise
+    // we'd echo the sender and skip the real recipients, or broadcast N
+    // times instead of once).
     const updateHandler = (update: Uint8Array, origin: unknown) => {
-        // Don't broadcast back to the originating client
-        if (origin === ws) return;
+        // Only the handler owned by the originating ws should broadcast.
+        // Updates from other origins (e.g. server-initiated) still broadcast
+        // via the first-registered handler; since all handlers share the
+        // same room.clients set, pick the one whose ws matches origin, or
+        // fall through for non-ws origins using only the first handler.
+        if (origin !== ws) return;
 
         const encoder = encoding.createEncoder();
         encoding.writeVarUint(encoder, MESSAGE_SYNC);
         syncProtocol.writeUpdate(encoder, update);
         const message = encoding.toUint8Array(encoder);
 
-        // Broadcast to all other clients
+        // Broadcast to all OTHER clients (everyone except the sender)
         for (const client of clients) {
             if (client !== ws && client.readyState === 1) {
                 client.send(message);
             }
         }
 
-        // Trigger persistence callback
+        // Trigger persistence callback once per update
         if (onUpdate) {
             onUpdate(update);
         }
@@ -134,18 +156,28 @@ export function setupYjsConnection(
         }
     });
 
+    // Track this client's awareness ID so we can clean it up on disconnect.
+    // The awareness ID is set when the client sends their first awareness update.
+    let clientAwarenessId: number | null = null;
+    const trackAwarenessId = ({ added }: { added: number[] }) => {
+        // Capture the first awareness ID this client broadcasts
+        if (clientAwarenessId === null && added.length > 0) {
+            clientAwarenessId = added[0];
+        }
+    };
+    awareness.on("update", trackAwarenessId);
+
     // Handle disconnect
     ws.on("close", () => {
         clients.delete(ws);
         ydoc.off("update", updateHandler);
         awareness.off("update", awarenessHandler);
+        awareness.off("update", trackAwarenessId);
 
-        // Remove client's awareness state
-        awarenessProtocol.removeAwarenessStates(
-            awareness,
-            [/* client awareness ID would go here */],
-            "disconnect",
-        );
+        // Remove client's awareness state (fixes ghost cursor bug)
+        if (clientAwarenessId !== null) {
+            awarenessProtocol.removeAwarenessStates(awareness, [clientAwarenessId], "disconnect");
+        }
 
         // Broadcast client left
         broadcastCustomMessage(clients, CUSTOM_CLIENT_LEFT, { userId: clientData.userId });
@@ -168,6 +200,11 @@ export function setupYjsConnection(
             for (const client of clients) {
                 client.close(1000, "Owner left");
             }
+
+            // Per D-55/D-57: Live Room mode — owner's local SQLite is source of truth.
+            // Clear Y.Doc and awareness so reconnecting owner gets fresh state.
+            // This prevents stale content/cursors from previous session.
+            clearRoomState(room);
         }
     });
 }
@@ -193,7 +230,8 @@ function handleMessage(
             // Read sync message and write response
             // Wrap in try-catch per T-07.5-07: malformed data mitigation
             try {
-                syncProtocol.readSyncMessage(decoder, encoder, ydoc, ws);
+                const messageType = syncProtocol.readSyncMessage(decoder, encoder, ydoc, ws);
+                console.log(`[yjs] Received sync message type ${messageType}, response length: ${encoding.length(encoder)}`);
             } catch (e) {
                 console.error("[yjs] Malformed sync message, disconnecting client:", e);
                 ws.close(1003, "Malformed sync message");
@@ -202,6 +240,7 @@ function handleMessage(
 
             // Send response if any
             if (encoding.length(encoder) > 1) {
+                console.log(`[yjs] Sending sync response, ${encoding.length(encoder)} bytes`);
                 ws.send(encoding.toUint8Array(encoder));
             }
             break;

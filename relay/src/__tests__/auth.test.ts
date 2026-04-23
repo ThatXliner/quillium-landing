@@ -1,247 +1,166 @@
 /**
- * auth.test.ts -- Tests for JWT authentication and permission validation.
+ * auth.test.ts -- Tests for native WebSocket JWT authentication.
  *
- * Covers RELY-01 (JWT auth) and RELY-02 (permission validation).
- * Uses mocked Supabase client to test middleware logic.
+ * The relay uses the Supabase service_role key, so these tests verify the
+ * relay's own authorization checks instead of relying on Postgres RLS.
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { authMiddleware } from "../auth/middleware.js";
-import { AuthErrorCode } from "../schemas.js";
-import type { Socket } from "socket.io";
 
-// Mock Supabase module
 vi.mock("../auth/supabase.js", () => ({
     supabaseConfigured: true,
     supabase: {
         auth: {
             getUser: vi.fn(),
         },
-        from: vi.fn(() => ({
-            select: vi.fn(() => ({
-                eq: vi.fn(() => ({
-                    single: vi.fn(),
-                })),
-            })),
-        })),
+        from: vi.fn(),
     },
 }));
 
-// Import mocked module
-import { supabase } from "../auth/supabase.js";
+vi.mock("../yjs/rooms.js", () => ({
+    getYjsRoom: vi.fn(),
+}));
 
-// Helper to create mock socket
-function createMockSocket(auth: Record<string, unknown> = {}): Socket {
-    return {
-        handshake: { auth },
-        data: {},
-    } as unknown as Socket;
+import { authenticateWebSocket } from "../auth/middleware.js";
+import { supabase } from "../auth/supabase.js";
+import { getYjsRoom } from "../yjs/rooms.js";
+
+function mockDocumentLookup(data: { owner_id: string } | null, error: unknown = null) {
+    const maybeSingle = vi.fn().mockResolvedValue({ data, error });
+    const eq = vi.fn().mockReturnValue({ maybeSingle });
+    const select = vi.fn().mockReturnValue({ eq });
+
+    vi.mocked(supabase!.from).mockReturnValue({ select } as any);
+
+    return { select, eq, maybeSingle };
 }
 
-describe("RELY-01: JWT Authentication", () => {
+describe("authenticateWebSocket", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.mocked(getYjsRoom).mockReturnValue(undefined);
     });
 
     it("rejects connection without token", async () => {
-        const socket = createMockSocket({});
-        const next = vi.fn();
+        const result = await authenticateWebSocket(null, "123e4567-e89b-12d3-a456-426614174000");
 
-        await authMiddleware(socket, next);
-
-        expect(next).toHaveBeenCalledWith(expect.any(Error));
-        expect(next.mock.calls[0][0].message).toBe(`${AuthErrorCode.AUTH_REQUIRED}`);
+        expect(result).toEqual({ success: false, error: "Missing auth token" });
+        expect(supabase!.auth.getUser).not.toHaveBeenCalled();
     });
 
-    it("rejects connection with invalid token", async () => {
-        const socket = createMockSocket({
-            token: "invalid-token",
-            documentId: "123e4567-e89b-12d3-a456-426614174000",
-        });
-        const next = vi.fn();
+    it("rejects connection without document ID", async () => {
+        const result = await authenticateWebSocket("valid-token", "");
 
+        expect(result).toEqual({ success: false, error: "Missing document ID" });
+        expect(supabase!.auth.getUser).not.toHaveBeenCalled();
+    });
+
+    it("rejects invalid Supabase JWTs", async () => {
         vi.mocked(supabase!.auth.getUser).mockResolvedValue({
             data: { user: null },
             error: { message: "Invalid token", status: 401 } as any,
         });
 
-        await authMiddleware(socket, next);
+        const result = await authenticateWebSocket(
+            "invalid-token",
+            "123e4567-e89b-12d3-a456-426614174000",
+        );
 
-        expect(next).toHaveBeenCalledWith(expect.any(Error));
-        expect(next.mock.calls[0][0].message).toBe(`${AuthErrorCode.AUTH_INVALID}`);
+        expect(result).toEqual({ success: false, error: "Invalid token" });
     });
 
-    it("rejects connection with expired token", async () => {
-        const socket = createMockSocket({
-            token: "expired-token",
-            documentId: "123e4567-e89b-12d3-a456-426614174000",
-        });
-        const next = vi.fn();
-
-        vi.mocked(supabase!.auth.getUser).mockResolvedValue({
-            data: { user: null },
-            error: { message: "Token has expired", status: 401 } as any,
-        });
-
-        await authMiddleware(socket, next);
-
-        expect(next).toHaveBeenCalledWith(expect.any(Error));
-        expect(next.mock.calls[0][0].message).toBe(`${AuthErrorCode.AUTH_EXPIRED}`);
-    });
-
-    it("accepts connection with valid Supabase JWT", async () => {
-        const socket = createMockSocket({
-            token: "valid-token",
-            documentId: "123e4567-e89b-12d3-a456-426614174000",
-        });
-        const next = vi.fn();
-
+    it("rejects when the document does not exist", async () => {
         vi.mocked(supabase!.auth.getUser).mockResolvedValue({
             data: { user: { id: "user-123", is_anonymous: false } as any },
             error: null,
         });
+        mockDocumentLookup(null);
 
-        // Mock document exists
-        const mockSingle = vi.fn().mockResolvedValue({
-            data: { id: "123e4567-e89b-12d3-a456-426614174000", owner_id: "user-123" },
-            error: null,
-        });
-        vi.mocked(supabase!.from).mockReturnValue({
-            select: vi.fn().mockReturnValue({
-                eq: vi.fn().mockReturnValue({
-                    single: mockSingle,
-                }),
-            }),
-        } as any);
+        const result = await authenticateWebSocket(
+            "valid-token",
+            "123e4567-e89b-12d3-a456-426614174000",
+        );
 
-        await authMiddleware(socket, next);
-
-        expect(next).toHaveBeenCalledWith();
-        expect(next.mock.calls[0][0]).toBeUndefined();
+        expect(result).toEqual({ success: false, error: "Permission denied" });
     });
 
-    it("extracts user ID from valid token", async () => {
-        const socket = createMockSocket({
-            token: "valid-token",
-            documentId: "123e4567-e89b-12d3-a456-426614174000",
-        });
-        const next = vi.fn();
-
+    it("rejects authenticated non-owners when the owner is not live", async () => {
         vi.mocked(supabase!.auth.getUser).mockResolvedValue({
-            data: { user: { id: "user-456", is_anonymous: true } as any },
+            data: { user: { id: "user-456", is_anonymous: false } as any },
             error: null,
         });
+        mockDocumentLookup({ owner_id: "user-123" });
 
-        const mockSingle = vi.fn().mockResolvedValue({
-            data: { id: "123e4567-e89b-12d3-a456-426614174000", owner_id: "other" },
-            error: null,
-        });
-        vi.mocked(supabase!.from).mockReturnValue({
-            select: vi.fn().mockReturnValue({
-                eq: vi.fn().mockReturnValue({
-                    single: mockSingle,
-                }),
-            }),
-        } as any);
+        const result = await authenticateWebSocket(
+            "valid-token",
+            "123e4567-e89b-12d3-a456-426614174000",
+        );
 
-        await authMiddleware(socket, next);
-
-        expect(socket.data.userId).toBe("user-456");
-        expect(socket.data.isAnonymous).toBe(true);
-    });
-});
-
-describe("RELY-02: Permission Validation", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
+        expect(result).toEqual({ success: false, error: "Permission denied" });
     });
 
-    it("rejects connection when document does not exist", async () => {
-        const socket = createMockSocket({
-            token: "valid-token",
-            documentId: "123e4567-e89b-12d3-a456-426614174000",
-        });
-        const next = vi.fn();
-
+    it("accepts authenticated non-owners while the owner is live", async () => {
         vi.mocked(supabase!.auth.getUser).mockResolvedValue({
-            data: { user: { id: "user-123" } as any },
+            data: { user: { id: "user-456", is_anonymous: false } as any },
             error: null,
         });
-
-        const mockSingle = vi.fn().mockResolvedValue({
-            data: null,
-            error: { message: "Not found", code: "PGRST116" },
-        });
-        vi.mocked(supabase!.from).mockReturnValue({
-            select: vi.fn().mockReturnValue({
-                eq: vi.fn().mockReturnValue({
-                    single: mockSingle,
-                }),
-            }),
+        mockDocumentLookup({ owner_id: "user-123" });
+        vi.mocked(getYjsRoom).mockReturnValue({
+            isOwnerConnected: true,
+            ownerId: "user-123",
         } as any);
 
-        await authMiddleware(socket, next);
+        const result = await authenticateWebSocket(
+            "valid-token",
+            "123e4567-e89b-12d3-a456-426614174000",
+        );
 
-        expect(next).toHaveBeenCalledWith(expect.any(Error));
-        expect(next.mock.calls[0][0].message).toBe(`${AuthErrorCode.PERMISSION_DENIED}`);
+        expect(result).toEqual({
+            success: true,
+            data: {
+                userId: "user-456",
+                documentId: "123e4567-e89b-12d3-a456-426614174000",
+                isOwner: false,
+                isAnonymous: false,
+            },
+        });
     });
 
-    it("accepts connection when user is document owner", async () => {
-        const socket = createMockSocket({
-            token: "valid-token",
-            documentId: "123e4567-e89b-12d3-a456-426614174000",
-        });
-        const next = vi.fn();
-
+    it("accepts document owners", async () => {
         vi.mocked(supabase!.auth.getUser).mockResolvedValue({
-            data: { user: { id: "owner-user" } as any },
+            data: { user: { id: "owner-user", is_anonymous: false } as any },
             error: null,
         });
+        mockDocumentLookup({ owner_id: "owner-user" });
 
-        const mockSingle = vi.fn().mockResolvedValue({
-            data: { id: "123e4567-e89b-12d3-a456-426614174000", owner_id: "owner-user" },
-            error: null,
+        const result = await authenticateWebSocket(
+            "valid-token",
+            "123e4567-e89b-12d3-a456-426614174000",
+        );
+
+        expect(result).toEqual({
+            success: true,
+            data: {
+                userId: "owner-user",
+                documentId: "123e4567-e89b-12d3-a456-426614174000",
+                isOwner: true,
+                isAnonymous: false,
+            },
         });
-        vi.mocked(supabase!.from).mockReturnValue({
-            select: vi.fn().mockReturnValue({
-                eq: vi.fn().mockReturnValue({
-                    single: mockSingle,
-                }),
-            }),
-        } as any);
-
-        await authMiddleware(socket, next);
-
-        expect(next).toHaveBeenCalledWith();
-        expect(socket.data.documentId).toBe("123e4567-e89b-12d3-a456-426614174000");
     });
 
-    it("stores documentId in socket data on success", async () => {
-        const docId = "123e4567-e89b-12d3-a456-426614174000";
-        const socket = createMockSocket({
-            token: "valid-token",
-            documentId: docId,
-        });
-        const next = vi.fn();
-
+    it("preserves anonymous owner identity", async () => {
         vi.mocked(supabase!.auth.getUser).mockResolvedValue({
-            data: { user: { id: "user-123" } as any },
+            data: { user: { id: "anon-owner", is_anonymous: true } as any },
             error: null,
         });
+        mockDocumentLookup({ owner_id: "anon-owner" });
 
-        const mockSingle = vi.fn().mockResolvedValue({
-            data: { id: docId, owner_id: "user-123" },
-            error: null,
-        });
-        vi.mocked(supabase!.from).mockReturnValue({
-            select: vi.fn().mockReturnValue({
-                eq: vi.fn().mockReturnValue({
-                    single: mockSingle,
-                }),
-            }),
-        } as any);
+        const result = await authenticateWebSocket(
+            "valid-token",
+            "123e4567-e89b-12d3-a456-426614174000",
+        );
 
-        await authMiddleware(socket, next);
-
-        expect(socket.data.documentId).toBe(docId);
+        expect(result.success).toBe(true);
+        expect(result.data?.isAnonymous).toBe(true);
     });
 });

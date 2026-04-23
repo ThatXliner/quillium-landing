@@ -555,13 +555,12 @@
 					servers.
 				</p>
 			</div>
-			<div class="faq-row">
+			<!-- <div class="faq-row">
 				<p class="faq-q">Can I try it before paying?</p>
 				<p class="faq-a">
-					Yes: waitlist members get early access. Pricing won't kick in until Omni is stable.
-					(Free!)
+    				No, but we do offer a full refund after 7 days. This is just like <a href="https://obsidian.md/pricing" class="text-black/40 underline underline-offset-2 hover:text-black/55">Obsidian</a>.
 				</p>
-			</div>
+			</div> -->
 			<div class="faq-row">
 				<p class="faq-q">What if I cancel?</p>
 				<p class="faq-a">

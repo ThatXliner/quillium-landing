@@ -1,9 +1,9 @@
 <script lang="ts">
 	import posthog from 'posthog-js';
 	import { onMount } from 'svelte';
-	import { fade, fly, scale } from 'svelte/transition';
-	import { X } from '@lucide/svelte';
+	import { fade, fly } from 'svelte/transition';
 	import ReadonlyAnnotationCard from '$lib/share/ReadonlyAnnotationCard.svelte';
+	import ReadonlyAnnotationModal from '$lib/share/ReadonlyAnnotationModal.svelte';
 
 	let { data } = $props();
 
@@ -45,21 +45,8 @@
 		}).format(new Date(value));
 	}
 
-	function formatTimestamp(value: number): string {
-		return new Intl.DateTimeFormat(undefined, {
-			dateStyle: 'medium',
-			timeStyle: 'short'
-		}).format(new Date(value));
-	}
-
 	function shareTokenSuffix(token: string): string {
 		return token.slice(-8);
-	}
-
-	function annotationLabel(type: ShareAnnotation['type']) {
-		if (type === 'comment') return 'Comment';
-		if (type === 'suggestion') return 'Suggestion';
-		return 'Revision';
 	}
 
 	function annotationToneClass(type: ShareAnnotation['type']) {
@@ -77,6 +64,42 @@
 			return isActive ? 'annotation-inline-suggestion-active' : 'annotation-inline-suggestion';
 		}
 		return isActive ? 'annotation-inline-revision-active' : 'annotation-inline-revision';
+	}
+
+	function annotationDepth(annotation: ShareAnnotation): number {
+		return annotation.id.split('.v').length - 1;
+	}
+
+	function annotationSpan(annotation: ShareAnnotation): number {
+		return Math.max(0, annotation.to - annotation.from);
+	}
+
+	function getPrimaryInlineAnnotation(
+		annotationIds: AnnotationId[],
+		annotations: ShareAnnotation[]
+	): ShareAnnotation | undefined {
+		const candidates = annotationIds
+			.map((id) => annotations.find((annotation) => annotation.id === id))
+			.filter((annotation): annotation is ShareAnnotation => !!annotation);
+
+		return candidates.sort((a, b) => {
+			const activeDelta =
+				Number(b.id === activeInlineAnnotationId) - Number(a.id === activeInlineAnnotationId);
+			if (activeDelta !== 0) return activeDelta;
+
+			const depthDelta = annotationDepth(b) - annotationDepth(a);
+			if (depthDelta !== 0) return depthDelta;
+
+			const spanDelta = annotationSpan(a) - annotationSpan(b);
+			if (spanDelta !== 0) return spanDelta;
+
+			const typeDelta =
+				Number(a.type === 'revision') - Number(b.type === 'revision') ||
+				Number(b.type === 'comment') - Number(a.type === 'comment');
+			if (typeDelta !== 0) return typeDelta;
+
+			return a.id.localeCompare(b.id);
+		})[0];
 	}
 
 	function markerSymbol(type: ShareAnnotation['type']) {
@@ -120,14 +143,6 @@
 			annotation.versions[0] ??
 			null
 		);
-	}
-
-	function getRequiredRevisionVersion(annotation: Extract<ShareAnnotation, { type: 'revision' }>) {
-		const selectedVersion = getSelectedRevisionVersion(annotation);
-		if (!selectedVersion) {
-			throw new Error(`Missing selected revision version for annotation ${annotation.id}`);
-		}
-		return selectedVersion;
 	}
 
 	function selectRevisionVersion(annotationId: AnnotationId, versionIndex: number) {
@@ -394,7 +409,7 @@
 
 	$effect(() => {
 		if (initializedSelection) return;
-		activeInlineAnnotationId = sortedAnnotations[0]?.id ?? null;
+		activeInlineAnnotationId = displayAnnotations[0]?.id ?? sortedAnnotations[0]?.id ?? null;
 		initializedSelection = true;
 	});
 
@@ -475,14 +490,15 @@
 							{:else}
 								{#each paragraph.segments as segment (segment.key)}
 									{#if segment.annotationIds.length > 0}
-										{@const primaryAnnotation = displayAnnotations.find(
-											(annotation) => annotation.id === segment.annotationIds[0]
+										{@const primaryAnnotation = getPrimaryInlineAnnotation(
+											segment.annotationIds,
+											displayAnnotations
 										)}
 										<button
 											type="button"
-											class={`annotation-inline ${annotationInlineClass(primaryAnnotation, activeInlineAnnotationId === segment.annotationIds[0])}`}
-											onclick={() => selectAnnotation(segment.annotationIds[0])}
-											aria-pressed={activeInlineAnnotationId === segment.annotationIds[0]}
+											class={`annotation-inline ${annotationInlineClass(primaryAnnotation, activeInlineAnnotationId === primaryAnnotation?.id)}`}
+											onclick={() => primaryAnnotation && selectAnnotation(primaryAnnotation.id)}
+											aria-pressed={activeInlineAnnotationId === primaryAnnotation?.id}
 										>
 											{segment.text}
 										</button>
@@ -513,8 +529,8 @@
 
 			<aside class="annotation-column" in:fly={{ x: 20, duration: 420, delay: 60 }}>
 				<div class="annotation-card-stack">
-					{#if sortedAnnotations.length > 0}
-						{#each sortedAnnotations as annotation (annotation.id)}
+					{#if displayAnnotations.length > 0}
+						{#each displayAnnotations as annotation (annotation.id)}
 							<ReadonlyAnnotationCard
 								{annotation}
 								active={activeInlineAnnotationId === annotation.id}
@@ -537,145 +553,20 @@
 </main>
 
 {#if modalAnnotation}
-	<div
-		class="annotation-modal-backdrop"
-		role="presentation"
-		onclick={(event) => event.currentTarget === event.target && closeAnnotationModal()}
-	>
-		<div
-			class="annotation-modal-shell"
-			in:scale={{ start: 0.96, duration: 180 }}
-			out:fade={{ duration: 120 }}
-		>
-			<div class="annotation-modal-header">
-				<div>
-					<p class="workspace-eyebrow mb-2">{annotationLabel(modalAnnotation.type)}</p>
-					<h2 class="annotation-modal-title">Read-only annotation details</h2>
-				</div>
-				<button
-					type="button"
-					class="annotation-modal-close"
-					onclick={closeAnnotationModal}
-					aria-label="Close annotation details"
-				>
-					<X size={18} />
-				</button>
-			</div>
-
-			<div class="annotation-modal-grid">
-				<section class="annotation-modal-panel">
-					<p class="annotation-modal-label">Attached text</p>
-					<p class="annotation-modal-body">
-						{modalAnnotation.type === 'revision'
-							? getRequiredRevisionVersion(modalAnnotation).text
-							: modalAnnotation.selectedText || '(collapsed selection)'}
-					</p>
-				</section>
-
-				{#if modalAnnotation.type === 'suggestion'}
-					<section class="annotation-modal-panel">
-						<p class="annotation-modal-label">Suggested replacements</p>
-						<div class="annotation-modal-stack">
-							{#each modalAnnotation.replacements as replacement, index (`modal-suggestion-${index}`)}
-								<article class="annotation-modal-item">
-									<p class="annotation-modal-item-label">Option {index + 1}</p>
-									<p class="annotation-modal-body">{replacement.text}</p>
-									{#if replacement.rationale}
-										<p class="annotation-modal-secondary">{replacement.rationale}</p>
-									{/if}
-								</article>
-							{/each}
-						</div>
-					</section>
-				{:else if modalAnnotation.type === 'revision'}
-					<section class="annotation-modal-panel">
-						<p class="annotation-modal-label">Revision versions</p>
-						<div class="revision-version-tabs">
-							{#each modalAnnotation.versions as version}
-								<button
-									type="button"
-									class={`revision-version-chip ${version.index === getSelectedRevisionVersionIndex(modalAnnotation) ? 'revision-version-chip-active' : ''}`}
-									onclick={() => selectRevisionVersion(modalAnnotation.id, version.index)}
-									aria-pressed={version.index === getSelectedRevisionVersionIndex(modalAnnotation)}
-								>
-									<span>V{version.index + 1}</span>
-									{#if version.label}
-										<span>{version.label}</span>
-									{/if}
-									{#if version.index === modalAnnotation.activeVersionIndex}
-										<span>Published</span>
-									{/if}
-								</button>
-							{/each}
-						</div>
-						<div class="annotation-modal-stack">
-							{#key `modal-revision-${modalAnnotation.id}-${getRequiredRevisionVersion(modalAnnotation).index}`}
-								<article
-									class="annotation-modal-item"
-									in:fade={{ duration: 180 }}
-									out:fade={{ duration: 140 }}
-								>
-									<p class="annotation-modal-item-label">
-										Version {getRequiredRevisionVersion(modalAnnotation).index +
-											1}{getRequiredRevisionVersion(modalAnnotation).label
-											? ` · ${getRequiredRevisionVersion(modalAnnotation).label}`
-											: ''}{getRequiredRevisionVersion(modalAnnotation).index ===
-										modalAnnotation.activeVersionIndex
-											? ' · published'
-											: ' · previewing'}
-									</p>
-									<p class="annotation-modal-body">
-										{getRequiredRevisionVersion(modalAnnotation).text}
-									</p>
-								</article>
-							{/key}
-						</div>
-					</section>
-				{/if}
-
-				<section class="annotation-modal-panel">
-					<p class="annotation-modal-label">Thread</p>
-					{#if modalAnnotation.thread.length > 0}
-						<div class="annotation-modal-stack">
-							{#each modalAnnotation.thread as message (message.time)}
-								<article class="annotation-modal-item">
-									<div class="thread-message-meta">
-										<span class="thread-author">{message.author}</span>
-										<span>{formatTimestamp(message.time)}</span>
-									</div>
-									<p class="annotation-modal-body">{message.message}</p>
-								</article>
-							{/each}
-						</div>
-					{:else}
-						<p class="annotation-empty-state">
-							No thread messages were attached to this annotation.
-						</p>
-					{/if}
-				</section>
-			</div>
-		</div>
-	</div>
+	<ReadonlyAnnotationModal
+		annotation={modalAnnotation}
+		selectedRevisionVersionIndex={modalAnnotation.type === 'revision'
+			? getSelectedRevisionVersionIndex(modalAnnotation)
+			: null}
+		onClose={closeAnnotationModal}
+		onSelectRevisionVersion={(versionIndex) =>
+			selectRevisionVersion(modalAnnotation.id, versionIndex)}
+	/>
 {/if}
 
 <style>
 	.share-shell {
 		background: #f5f4f1;
-	}
-
-	.workspace-eyebrow,
-	.annotation-modal-label {
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: rgba(15, 23, 42, 0.42);
-	}
-
-	.annotation-modal-secondary {
-		font-size: 0.92rem;
-		line-height: 1.6;
-		color: rgba(15, 23, 42, 0.56);
 	}
 
 	.share-topbar-shell {
@@ -747,14 +638,6 @@
 		margin-top: 0.05rem;
 		font-size: 0.68rem;
 		color: rgba(0, 0, 0, 0.42);
-	}
-
-	.revision-version-chip {
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.72);
-		padding: 0.4rem 0.72rem;
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 	}
 
 	.share-install-button {
@@ -920,139 +803,14 @@
 		gap: 8px;
 	}
 
-	.annotation-modal-panel,
-	.annotation-modal-item {
-		border: 1px solid rgba(15, 23, 42, 0.06);
-		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.72);
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
-	}
-
-	.annotation-modal-stack,
-	.revision-version-tabs {
-		display: grid;
-		gap: 0.55rem;
-		margin-top: 0.6rem;
-	}
-
-	.annotation-modal-item {
-		padding: 0.7rem 0.8rem;
-	}
-
-	.annotation-modal-item-label,
-	.revision-version-label {
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.78);
-	}
-
-	.thread-message-meta {
-		font-size: 0.68rem;
-		color: rgba(15, 23, 42, 0.44);
-		margin-bottom: 0.28rem;
-	}
-
-	.thread-author {
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.7);
-	}
-
-	.revision-version-body,
-	.annotation-modal-body,
 	.annotation-empty-state {
 		font-size: 0.84rem;
 		line-height: 1.55;
 		color: rgba(15, 23, 42, 0.68);
 	}
 
-	.revision-version-tabs {
-		grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-	}
-
-	.revision-version-chip {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.3rem;
-		font-size: 0.66rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.5);
-		cursor: pointer;
-		transition:
-			transform 0.14s ease,
-			box-shadow 0.14s ease,
-			border-color 0.14s ease,
-			background-color 0.14s ease;
-	}
-
-	.revision-version-chip:hover {
-		transform: translateY(-1px);
-	}
-
-	.revision-version-chip-active {
-		border-color: rgba(168, 85, 247, 0.28);
-		box-shadow:
-			0 0 0 1px rgba(168, 85, 247, 0.18),
-			inset 0 1px 0 rgba(255, 255, 255, 0.92);
-	}
-
-	.revision-version-hint {
-		font-size: 0.74rem;
-		line-height: 1.5;
-		color: rgba(15, 23, 42, 0.46);
-		padding: 0.1rem 0.1rem 0;
-	}
-
-	.annotation-modal-backdrop {
-		position: fixed;
-		inset: 0;
-		z-index: 50;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 1.5rem;
-		background: rgba(15, 23, 42, 0.24);
-		backdrop-filter: blur(10px);
-	}
-
-	.annotation-modal-shell {
-		width: min(920px, 100%);
-		max-height: min(88vh, 980px);
-		overflow: auto;
-		border: 1px solid rgba(15, 23, 42, 0.08);
-		border-radius: 28px;
-		background: rgba(247, 247, 244, 0.94);
-		box-shadow: 0 36px 80px rgba(15, 23, 42, 0.22);
-		padding: 1.25rem;
-	}
-
-	.annotation-modal-header {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: 1rem;
-		margin-bottom: 1rem;
-	}
-
-	.annotation-modal-title {
-		font-family: Georgia, serif;
-		font-size: clamp(1.55rem, 3vw, 2.35rem);
-		line-height: 1.05;
-		color: rgba(15, 23, 42, 0.92);
-	}
-
-	.annotation-modal-grid {
-		display: grid;
-		gap: 0.9rem;
-	}
-
-	.annotation-modal-panel {
-		padding: 1rem;
-	}
-
 	.annotation-inline:focus-visible,
-	.annotation-marker:focus-visible,
-	.revision-version-chip:focus-visible,
-	.annotation-modal-close:focus-visible {
+	.annotation-marker:focus-visible {
 		outline: 2px solid rgba(37, 99, 235, 0.45);
 		outline-offset: 2px;
 	}

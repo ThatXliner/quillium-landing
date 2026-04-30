@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		ChevronDownIcon,
-		GitBranchIcon,
-		Maximize2,
-		PlusIcon,
-		SparklesIcon,
-		Trash2,
-		X
-	} from '@lucide/svelte';
+	import { ChevronDownIcon, GitBranchIcon, Maximize2, SparklesIcon } from '@lucide/svelte';
 	import { scale } from 'svelte/transition';
 	import ReadonlyThreadMessage from './ReadonlyThreadMessage.svelte';
 	import type { SerializedAnnotation } from './types';
@@ -55,15 +47,6 @@
 					aria-label="Expand comment thread"
 				>
 					<Maximize2 size={14} />
-				</button>
-				<button
-					class="cursor-default rounded-md p-1 text-blue-400/30"
-					type="button"
-					disabled
-					title="Read-only snapshot"
-					aria-label="Delete comment unavailable on shared page"
-				>
-					<Trash2 size={16} />
 				</button>
 			</div>
 		</div>
@@ -115,14 +98,6 @@
 					AI Suggestion
 				</h3>
 			</div>
-			<button
-				class="cursor-default rounded-md p-1 text-green-400/30"
-				type="button"
-				disabled
-				title="Read-only snapshot"
-			>
-				<Trash2 size={16} />
-			</button>
 		</div>
 
 		{#if annotation.thread.length > 0 && annotation.thread[0].author === 'AI'}
@@ -203,14 +178,6 @@
 			<h3 class="text-[10px] font-semibold tracking-wider text-purple-600/70 uppercase">
 				Revision
 			</h3>
-			<button
-				class="cursor-default rounded-md p-1 text-purple-400/30"
-				type="button"
-				disabled
-				title="Read-only snapshot"
-			>
-				<Trash2 size={16} />
-			</button>
 		</div>
 
 		<div class="flex flex-wrap items-center gap-1 px-3 pb-2">
@@ -232,30 +199,11 @@
 					>
 						{version.label ?? (version.text.slice(0, 24) || `Version ${i + 1}`)}
 					</button>
-					<button
-						class="py-1 pr-1.5 pl-0.5 transition-colors {versionActive
-							? 'text-white/50'
-							: 'text-black/25'} cursor-default"
-						type="button"
-						disabled
-						title={`Delete version ${i + 1}`}
-					>
-						<X size={9} />
-					</button>
 				</div>
 			{/each}
 		</div>
 
-		<div class="flex gap-1.5 px-3 pb-3">
-			<button
-				class="flex cursor-default items-center gap-1.5 rounded-md bg-white/50 px-2 py-1 text-[11px] font-medium text-purple-600/80 ring-1 ring-purple-200/40"
-				type="button"
-				disabled
-				title="Create a new version"
-			>
-				<PlusIcon size={14} />
-				<span>New Version</span>
-			</button>
+		<div class="flex justify-end gap-1.5 px-3 pb-3">
 			<button
 				class="ml-auto flex items-center gap-1 rounded-md bg-white/50 px-2 py-1 text-[11px] font-medium text-purple-600/60 ring-1 ring-purple-200/40 transition-colors hover:bg-white/70"
 				type="button"

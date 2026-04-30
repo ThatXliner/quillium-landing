@@ -1,5 +1,6 @@
 import { env } from '$env/dynamic/public';
 import { createClient } from '@supabase/supabase-js';
+import type { SerializedAnnotation } from '$lib/share/types';
 
 export type PublicShare = {
 	token: string;
@@ -12,8 +13,7 @@ export type PublicShare = {
 	canonicalUrl: string;
 };
 
-type ShareRow = {
-	share_token: string;
+type PublicShareRpcRow = {
 	published_title: string;
 	preview_text: string;
 	published_content: string;
@@ -22,38 +22,18 @@ type ShareRow = {
 	published_at: string | null;
 };
 
-type SerializedThreadMessage = {
+type RpcError = {
 	message: string;
-	author: string;
-	time: number;
 };
 
-type SerializedAnnotationBase = {
-	id: string;
-	type: 'comment' | 'suggestion' | 'revision';
-	from: number;
-	to: number;
-	selectedText: string;
-	thread: SerializedThreadMessage[];
+type PublicShareRpcClient = {
+	rpc: (
+		fn: 'get_public_share_by_token',
+		args: { p_share_token: string }
+	) => {
+		maybeSingle: <T>() => Promise<{ data: T | null; error: RpcError | null }>;
+	};
 };
-
-type SerializedAnnotation =
-	| (SerializedAnnotationBase & { type: 'comment' })
-	| (SerializedAnnotationBase & {
-			type: 'suggestion';
-			replacements: { text: string; rationale?: string }[];
-			author?: string;
-	  })
-	| (SerializedAnnotationBase & {
-			type: 'revision';
-			activeVersionIndex: number;
-			versions: {
-				index: number;
-				text: string;
-				label?: string;
-				annotations: SerializedAnnotation[];
-			}[];
-	  });
 
 const SITE_URL = 'https://quillium.bryanhu.com';
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -69,9 +49,7 @@ function getSupabaseEnv() {
 	return { supabaseUrl, publishableAnonKey };
 }
 
-let supabaseAdmin:
-	| ReturnType<typeof createClient<Record<string, never>>>
-	| undefined;
+let supabaseAdmin: ReturnType<typeof createClient> | undefined;
 
 function getSupabaseAdmin() {
 	if (supabaseAdmin) return supabaseAdmin;
@@ -90,19 +68,16 @@ export function isShareToken(token: string): boolean {
 	return UUID_RE.test(token);
 }
 
-export async function loadPublicShare(_fetchFn: typeof fetch, token: string): Promise<PublicShare | null> {
+export async function loadPublicShare(
+	_fetchFn: typeof fetch,
+	token: string
+): Promise<PublicShare | null> {
 	if (!isShareToken(token)) return null;
 
-	const client = getSupabaseAdmin();
+	const client = getSupabaseAdmin() as unknown as PublicShareRpcClient;
 	const { data, error } = await client
-		.from('shares')
-		.select(
-			'share_token,published_title,preview_text,published_content,published_annotations,author_name,published_at'
-		)
-		.eq('share_token', token)
-		.eq('enabled', true)
-		.limit(1)
-		.maybeSingle<ShareRow>();
+		.rpc('get_public_share_by_token', { p_share_token: token })
+		.maybeSingle<PublicShareRpcRow>();
 
 	if (error) {
 		throw new Error(`Failed to load public share (${error.message})`);
@@ -112,13 +87,13 @@ export async function loadPublicShare(_fetchFn: typeof fetch, token: string): Pr
 	if (!share) return null;
 
 	return {
-		token: share.share_token,
+		token,
 		title: share.published_title || 'Untitled',
 		excerpt: share.preview_text || '',
 		content: share.published_content || '',
 		annotations: share.published_annotations ?? [],
 		authorName: share.author_name,
 		publishedAt: share.published_at,
-		canonicalUrl: `${SITE_URL}/share/${share.share_token}`
+		canonicalUrl: `${SITE_URL}/share/${token}`
 	};
 }

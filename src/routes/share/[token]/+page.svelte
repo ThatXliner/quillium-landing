@@ -1,10 +1,9 @@
 <script lang="ts">
-	import Footer from '$lib/components/Footer.svelte';
-	import Nav from '$lib/components/Nav.svelte';
 	import posthog from 'posthog-js';
 	import { onMount } from 'svelte';
 	import { fade, fly, scale } from 'svelte/transition';
-	import { MessageSquareMore, Sparkles, Split, X } from '@lucide/svelte';
+	import { X } from '@lucide/svelte';
+	import ReadonlyAnnotationCard from '$lib/share/ReadonlyAnnotationCard.svelte';
 
 	let { data } = $props();
 
@@ -57,24 +56,10 @@
 		return token.slice(-8);
 	}
 
-	function annotationIcon(type: ShareAnnotation['type']) {
-		if (type === 'comment') return MessageSquareMore;
-		if (type === 'suggestion') return Sparkles;
-		return Split;
-	}
-
 	function annotationLabel(type: ShareAnnotation['type']) {
 		if (type === 'comment') return 'Comment';
 		if (type === 'suggestion') return 'Suggestion';
 		return 'Revision';
-	}
-
-	function annotationChipLabel(annotation: ShareAnnotation) {
-		if (annotation.type === 'comment') return `${annotation.thread.length} message${annotation.thread.length === 1 ? '' : 's'}`;
-		if (annotation.type === 'suggestion') {
-			return `${annotation.replacements.length} option${annotation.replacements.length === 1 ? '' : 's'}`;
-		}
-		return `${annotation.versions.length} version${annotation.versions.length === 1 ? '' : 's'}`;
 	}
 
 	function annotationToneClass(type: ShareAnnotation['type']) {
@@ -137,9 +122,7 @@
 		);
 	}
 
-	function getRequiredRevisionVersion(
-		annotation: Extract<ShareAnnotation, { type: 'revision' }>
-	) {
+	function getRequiredRevisionVersion(annotation: Extract<ShareAnnotation, { type: 'revision' }>) {
 		const selectedVersion = getSelectedRevisionVersion(annotation);
 		if (!selectedVersion) {
 			throw new Error(`Missing selected revision version for annotation ${annotation.id}`);
@@ -226,10 +209,7 @@
 		});
 	}
 
-	function buildDisplayedShare(
-		content: string,
-		annotations: ShareAnnotation[]
-	): DisplayShare {
+	function buildDisplayedShare(content: string, annotations: ShareAnnotation[]): DisplayShare {
 		let nextContent = content;
 		let nextAnnotations = [...annotations];
 
@@ -361,7 +341,9 @@
 			}));
 
 			nextAnnotations = [
-				...nextAnnotations.filter((annotation) => !mappedNestedAnnotations.some((nested) => nested.id === annotation.id)),
+				...nextAnnotations.filter(
+					(annotation) => !mappedNestedAnnotations.some((nested) => nested.id === annotation.id)
+				),
 				...mappedNestedAnnotations
 			];
 		}
@@ -394,7 +376,9 @@
 
 	const displayAnnotations = $derived(displayedShare.annotations);
 
-	const paragraphBlocks = $derived(buildParagraphBlocks(displayedShare.content, displayAnnotations));
+	const paragraphBlocks = $derived(
+		buildParagraphBlocks(displayedShare.content, displayAnnotations)
+	);
 
 	const activeInlineAnnotation = $derived(
 		displayAnnotations.find((annotation) => annotation.id === activeInlineAnnotationId) ??
@@ -424,27 +408,43 @@
 
 <svelte:head>
 	<title>{data.share.title} · Shared via Quillium</title>
-	<meta name="description" content={data.share.excerpt || 'A read-only document shared from Quillium.'} />
+	<meta
+		name="description"
+		content={data.share.excerpt || 'A read-only document shared from Quillium.'}
+	/>
 	<link rel="canonical" href={data.share.canonicalUrl} />
 	<meta property="og:title" content={`${data.share.title} · Shared via Quillium`} />
-	<meta property="og:description" content={data.share.excerpt || 'A read-only document shared from Quillium.'} />
+	<meta
+		property="og:description"
+		content={data.share.excerpt || 'A read-only document shared from Quillium.'}
+	/>
 	<meta property="og:url" content={data.share.canonicalUrl} />
 	<meta property="og:type" content="article" />
 </svelte:head>
 
-<Nav />
-
-<main class="share-shell min-h-screen px-4 pt-28 pb-20 sm:px-6">
+<main class="share-shell min-h-screen px-4 pt-4 pb-12 sm:px-6">
 	<section class="mx-auto max-w-[1320px]">
 		<div class="share-topbar-shell">
 			<div class="share-topbar" in:fly={{ y: -18, duration: 420 }}>
+				<div class="share-status">
+					<span class="share-status-dot"></span>
+					<span>Read-only</span>
+				</div>
+				<div class="share-topbar-divider"></div>
 				<div class="share-title-block">
 					<p class="share-title">{data.share.title}</p>
 					<p class="share-topbar-meta">
-						{data.share.authorName || 'Shared from Quillium'} · {formatPublishedAt(data.share.publishedAt)}
+						{data.share.authorName || 'Shared from Quillium'} · {formatPublishedAt(
+							data.share.publishedAt
+						)}
 					</p>
 				</div>
-				<a href={downloadUrl} onclick={() => trackInstallClick('toolbar')} class="btn-primary share-install-button">
+				<div class="share-topbar-divider share-topbar-divider-optional"></div>
+				<a
+					href={downloadUrl}
+					onclick={() => trackInstallClick('toolbar')}
+					class="btn-primary share-install-button"
+				>
 					Edit in Quillium
 				</a>
 			</div>
@@ -512,173 +512,24 @@
 			</section>
 
 			<aside class="annotation-column" in:fly={{ x: 20, duration: 420, delay: 60 }}>
-				<div class="annotation-column-note">
-					<p class="annotation-note-label">Read-only annotations</p>
-					<p class="annotation-note-copy">
-						Highlights stay in the document. Annotation details live here, like the editor.
-					</p>
-				</div>
-
 				<div class="annotation-card-stack">
 					{#if sortedAnnotations.length > 0}
 						{#each sortedAnnotations as annotation (annotation.id)}
-							{@const isActive = activeInlineAnnotationId === annotation.id}
-							{@const Icon = annotationIcon(annotation.type)}
-							{@const selectedRevisionVersion = annotation.type === 'revision' ? getSelectedRevisionVersion(annotation) : null}
-							<article
-								class={`annotation-card ${annotation.type === 'comment' ? 'annotation-card-comment' : annotation.type === 'suggestion' ? 'annotation-card-suggestion' : 'annotation-card-revision'} ${isActive ? 'annotation-card-active' : ''}`}
-								in:scale={{ start: 0.96, duration: 220 }}
-							>
-								<div class="annotation-card-topline">
-									<button
-										type="button"
-										class="annotation-card-select"
-										onclick={() => selectAnnotation(annotation.id)}
-										aria-pressed={isActive}
-									>
-										<div class="annotation-card-icon">
-											<Icon size={14} />
-										</div>
-										<div class="min-w-0 flex-1 text-left">
-											<p class="annotation-card-label">{annotationLabel(annotation.type)}</p>
-											<p class="annotation-card-meta">{annotationChipLabel(annotation)}</p>
-										</div>
-									</button>
-
-									{#if isActive}
-										<button
-											type="button"
-											class="annotation-card-action"
-											onclick={() => openAnnotationModal(annotation.id)}
-										>
-											Open
-										</button>
-									{/if}
-								</div>
-
-								<button
-									type="button"
-									class="annotation-selection-chip"
-									onclick={() => selectAnnotation(annotation.id)}
-									aria-pressed={isActive}
-								>
-									{annotation.type === 'revision' && selectedRevisionVersion
-										? selectedRevisionVersion.text
-										: annotation.selectedText || 'Collapsed selection'}
-								</button>
-
-								{#if annotation.type === 'comment'}
-									{#if annotation.thread.length > 0}
-										<div class="annotation-thread-stack">
-											{#each (isActive ? annotation.thread : annotation.thread.slice(0, 1)) as message (message.time)}
-												<article class="thread-message">
-													<div class="thread-message-meta">
-														<span class="thread-author">{message.author}</span>
-														<span>{formatTimestamp(message.time)}</span>
-													</div>
-													<p class="thread-message-body">{message.message}</p>
-												</article>
-											{/each}
-										</div>
-									{:else}
-										<p class="annotation-empty-state">No thread messages were attached to this comment.</p>
-									{/if}
-								{:else if annotation.type === 'suggestion'}
-									<div class="annotation-option-stack">
-										{#each (isActive ? annotation.replacements : annotation.replacements.slice(0, 1)) as replacement, index (`${annotation.id}-${index}`)}
-											<article class="suggestion-option">
-												<p class="suggestion-option-label">Option {index + 1}</p>
-												<p class="suggestion-option-text">{replacement.text}</p>
-												{#if isActive && replacement.rationale}
-													<p class="suggestion-option-rationale">{replacement.rationale}</p>
-												{/if}
-											</article>
-										{/each}
-									</div>
-
-									{#if isActive && annotation.thread.length > 0}
-										<div class="annotation-thread-stack">
-											{#each annotation.thread as message (message.time)}
-												<article class="thread-message">
-													<div class="thread-message-meta">
-														<span class="thread-author">{message.author}</span>
-														<span>{formatTimestamp(message.time)}</span>
-													</div>
-													<p class="thread-message-body">{message.message}</p>
-												</article>
-											{/each}
-										</div>
-									{/if}
-								{:else}
-									<div class="revision-version-tabs">
-										{#each annotation.versions as version}
-											<button
-												type="button"
-												class={`revision-version-chip ${version.index === getSelectedRevisionVersionIndex(annotation) ? 'revision-version-chip-active' : ''}`}
-												onclick={() => selectRevisionVersion(annotation.id, version.index)}
-												aria-pressed={version.index === getSelectedRevisionVersionIndex(annotation)}
-											>
-												<span>V{version.index + 1}</span>
-												{#if version.label}
-													<span>{version.label}</span>
-												{/if}
-												{#if version.index === annotation.activeVersionIndex}
-													<span>Published</span>
-												{/if}
-											</button>
-										{/each}
-									</div>
-
-									<div class="revision-version-stack">
-										{#if selectedRevisionVersion}
-											{#key `${annotation.id}-${selectedRevisionVersion.index}`}
-												<article
-													class={`revision-version-card ${selectedRevisionVersion.index === annotation.activeVersionIndex ? 'revision-version-card-active' : ''}`}
-													in:fade={{ duration: 180 }}
-													out:fade={{ duration: 140 }}
-												>
-													<p class="revision-version-label">
-														Version {selectedRevisionVersion.index + 1}{selectedRevisionVersion.label ? ` · ${selectedRevisionVersion.label}` : ''}{selectedRevisionVersion.index === annotation.activeVersionIndex ? ' · published' : ' · previewing'}
-													</p>
-													<p class="revision-version-body">{selectedRevisionVersion.text}</p>
-												</article>
-											{/key}
-										{/if}
-										{#if isActive && annotation.versions.length > 1}
-											<p class="revision-version-hint">
-												Switch versions to inspect alternate drafts without changing the published document.
-											</p>
-										{/if}
-									</div>
-
-									{#if isActive && annotation.thread.length > 0}
-										<div class="annotation-thread-stack">
-											{#each annotation.thread as message (message.time)}
-												<article class="thread-message">
-													<div class="thread-message-meta">
-														<span class="thread-author">{message.author}</span>
-														<span>{formatTimestamp(message.time)}</span>
-													</div>
-													<p class="thread-message-body">{message.message}</p>
-												</article>
-											{/each}
-										</div>
-									{/if}
-								{/if}
-							</article>
+							<ReadonlyAnnotationCard
+								{annotation}
+								active={activeInlineAnnotationId === annotation.id}
+								selectedRevisionVersionIndex={annotation.type === 'revision'
+									? getSelectedRevisionVersionIndex(annotation)
+									: null}
+								onSelect={() => selectAnnotation(annotation.id)}
+								onOpen={() => openAnnotationModal(annotation.id)}
+								onSelectRevisionVersion={(versionIndex) =>
+									selectRevisionVersion(annotation.id, versionIndex)}
+							/>
 						{/each}
 					{:else}
 						<p class="annotation-empty-state">This snapshot does not have any annotations yet.</p>
 					{/if}
-				</div>
-
-				<div class="annotation-column-footer">
-					<p class="annotation-note-copy">
-						Quillium stays free for local writing. Shared pages are snapshots people can read without an account.
-					</p>
-					<a href={downloadUrl} onclick={() => trackInstallClick('rail')} class="annotation-secondary-cta">
-						Get Quillium
-					</a>
 				</div>
 			</aside>
 		</div>
@@ -691,13 +542,22 @@
 		role="presentation"
 		onclick={(event) => event.currentTarget === event.target && closeAnnotationModal()}
 	>
-		<div class="annotation-modal-shell" in:scale={{ start: 0.96, duration: 180 }} out:fade={{ duration: 120 }}>
+		<div
+			class="annotation-modal-shell"
+			in:scale={{ start: 0.96, duration: 180 }}
+			out:fade={{ duration: 120 }}
+		>
 			<div class="annotation-modal-header">
 				<div>
 					<p class="workspace-eyebrow mb-2">{annotationLabel(modalAnnotation.type)}</p>
 					<h2 class="annotation-modal-title">Read-only annotation details</h2>
 				</div>
-				<button type="button" class="annotation-modal-close" onclick={closeAnnotationModal} aria-label="Close annotation details">
+				<button
+					type="button"
+					class="annotation-modal-close"
+					onclick={closeAnnotationModal}
+					aria-label="Close annotation details"
+				>
 					<X size={18} />
 				</button>
 			</div>
@@ -750,12 +610,24 @@
 						</div>
 						<div class="annotation-modal-stack">
 							{#key `modal-revision-${modalAnnotation.id}-${getRequiredRevisionVersion(modalAnnotation).index}`}
-									<article class="annotation-modal-item" in:fade={{ duration: 180 }} out:fade={{ duration: 140 }}>
-										<p class="annotation-modal-item-label">
-											Version {getRequiredRevisionVersion(modalAnnotation).index + 1}{getRequiredRevisionVersion(modalAnnotation).label ? ` · ${getRequiredRevisionVersion(modalAnnotation).label}` : ''}{getRequiredRevisionVersion(modalAnnotation).index === modalAnnotation.activeVersionIndex ? ' · published' : ' · previewing'}
-										</p>
-										<p class="annotation-modal-body">{getRequiredRevisionVersion(modalAnnotation).text}</p>
-									</article>
+								<article
+									class="annotation-modal-item"
+									in:fade={{ duration: 180 }}
+									out:fade={{ duration: 140 }}
+								>
+									<p class="annotation-modal-item-label">
+										Version {getRequiredRevisionVersion(modalAnnotation).index +
+											1}{getRequiredRevisionVersion(modalAnnotation).label
+											? ` · ${getRequiredRevisionVersion(modalAnnotation).label}`
+											: ''}{getRequiredRevisionVersion(modalAnnotation).index ===
+										modalAnnotation.activeVersionIndex
+											? ' · published'
+											: ' · previewing'}
+									</p>
+									<p class="annotation-modal-body">
+										{getRequiredRevisionVersion(modalAnnotation).text}
+									</p>
+								</article>
 							{/key}
 						</div>
 					</section>
@@ -776,7 +648,9 @@
 							{/each}
 						</div>
 					{:else}
-						<p class="annotation-empty-state">No thread messages were attached to this annotation.</p>
+						<p class="annotation-empty-state">
+							No thread messages were attached to this annotation.
+						</p>
 					{/if}
 				</section>
 			</div>
@@ -784,18 +658,12 @@
 	</div>
 {/if}
 
-<Footer />
-
 <style>
 	.share-shell {
-		background:
-			radial-gradient(circle at top, rgba(255, 255, 255, 0.88), transparent 36%),
-			linear-gradient(180deg, #f7f7f4 0%, #eef0ec 100%);
+		background: #f5f4f1;
 	}
 
 	.workspace-eyebrow,
-	.editor-meta-label,
-	.annotation-card-label,
 	.annotation-modal-label {
 		font-size: 0.68rem;
 		font-weight: 700;
@@ -804,9 +672,6 @@
 		color: rgba(15, 23, 42, 0.42);
 	}
 
-	.editor-meta-copy,
-	.rail-copy,
-	.annotation-card-meta,
 	.annotation-modal-secondary {
 		font-size: 0.92rem;
 		line-height: 1.6;
@@ -815,27 +680,52 @@
 
 	.share-topbar-shell {
 		position: sticky;
-		top: 6rem;
-		z-index: 20;
+		top: 1rem;
+		z-index: 40;
 		display: flex;
 		justify-content: center;
-		margin-bottom: 2rem;
+		margin-bottom: 3rem;
+		pointer-events: none;
 	}
 
 	.share-topbar {
 		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
-		gap: 0.85rem;
-		max-width: min(64rem, calc(100vw - 2rem));
-		padding: 0.9rem 1.25rem;
+		gap: 1rem;
+		max-width: min(100%, 42rem);
+		min-width: 0;
+		padding: 0.5rem 1.5rem;
 		border-radius: 2rem;
-		background: rgba(209, 213, 219, 0.72);
-		border: 1px solid rgba(255, 255, 255, 0.36);
-		box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+		background: rgba(209, 213, 219, 0.7);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
 		backdrop-filter: blur(14px);
 		animation: shareTopbarSettle 560ms cubic-bezier(0.16, 1, 0.3, 1);
+		pointer-events: auto;
+	}
+
+	.share-status {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-shrink: 0;
+		font-size: 0.875rem;
+		color: rgba(0, 0, 0, 0.9);
+	}
+
+	.share-status-dot {
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 999px;
+		background: #4ade80;
+	}
+
+	.share-topbar-divider {
+		width: 1px;
+		height: 2rem;
+		flex-shrink: 0;
+		background: rgba(0, 0, 0, 0.2);
 	}
 
 	.share-title-block {
@@ -844,21 +734,21 @@
 	}
 
 	.share-title {
-		font-size: 0.98rem;
-		font-weight: 600;
-		color: rgba(15, 23, 42, 0.82);
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: rgba(0, 0, 0, 0.6);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		max-width: min(32rem, 80vw);
+		max-width: min(24rem, 42vw);
 	}
 
 	.share-topbar-meta {
-		font-size: 0.74rem;
-		color: rgba(15, 23, 42, 0.54);
+		margin-top: 0.05rem;
+		font-size: 0.68rem;
+		color: rgba(0, 0, 0, 0.42);
 	}
 
-	.annotation-secondary-cta,
 	.revision-version-chip {
 		border: 1px solid rgba(15, 23, 42, 0.08);
 		border-radius: 999px;
@@ -868,6 +758,10 @@
 	}
 
 	.share-install-button {
+		min-height: 2.4rem;
+		border-radius: 999px;
+		padding: 0 1rem;
+		font-size: 0.78rem;
 		white-space: nowrap;
 		box-shadow:
 			0 10px 28px rgba(37, 99, 235, 0.22),
@@ -877,12 +771,9 @@
 	.editor-sheet {
 		width: min(816px, 100%);
 		min-height: calc(100vh - 4rem);
-		border: 1px solid rgba(15, 23, 42, 0.04);
-		border-radius: 0.75rem;
+		border-radius: 0.5rem;
 		background: #fff;
-		box-shadow:
-			0 18px 60px rgba(15, 23, 42, 0.09),
-			0 1px 0 rgba(255, 255, 255, 0.9) inset;
+		box-shadow: 0 20px 46px rgba(15, 23, 42, 0.18);
 		padding: 0.75rem 0.25rem;
 		animation: documentSheetSettle 620ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
@@ -896,13 +787,13 @@
 
 	.share-document {
 		display: grid;
-		gap: 1.15rem;
+		gap: 0;
 		max-width: 816px;
 		margin: 0 auto;
 		padding: 0.5rem clamp(0.35rem, 1vw, 0.75rem) 3rem;
-		font-family: Georgia, serif;
+		font-family: var(--doc-font-family, 'SF Pro Text', system-ui, sans-serif);
 		font-size: 18px;
-		line-height: 1.9;
+		line-height: 1.6;
 		color: rgba(15, 23, 42, 0.82);
 	}
 
@@ -991,7 +882,10 @@
 		box-shadow:
 			0 6px 14px rgba(15, 23, 42, 0.05),
 			inset 0 1px 0 rgba(255, 255, 255, 0.92);
-		font-family: system-ui, -apple-system, sans-serif;
+		font-family:
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-size: 0.68rem;
 		font-weight: 700;
 		cursor: pointer;
@@ -1015,144 +909,25 @@
 	.annotation-column {
 		display: flex;
 		flex-direction: column;
-		gap: 0.8rem;
 		position: sticky;
-		top: 9rem;
+		top: 5.25rem;
 		width: 280px;
-	}
-
-	.annotation-column-note,
-	.annotation-column-footer {
-		padding: 0.2rem 0.1rem;
-	}
-
-	.annotation-note-label {
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: rgba(15, 23, 42, 0.38);
-	}
-
-	.annotation-note-copy {
-		font-size: 0.82rem;
-		line-height: 1.55;
-		color: rgba(15, 23, 42, 0.52);
 	}
 
 	.annotation-card-stack {
 		display: flex;
 		flex-direction: column;
-		gap: 0.6rem;
+		gap: 8px;
 	}
 
-	.annotation-card {
-		border: 1px solid transparent;
-		border-radius: 12px;
-		padding: 0.7rem;
-		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-		backdrop-filter: blur(12px);
-		transition:
-			transform 0.16s ease,
-			box-shadow 0.16s ease,
-			border-color 0.16s ease,
-			opacity 0.16s ease,
-			background-color 0.2s ease;
-	}
-
-	.annotation-card:hover {
-		transform: translateY(-1px);
-	}
-
-	.annotation-card-active {
-		border-color: rgba(15, 23, 42, 0.1);
-		box-shadow: 0 18px 32px rgba(15, 23, 42, 0.12);
-		transform: translateY(-1px);
-	}
-
-	.annotation-card-comment {
-		background: rgba(239, 246, 255, 0.88);
-		border-color: rgba(191, 219, 254, 0.5);
-	}
-
-	.annotation-card-suggestion {
-		background: rgba(240, 253, 244, 0.88);
-		border-color: rgba(187, 247, 208, 0.5);
-	}
-
-	.annotation-card-revision {
-		background: rgba(250, 245, 255, 0.9);
-		border-color: rgba(221, 214, 254, 0.55);
-	}
-
-	.annotation-card-topline,
-	.thread-message-meta {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: 0.6rem;
-	}
-
-	.annotation-card-select {
-		display: flex;
-		align-items: center;
-		gap: 0.7rem;
-		flex: 1;
-		min-width: 0;
-		background: transparent;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-	}
-
-	.annotation-card-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 1.8rem;
-		height: 1.8rem;
-		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.7);
-	}
-
-	.annotation-card-action {
-		border: none;
-		background: rgba(255, 255, 255, 0.55);
-		border-radius: 999px;
-		padding: 0.38rem 0.7rem;
-		font-size: 0.7rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.58);
-		cursor: pointer;
-	}
-
-	.annotation-selection-chip,
 	.annotation-modal-panel,
-	.annotation-modal-item,
-	.thread-message,
-	.suggestion-option,
-	.revision-version-card {
+	.annotation-modal-item {
 		border: 1px solid rgba(15, 23, 42, 0.06);
 		border-radius: 10px;
 		background: rgba(255, 255, 255, 0.72);
 		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
 	}
 
-	.annotation-selection-chip {
-		width: 100%;
-		margin-top: 0.6rem;
-		padding: 0.72rem 0.78rem;
-		text-align: left;
-		border-radius: 10px;
-		font-size: 0.82rem;
-		line-height: 1.5;
-		color: rgba(15, 23, 42, 0.62);
-		cursor: pointer;
-	}
-
-	.annotation-thread-stack,
-	.annotation-option-stack,
-	.revision-version-stack,
 	.annotation-modal-stack,
 	.revision-version-tabs {
 		display: grid;
@@ -1160,16 +935,12 @@
 		margin-top: 0.6rem;
 	}
 
-	.thread-message,
-	.suggestion-option,
-	.revision-version-card,
 	.annotation-modal-item {
 		padding: 0.7rem 0.8rem;
 	}
 
 	.annotation-modal-item-label,
-	.revision-version-label,
-	.suggestion-option-label {
+	.revision-version-label {
 		font-size: 0.75rem;
 		font-weight: 700;
 		color: rgba(15, 23, 42, 0.78);
@@ -1186,21 +957,12 @@
 		color: rgba(15, 23, 42, 0.7);
 	}
 
-	.thread-message-body,
-	.suggestion-option-text,
 	.revision-version-body,
 	.annotation-modal-body,
 	.annotation-empty-state {
 		font-size: 0.84rem;
 		line-height: 1.55;
 		color: rgba(15, 23, 42, 0.68);
-	}
-
-	.suggestion-option-rationale {
-		margin-top: 0.35rem;
-		font-size: 0.76rem;
-		line-height: 1.5;
-		color: rgba(21, 128, 61, 0.74);
 	}
 
 	.revision-version-tabs {
@@ -1226,8 +988,7 @@
 		transform: translateY(-1px);
 	}
 
-	.revision-version-chip-active,
-	.revision-version-card-active {
+	.revision-version-chip-active {
 		border-color: rgba(168, 85, 247, 0.28);
 		box-shadow:
 			0 0 0 1px rgba(168, 85, 247, 0.18),
@@ -1288,21 +1049,9 @@
 		padding: 1rem;
 	}
 
-	.annotation-secondary-cta {
-		display: inline-flex;
-		align-self: flex-start;
-		margin-top: 0.65rem;
-		font-size: 0.72rem;
-		font-weight: 700;
-		color: rgba(15, 23, 42, 0.7);
-	}
-
 	.annotation-inline:focus-visible,
 	.annotation-marker:focus-visible,
-	.annotation-card-select:focus-visible,
-	.annotation-selection-chip:focus-visible,
 	.revision-version-chip:focus-visible,
-	.annotation-card-action:focus-visible,
 	.annotation-modal-close:focus-visible {
 		outline: 2px solid rgba(37, 99, 235, 0.45);
 		outline-offset: 2px;
@@ -1349,14 +1098,23 @@
 
 	@media (max-width: 720px) {
 		.share-topbar {
-			padding: 0.85rem 1rem;
+			gap: 0.75rem;
+			padding: 0.5rem 1rem;
+		}
+
+		.share-topbar-divider-optional,
+		.share-install-button {
+			display: none;
+		}
+
+		.share-title {
+			max-width: min(16rem, 48vw);
 		}
 
 		.share-document {
-			font-size: 17px;
-			line-height: 1.82;
+			font-size: 18px;
+			line-height: 1.6;
 			padding: 0.8rem 0 2rem;
 		}
-
 	}
 </style>

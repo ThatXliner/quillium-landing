@@ -13,16 +13,16 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.103.3",
+    "dotenv": "^17.4.2",
     "ws": "^8.20.0",
     "y-protocols": "^1.0.7",
     "yjs": "^13.6.30",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "typescript": "^5.9.0",
     "@types/node": "^22.0.0",
-    "vitest": "^4.1.4",
     "tsx": "^4.19.0",
-    "dotenv": "^16.5.0"
+    "typescript": "^5.9.0",
+    "vitest": "^4.1.4"
   }
 }

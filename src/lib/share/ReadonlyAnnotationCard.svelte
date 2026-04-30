@@ -1,21 +1,29 @@
 <script lang="ts">
 	import { ChevronDownIcon, GitBranchIcon, Maximize2, SparklesIcon } from '@lucide/svelte';
 	import { scale } from 'svelte/transition';
+	import ReadonlyAnnotatedText from './ReadonlyAnnotatedText.svelte';
 	import ReadonlyThreadMessage from './ReadonlyThreadMessage.svelte';
+	import type { AnnotationId, RevisionVersionSelections } from './rendering';
 	import type { SerializedAnnotation } from './types';
 
 	let {
 		annotation,
 		active,
+		activeAnnotationId = null,
+		revisionVersionSelections = {},
 		selectedRevisionVersionIndex,
 		onSelect,
+		onSelectAnnotation,
 		onOpen,
 		onSelectRevisionVersion
 	}: {
 		annotation: SerializedAnnotation;
 		active: boolean;
+		activeAnnotationId?: AnnotationId | null;
+		revisionVersionSelections?: RevisionVersionSelections;
 		selectedRevisionVersionIndex: number | null;
 		onSelect: () => void;
+		onSelectAnnotation?: (annotationId: AnnotationId) => void;
 		onOpen: () => void;
 		onSelectRevisionVersion: (versionIndex: number) => void;
 	} = $props();
@@ -217,7 +225,14 @@
 		{#if selectedRevisionVersion}
 			<div class="mx-3 mb-3 overflow-hidden rounded-lg bg-white/60 ring-1 ring-white/40">
 				<div class="revision-inline-preview">
-					<p>{selectedRevisionVersion.text}</p>
+					<ReadonlyAnnotatedText
+						content={selectedRevisionVersion.text}
+						annotations={selectedRevisionVersion.annotations ?? []}
+						{activeAnnotationId}
+						{revisionVersionSelections}
+						onSelectAnnotation={(annotationId) => onSelectAnnotation?.(annotationId)}
+						compact
+					/>
 				</div>
 			</div>
 		{/if}

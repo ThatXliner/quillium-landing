@@ -4,11 +4,13 @@
 	import { fade, fly } from 'svelte/transition';
 	import ReadonlyAnnotationCard from '$lib/share/ReadonlyAnnotationCard.svelte';
 	import ReadonlyAnnotationModal from '$lib/share/ReadonlyAnnotationModal.svelte';
+	import { findAnnotationPath } from '$lib/share/rendering';
 
 	let { data } = $props();
 
 	type ShareAnnotation = (typeof data.share.annotations)[number];
 	type AnnotationId = ShareAnnotation['id'];
+	type AnnotationPath = NonNullable<ReturnType<typeof findAnnotationPath>>;
 	type ParagraphSegment = {
 		key: string;
 		text: string;
@@ -33,9 +35,11 @@
 		'/?utm_source=shared-doc&utm_medium=share-page&utm_campaign=public-readonly-share#download';
 
 	let activeInlineAnnotationId = $state<AnnotationId | null>(null);
-	let modalAnnotationId = $state<AnnotationId | null>(null);
+	let modalAnnotationStack = $state<AnnotationId[]>([]);
 	let initializedSelection = $state(false);
 	let revisionVersionSelections = $state<Record<string, number>>({});
+
+	const modalAnnotationId = $derived(modalAnnotationStack.at(-1) ?? null);
 
 	function formatPublishedAt(value: string | null): string {
 		if (!value) return 'Shared from Quillium';
@@ -84,7 +88,7 @@
 
 		return candidates.sort((a, b) => {
 			const activeDelta =
-				Number(b.id === activeInlineAnnotationId) - Number(a.id === activeInlineAnnotationId);
+				Number(b.id === activeDocumentAnnotationId) - Number(a.id === activeDocumentAnnotationId);
 			if (activeDelta !== 0) return activeDelta;
 
 			const depthDelta = annotationDepth(b) - annotationDepth(a);
@@ -116,17 +120,36 @@
 		activeInlineAnnotationId = id;
 	}
 
-	function toggleInlineAnnotation(id: AnnotationId) {
-		activeInlineAnnotationId = activeInlineAnnotationId === id ? null : id;
-	}
-
 	function openAnnotationModal(id: AnnotationId) {
 		activeInlineAnnotationId = id;
-		modalAnnotationId = id;
+		const path = findAnnotationPath(
+			id,
+			data.share.content,
+			data.share.annotations
+		) as AnnotationPath | null;
+		if (path) {
+			revisionVersionSelections = path.reduce(
+				(selections, entry) => {
+					if (entry.annotation.type === 'revision' && entry.viaVersionIndex !== null) {
+						return {
+							...selections,
+							[entry.annotation.id]: entry.viaVersionIndex
+						};
+					}
+					return selections;
+				},
+				{ ...revisionVersionSelections }
+			);
+		}
+		modalAnnotationStack = path?.map((entry) => entry.annotation.id) ?? [id];
 	}
 
 	function closeAnnotationModal() {
-		modalAnnotationId = null;
+		const nextStack = modalAnnotationStack.slice(0, -1);
+		modalAnnotationStack = nextStack;
+		if (nextStack.length > 0) {
+			activeInlineAnnotationId = nextStack.at(-1) ?? activeInlineAnnotationId;
+		}
 	}
 
 	function getSelectedRevisionVersionIndex(annotation: ShareAnnotation): number {
@@ -347,20 +370,6 @@
 					to: Math.max(nextFrom, nextTo)
 				};
 			});
-
-			const mappedNestedAnnotations = nestedDisplayedShare.annotations.map((annotation) => ({
-				...annotation,
-				from: replacementStart + annotation.from,
-				to: replacementStart + annotation.to,
-				selectedText: replacementText.slice(annotation.from, annotation.to)
-			}));
-
-			nextAnnotations = [
-				...nextAnnotations.filter(
-					(annotation) => !mappedNestedAnnotations.some((nested) => nested.id === annotation.id)
-				),
-				...mappedNestedAnnotations
-			];
 		}
 
 		return {
@@ -395,16 +404,25 @@
 		buildParagraphBlocks(displayedShare.content, displayAnnotations)
 	);
 
-	const activeInlineAnnotation = $derived(
-		displayAnnotations.find((annotation) => annotation.id === activeInlineAnnotationId) ??
-			sortedAnnotations.find((annotation) => annotation.id === activeInlineAnnotationId) ??
-			null
+	const modalAnnotationPath = $derived(
+		modalAnnotationId
+			? ((findAnnotationPath(
+					modalAnnotationId,
+					data.share.content,
+					data.share.annotations
+				) as AnnotationPath | null) ?? [])
+			: []
 	);
 
 	const modalAnnotation = $derived(
-		displayAnnotations.find((annotation) => annotation.id === modalAnnotationId) ??
-			sortedAnnotations.find((annotation) => annotation.id === modalAnnotationId) ??
-			null
+		(modalAnnotationPath.at(-1)?.annotation as ShareAnnotation | undefined) ?? null
+	);
+
+	const activeDocumentAnnotationId = $derived(
+		displayAnnotations.some((annotation) => annotation.id === activeInlineAnnotationId)
+			? activeInlineAnnotationId
+			: ((modalAnnotationPath[0]?.annotation.id as AnnotationId | undefined) ??
+					activeInlineAnnotationId)
 	);
 
 	$effect(() => {
@@ -477,7 +495,7 @@
 											type="button"
 											class={`annotation-marker ${annotationToneClass(marker.type)}`}
 											onclick={() => selectAnnotation(marker.id)}
-											aria-pressed={activeInlineAnnotationId === marker.id}
+											aria-pressed={activeDocumentAnnotationId === marker.id}
 										>
 											{markerSymbol(marker.type)}
 										</button>
@@ -496,9 +514,9 @@
 										)}
 										<button
 											type="button"
-											class={`annotation-inline ${annotationInlineClass(primaryAnnotation, activeInlineAnnotationId === primaryAnnotation?.id)}`}
+											class={`annotation-inline ${annotationInlineClass(primaryAnnotation, activeDocumentAnnotationId === primaryAnnotation?.id)}`}
 											onclick={() => primaryAnnotation && selectAnnotation(primaryAnnotation.id)}
-											aria-pressed={activeInlineAnnotationId === primaryAnnotation?.id}
+											aria-pressed={activeDocumentAnnotationId === primaryAnnotation?.id}
 										>
 											{segment.text}
 										</button>
@@ -513,7 +531,7 @@
 													type="button"
 													class={`annotation-marker ${annotationToneClass(marker.type)}`}
 													onclick={() => selectAnnotation(marker.id)}
-													aria-pressed={activeInlineAnnotationId === marker.id}
+													aria-pressed={activeDocumentAnnotationId === marker.id}
 												>
 													{markerSymbol(marker.type)}
 												</button>
@@ -533,11 +551,14 @@
 						{#each displayAnnotations as annotation (annotation.id)}
 							<ReadonlyAnnotationCard
 								{annotation}
-								active={activeInlineAnnotationId === annotation.id}
+								active={activeDocumentAnnotationId === annotation.id}
+								activeAnnotationId={activeInlineAnnotationId}
+								{revisionVersionSelections}
 								selectedRevisionVersionIndex={annotation.type === 'revision'
 									? getSelectedRevisionVersionIndex(annotation)
 									: null}
 								onSelect={() => selectAnnotation(annotation.id)}
+								onSelectAnnotation={openAnnotationModal}
 								onOpen={() => openAnnotationModal(annotation.id)}
 								onSelectRevisionVersion={(versionIndex) =>
 									selectRevisionVersion(annotation.id, versionIndex)}
@@ -555,12 +576,13 @@
 {#if modalAnnotation}
 	<ReadonlyAnnotationModal
 		annotation={modalAnnotation}
-		selectedRevisionVersionIndex={modalAnnotation.type === 'revision'
-			? getSelectedRevisionVersionIndex(modalAnnotation)
-			: null}
+		rootContent={data.share.content}
+		rootAnnotations={data.share.annotations}
+		activeAnnotationId={activeInlineAnnotationId}
+		{revisionVersionSelections}
 		onClose={closeAnnotationModal}
-		onSelectRevisionVersion={(versionIndex) =>
-			selectRevisionVersion(modalAnnotation.id, versionIndex)}
+		onSelectAnnotation={openAnnotationModal}
+		onSelectRevisionVersion={selectRevisionVersion}
 	/>
 {/if}
 

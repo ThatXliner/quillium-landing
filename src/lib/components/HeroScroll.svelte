@@ -242,9 +242,9 @@
 <style>
   .hero-scroll { width: 100%; background: #f5f4f1; }
   .stage { position: relative; width: 100%; background-color: #f5f4f1; overflow: hidden; }
-  .pinned { width: 100%; height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
-  .stage-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; width: min(94vw, 1150px); padding: 0 2rem; }
-  .text-col { display: flex; flex-direction: column; padding-left: clamp(0px, 2vw, 2rem); }
+  .pinned { width: 100%; height: 100vh; position: relative; display: flex; align-items: flex-start; justify-content: center; padding-top: 18vh; }
+  .stage-inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); align-items: center; width: min(92vw, 1100px); }
+  .text-col { display: flex; flex-direction: column; }
   .logo-wrap { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 22px; border: 1.5px solid rgba(255,255,255,0.35); background: radial-gradient(at 40% 35%, #eceef2, #cdd1d9); margin-bottom: 1rem; }
   .eyebrow { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(0,0,0,0.35); margin: 0 0 0.75rem 0; }
   .headline { font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1.15; letter-spacing: -0.03em; color: rgba(0,0,0,0.88); margin: 0 0 1rem 0; }

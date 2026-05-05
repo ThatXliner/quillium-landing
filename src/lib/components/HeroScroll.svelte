@@ -181,6 +181,9 @@
         class:hidden={!showCursor}>|</span
       >
     </h1>
+    <p class="intro-desc">
+      Write a sentence three different ways, and decide which to pick later. Branch any phrase without losing a single word.
+    </p>
     <p class="intro-hint">Scroll to see what makes it different</p>
 
     <div class="intro-trust">
@@ -258,9 +261,6 @@
 
   <!-- CTA -->
   <div class="cta-section" id="hero-scroll-cta">
-    <p class="cta-desc">
-      Write a sentence three different ways, and decide which to pick later. Branch any phrase without losing a single word.
-    </p>
     <div class="cta-buttons">
       <a href={downloadUrl} class="btn-primary">Download Now</a>
     </div>
@@ -316,6 +316,13 @@
   .cursor { font-weight: 300; animation: blink 0.6s step-end infinite; }
   .cursor.hidden { display: none; }
   @keyframes blink { 50% { opacity: 0; } }
+  .intro-desc {
+    max-width: 520px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0 0 1.5rem 0;
+  }
   .intro-hint {
     font-family: 'Inter', sans-serif;
     font-size: 0.8rem;

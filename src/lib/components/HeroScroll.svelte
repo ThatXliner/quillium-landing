@@ -68,6 +68,15 @@
     const textCol = document.getElementById('text-col')!;
     const shotWrap = document.getElementById('shot-wrap')!;
 
+    // Calculate transform offsets: from right-column position → centered
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const shotRect = shotWrap.getBoundingClientRect(); // final centered rect
+    const startW = vw * 0.48; // approximate right-column width
+    const startScale = Math.min(startW / shotRect.width, 1);
+    const startX = (vw * 0.74) - (shotRect.left + shotRect.width / 2);
+    const startY = (vh * 0.5) - (shotRect.top + shotRect.height / 2);
+
     const shots = [
       document.getElementById('shot-editor')!,
       document.getElementById('shot-revision')!,
@@ -101,7 +110,9 @@
     });
     copies.forEach((c, idx) => { if (idx > 0) gsap.set(c, { opacity: 0, y: 16 }); });
     dots.forEach((d, idx) => { if (idx > 0) gsap.set(d, { opacity: 0.25, scale: 1 }); });
-    gsap.set('#hero-scroll-cta', { opacity: 0 });
+    // Offset screenshot to its initial right-column position (GPU-friendly)
+    gsap.set(shotWrap, { x: startX, y: startY, scale: startScale, xPercent: -50, yPercent: -50 });
+    gsap.set(textCol, { opacity: 1 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -122,9 +133,8 @@
     });
 
     // Phase 0: Side-by-side → screenshot centers (0% – 20%)
-    tl.to(textCol, { opacity: 0, duration: 0.1 }, 0.08);
-    // Animate shot from right column to center
-    tl.to(shotWrap, { right: 'auto', left: '50%', xPercent: -50, yPercent: -50, top: '50%', width: 'min(88vw, 960px)', maxWidth: 'none', duration: 0.14 }, 0.06);
+    tl.to(textCol, { opacity: 0, x: -30, duration: 0.12 }, 0.08);
+    tl.to(shotWrap, { x: 0, y: 0, scale: 1, xPercent: -50, yPercent: -50, duration: 0.14, ease: 'power2.inOut' }, 0.06);
     tl.to(copies[0], { opacity: 0, y: -14, duration: 0.04 }, 0.16);
 
     // Phase 1: Branches (20% – 36%)
@@ -326,10 +336,10 @@
   }
   .trust-link:hover { color: rgba(0,0,0,0.7); }
 
-  /* --- Screenshot wrap (starts on right, animates to center) --- */
+  /* --- Screenshot wrap (positioned at final centered state, offset by GSAP) --- */
   .shot-wrap {
-    position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
-    width: 50%; max-width: 560px;
+    position: absolute; left: 50%; top: 50%;
+    width: min(88vw, 960px); will-change: transform;
   }
   .screenshot-area { position: relative; width: 100%; }
   .screenshots { position: relative; width: 100%; aspect-ratio: 8 / 5; }

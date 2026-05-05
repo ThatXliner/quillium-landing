@@ -196,6 +196,18 @@
       >
     </h1>
     <p class="intro-hint">Scroll to see what makes it different</p>
+
+    <div class="intro-trust">
+      <a href="/blog/quillium-is-not-an-ai-app" class="intro-trust-link"
+        ><Pen size={14} strokeWidth={2} class="opacity-60" /> Write every word (No AI bs).</a
+      >
+      <a href="/blog/quillium-privacy" class="intro-trust-link"
+        ><Lock size={14} strokeWidth={2} class="opacity-60" /> Fully private.</a
+      >
+      <a href="/blog/how-quillium-keeps-your-writing-safe" class="intro-trust-link"
+        ><ShieldCheck size={14} strokeWidth={2} class="opacity-60" /> Safe and secure.</a
+      >
+    </div>
   </div>
 
   <!-- Pinned stage -->
@@ -310,17 +322,6 @@
     <div class="cta-buttons">
       <a href={downloadUrl} class="btn-primary">Download Now</a>
     </div>
-    <div class="trust-row">
-      <a href="/blog/quillium-is-not-an-ai-app" class="trust-link"
-        ><Pen size={14} strokeWidth={2} class="opacity-50" /> Write every word (No AI bs).</a
-      >
-      <a href="/blog/quillium-privacy" class="trust-link"
-        ><Lock size={14} strokeWidth={2} class="opacity-50" /> Fully private.</a
-      >
-      <a href="/blog/how-quillium-keeps-your-writing-safe" class="trust-link"
-        ><ShieldCheck size={14} strokeWidth={2} class="opacity-50" /> Safe and secure.</a
-      >
-    </div>
   </div>
 </section>
 
@@ -376,11 +377,31 @@
   .intro-hint {
     font-family: 'Inter', sans-serif;
     font-size: 0.8rem;
-    color: rgba(0, 0, 0, 0.25);
+    color: rgba(0, 0, 0, 0.4);
     letter-spacing: 0.05em;
-    margin: 0;
+    margin: 0 0 2.5rem 0;
     animation: pulse-hint 2s ease-in-out infinite;
   }
+  .intro-trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid;
+    border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;
+  }
+  .intro-trust-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.3s;
+  }
+  .intro-trust-link:hover { color: rgba(0, 0, 0, 0.7); }
   @keyframes pulse-hint {
     0%, 100% { opacity: 0.25; }
     50% { opacity: 0.55; }
@@ -545,26 +566,6 @@
   .cta-buttons {
     margin-bottom: 2.5rem;
   }
-  .trust-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.25rem;
-    padding-top: 1.5rem;
-    border-top: 2px solid;
-    border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;
-  }
-  .trust-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.5);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: color 0.3s;
-  }
-  .trust-link:hover { color: rgba(0, 0, 0, 0.7); }
 
   /* --- Mobile --- */
   @media (max-width: 767px) {

@@ -67,10 +67,6 @@
     const stage = document.getElementById('features');
     if (!stage) return () => clearInterval(interval);
 
-    const textCol = document.getElementById('text-col')!;
-    const shotCol = document.getElementById('shot-col')!;
-    const screenshotArea = document.getElementById('screenshot-area')!;
-
     const shots = [
       document.getElementById('shot-editor')!,
       document.getElementById('shot-revision')!,
@@ -97,82 +93,73 @@
     const dots = document.querySelectorAll<HTMLElement>('.progress-dot');
 
     // Initial state
-    shots.forEach((s, idx) => { if (idx > 0) gsap.set(s, { opacity: 0 }); });
+    shots.forEach((s, idx) => { if (idx > 0) gsap.set(s, { opacity: 0, scale: 0.95 }); });
     callouts.forEach((c) => {
       gsap.set(c.el, { opacity: 0, y: 12 });
       gsap.set(c.line, { strokeDashoffset: 200 });
     });
     copies.forEach((c, idx) => { if (idx > 0) gsap.set(c, { opacity: 0, y: 16 }); });
-    dots.forEach((d, idx) => { if (idx > 0) gsap.set(d, { opacity: 0.25 }); });
+    dots.forEach((d, idx) => { if (idx > 0) gsap.set(d, { opacity: 0.25, scale: 1 }); });
     gsap.set('#hero-scroll-cta', { opacity: 0 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: stage,
         start: 'top top',
-        end: '+=600%',
+        end: '+=500%',
         pin: true,
         scrub: 1.2,
         onUpdate(self) {
           const p = self.progress;
           dots.forEach((dot, idx) => {
             const threshold = idx / (dots.length - 1);
-            const active = p >= threshold - 0.015;
+            const active = p >= threshold - 0.02;
             gsap.to(dot, { opacity: active ? 0.9 : 0.25, scale: active ? 1.4 : 1, duration: 0.08, overwrite: true });
           });
         },
       },
     });
 
-    // --- Phase 0: Side-by-side → centered (0% – 18%) ---
-    // Text column fades left
-    tl.to(textCol, { opacity: 0, x: -80, duration: 0.12 }, 0.06);
-    // Screenshot breaks out to center stage
-    tl.to(shotCol, { left: '50%', right: 'auto', xPercent: -50, yPercent: -50, top: '50%', width: 'min(88vw, 960px)', maxWidth: 'none', duration: 0.14 }, 0.04);
-    // Scale the screenshot area up slightly as it centers
-    tl.to(screenshotArea, { scale: 1.08, duration: 0.14 }, 0.04);
-    // Editor label fades out
-    tl.to(copies[0], { opacity: 0, y: -14, duration: 0.04 }, 0.14);
+    // Editor → Branches (15%–20%)
+    tl.to(shots[0], { opacity: 0, scale: 1.12, duration: 0.05 }, 0.15);
+    tl.to(copies[0], { opacity: 0, y: -14, duration: 0.03 }, 0.15);
+    tl.to(shots[1], { opacity: 1, scale: 1, duration: 0.05 }, 0.17);
+    tl.to(copies[1], { opacity: 1, y: 0, duration: 0.05 }, 0.17);
+    tl.to(callouts[0].el, { opacity: 1, y: 0, duration: 0.04 }, 0.19);
+    tl.to(callouts[0].line, { strokeDashoffset: 0, duration: 0.04 }, 0.19);
 
-    // --- Phase 1: Branches (18% – 34%) ---
-    tl.to(shots[0], { opacity: 0, duration: 0.04 }, 0.18);
-    tl.to(shots[1], { opacity: 1, duration: 0.05 }, 0.2);
-    tl.to(copies[1], { opacity: 1, y: 0, duration: 0.05 }, 0.2);
-    tl.to(callouts[0].el, { opacity: 1, y: 0, duration: 0.04 }, 0.22);
-    tl.to(callouts[0].line, { strokeDashoffset: 0, duration: 0.04 }, 0.22);
+    // Branches → Comments (35%–40%)
+    tl.to(shots[1], { opacity: 0, scale: 1.1, duration: 0.05 }, 0.35);
+    tl.to(copies[1], { opacity: 0, y: -14, duration: 0.03 }, 0.35);
+    tl.to(callouts[0].el, { opacity: 0, y: -10, duration: 0.03 }, 0.35);
+    tl.to(callouts[0].line, { strokeDashoffset: 200, duration: 0.03 }, 0.35);
+    tl.to(shots[2], { opacity: 1, scale: 1, duration: 0.05 }, 0.37);
+    tl.to(copies[2], { opacity: 1, y: 0, duration: 0.05 }, 0.37);
+    tl.to(callouts[1].el, { opacity: 1, y: 0, duration: 0.04 }, 0.39);
+    tl.to(callouts[1].line, { strokeDashoffset: 0, duration: 0.04 }, 0.39);
 
-    // --- Phase 2: Comments (34% – 50%) ---
-    tl.to(shots[1], { opacity: 0, duration: 0.04 }, 0.34);
-    tl.to(copies[1], { opacity: 0, y: -14, duration: 0.03 }, 0.34);
-    tl.to(callouts[0].el, { opacity: 0, y: -10, duration: 0.03 }, 0.34);
-    tl.to(callouts[0].line, { strokeDashoffset: 200, duration: 0.03 }, 0.34);
-    tl.to(shots[2], { opacity: 1, duration: 0.05 }, 0.36);
-    tl.to(copies[2], { opacity: 1, y: 0, duration: 0.05 }, 0.36);
-    tl.to(callouts[1].el, { opacity: 1, y: 0, duration: 0.04 }, 0.38);
-    tl.to(callouts[1].line, { strokeDashoffset: 0, duration: 0.04 }, 0.38);
+    // Comments → Inline (55%–60%)
+    tl.to(shots[2], { opacity: 0, scale: 1.1, duration: 0.05 }, 0.55);
+    tl.to(copies[2], { opacity: 0, y: -14, duration: 0.03 }, 0.55);
+    tl.to(callouts[1].el, { opacity: 0, y: -10, duration: 0.03 }, 0.55);
+    tl.to(callouts[1].line, { strokeDashoffset: 200, duration: 0.03 }, 0.55);
+    tl.to(shots[3], { opacity: 1, scale: 1, duration: 0.05 }, 0.57);
+    tl.to(copies[3], { opacity: 1, y: 0, duration: 0.05 }, 0.57);
+    tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.59);
+    tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.59);
 
-    // --- Phase 3: Inline (50% – 66%) ---
-    tl.to(shots[2], { opacity: 0, duration: 0.04 }, 0.5);
-    tl.to(copies[2], { opacity: 0, y: -14, duration: 0.03 }, 0.5);
-    tl.to(callouts[1].el, { opacity: 0, y: -10, duration: 0.03 }, 0.5);
-    tl.to(callouts[1].line, { strokeDashoffset: 200, duration: 0.03 }, 0.5);
-    tl.to(shots[3], { opacity: 1, duration: 0.05 }, 0.52);
-    tl.to(copies[3], { opacity: 1, y: 0, duration: 0.05 }, 0.52);
-    tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.54);
-    tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.54);
+    // Inline → Safety/Library (75%–80%)
+    tl.to(shots[3], { opacity: 0, scale: 1.1, duration: 0.05 }, 0.75);
+    tl.to(copies[3], { opacity: 0, y: -14, duration: 0.03 }, 0.75);
+    tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.75);
+    tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.75);
+    tl.to(shots[4], { opacity: 1, scale: 1, duration: 0.05 }, 0.77);
+    tl.to(copies[4], { opacity: 1, y: 0, duration: 0.05 }, 0.77);
+    tl.to(callouts[3].el, { opacity: 1, y: 0, duration: 0.04 }, 0.79);
+    tl.to(callouts[3].line, { strokeDashoffset: 0, duration: 0.04 }, 0.79);
 
-    // --- Phase 4: Safety/Library (66% – 82%) ---
-    tl.to(shots[3], { opacity: 0, duration: 0.04 }, 0.66);
-    tl.to(copies[3], { opacity: 0, y: -14, duration: 0.03 }, 0.66);
-    tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.66);
-    tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.66);
-    tl.to(shots[4], { opacity: 1, duration: 0.05 }, 0.68);
-    tl.to(copies[4], { opacity: 1, y: 0, duration: 0.05 }, 0.68);
-    tl.to(callouts[3].el, { opacity: 1, y: 0, duration: 0.04 }, 0.7);
-    tl.to(callouts[3].line, { strokeDashoffset: 0, duration: 0.04 }, 0.7);
-
-    // --- Phase 5: Fade to CTA (90% – 100%) ---
-    tl.to(shots[4], { opacity: 0.3, duration: 0.06 }, 0.92);
+    // Fade to CTA (90%–100%)
+    tl.to(shots[4], { opacity: 0.3, scale: 1.05, duration: 0.07 }, 0.92);
     tl.to(copies[4], { opacity: 0, y: -14, duration: 0.04 }, 0.9);
     tl.to(callouts[3].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
     tl.to(callouts[3].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
@@ -187,95 +174,99 @@
 </script>
 
 <section class="hero-scroll">
-  <!-- Single pinned stage — starts side-by-side, transitions to centered -->
+  <!-- Intro: side-by-side (normal flow, scrolls away) -->
+  <div class="intro">
+    <div class="intro-inner">
+      <div class="intro-text">
+        <div class="logo-wrap">
+          <img src="/logo.svg" alt="Quillium mark" width="80" height="80" />
+        </div>
+        <p class="eyebrow">The Non-Linear Writing App</p>
+        <h1 class="headline">
+          {displayText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span class="cursor" class:hidden={!showCursor}>|</span>
+        </h1>
+        <p class="intro-desc">
+          Write a sentence three different ways, and decide which to pick later. Branch any phrase without losing a single word.
+        </p>
+        <div class="intro-trust">
+          <a href="/blog/quillium-is-not-an-ai-app" class="intro-trust-link"><Pen size={14} strokeWidth={2} class="opacity-60" /> Write every word (No AI bs).</a>
+          <a href="/blog/quillium-privacy" class="intro-trust-link"><Lock size={14} strokeWidth={2} class="opacity-60" /> Fully private.</a>
+          <a href="/blog/how-quillium-keeps-your-writing-safe" class="intro-trust-link"><ShieldCheck size={14} strokeWidth={2} class="opacity-60" /> Safe and secure.</a>
+        </div>
+        <div class="intro-cta">
+          <a href={downloadUrl} class="btn-primary">Download Now</a>
+        </div>
+      </div>
+      <div class="intro-shot">
+        <img src={editorImg} alt="" class="intro-shot-img" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Pinned stage: screenshot front and center, callouts animate -->
   <div class="stage" id="features">
-    <div class="pinned" id="hero-scroll-pinned">
-      <div class="stage-inner" id="stage-inner">
-        <!-- Text column (fades out as you scroll) -->
-        <div class="text-col" id="text-col">
-          <div class="logo-wrap">
-            <img src="/logo.svg" alt="Quillium mark" width="88" height="88" />
-          </div>
-          <p class="eyebrow">The Non-Linear Writing App</p>
-          <h1 class="headline">
-            {displayText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span class="cursor" class:hidden={!showCursor}>|</span>
-          </h1>
-          <p class="intro-desc">
-            Write a sentence three different ways, and decide which to pick later. Branch any phrase without losing a single word.
-          </p>
-          <div class="intro-trust">
-            <a href="/blog/quillium-is-not-an-ai-app" class="intro-trust-link"><Pen size={14} strokeWidth={2} class="opacity-60" /> Write every word (No AI bs).</a>
-            <a href="/blog/quillium-privacy" class="intro-trust-link"><Lock size={14} strokeWidth={2} class="opacity-60" /> Fully private.</a>
-            <a href="/blog/how-quillium-keeps-your-writing-safe" class="intro-trust-link"><ShieldCheck size={14} strokeWidth={2} class="opacity-60" /> Safe and secure.</a>
-          </div>
+    <div class="pinned">
+      <div class="screenshot-area">
+        <div class="screenshots">
+          <img src={editorImg} alt="" class="shot" id="shot-editor" />
+          <img src={revisionImg} alt="" class="shot" id="shot-revision" />
+          <img src={commentImg} alt="" class="shot" id="shot-comment" />
+          <img src={inlineImg} alt="" class="shot" id="shot-inline" />
+          <img src={libraryImg} alt="" class="shot" id="shot-library" />
         </div>
 
-        <!-- Screenshot area (starts on the right, transforms to center) -->
-        <div class="shot-col" id="shot-col">
-          <div class="screenshot-area" id="screenshot-area">
-            <div class="screenshots">
-              <img src={editorImg} alt="" class="shot" id="shot-editor" />
-              <img src={revisionImg} alt="" class="shot" id="shot-revision" />
-              <img src={commentImg} alt="" class="shot" id="shot-comment" />
-              <img src={inlineImg} alt="" class="shot" id="shot-inline" />
-              <img src={libraryImg} alt="" class="shot" id="shot-library" />
-            </div>
+        <div class="callouts">
+          <div class="callout" id="callout-1">
+            <svg width="130" height="60" viewBox="0 0 130 60" class="callout-svg">
+              <path id="line-1" d="M 5 45 Q 40 45 65 25 Q 85 10 120 8" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+              <circle cx="120" cy="8" r="3.5" fill="#a855f7" />
+            </svg>
+            <span class="callout-label" style="color:#a855f7;">Write in Branches</span>
+          </div>
+          <div class="callout" id="callout-2">
+            <svg width="130" height="60" viewBox="0 0 130 60" class="callout-svg">
+              <path id="line-2" d="M 125 45 Q 90 45 65 25 Q 45 10 10 8" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+              <circle cx="10" cy="8" r="3.5" fill="#d97706" />
+            </svg>
+            <span class="callout-label" style="color:#d97706;">Great Minds Think Together</span>
+          </div>
+          <div class="callout" id="callout-3">
+            <svg width="140" height="60" viewBox="0 0 140 60" class="callout-svg">
+              <path id="line-3" d="M 10 10 Q 45 25 70 35 Q 90 42 125 40" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+              <circle cx="125" cy="40" r="3.5" fill="#22c55e" />
+            </svg>
+            <span class="callout-label" style="color:#22c55e;">Nested Revisions, Inline</span>
+          </div>
+          <div class="callout" id="callout-4">
+            <svg width="140" height="60" viewBox="0 0 140 60" class="callout-svg">
+              <path id="line-4" d="M 70 5 Q 60 20 40 35 Q 25 45 10 48" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+              <circle cx="10" cy="48" r="3.5" fill="#3b82f6" />
+            </svg>
+            <span class="callout-label" style="color:#3b82f6;">Never Lose Your Work</span>
+          </div>
+        </div>
+      </div>
 
-            <!-- Arrow callouts -->
-            <div class="callouts">
-              <div class="callout" id="callout-1">
-                <svg width="130" height="60" viewBox="0 0 130 60" class="callout-svg">
-                  <path id="line-1" d="M 5 45 Q 40 45 65 25 Q 85 10 120 8" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-                  <circle cx="120" cy="8" r="3.5" fill="#a855f7" />
-                </svg>
-                <span class="callout-label" style="color:#a855f7;">Write in Branches</span>
-              </div>
-              <div class="callout" id="callout-2">
-                <svg width="130" height="60" viewBox="0 0 130 60" class="callout-svg">
-                  <path id="line-2" d="M 125 45 Q 90 45 65 25 Q 45 10 10 8" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-                  <circle cx="10" cy="8" r="3.5" fill="#d97706" />
-                </svg>
-                <span class="callout-label" style="color:#d97706;">Great Minds Think Together</span>
-              </div>
-              <div class="callout" id="callout-3">
-                <svg width="140" height="60" viewBox="0 0 140 60" class="callout-svg">
-                  <path id="line-3" d="M 10 10 Q 45 25 70 35 Q 90 42 125 40" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-                  <circle cx="125" cy="40" r="3.5" fill="#22c55e" />
-                </svg>
-                <span class="callout-label" style="color:#22c55e;">Nested Revisions, Inline</span>
-              </div>
-              <div class="callout" id="callout-4">
-                <svg width="140" height="60" viewBox="0 0 140 60" class="callout-svg">
-                  <path id="line-4" d="M 70 5 Q 60 20 40 35 Q 25 45 10 48" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-                  <circle cx="10" cy="48" r="3.5" fill="#3b82f6" />
-                </svg>
-                <span class="callout-label" style="color:#3b82f6;">Never Lose Your Work</span>
-              </div>
-            </div>
-
-            <!-- Feature copy below screenshot -->
-            <div class="copy-strip">
-              <div class="copy-block" id="copy-editor">
-                <p class="copy-subtitle">Your writing, front and center.</p>
-              </div>
-              <div class="copy-block" id="copy-branches">
-                <p class="copy-subtitle">Fork any sentence. Keep every version. Navigate your creative decisions freely and try what might work.</p>
-              </div>
-              <div class="copy-block" id="copy-comments">
-                <p class="copy-subtitle">Comments, revisions, and suggestions float beside the text they're about. Collaborate with your editor, anytime and anywhere.</p>
-              </div>
-              <div class="copy-block" id="copy-inline">
-                <p class="copy-subtitle">See revision diffs right where they matter — in the text. Compare branches side-by-side without losing context.</p>
-              </div>
-              <div class="copy-block" id="copy-safety">
-                <p class="copy-subtitle">Your work is saved locally — durable, reliable, instant. A database with 25+ years of experience means even if your computer crashes mid-sentence, nothing is lost.</p>
-                <div class="tag-list">
-                  <span class="tag tag--blue">Offline-first</span>
-                  <span class="tag tag--blue">SQLite-backed</span>
-                  <span class="tag tag--blue">Crash-resistant</span>
-                </div>
-              </div>
-            </div>
+      <!-- Feature copy below screenshot -->
+      <div class="copy-strip">
+        <div class="copy-block" id="copy-editor">
+          <p class="copy-subtitle">Your writing, front and center.</p>
+        </div>
+        <div class="copy-block" id="copy-branches">
+          <p class="copy-subtitle">Fork any sentence. Keep every version. Navigate your creative decisions freely and try what might work.</p>
+        </div>
+        <div class="copy-block" id="copy-comments">
+          <p class="copy-subtitle">Comments, revisions, and suggestions float beside the text they're about. Collaborate with your editor, anytime and anywhere.</p>
+        </div>
+        <div class="copy-block" id="copy-inline">
+          <p class="copy-subtitle">See revision diffs right where they matter — in the text. Compare branches side-by-side without losing context.</p>
+        </div>
+        <div class="copy-block" id="copy-safety">
+          <p class="copy-subtitle">Your work is saved locally — durable, reliable, instant. A database with 25+ years of experience means even if your computer crashes mid-sentence, nothing is lost.</p>
+          <div class="tag-list">
+            <span class="tag tag--blue">Offline-first</span>
+            <span class="tag tag--blue">SQLite-backed</span>
+            <span class="tag tag--blue">Crash-resistant</span>
           </div>
         </div>
       </div>
@@ -298,25 +289,20 @@
 <style>
   .hero-scroll { width: 100%; background: #f5f4f1; }
 
-  /* --- Stage --- */
-  .stage { position: relative; width: 100%; background-color: #f5f4f1; overflow: hidden; }
-  .pinned {
-    width: 100%; height: 100vh; position: relative;
-    display: flex; align-items: center; justify-content: center;
+  /* --- Intro (side-by-side, normal flow) --- */
+  .intro {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
   }
-  .stage-inner {
-    position: relative; width: 100%; height: 100%;
+  .intro-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem);
+    align-items: center; width: min(92vw, 1100px);
   }
-
-  /* --- Text column --- */
-  .text-col {
-    position: absolute; left: 6%; top: 50%; transform: translateY(-50%);
-    display: flex; flex-direction: column; max-width: 420px;
-  }
+  .intro-text { display: flex; flex-direction: column; }
   .logo-wrap {
-    width: 96px; height: 96px; display: flex; align-items: center; justify-content: center;
-    border-radius: 26px; border: 1.5px solid rgba(255,255,255,0.35);
-    background: radial-gradient(at 40% 35%, #eceef2, #cdd1d9); margin-bottom: 1.25rem;
+    width: 88px; height: 88px; display: flex; align-items: center; justify-content: center;
+    border-radius: 24px; border: 1.5px solid rgba(255,255,255,0.35);
+    background: radial-gradient(at 40% 35%, #eceef2, #cdd1d9); margin-bottom: 1rem;
   }
   .eyebrow {
     font-size: 0.72rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase;
@@ -325,7 +311,7 @@
   .headline {
     font-family: 'Newsreader', Georgia, serif; font-size: clamp(2.2rem, 4.5vw, 3.5rem);
     font-weight: 400; line-height: 1.15; letter-spacing: -0.03em;
-    color: rgba(0,0,0,0.88); max-width: 500px; margin: 0 0 1.25rem 0;
+    color: rgba(0,0,0,0.88); margin: 0 0 1rem 0; max-width: 460px;
   }
   .italic { font-style: italic; }
   .cursor { font-weight: 300; animation: blink 0.6s step-end infinite; }
@@ -333,7 +319,7 @@
   @keyframes blink { 50% { opacity: 0; } }
   .intro-desc {
     font-size: 0.95rem; line-height: 1.65; color: rgba(0,0,0,0.5);
-    margin: 0 0 1.5rem 0; max-width: 420px;
+    margin: 0 0 1.5rem 0; max-width: 400px;
   }
   .intro-trust {
     display: flex; flex-wrap: wrap; gap: 1rem; padding-top: 1.25rem;
@@ -345,15 +331,19 @@
     color: rgba(0,0,0,0.5); text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s;
   }
   .intro-trust-link:hover { color: rgba(0,0,0,0.7); }
+  .intro-cta { margin-top: 1.25rem; }
+  .intro-shot-img {
+    width: 100%; height: auto; border-radius: 12px;
+    box-shadow: 0 16px 64px rgba(44,42,39,0.1), 0 4px 16px rgba(44,42,39,0.05);
+  }
 
-  /* --- Screenshot column (starts on the right, animates to center) --- */
-  .shot-col {
-    position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
-    width: 50%; max-width: 580px;
+  /* --- Stage (pinned, centered) --- */
+  .stage { position: relative; width: 100%; background-color: #f5f4f1; overflow: hidden; }
+  .pinned {
+    width: 100%; height: 100vh; position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
   }
-  .screenshot-area {
-    position: relative; width: 100%; transform-origin: center center;
-  }
+  .screenshot-area { position: relative; width: min(88vw, 960px); }
   .screenshots { position: relative; width: 100%; aspect-ratio: 8 / 5; }
   .shot {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
@@ -380,7 +370,7 @@
   #callout-4 .callout-label { margin-right: -10px; margin-bottom: 4px; }
 
   /* --- Copy strip --- */
-  .copy-strip { position: relative; width: 100%; min-height: 56px; margin-top: 1rem; }
+  .copy-strip { position: relative; width: min(88vw, 960px); min-height: 56px; }
   .copy-block {
     position: absolute; inset: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
@@ -390,35 +380,28 @@
     color: rgba(0,0,0,0.5); line-height: 1.6; margin: 0; max-width: 550px;
   }
   .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; justify-content: center; }
-  .tag {
-    border-radius: 9999px; padding: 3px 11px; font-size: 12px;
-    font-family: 'Inter', sans-serif; font-weight: 500;
-  }
-  .tag--blue {
-    background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); color: #2563eb;
-  }
+  .tag { border-radius: 9999px; padding: 3px 11px; font-size: 12px; font-family: 'Inter', sans-serif; font-weight: 500; }
+  .tag--blue { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); color: #2563eb; }
 
   /* --- Progress --- */
   .progress {
     position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
     display: flex; flex-direction: column; gap: 14px; z-index: 10;
   }
-  .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: rgba(0,0,0,0.2); transition: transform 0.25s ease;
-  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(0,0,0,0.2); transition: transform 0.25s ease; }
 
   /* --- CTA --- */
   .cta-section { display: flex; justify-content: center; padding: 6rem 2rem 7rem; background: #f5f4f1; }
 
   /* --- Mobile --- */
   @media (max-width: 767px) {
+    .intro { min-height: auto; padding: 4rem 1.25rem 2rem; }
+    .intro-inner { grid-template-columns: 1fr; gap: 2rem; width: 100%; }
     .stage { overflow: visible; }
-    .pinned { height: auto; padding: 2rem 1.25rem; }
-    .stage-inner { position: relative; width: 100%; height: auto; }
-    .text-col { position: relative !important; left: auto !important; top: auto !important; transform: none !important; max-width: 100%; margin-bottom: 2rem; }
-    .shot-col { position: relative !important; right: auto !important; top: auto !important; transform: none !important; width: 100% !important; max-width: 100%; }
+    .pinned { height: auto; padding: 2rem 1.25rem; gap: 1rem; }
+    .screenshot-area { width: 100%; }
     .shot { position: relative !important; opacity: 1 !important; }
+    .copy-strip { width: 100%; }
     .copy-block { position: relative !important; opacity: 1 !important; }
     .callouts, .progress { display: none; }
   }

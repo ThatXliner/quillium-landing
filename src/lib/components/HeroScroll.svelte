@@ -61,7 +61,7 @@
       }
     }, 100);
 
-    if (isMobile) return;
+    if (!isMobile) {
 
     // --- GSAP Scroll Sequence ---
     const stage = document.getElementById('hero-scroll-stage');
@@ -168,6 +168,7 @@
     );
 
     scrollCtx = tl.scrollTrigger!;
+	}
 
     return () => clearInterval(interval);
   });

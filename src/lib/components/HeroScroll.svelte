@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { gsap } from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import { Pen, Lock, ShieldCheck, GitBranch, MessageSquare, CircleCheck } from '@lucide/svelte';
+  import { Pen, Lock, ShieldCheck } from '@lucide/svelte';
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -75,31 +75,24 @@
       document.getElementById('shot-library')!,
     ].filter(Boolean);
 
-    const copies = [
-      document.getElementById('copy-editor')!,
-      document.getElementById('copy-branches')!,
-      document.getElementById('copy-comments')!,
-      document.getElementById('copy-inline')!,
-      document.getElementById('copy-safety')!,
-    ].filter(Boolean);
-
-    const annos = [
-      document.getElementById('anno-1')!,
-      document.getElementById('anno-2')!,
-      document.getElementById('anno-3')!,
-      document.getElementById('anno-4')!,
-    ].filter(Boolean);
+    // Each callout: { el: DOM element, line: SVG path element }
+    const callouts = [
+      { el: document.getElementById('callout-1')!, line: document.getElementById('line-1')! },
+      { el: document.getElementById('callout-2')!, line: document.getElementById('line-2')! },
+      { el: document.getElementById('callout-3')!, line: document.getElementById('line-3')! },
+      { el: document.getElementById('callout-4')!, line: document.getElementById('line-4')! },
+    ].filter((c) => c.el && c.line);
 
     const dots = document.querySelectorAll<HTMLElement>('.progress-dot');
 
     // Initial state
     shots.forEach((s, idx) => {
-      if (idx > 0) gsap.set(s, { opacity: 0, scale: 0.92 });
+      if (idx > 0) gsap.set(s, { opacity: 0, scale: 0.95 });
     });
-    copies.forEach((c, idx) => {
-      if (idx > 0) gsap.set(c, { opacity: 0, y: 24 });
+    callouts.forEach((c) => {
+      gsap.set(c.el, { opacity: 0, y: 12 });
+      gsap.set(c.line, { strokeDashoffset: 200 });
     });
-    annos.forEach((a) => gsap.set(a, { opacity: 0, y: 15 }));
     dots.forEach((d, idx) => {
       if (idx > 0) gsap.set(d, { opacity: 0.25, scale: 1 });
     });
@@ -129,48 +122,41 @@
     });
 
     // --- Phase sequence ---
-    // Phase 0→1: Editor → Branches (15%–20%)
-    tl.to(shots[0], { opacity: 0, scale: 1.2, duration: 0.05 }, 0.15);
-    tl.to(copies[0], { opacity: 0, y: -20, duration: 0.03 }, 0.15);
+    // Editor → Branches (15%–20%)
+    tl.to(shots[0], { opacity: 0, scale: 1.15, duration: 0.05 }, 0.15);
     tl.to(shots[1], { opacity: 1, scale: 1, duration: 0.05 }, 0.17);
-    tl.to(copies[1], { opacity: 1, y: 0, duration: 0.05 }, 0.17);
-    tl.to(annos[0], { opacity: 1, y: 0, duration: 0.04 }, 0.19);
+    tl.to(callouts[0].el, { opacity: 1, y: 0, duration: 0.04 }, 0.19);
+    tl.to(callouts[0].line, { strokeDashoffset: 0, duration: 0.04 }, 0.19);
 
-    // Phase 1→2: Branches → Comments (35%–40%)
-    tl.to(shots[1], { opacity: 0, scale: 1.15, duration: 0.05 }, 0.35);
-    tl.to(copies[1], { opacity: 0, y: -20, duration: 0.03 }, 0.35);
-    tl.to(annos[0], { opacity: 0, y: -10, duration: 0.03 }, 0.35);
+    // Branches → Comments (35%–40%)
+    tl.to(shots[1], { opacity: 0, scale: 1.1, duration: 0.05 }, 0.35);
+    tl.to(callouts[0].el, { opacity: 0, y: -10, duration: 0.03 }, 0.35);
+    tl.to(callouts[0].line, { strokeDashoffset: 200, duration: 0.03 }, 0.35);
     tl.to(shots[2], { opacity: 1, scale: 1, duration: 0.05 }, 0.37);
-    tl.to(copies[2], { opacity: 1, y: 0, duration: 0.05 }, 0.37);
-    tl.to(annos[1], { opacity: 1, y: 0, duration: 0.04 }, 0.39);
+    tl.to(callouts[1].el, { opacity: 1, y: 0, duration: 0.04 }, 0.39);
+    tl.to(callouts[1].line, { strokeDashoffset: 0, duration: 0.04 }, 0.39);
 
-    // Phase 2→3: Comments → Inline (55%–60%)
-    tl.to(shots[2], { opacity: 0, scale: 1.15, duration: 0.05 }, 0.55);
-    tl.to(copies[2], { opacity: 0, y: -20, duration: 0.03 }, 0.55);
-    tl.to(annos[1], { opacity: 0, y: -10, duration: 0.03 }, 0.55);
+    // Comments → Inline (55%–60%)
+    tl.to(shots[2], { opacity: 0, scale: 1.1, duration: 0.05 }, 0.55);
+    tl.to(callouts[1].el, { opacity: 0, y: -10, duration: 0.03 }, 0.55);
+    tl.to(callouts[1].line, { strokeDashoffset: 200, duration: 0.03 }, 0.55);
     tl.to(shots[3], { opacity: 1, scale: 1, duration: 0.05 }, 0.57);
-    tl.to(copies[3], { opacity: 1, y: 0, duration: 0.05 }, 0.57);
-    tl.to(annos[2], { opacity: 1, y: 0, duration: 0.04 }, 0.59);
+    tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.59);
+    tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.59);
 
-    // Phase 3→4: Inline → Safety/Library (75%–80%)
-    tl.to(shots[3], { opacity: 0, scale: 1.15, duration: 0.05 }, 0.75);
-    tl.to(copies[3], { opacity: 0, y: -20, duration: 0.03 }, 0.75);
-    tl.to(annos[2], { opacity: 0, y: -10, duration: 0.03 }, 0.75);
+    // Inline → Library/Safety (75%–80%)
+    tl.to(shots[3], { opacity: 0, scale: 1.1, duration: 0.05 }, 0.75);
+    tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.75);
+    tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.75);
     tl.to(shots[4], { opacity: 1, scale: 1, duration: 0.05 }, 0.77);
-    tl.to(copies[4], { opacity: 1, y: 0, duration: 0.05 }, 0.77);
-    tl.to(annos[3], { opacity: 1, y: 0, duration: 0.04 }, 0.79);
+    tl.to(callouts[3].el, { opacity: 1, y: 0, duration: 0.04 }, 0.79);
+    tl.to(callouts[3].line, { strokeDashoffset: 0, duration: 0.04 }, 0.79);
 
-    // Phase 5: fade to CTA (90%–100%)
-    tl.to(shots[4], { opacity: 0.4, scale: 1.08, duration: 0.07 }, 0.92);
-    tl.to(copies[4], { opacity: 0, y: -20, duration: 0.04 }, 0.9);
-    tl.to(annos[3], { opacity: 0, y: -10, duration: 0.03 }, 0.9);
+    // Fade to CTA (90%–100%)
+    tl.to(shots[4], { opacity: 0.4, scale: 1.06, duration: 0.07 }, 0.92);
+    tl.to(callouts[3].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
+    tl.to(callouts[3].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
     tl.to('#hero-scroll-cta', { opacity: 1, y: 0, duration: 0.06 }, 0.94);
-
-    // Background transitions
-    tl.to(stage, { backgroundColor: '#2a2a2a', duration: 0.08 }, 0.3);
-    tl.to(stage, { backgroundColor: '#1a1a1a', duration: 0.06 }, 0.45);
-    tl.to(stage, { backgroundColor: '#2a2a2a', duration: 0.06 }, 0.6);
-    tl.to(stage, { backgroundColor: '#f5f4f1', duration: 0.08 }, 0.78);
 
     scrollCtx = tl.scrollTrigger!;
 
@@ -213,95 +199,51 @@
   <!-- Pinned stage -->
   <div class="stage" id="hero-scroll-stage">
     <div class="pinned" id="hero-scroll-pinned">
-      <div class="stage-inner">
-        <!-- Feature copy column -->
-        <div class="copy-col">
-          <!-- Phase 0: Editor (no copy, just a label) -->
-          <div class="copy-block" id="copy-editor"></div>
+      <!-- Screenshots, big and center -->
+      <div class="screenshots">
+        <img src={editorImg} alt="" class="shot" id="shot-editor" />
+        <img src={revisionImg} alt="" class="shot" id="shot-revision" />
+        <img src={commentImg} alt="" class="shot" id="shot-comment" />
+        <img src={inlineImg} alt="" class="shot" id="shot-inline" />
+        <img src={libraryImg} alt="" class="shot" id="shot-library" />
+      </div>
 
-          <!-- Phase 1: Branches -->
-          <div class="copy-block" id="copy-branches">
-            <div class="feature-icon" style="background:rgba(168,85,247,0.08);">
-              <GitBranch size={22} strokeWidth={1.5} color="#a855f7" />
-            </div>
-            <h3 class="feature-heading">Write in Branches</h3>
-            <p class="feature-desc">
-              Fork any sentence. Keep every version. Navigate your creative decisions freely and try what might work.
-            </p>
-          </div>
-
-          <!-- Phase 2: Comments -->
-          <div class="copy-block" id="copy-comments">
-            <div class="feature-icon" style="background:rgba(252,188,5,0.1);">
-              <MessageSquare size={22} strokeWidth={1.5} color="#d97706" />
-            </div>
-            <h3 class="feature-heading">Great Minds Think Together</h3>
-            <p class="feature-desc">
-              Comments, revisions, and suggestions float beside the text they're about. Collaborate with your editor, anytime and anywhere.
-            </p>
-          </div>
-
-          <!-- Phase 3: Inline revisions -->
-          <div class="copy-block" id="copy-inline">
-            <div class="feature-icon" style="background:rgba(34,197,94,0.08);">
-              <GitBranch size={22} strokeWidth={1.5} color="#22c55e" />
-            </div>
-            <h3 class="feature-heading">Nested Revisions, Inline</h3>
-            <p class="feature-desc">
-              See revision diffs right where they matter — in the text. Compare branches side-by-side without losing context.
-            </p>
-          </div>
-
-          <!-- Phase 4: Safety -->
-          <div class="copy-block" id="copy-safety">
-            <div class="feature-icon" style="background:rgba(59,130,246,0.08);">
-              <CircleCheck size={22} strokeWidth={1.5} color="#3b82f6" />
-            </div>
-            <h3 class="feature-heading">Never Lose Your Work</h3>
-            <p class="feature-desc">
-              Your work is saved locally — durable, reliable, instant. A database with 25+ years of experience means even if your computer crashes mid-sentence, nothing is lost.
-            </p>
-            <div class="tag-list">
-              <span class="tag tag--blue">Offline-first</span>
-              <span class="tag tag--blue">SQLite-backed</span>
-              <span class="tag tag--blue">Crash-resistant</span>
-            </div>
-          </div>
+      <!-- Callouts: arrow lines + labels overlaid on screenshot -->
+      <div class="callouts">
+        <!-- Branches -->
+        <div class="callout" id="callout-1">
+          <svg width="130" height="60" viewBox="0 0 130 60" class="callout-svg">
+            <path id="line-1" d="M 5 45 Q 40 45 65 25 Q 85 10 120 8" fill="none" stroke="#a855f7" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+            <circle cx="120" cy="8" r="3.5" fill="#a855f7" />
+          </svg>
+          <span class="callout-label" style="color:#a855f7;">Write in Branches</span>
         </div>
 
-        <!-- Screenshot column -->
-        <div class="shot-col">
-          <div class="screenshots">
-            <img src={editorImg} alt="" class="shot" id="shot-editor" />
-            <img src={revisionImg} alt="" class="shot" id="shot-revision" />
-            <img src={commentImg} alt="" class="shot" id="shot-comment" />
-            <img src={inlineImg} alt="" class="shot" id="shot-inline" />
-            <img src={libraryImg} alt="" class="shot" id="shot-library" />
-          </div>
+        <!-- Comments -->
+        <div class="callout" id="callout-2">
+          <svg width="130" height="60" viewBox="0 0 130 60" class="callout-svg">
+            <path id="line-2" d="M 125 45 Q 90 45 65 25 Q 45 10 10 8" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+            <circle cx="10" cy="8" r="3.5" fill="#d97706" />
+          </svg>
+          <span class="callout-label" style="color:#d97706;">Great Minds Think Together</span>
+        </div>
 
-          <!-- Annotations overlaid on screenshots -->
-          <div class="annotations">
-            <div class="anno" id="anno-1">
-              <svg width="100" height="40" viewBox="0 0 100 40" class="anno-line">
-                <path d="M 5 35 Q 30 35 50 20 Q 70 5 95 5" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-              </svg>
-            </div>
-            <div class="anno" id="anno-2">
-              <svg width="100" height="40" viewBox="0 0 100 40" class="anno-line">
-                <path d="M 95 35 Q 70 35 50 20 Q 30 5 5 5" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-              </svg>
-            </div>
-            <div class="anno" id="anno-3">
-              <svg width="100" height="40" viewBox="0 0 100 40" class="anno-line">
-                <path d="M 5 5 Q 30 20 50 25 Q 70 30 95 30" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-              </svg>
-            </div>
-            <div class="anno" id="anno-4">
-              <svg width="100" height="40" viewBox="0 0 100 40" class="anno-line">
-                <path d="M 50 35 Q 50 20 40 10 Q 30 5 5 5" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
-              </svg>
-            </div>
-          </div>
+        <!-- Inline revisions -->
+        <div class="callout" id="callout-3">
+          <svg width="140" height="60" viewBox="0 0 140 60" class="callout-svg">
+            <path id="line-3" d="M 10 10 Q 45 25 70 35 Q 90 42 125 40" fill="none" stroke="#22c55e" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+            <circle cx="125" cy="40" r="3.5" fill="#22c55e" />
+          </svg>
+          <span class="callout-label" style="color:#22c55e;">Nested Revisions, Inline</span>
+        </div>
+
+        <!-- Safety / Library -->
+        <div class="callout" id="callout-4">
+          <svg width="140" height="60" viewBox="0 0 140 60" class="callout-svg">
+            <path id="line-4" d="M 70 5 Q 60 20 40 35 Q 25 45 10 48" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="200" stroke-dashoffset="200" stroke-linecap="round" />
+            <circle cx="10" cy="48" r="3.5" fill="#3b82f6" />
+          </svg>
+          <span class="callout-label" style="color:#3b82f6;">Never Lose Your Work</span>
         </div>
       </div>
 
@@ -403,8 +345,8 @@
   }
   .intro-trust-link:hover { color: rgba(0, 0, 0, 0.7); }
   @keyframes pulse-hint {
-    0%, 100% { opacity: 0.25; }
-    50% { opacity: 0.55; }
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.65; }
   }
 
   /* --- Stage --- */
@@ -422,78 +364,11 @@
     align-items: center;
     justify-content: center;
   }
-  .stage-inner {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: center;
-    width: min(92vw, 1100px);
-    padding: 0 2rem;
-  }
 
-  /* --- Copy column --- */
-  .copy-col {
-    position: relative;
-    min-height: 280px;
-  }
-  .copy-block {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .feature-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
-  .feature-heading {
-    font-family: 'Newsreader', Georgia, serif;
-    font-size: clamp(1.35rem, 2.5vw, 1.75rem);
-    font-weight: 400;
-    color: rgba(0, 0, 0, 0.88);
-    margin: 0 0 12px 0;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-  .feature-desc {
-    font-size: 0.95rem;
-    color: rgba(0, 0, 0, 0.55);
-    line-height: 1.7;
-    margin: 0 0 16px 0;
-    max-width: 360px;
-  }
-  .tag-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
-  }
-  .tag {
-    border-radius: 9999px;
-    padding: 3px 11px;
-    font-size: 12px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-  }
-  .tag--blue {
-    background: rgba(59, 130, 246, 0.08);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    color: #2563eb;
-  }
-
-  /* --- Screenshot column --- */
-  .shot-col {
-    position: relative;
-  }
+  /* --- Screenshots --- */
   .screenshots {
     position: relative;
-    width: 100%;
+    width: min(88vw, 960px);
     aspect-ratio: 8 / 5;
   }
   .shot {
@@ -503,30 +378,47 @@
     height: 100%;
     object-fit: contain;
     border-radius: 12px;
-    box-shadow: 0 12px 48px rgba(44, 42, 39, 0.12), 0 4px 12px rgba(44, 42, 39, 0.06);
+    box-shadow: 0 16px 64px rgba(44, 42, 39, 0.1), 0 4px 16px rgba(44, 42, 39, 0.05);
   }
 
-  /* --- Annotations --- */
-  .annotations {
+  /* --- Callouts --- */
+  .callouts {
     position: absolute;
     inset: 0;
     pointer-events: none;
   }
-  .anno {
+  .callout {
     position: absolute;
     display: flex;
     align-items: center;
+    gap: 0;
   }
-  .anno-line {
+  .callout-svg {
     overflow: visible;
+    flex-shrink: 0;
   }
-  .anno-line path {
-    stroke-linecap: round;
+  .callout-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    padding: 5px 12px;
+    border-radius: 7px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+    letter-spacing: -0.01em;
   }
-  #anno-1 { top: 15%; right: 18%; }
-  #anno-2 { top: 35%; left: 20%; }
-  #anno-3 { top: 50%; right: 15%; }
-  #anno-4 { bottom: 22%; left: 22%; }
+
+  /* Callout positions — relative to pinned container */
+  #callout-1 { top: 18%; left: 10%; flex-direction: row; }
+  #callout-1 .callout-label { margin-left: -30px; margin-top: -8px; }
+  #callout-2 { top: 34%; right: 8%; flex-direction: row-reverse; }
+  #callout-2 .callout-label { margin-right: -20px; margin-top: -8px; }
+  #callout-3 { top: 55%; left: 8%; flex-direction: row; }
+  #callout-3 .callout-label { margin-left: -15px; }
+  #callout-4 { bottom: 22%; right: 12%; flex-direction: row-reverse; }
+  #callout-4 .callout-label { margin-right: -10px; margin-bottom: 4px; }
 
   /* --- Progress dots --- */
   .progress {
@@ -574,22 +466,11 @@
       height: auto;
       padding: 2rem 1.25rem;
     }
-    .stage-inner {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
+    .screenshots {
       width: 100%;
-      padding: 0;
-    }
-    .copy-col {
-      position: relative;
-      min-height: auto;
-    }
-    .copy-block {
-      position: relative !important;
-      opacity: 1 !important;
-      margin-bottom: 1rem;
+      aspect-ratio: auto;
     }
     .shot { position: relative !important; opacity: 1 !important; }
-    .annotations, .progress, .intro-hint { display: none; }
+    .callouts, .progress, .intro-hint { display: none; }
   }
 </style>

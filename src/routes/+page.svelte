@@ -4,6 +4,7 @@
 	import { initReveal } from '$lib/reveal';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
+	import HeroScroll from '$lib/components/HeroScroll.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
@@ -103,7 +104,11 @@
 
 <Nav />
 <main>
-	<Hero release={data.release} />
+	{#if data.showScrollHero}
+		<HeroScroll release={data.release} />
+	{:else}
+		<Hero release={data.release} />
+	{/if}
 
 	<Showcase />
 

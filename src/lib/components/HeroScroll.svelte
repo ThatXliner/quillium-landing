@@ -127,8 +127,8 @@
     // --- Phase 0: Side-by-side → centered (0% – 18%) ---
     // Text column fades left
     tl.to(textCol, { opacity: 0, x: -80, duration: 0.12 }, 0.06);
-    // Screenshot breaks out of the grid to center stage
-    tl.to(shotCol, { left: '50%', right: 'auto', xPercent: -50, yPercent: -50, top: '50%', width: '82vw', duration: 0.14 }, 0.04);
+    // Screenshot breaks out to center stage
+    tl.to(shotCol, { left: '50%', right: 'auto', xPercent: -50, yPercent: -50, top: '50%', width: 'min(88vw, 960px)', maxWidth: 'none', duration: 0.14 }, 0.04);
     // Scale the screenshot area up slightly as it centers
     tl.to(screenshotArea, { scale: 1.08, duration: 0.14 }, 0.04);
     // Editor label fades out
@@ -352,7 +352,7 @@
     width: 50%; max-width: 580px;
   }
   .screenshot-area {
-    width: 100%; transform-origin: center center;
+    position: relative; width: 100%; transform-origin: center center;
   }
   .screenshots { position: relative; width: 100%; aspect-ratio: 8 / 5; }
   .shot {

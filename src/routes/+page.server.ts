@@ -49,7 +49,7 @@ export async function load({ fetch }): Promise<{ release: ReleaseData; showScrol
 
 		if (!missingPatterns.length) {
 			// Latest release has everything — fast path
-			return { release: { version: latest.tag_name ?? null, assets: latestAssets }, showScrollHero: Math.random() < 0.5 };
+			return { release: { version: latest.tag_name ?? null, assets: latestAssets }, showScrollHero: true };
 		}
 
 		// Some OS assets are missing — fetch older releases to fill gaps
@@ -73,7 +73,7 @@ export async function load({ fetch }): Promise<{ release: ReleaseData; showScrol
 		}
 
 		if (bestAssets.length) {
-			return { release: { version: latest.tag_name ?? null, assets: bestAssets }, showScrollHero: Math.random() < 0.5 };
+			return { release: { version: latest.tag_name ?? null, assets: bestAssets }, showScrollHero: true };
 		}
 	} catch {
 		// Fall through to fallback
@@ -84,6 +84,6 @@ export async function load({ fetch }): Promise<{ release: ReleaseData; showScrol
 			version: null,
 			assets: []
 		},
-		showScrollHero: false
+		showScrollHero: true
 	};
 }

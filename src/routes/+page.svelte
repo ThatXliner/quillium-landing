@@ -110,13 +110,15 @@
 		<Hero release={data.release} />
 	{/if}
 
-	<Showcase />
+{#if !data.showScrollHero}
+		<Showcase />
 
-	<div class="warm-divider section-divider"></div>
+		<div class="warm-divider section-divider"></div>
 
-	<Features />
+		<Features />
 
-	<div class="warm-divider section-divider"></div>
+		<div class="warm-divider section-divider"></div>
+	{/if}
 
 	<Download release={data.release} />
 </main>

@@ -29,6 +29,9 @@ brand-bible.html
 # Superpowers
 .superpowers/
 
+# Worktrees
+.worktrees/
+
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*

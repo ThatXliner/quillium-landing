@@ -125,11 +125,12 @@
     });
 
     // --- Phase 0: Side-by-side → centered (0% – 18%) ---
-    // Text column fades out
-    tl.to(textCol, { opacity: 0, x: -40, duration: 0.12 }, 0.06);
-    // Screenshot grows from side position to center
-    tl.to(screenshotArea, { scale: 1.22, x: '+=0', duration: 0.14 }, 0.04);
-    tl.to(screenshotArea, { scale: 1.22, duration: 0.14 }, 0.04);
+    // Text column fades left
+    tl.to(textCol, { opacity: 0, x: -80, duration: 0.12 }, 0.06);
+    // Screenshot breaks out of the grid to center stage
+    tl.to(shotCol, { left: '50%', right: 'auto', xPercent: -50, yPercent: -50, top: '50%', width: '82vw', duration: 0.14 }, 0.04);
+    // Scale the screenshot area up slightly as it centers
+    tl.to(screenshotArea, { scale: 1.08, duration: 0.14 }, 0.04);
     // Editor label fades out
     tl.to(copies[0], { opacity: 0, y: -14, duration: 0.04 }, 0.14);
 
@@ -304,12 +305,14 @@
     display: flex; align-items: center; justify-content: center;
   }
   .stage-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem);
-    align-items: center; width: min(92vw, 1150px); padding: 0 2rem;
+    position: relative; width: 100%; height: 100%;
   }
 
   /* --- Text column --- */
-  .text-col { display: flex; flex-direction: column; }
+  .text-col {
+    position: absolute; left: 6%; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; max-width: 420px;
+  }
   .logo-wrap {
     width: 96px; height: 96px; display: flex; align-items: center; justify-content: center;
     border-radius: 26px; border: 1.5px solid rgba(255,255,255,0.35);
@@ -343,8 +346,11 @@
   }
   .intro-trust-link:hover { color: rgba(0,0,0,0.7); }
 
-  /* --- Screenshot column --- */
-  .shot-col { display: flex; align-items: center; justify-content: center; }
+  /* --- Screenshot column (starts on the right, animates to center) --- */
+  .shot-col {
+    position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
+    width: 50%; max-width: 580px;
+  }
   .screenshot-area {
     width: 100%; transform-origin: center center;
   }
@@ -409,7 +415,9 @@
   @media (max-width: 767px) {
     .stage { overflow: visible; }
     .pinned { height: auto; padding: 2rem 1.25rem; }
-    .stage-inner { grid-template-columns: 1fr; gap: 1.5rem; width: 100%; padding: 0; }
+    .stage-inner { position: relative; width: 100%; height: auto; }
+    .text-col { position: relative !important; left: auto !important; top: auto !important; transform: none !important; max-width: 100%; margin-bottom: 2rem; }
+    .shot-col { position: relative !important; right: auto !important; top: auto !important; transform: none !important; width: 100% !important; max-width: 100%; }
     .shot { position: relative !important; opacity: 1 !important; }
     .copy-block { position: relative !important; opacity: 1 !important; }
     .callouts, .progress { display: none; }

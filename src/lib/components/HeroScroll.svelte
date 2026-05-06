@@ -100,6 +100,7 @@
 			gsap.set(c.line, { strokeDashoffset: 200 });
 		});
 		copies.forEach((c, idx) => {
+			gsap.set(c, { pointerEvents: idx === 0 ? 'auto' : 'none' });
 			if (idx > 0) gsap.set(c, { opacity: 0, y: 16 });
 		});
 		dots.forEach((d, idx) => {
@@ -143,47 +144,47 @@
 		// Phase 0: text fades, screenshot slides to center + scales up (0%–18%)
 		tl.to(textCol, { opacity: 0, x: -40, duration: 0.12 }, 0.06);
 		tl.to(shotWrap, { x: moveX, y: moveY, scale: targetScale, duration: 0.15 }, 0.06);
-		tl.to(copies[0], { opacity: 0, y: -14, duration: 0.04 }, 0.15);
+		tl.to(copies[0], { opacity: 0, y: -14, pointerEvents: 'none', duration: 0.04 }, 0.15);
 
 		// Phase 1: Branches (18%–34%)
 		tl.set(shots[1], { opacity: 1 }, 0.18);
-		tl.to(copies[1], { opacity: 1, y: 0, duration: 0.05 }, 0.2);
+		tl.to(copies[1], { opacity: 1, y: 0, pointerEvents: 'auto', duration: 0.05 }, 0.2);
 		tl.to(callouts[0].el, { opacity: 1, y: 0, duration: 0.04 }, 0.22);
 		tl.to(callouts[0].line, { strokeDashoffset: 0, duration: 0.04 }, 0.22);
 
 		// Phase 2: Comments (34%–50%)
 		tl.to([shots[0], shots[1]], { opacity: 0, duration: 0.05 }, 0.34);
-		tl.to(copies[1], { opacity: 0, y: -14, duration: 0.03 }, 0.34);
+		tl.to(copies[1], { opacity: 0, y: -14, pointerEvents: 'none', duration: 0.03 }, 0.34);
 		tl.to(callouts[0].el, { opacity: 0, y: -10, duration: 0.03 }, 0.34);
 		tl.to(callouts[0].line, { strokeDashoffset: 200, duration: 0.03 }, 0.34);
 		tl.to(shots[2], { opacity: 1, duration: 0.05 }, 0.36);
-		tl.to(copies[2], { opacity: 1, y: 0, duration: 0.05 }, 0.36);
+		tl.to(copies[2], { opacity: 1, y: 0, pointerEvents: 'auto', duration: 0.05 }, 0.36);
 		tl.to(callouts[1].el, { opacity: 1, y: 0, duration: 0.04 }, 0.38);
 		tl.to(callouts[1].line, { strokeDashoffset: 0, duration: 0.04 }, 0.38);
 
 		// Phase 3: Nestable revisions (50%–66%)
 		tl.to(shots[2], { opacity: 0, duration: 0.05 }, 0.5);
-		tl.to(copies[2], { opacity: 0, y: -14, duration: 0.03 }, 0.5);
+		tl.to(copies[2], { opacity: 0, y: -14, pointerEvents: 'none', duration: 0.03 }, 0.5);
 		tl.to(callouts[1].el, { opacity: 0, y: -10, duration: 0.03 }, 0.5);
 		tl.to(callouts[1].line, { strokeDashoffset: 200, duration: 0.03 }, 0.5);
 		tl.to(shots[3], { opacity: 1, duration: 0.05 }, 0.52);
-		tl.to(copies[3], { opacity: 1, y: 0, duration: 0.05 }, 0.52);
+		tl.to(copies[3], { opacity: 1, y: 0, pointerEvents: 'auto', duration: 0.05 }, 0.52);
 		tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.54);
 		tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.54);
 
 		// Phase 4: Safety (66%–82%)
 		tl.to(shots[3], { opacity: 0, duration: 0.05 }, 0.66);
-		tl.to(copies[3], { opacity: 0, y: -14, duration: 0.03 }, 0.66);
+		tl.to(copies[3], { opacity: 0, y: -14, pointerEvents: 'none', duration: 0.03 }, 0.66);
 		tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.66);
 		tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.66);
 		tl.to(shots[4], { opacity: 1, duration: 0.05 }, 0.68);
-		tl.to(copies[4], { opacity: 1, y: 0, duration: 0.05 }, 0.68);
+		tl.to(copies[4], { opacity: 1, y: 0, pointerEvents: 'auto', duration: 0.05 }, 0.68);
 		tl.to(callouts[3].el, { opacity: 1, y: 0, duration: 0.04 }, 0.7);
 		tl.to(callouts[3].line, { strokeDashoffset: 0, duration: 0.04 }, 0.7);
 
 		// CTA (92%–100%)
 		tl.to(shots[4], { opacity: 0.3, duration: 0.07 }, 0.92);
-		tl.to(copies[4], { opacity: 0, y: -14, duration: 0.04 }, 0.9);
+		tl.to(copies[4], { opacity: 0, y: -14, pointerEvents: 'none', duration: 0.04 }, 0.9);
 		tl.to(callouts[3].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
 		tl.to(callouts[3].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
 
@@ -399,7 +400,7 @@
 						</div>
 						<div
 							id="copy-branches"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
+							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
@@ -411,7 +412,7 @@
 						</div>
 						<div
 							id="copy-comments"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
+							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
@@ -421,13 +422,13 @@
 								<a
 									href="/omni"
 									class="text-black/40 underline underline-offset-2 hover:text-black/55"
-									>Collaborate with your editor, anytime and anywhere</a
-								>, anytime and anywhere.
+									>Collaborate with your editor, anytime and anywhere.</a
+								>
 							</p>
 						</div>
 						<div
 							id="copy-inline"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
+							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
@@ -439,7 +440,7 @@
 						</div>
 						<div
 							id="copy-safety"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
+							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"

@@ -78,8 +78,7 @@
 		const callouts = [
 			{ el: document.getElementById('callout-1')!, line: document.getElementById('line-1')! },
 			{ el: document.getElementById('callout-2')!, line: document.getElementById('line-2')! },
-			{ el: document.getElementById('callout-3')!, line: document.getElementById('line-3')! },
-			{ el: document.getElementById('callout-4')!, line: document.getElementById('line-4')! }
+			{ el: document.getElementById('callout-3')!, line: document.getElementById('line-3')! }
 		].filter((c) => c.el && c.line);
 
 		const copies = [
@@ -163,31 +162,27 @@
 		tl.to(callouts[1].el, { opacity: 1, y: 0, duration: 0.04 }, 0.38);
 		tl.to(callouts[1].line, { strokeDashoffset: 0, duration: 0.04 }, 0.38);
 
-		// Phase 3: Inline (50%–66%)
+		// Phase 3: Nestable revisions (50%–66%)
 		tl.to(shots[2], { opacity: 0, duration: 0.05 }, 0.5);
 		tl.to(copies[2], { opacity: 0, y: -14, duration: 0.03 }, 0.5);
 		tl.to(callouts[1].el, { opacity: 0, y: -10, duration: 0.03 }, 0.5);
 		tl.to(callouts[1].line, { strokeDashoffset: 200, duration: 0.03 }, 0.5);
 		tl.to(shots[3], { opacity: 1, duration: 0.05 }, 0.52);
 		tl.to(copies[3], { opacity: 1, y: 0, duration: 0.05 }, 0.52);
-		tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.54);
-		tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.54);
 
 		// Phase 4: Safety (66%–82%)
 		tl.to(shots[3], { opacity: 0, duration: 0.05 }, 0.66);
 		tl.to(copies[3], { opacity: 0, y: -14, duration: 0.03 }, 0.66);
-		tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.66);
-		tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.66);
 		tl.to(shots[4], { opacity: 1, duration: 0.05 }, 0.68);
 		tl.to(copies[4], { opacity: 1, y: 0, duration: 0.05 }, 0.68);
-		tl.to(callouts[3].el, { opacity: 1, y: 0, duration: 0.04 }, 0.7);
-		tl.to(callouts[3].line, { strokeDashoffset: 0, duration: 0.04 }, 0.7);
+		tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.7);
+		tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.7);
 
 		// CTA (92%–100%)
 		tl.to(shots[4], { opacity: 0.3, duration: 0.07 }, 0.92);
 		tl.to(copies[4], { opacity: 0, y: -14, duration: 0.04 }, 0.9);
-		tl.to(callouts[3].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
-		tl.to(callouts[3].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
+		tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
+		tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
 
 		scrollCtx = tl.scrollTrigger!;
 		return () => clearInterval(interval);
@@ -263,115 +258,90 @@
 								src={revisionImg}
 								alt=""
 								id="shot-revision"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
 							/>
 							<img
 								src={commentImg}
 								alt=""
 								id="shot-comment"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
 							/>
 							<img
 								src={inlineImg}
 								alt=""
 								id="shot-inline"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
 							/>
 							<img
 								src={libraryImg}
 								alt=""
 								id="shot-library"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
 							/>
 						</div>
 						<div id="callouts-wrap" class="pointer-events-none absolute inset-0">
-							<div id="callout-1" class="absolute" style="top:18%;left:10%;">
-								<svg
-									width="130"
-									height="60"
-									viewBox="0 0 130 60"
-									class="flex-shrink-0 overflow-visible"
-									><path
+							<div id="callout-1" class="absolute inset-0 opacity-0">
+								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+									<path
 										id="line-1"
-										d="M 5 45 Q 40 45 65 25 Q 85 10 120 8"
+										d="M 27 32 C 39 35 50 40 58.5 47.5"
 										fill="none"
 										stroke="#a855f7"
-										stroke-width="2"
+										stroke-width="0.35"
 										stroke-dasharray="200"
 										stroke-dashoffset="200"
 										stroke-linecap="round"
-									/><circle cx="120" cy="8" r="3.5" fill="#a855f7" /></svg
-								>
+										vector-effect="non-scaling-stroke"
+									/>
+								</svg>
 								<span
-									class="mt-[-8px] ml-[-30px] rounded-lg bg-white/90 px-3 py-[5px] text-[0.78rem] font-semibold tracking-[-0.01em] whitespace-nowrap text-[#a855f7] shadow-[0_1px_10px_rgba(0,0,0,0.08)] backdrop-blur-xl"
-									style="font-family:'Inter',sans-serif;">Write in Branches</span
+									class="callout-label"
+									style="top:28%;left:11%;color:#a855f7;font-family:'Inter',sans-serif;"
+									>Write in Branches</span
 								>
+								<span class="callout-dot bg-[#a855f7]" style="top:47.5%;left:58.5%;"></span>
 							</div>
-							<div id="callout-2" class="absolute" style="top:34%;right:8%;">
-								<svg
-									width="130"
-									height="60"
-									viewBox="0 0 130 60"
-									class="flex-shrink-0 overflow-visible"
-									><path
+							<div id="callout-2" class="absolute inset-0 opacity-0">
+								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+									<path
 										id="line-2"
-										d="M 125 45 Q 90 45 65 25 Q 45 10 10 8"
+										d="M 74 26 C 79 28 84 31 88.5 34"
 										fill="none"
 										stroke="#d97706"
-										stroke-width="2"
+										stroke-width="0.35"
 										stroke-dasharray="200"
 										stroke-dashoffset="200"
 										stroke-linecap="round"
-									/><circle cx="10" cy="8" r="3.5" fill="#d97706" /></svg
-								>
+										vector-effect="non-scaling-stroke"
+									/>
+								</svg>
 								<span
-									class="mt-[-8px] mr-[-20px] rounded-lg bg-white/90 px-3 py-[5px] text-[0.78rem] font-semibold tracking-[-0.01em] whitespace-nowrap text-[#d97706] shadow-[0_1px_10px_rgba(0,0,0,0.08)] backdrop-blur-xl"
-									style="font-family:'Inter',sans-serif;">Great Minds Think Together</span
+									class="callout-label"
+									style="top:19%;left:63%;color:#d97706;font-family:'Inter',sans-serif;"
+									>Great Minds Think Together</span
 								>
+								<span class="callout-dot bg-[#d97706]" style="top:34%;left:88.5%;"></span>
 							</div>
-							<div id="callout-3" class="absolute" style="top:55%;left:8%;">
-								<svg
-									width="140"
-									height="60"
-									viewBox="0 0 140 60"
-									class="flex-shrink-0 overflow-visible"
-									><path
+							<div id="callout-3" class="absolute inset-0 opacity-0">
+								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+									<path
 										id="line-3"
-										d="M 10 10 Q 45 25 70 35 Q 90 42 125 40"
-										fill="none"
-										stroke="#22c55e"
-										stroke-width="2"
-										stroke-dasharray="200"
-										stroke-dashoffset="200"
-										stroke-linecap="round"
-									/><circle cx="125" cy="40" r="3.5" fill="#22c55e" /></svg
-								>
-								<span
-									class="ml-[-15px] rounded-lg bg-white/90 px-3 py-[5px] text-[0.78rem] font-semibold tracking-[-0.01em] whitespace-nowrap text-[#22c55e] shadow-[0_1px_10px_rgba(0,0,0,0.08)] backdrop-blur-xl"
-									style="font-family:'Inter',sans-serif;">Nested Revisions, Inline</span
-								>
-							</div>
-							<div id="callout-4" class="absolute" style="bottom:22%;right:12%;">
-								<svg
-									width="140"
-									height="60"
-									viewBox="0 0 140 60"
-									class="flex-shrink-0 overflow-visible"
-									><path
-										id="line-4"
-										d="M 70 5 Q 60 20 40 35 Q 25 45 10 48"
+										d="M 60 74 C 48 62 37 47 25 36"
 										fill="none"
 										stroke="#3b82f6"
-										stroke-width="2"
+										stroke-width="0.35"
 										stroke-dasharray="200"
 										stroke-dashoffset="200"
 										stroke-linecap="round"
-									/><circle cx="10" cy="48" r="3.5" fill="#3b82f6" /></svg
-								>
+										vector-effect="non-scaling-stroke"
+									/>
+								</svg>
 								<span
-									class="mr-[-10px] mb-1 rounded-lg bg-white/90 px-3 py-[5px] text-[0.78rem] font-semibold tracking-[-0.01em] whitespace-nowrap text-[#3b82f6] shadow-[0_1px_10px_rgba(0,0,0,0.08)] backdrop-blur-xl"
-									style="font-family:'Inter',sans-serif;">Never Lose Your Work</span
+									class="callout-label"
+									style="top:70%;left:56%;color:#3b82f6;font-family:'Inter',sans-serif;"
+									>Never Lose Your Work</span
 								>
+								<span class="callout-dot bg-[#3b82f6]" style="top:36%;left:25%;"></span>
 							</div>
 						</div>
 					</div>
@@ -389,7 +359,7 @@
 						</div>
 						<div
 							id="copy-branches"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center"
+							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
@@ -401,7 +371,7 @@
 						</div>
 						<div
 							id="copy-comments"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center"
+							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
@@ -413,19 +383,19 @@
 						</div>
 						<div
 							id="copy-inline"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center"
+							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
-								See revision diffs right where they matter — in the text. Compare branches
-								side-by-side without losing context.
+								Revisions can hold revisions of their own. Follow an idea inward without losing
+								the draft around it.
 							</p>
 						</div>
 						<div
 							id="copy-safety"
-							class="absolute inset-0 flex flex-col items-center justify-center text-center"
+							class="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
@@ -475,6 +445,29 @@
 	}
 	.trust-link:hover {
 		color: rgba(0, 0, 0, 0.7);
+	}
+
+	.callout-label {
+		position: absolute;
+		transform: translate(-50%, -50%);
+		border-radius: 0.5rem;
+		background: rgba(255, 255, 255, 0.9);
+		padding: 5px 0.75rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		line-height: 1.2;
+		white-space: nowrap;
+		box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+		backdrop-filter: blur(16px);
+	}
+
+	.callout-dot {
+		position: absolute;
+		width: 7px;
+		height: 7px;
+		transform: translate(-50%, -50%);
+		border-radius: 9999px;
+		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85);
 	}
 
 	@media (max-width: 767px) {

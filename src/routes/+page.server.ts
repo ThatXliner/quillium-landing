@@ -28,7 +28,7 @@ const OS_PATTERNS = [
 	'_amd64.AppImage'
 ];
 
-export async function load({ fetch }): Promise<{ release: ReleaseData; showScrollHero: boolean }> {
+export async function load({ fetch }): Promise<{ release: ReleaseData }> {
 	try {
 		const headers: Record<string, string> = { Accept: 'application/vnd.github+json' };
 		const token = env.GITHUB_PAT;
@@ -49,7 +49,7 @@ export async function load({ fetch }): Promise<{ release: ReleaseData; showScrol
 
 		if (!missingPatterns.length) {
 			// Latest release has everything — fast path
-			return { release: { version: latest.tag_name ?? null, assets: latestAssets }, showScrollHero: true };
+			return { release: { version: latest.tag_name ?? null, assets: latestAssets } };
 		}
 
 		// Some OS assets are missing — fetch older releases to fill gaps
@@ -73,7 +73,7 @@ export async function load({ fetch }): Promise<{ release: ReleaseData; showScrol
 		}
 
 		if (bestAssets.length) {
-			return { release: { version: latest.tag_name ?? null, assets: bestAssets }, showScrollHero: true };
+			return { release: { version: latest.tag_name ?? null, assets: bestAssets } };
 		}
 	} catch {
 		// Fall through to fallback
@@ -83,7 +83,6 @@ export async function load({ fetch }): Promise<{ release: ReleaseData; showScrol
 		release: {
 			version: null,
 			assets: []
-		},
-		showScrollHero: true
+		}
 	};
 }

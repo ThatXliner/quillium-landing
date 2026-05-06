@@ -12,10 +12,18 @@
 
 	let { data } = $props();
 
+	let showScrollHero = $state(false);
+
 	onMount(() => {
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
 		}
+
+		posthog.onFeatureFlags(() => {
+			const flag = posthog.getFeatureFlag('hero-scroll-experiment');
+			showScrollHero = flag === 'scroll';
+		});
+
 		initReveal();
 
 		// Smooth scroll for anchor links
@@ -104,13 +112,13 @@
 
 <Nav />
 <main>
-	{#if data.showScrollHero}
+	{#if showScrollHero}
 		<HeroScroll release={data.release} />
 	{:else}
 		<Hero release={data.release} />
 	{/if}
 
-{#if !data.showScrollHero}
+	{#if !showScrollHero}
 		<Showcase />
 
 		<div class="warm-divider section-divider"></div>

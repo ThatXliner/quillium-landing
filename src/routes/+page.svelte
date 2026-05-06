@@ -4,6 +4,7 @@
 	import { initReveal } from '$lib/reveal';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
+	import HeroScroll from '$lib/components/HeroScroll.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
@@ -11,10 +12,18 @@
 
 	let { data } = $props();
 
+	let showScrollHero = $state(false);
+
 	onMount(() => {
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
 		}
+
+		posthog.onFeatureFlags(() => {
+			const flag = posthog.getFeatureFlag('hero-scroll-experiment');
+			showScrollHero = flag === 'scroll';
+		});
+
 		initReveal();
 
 		// Smooth scroll for anchor links
@@ -103,15 +112,21 @@
 
 <Nav />
 <main>
-	<Hero release={data.release} />
+	{#if showScrollHero}
+		<HeroScroll release={data.release} />
+	{:else}
+		<Hero release={data.release} />
+	{/if}
 
-	<Showcase />
+	{#if !showScrollHero}
+		<Showcase />
 
-	<div class="warm-divider section-divider"></div>
+		<div class="warm-divider section-divider"></div>
 
-	<Features />
+		<Features />
 
-	<div class="warm-divider section-divider"></div>
+		<div class="warm-divider section-divider"></div>
+	{/if}
 
 	<Download release={data.release} />
 </main>

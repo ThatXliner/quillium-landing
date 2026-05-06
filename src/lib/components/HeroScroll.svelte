@@ -6,7 +6,6 @@
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	import editorImg from '$lib/assets/screenshots/01-editor.png';
 	import revisionImg from '$lib/assets/screenshots/05-revision-active.png';
 	import commentImg from '$lib/assets/screenshots/04-comment-active.png';
 	import inlineImg from '$lib/assets/screenshots/13-inline-nested-revision.png';
@@ -147,14 +146,13 @@
 		tl.to(copies[0], { opacity: 0, y: -14, duration: 0.04 }, 0.15);
 
 		// Phase 1: Branches (18%–34%)
-		tl.to(shots[0], { opacity: 0, duration: 0.05 }, 0.18);
-		tl.to(shots[1], { opacity: 1, duration: 0.05 }, 0.2);
+		tl.set(shots[1], { opacity: 1 }, 0.18);
 		tl.to(copies[1], { opacity: 1, y: 0, duration: 0.05 }, 0.2);
 		tl.to(callouts[0].el, { opacity: 1, y: 0, duration: 0.04 }, 0.22);
 		tl.to(callouts[0].line, { strokeDashoffset: 0, duration: 0.04 }, 0.22);
 
 		// Phase 2: Comments (34%–50%)
-		tl.to(shots[1], { opacity: 0, duration: 0.05 }, 0.34);
+		tl.to([shots[0], shots[1]], { opacity: 0, duration: 0.05 }, 0.34);
 		tl.to(copies[1], { opacity: 0, y: -14, duration: 0.03 }, 0.34);
 		tl.to(callouts[0].el, { opacity: 0, y: -10, duration: 0.03 }, 0.34);
 		tl.to(callouts[0].line, { strokeDashoffset: 200, duration: 0.03 }, 0.34);
@@ -254,7 +252,7 @@
 					<div class="relative w-full">
 						<div class="relative aspect-[8/5] w-full">
 							<img
-								src={editorImg}
+								src={revisionImg}
 								alt=""
 								id="shot-editor"
 								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
@@ -286,6 +284,10 @@
 						</div>
 						<div id="callouts-wrap" class="pointer-events-none absolute inset-0">
 							<div id="callout-1" class="absolute inset-0 opacity-0">
+								<span
+									class="callout-spotlight"
+									style="--spot-x:58.5%;--spot-y:47.5%;--spot-w:31%;--spot-h:10%;"
+								></span>
 								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
 									<path
 										id="line-1"
@@ -328,6 +330,10 @@
 								<span class="callout-dot bg-[#d97706]" style="top:34%;left:88.5%;"></span>
 							</div>
 							<div id="callout-3" class="absolute inset-0 opacity-0">
+								<span
+									class="callout-spotlight"
+									style="--spot-x:78%;--spot-y:59%;--spot-w:21%;--spot-h:31%;"
+								></span>
 								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
 									<path
 										id="line-3"
@@ -473,8 +479,30 @@
 		color: rgba(0, 0, 0, 0.7);
 	}
 
+	.callout-spotlight {
+		position: absolute;
+		inset: 0;
+		border-radius: 0.75rem;
+		background: rgba(17, 18, 20, 0.34);
+		-webkit-mask-image: radial-gradient(
+			ellipse var(--spot-w) var(--spot-h) at var(--spot-x) var(--spot-y),
+			transparent 0%,
+			transparent 42%,
+			rgba(0, 0, 0, 0.78) 68%,
+			#000 100%
+		);
+		mask-image: radial-gradient(
+			ellipse var(--spot-w) var(--spot-h) at var(--spot-x) var(--spot-y),
+			transparent 0%,
+			transparent 42%,
+			rgba(0, 0, 0, 0.78) 68%,
+			#000 100%
+		);
+	}
+
 	.callout-label {
 		position: absolute;
+		z-index: 2;
 		transform: translate(-50%, -50%);
 		border-radius: 0.5rem;
 		background: rgba(255, 255, 255, 0.9);
@@ -489,11 +517,16 @@
 
 	.callout-dot {
 		position: absolute;
+		z-index: 2;
 		width: 7px;
 		height: 7px;
 		transform: translate(-50%, -50%);
 		border-radius: 9999px;
 		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85);
+	}
+
+	#callouts-wrap svg {
+		z-index: 1;
 	}
 
 	@media (max-width: 767px) {

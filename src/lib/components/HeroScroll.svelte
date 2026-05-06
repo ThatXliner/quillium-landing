@@ -78,7 +78,8 @@
 		const callouts = [
 			{ el: document.getElementById('callout-1')!, line: document.getElementById('line-1')! },
 			{ el: document.getElementById('callout-2')!, line: document.getElementById('line-2')! },
-			{ el: document.getElementById('callout-3')!, line: document.getElementById('line-3')! }
+			{ el: document.getElementById('callout-3')!, line: document.getElementById('line-3')! },
+			{ el: document.getElementById('callout-4')!, line: document.getElementById('line-4')! }
 		].filter((c) => c.el && c.line);
 
 		const copies = [
@@ -169,20 +170,24 @@
 		tl.to(callouts[1].line, { strokeDashoffset: 200, duration: 0.03 }, 0.5);
 		tl.to(shots[3], { opacity: 1, duration: 0.05 }, 0.52);
 		tl.to(copies[3], { opacity: 1, y: 0, duration: 0.05 }, 0.52);
+		tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.54);
+		tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.54);
 
 		// Phase 4: Safety (66%–82%)
 		tl.to(shots[3], { opacity: 0, duration: 0.05 }, 0.66);
 		tl.to(copies[3], { opacity: 0, y: -14, duration: 0.03 }, 0.66);
+		tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.66);
+		tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.66);
 		tl.to(shots[4], { opacity: 1, duration: 0.05 }, 0.68);
 		tl.to(copies[4], { opacity: 1, y: 0, duration: 0.05 }, 0.68);
-		tl.to(callouts[2].el, { opacity: 1, y: 0, duration: 0.04 }, 0.7);
-		tl.to(callouts[2].line, { strokeDashoffset: 0, duration: 0.04 }, 0.7);
+		tl.to(callouts[3].el, { opacity: 1, y: 0, duration: 0.04 }, 0.7);
+		tl.to(callouts[3].line, { strokeDashoffset: 0, duration: 0.04 }, 0.7);
 
 		// CTA (92%–100%)
 		tl.to(shots[4], { opacity: 0.3, duration: 0.07 }, 0.92);
 		tl.to(copies[4], { opacity: 0, y: -14, duration: 0.04 }, 0.9);
-		tl.to(callouts[2].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
-		tl.to(callouts[2].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
+		tl.to(callouts[3].el, { opacity: 0, y: -10, duration: 0.03 }, 0.9);
+		tl.to(callouts[3].line, { strokeDashoffset: 200, duration: 0.03 }, 0.9);
 
 		scrollCtx = tl.scrollTrigger!;
 		return () => clearInterval(interval);
@@ -326,6 +331,27 @@
 								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
 									<path
 										id="line-3"
+										d="M 45 62 C 57 58 66 54 78 49"
+										fill="none"
+										stroke="#22c55e"
+										stroke-width="0.35"
+										stroke-dasharray="200"
+										stroke-dashoffset="200"
+										stroke-linecap="round"
+										vector-effect="non-scaling-stroke"
+									/>
+								</svg>
+								<span
+									class="callout-label"
+									style="top:62%;left:30%;color:#22c55e;font-family:'Inter',sans-serif;"
+									>Nested annotations</span
+								>
+								<span class="callout-dot bg-[#22c55e]" style="top:49%;left:78%;"></span>
+							</div>
+							<div id="callout-4" class="absolute inset-0 opacity-0">
+								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+									<path
+										id="line-4"
 										d="M 60 74 C 48 62 37 47 25 36"
 										fill="none"
 										stroke="#3b82f6"

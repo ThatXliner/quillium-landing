@@ -284,11 +284,11 @@
 						</div>
 						<div id="callouts-wrap" class="pointer-events-none absolute inset-0">
 							<div id="callout-1" class="absolute inset-0 opacity-0">
-								<span
-									class="callout-spotlight"
-									style="--spot-x:58.5%;--spot-y:47.5%;--spot-w:31%;--spot-h:10%;"
-								></span>
-								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+								<svg
+									viewBox="0 0 100 100"
+									preserveAspectRatio="none"
+									class="absolute inset-0 h-full w-full"
+								>
 									<path
 										id="line-1"
 										d="M 27 32 C 39 35 50 40 58.5 47.5"
@@ -309,7 +309,11 @@
 								<span class="callout-dot bg-[#a855f7]" style="top:47.5%;left:58.5%;"></span>
 							</div>
 							<div id="callout-2" class="absolute inset-0 opacity-0">
-								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+								<svg
+									viewBox="0 0 100 100"
+									preserveAspectRatio="none"
+									class="absolute inset-0 h-full w-full"
+								>
 									<path
 										id="line-2"
 										d="M 74 26 C 79 28 84 31 88.5 34"
@@ -330,11 +334,11 @@
 								<span class="callout-dot bg-[#d97706]" style="top:34%;left:88.5%;"></span>
 							</div>
 							<div id="callout-3" class="absolute inset-0 opacity-0">
-								<span
-									class="callout-spotlight"
-									style="--spot-x:78%;--spot-y:59%;--spot-w:21%;--spot-h:31%;"
-								></span>
-								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+								<svg
+									viewBox="0 0 100 100"
+									preserveAspectRatio="none"
+									class="absolute inset-0 h-full w-full"
+								>
 									<path
 										id="line-3"
 										d="M 45 62 C 57 58 66 54 78 49"
@@ -355,7 +359,11 @@
 								<span class="callout-dot bg-[#22c55e]" style="top:49%;left:78%;"></span>
 							</div>
 							<div id="callout-4" class="absolute inset-0 opacity-0">
-								<svg viewBox="0 0 100 100" preserveAspectRatio="none" class="absolute inset-0 h-full w-full">
+								<svg
+									viewBox="0 0 100 100"
+									preserveAspectRatio="none"
+									class="absolute inset-0 h-full w-full"
+								>
 									<path
 										id="line-4"
 										d="M 60 74 C 48 62 37 47 25 36"
@@ -410,7 +418,11 @@
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
 								Comments, revisions, and suggestions float beside the text they're about.
-								Collaborate with your editor, anytime and anywhere.
+								<a
+									href="/omni"
+									class="text-black/40 underline underline-offset-2 hover:text-black/55"
+									>Collaborate with your editor, anytime and anywhere</a
+								>, anytime and anywhere.
 							</p>
 						</div>
 						<div
@@ -421,8 +433,8 @@
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
-								Revisions can hold revisions of their own. Follow an idea inward without losing
-								the draft around it.
+								Revisions can hold revisions of their own. Follow an idea inward without losing the
+								draft around it.
 							</p>
 						</div>
 						<div
@@ -479,30 +491,8 @@
 		color: rgba(0, 0, 0, 0.7);
 	}
 
-	.callout-spotlight {
-		position: absolute;
-		inset: 0;
-		border-radius: 0.75rem;
-		background: rgba(17, 18, 20, 0.34);
-		-webkit-mask-image: radial-gradient(
-			ellipse var(--spot-w) var(--spot-h) at var(--spot-x) var(--spot-y),
-			transparent 0%,
-			transparent 42%,
-			rgba(0, 0, 0, 0.78) 68%,
-			#000 100%
-		);
-		mask-image: radial-gradient(
-			ellipse var(--spot-w) var(--spot-h) at var(--spot-x) var(--spot-y),
-			transparent 0%,
-			transparent 42%,
-			rgba(0, 0, 0, 0.78) 68%,
-			#000 100%
-		);
-	}
-
 	.callout-label {
 		position: absolute;
-		z-index: 2;
 		transform: translate(-50%, -50%);
 		border-radius: 0.5rem;
 		background: rgba(255, 255, 255, 0.9);
@@ -517,16 +507,11 @@
 
 	.callout-dot {
 		position: absolute;
-		z-index: 2;
 		width: 7px;
 		height: 7px;
 		transform: translate(-50%, -50%);
 		border-radius: 9999px;
 		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85);
-	}
-
-	#callouts-wrap svg {
-		z-index: 1;
 	}
 
 	@media (max-width: 767px) {

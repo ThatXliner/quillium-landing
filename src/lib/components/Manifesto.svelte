@@ -1,7 +1,7 @@
 <!-- ==================== MANIFESTO ==================== -->
 <section id="manifesto" class="px-8 text-center">
 	<div class="reveal mx-auto mt-20 max-w-[800px]">
-		<p class="section-eyebrow section-eyebrow--centered">The Manifesto</p>
+		<h1 class="section-eyebrow section-eyebrow--centered">The Manifesto</>
 
 		<h2
 			class="mb-5 font-[Newsreader,Georgia,serif] text-[clamp(1.8rem,4vw,2.8rem)] leading-[1.25] font-normal text-black/88 italic"

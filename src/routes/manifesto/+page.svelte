@@ -43,7 +43,7 @@
 		rel="stylesheet"
 		media="print"
 		onload={(e) => {
-			e.currentTarget.media = 'all';
+			(e.currentTarget as HTMLLinkElement).media = 'all';
 		}}
 	/>
 	<noscript>

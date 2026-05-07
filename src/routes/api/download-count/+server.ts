@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { POSTHOG_PERSONAL_API_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { PUBLIC_POSTHOG_HOST } from '$env/static/public';
 import type { RequestHandler } from './$types';
 
@@ -20,12 +20,17 @@ export const GET: RequestHandler = async ({ fetch }) => {
 		return json({ count: cache.count });
 	}
 
+	const apiKey = env.POSTHOG_PERSONAL_API_KEY;
+	if (!apiKey) {
+		return json({ count: 0 });
+	}
+
 	try {
 		const res = await fetch(`${PUBLIC_POSTHOG_HOST}/api/projects/${PROJECT_ID}/query`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${POSTHOG_PERSONAL_API_KEY}`
+				Authorization: `Bearer ${apiKey}`
 			},
 			body: JSON.stringify({
 				query: {

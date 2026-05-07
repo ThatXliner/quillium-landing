@@ -23,34 +23,26 @@ function getPosts(): PostMeta[] {
 export const GET: RequestHandler = () => {
 	const posts = getPosts();
 	const site = 'https://quillium.bryanhu.com';
+	const pages = [
+		{ path: '/', changefreq: 'weekly', priority: '1.0' },
+		{ path: '/blog', changefreq: 'weekly', priority: '0.8' },
+		{ path: '/omni', changefreq: 'monthly', priority: '0.6' },
+		{ path: '/pricing', changefreq: 'monthly', priority: '0.5' },
+		{ path: '/manifesto', changefreq: 'monthly', priority: '0.5' },
+		{ path: '/cant-think-straight', changefreq: 'monthly', priority: '0.5' },
+		{ path: '/support', changefreq: 'monthly', priority: '0.4' },
+		{ path: '/ai', changefreq: 'monthly', priority: '0.5' },
+		{ path: '/privacy', changefreq: 'monthly', priority: '0.3' },
+		{ path: '/terms', changefreq: 'monthly', priority: '0.3' }
+	];
 
 	const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<url>
-		<loc>${site}/</loc>
-		<changefreq>weekly</changefreq>
-		<priority>1.0</priority>
-	</url>
-	<url>
-		<loc>${site}/blog</loc>
-		<changefreq>weekly</changefreq>
-		<priority>0.8</priority>
-	</url>
-	<url>
-		<loc>${site}/privacy</loc>
-		<changefreq>monthly</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>${site}/terms</loc>
-		<changefreq>monthly</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>${site}/ai</loc>
-		<changefreq>monthly</changefreq>
-		<priority>0.5</priority>
-	</url>
+${pages.map((page) => `	<url>
+		<loc>${site}${page.path}</loc>
+		<changefreq>${page.changefreq}</changefreq>
+		<priority>${page.priority}</priority>
+	</url>`).join('\n')}
 ${posts.map((post) => `	<url>
 		<loc>${site}/blog/${post.slug}</loc>
 		<lastmod>${post.date}</lastmod>

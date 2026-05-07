@@ -4,30 +4,35 @@
 
 	let { data } = $props();
 	const Content = $derived(data.content);
+	const site = 'https://quillium.bryanhu.com';
+	const postUrl = $derived(`${site}/blog/${data.slug}`);
+	const imageUrl = $derived(`${site}/og/${data.slug}`);
+	const modifiedDate = $derived(data.meta.updated ?? data.meta.date);
 </script>
 
 <svelte:head>
 	<title>{data.meta.title} — Quillium</title>
 	<meta name="description" content={data.meta.description} />
-	<link rel="canonical" href="https://quillium.bryanhu.com/blog/{data.slug}" />
+	<link rel="canonical" href={postUrl} />
 
 	<!-- Open Graph -->
 	<meta property="og:type" content="article" />
-	<meta property="og:url" content="https://quillium.bryanhu.com/blog/{data.slug}" />
+	<meta property="og:url" content={postUrl} />
 	<meta property="og:title" content="{data.meta.title} — Quillium" />
 	<meta property="og:description" content={data.meta.description} />
 	<meta property="og:site_name" content="Quillium" />
-	<meta property="og:image" content="https://quillium.bryanhu.com/og/{data.slug}" />
+	<meta property="og:image" content={imageUrl} />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="article:published_time" content={data.meta.date} />
+	<meta property="article:modified_time" content={modifiedDate} />
 	{#if data.meta.author}<meta property="article:author" content={data.meta.author} />{/if}
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="{data.meta.title} — Quillium" />
 	<meta name="twitter:description" content={data.meta.description} />
-	<meta name="twitter:image" content="https://quillium.bryanhu.com/og/{data.slug}" />
+	<meta name="twitter:image" content={imageUrl} />
 
 	<!-- Structured Data -->
 	{@html `<script type="application/ld+json">${JSON.stringify({
@@ -36,6 +41,8 @@
 		"headline": data.meta.title,
 		"description": data.meta.description,
 		"datePublished": data.meta.date,
+		"dateModified": modifiedDate,
+		"image": imageUrl,
 		"author": {
 			"@type": "Person",
 			"name": data.meta.author ?? "Quillium"
@@ -45,8 +52,37 @@
 			"name": "Quillium",
 			"url": "https://quillium.bryanhu.com"
 		},
-		"url": `https://quillium.bryanhu.com/blog/${data.slug}`,
-		"mainEntityOfPage": `https://quillium.bryanhu.com/blog/${data.slug}`
+		"isPartOf": {
+			"@type": "Blog",
+			"name": "Quillium Blog",
+			"url": `${site}/blog`
+		},
+		"url": postUrl,
+		"mainEntityOfPage": postUrl
+	})}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{
+				"@type": "ListItem",
+				"position": 1,
+				"name": "Quillium",
+				"item": site
+			},
+			{
+				"@type": "ListItem",
+				"position": 2,
+				"name": "Blog",
+				"item": `${site}/blog`
+			},
+			{
+				"@type": "ListItem",
+				"position": 3,
+				"name": data.meta.title,
+				"item": postUrl
+			}
+		]
 	})}</script>`}
 </svelte:head>
 

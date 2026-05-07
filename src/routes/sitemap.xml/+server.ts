@@ -6,6 +6,7 @@ interface PostMeta {
 	title: string;
 	description: string;
 	date: string;
+	updated?: string;
 	slug: string;
 }
 
@@ -24,28 +25,34 @@ export const GET: RequestHandler = () => {
 	const posts = getPosts();
 	const site = 'https://quillium.bryanhu.com';
 	const pages = [
-		{ path: '/', changefreq: 'weekly', priority: '1.0' },
-		{ path: '/blog', changefreq: 'weekly', priority: '0.8' },
-		{ path: '/omni', changefreq: 'monthly', priority: '0.6' },
-		{ path: '/pricing', changefreq: 'monthly', priority: '0.5' },
-		{ path: '/manifesto', changefreq: 'monthly', priority: '0.5' },
-		{ path: '/cant-think-straight', changefreq: 'monthly', priority: '0.5' },
-		{ path: '/support', changefreq: 'monthly', priority: '0.4' },
-		{ path: '/ai', changefreq: 'monthly', priority: '0.5' },
-		{ path: '/privacy', changefreq: 'monthly', priority: '0.3' },
-		{ path: '/terms', changefreq: 'monthly', priority: '0.3' }
+		{ path: '/', lastmod: '2026-05-06', changefreq: 'weekly', priority: '1.0' },
+		{ path: '/blog', lastmod: '2026-05-06', changefreq: 'weekly', priority: '0.8' },
+		{ path: '/omni', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.6' },
+		{ path: '/pricing', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.5' },
+		{ path: '/manifesto', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.5' },
+		{
+			path: '/cant-think-straight',
+			lastmod: '2026-05-06',
+			changefreq: 'monthly',
+			priority: '0.5'
+		},
+		{ path: '/support', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.4' },
+		{ path: '/ai', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.5' },
+		{ path: '/privacy', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.3' },
+		{ path: '/terms', lastmod: '2026-05-06', changefreq: 'monthly', priority: '0.3' }
 	];
 
 	const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages.map((page) => `	<url>
 		<loc>${site}${page.path}</loc>
+		<lastmod>${page.lastmod}</lastmod>
 		<changefreq>${page.changefreq}</changefreq>
 		<priority>${page.priority}</priority>
 	</url>`).join('\n')}
 ${posts.map((post) => `	<url>
 		<loc>${site}/blog/${post.slug}</loc>
-		<lastmod>${post.date}</lastmod>
+		<lastmod>${post.updated ?? post.date}</lastmod>
 		<priority>0.7</priority>
 	</url>`).join('\n')}
 </urlset>`;

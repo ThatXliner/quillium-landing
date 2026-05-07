@@ -15,7 +15,13 @@ export async function load({ params }) {
 		return {
 			slug: params.slug,
 			content: post.default,
-			meta: post.metadata as { title: string; description: string; date: string; author?: string }
+			meta: post.metadata as {
+				title: string;
+				description: string;
+				date: string;
+				updated?: string;
+				author?: string;
+			}
 		};
 	} catch {
 		error(404, 'Post not found');

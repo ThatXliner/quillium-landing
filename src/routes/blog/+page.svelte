@@ -3,6 +3,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 	let { data } = $props();
+	const site = 'https://quillium.bryanhu.com';
 </script>
 
 <svelte:head>
@@ -31,6 +32,29 @@
 		content="Thoughts on writing, collaboration, and building Quillium."
 	/>
 	<meta name="twitter:image" content="https://quillium.bryanhu.com/og-image.png" />
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Blog",
+		"name": "Quillium Blog",
+		"description": "Thoughts on writing, collaboration, and building Quillium.",
+		"url": `${site}/blog`,
+		"publisher": {
+			"@type": "Organization",
+			"name": "Quillium",
+			"url": site
+		}
+	})}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "ItemList",
+		"name": "Quillium Blog Posts",
+		"itemListElement": data.posts.map((post, index) => ({
+			"@type": "ListItem",
+			"position": index + 1,
+			"url": `${site}/blog/${post.slug}`,
+			"name": post.title
+		}))
+	})}</script>`}
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link

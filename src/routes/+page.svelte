@@ -21,7 +21,7 @@
 
 		posthog.onFeatureFlags(() => {
 			const flag = posthog.getFeatureFlag('hero-scroll-experiment');
-			showScrollHero = flag === 'scroll';
+			showScrollHero = flag === 'scroll' && window.innerWidth >= 768;
 		});
 
 		initReveal();

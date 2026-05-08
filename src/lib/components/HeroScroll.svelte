@@ -395,7 +395,7 @@
 								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
-								Your writing, front and center.
+								Scroll to learn more.
 							</p>
 						</div>
 						<div

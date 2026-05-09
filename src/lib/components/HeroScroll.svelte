@@ -108,6 +108,7 @@
 		});
 
 		// Measure where the shot naturally sits (in the right grid column), calculate center offset
+		const stageRect = stage.getBoundingClientRect();
 		const shotRect = shotWrap.getBoundingClientRect();
 		const vw = window.innerWidth;
 		const targetW = Math.min(vw * 0.88, 960);
@@ -115,7 +116,7 @@
 		const targetCenterX = vw / 2;
 		const currentCenterX = shotRect.left + shotRect.width / 2;
 		const moveX = targetCenterX - currentCenterX;
-		const currentCenterY = shotRect.top + shotRect.height / 2;
+		const currentCenterY = shotRect.top - stageRect.top + shotRect.height / 2;
 		const moveY = window.innerHeight / 2 - currentCenterY;
 
 		const tl = gsap.timeline({

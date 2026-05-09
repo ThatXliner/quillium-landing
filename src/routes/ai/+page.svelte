@@ -32,6 +32,7 @@
 		"headline": data.meta.title,
 		"description": data.meta.description,
 		"datePublished": data.meta.date,
+		"dateModified": data.meta.updated ?? data.meta.date,
 		"author": {
 			"@type": "Person",
 			"name": data.meta.author ?? "Quillium"
@@ -40,6 +41,12 @@
 			"@type": "Organization",
 			"name": "Quillium",
 			"url": "https://quillium.bryanhu.com"
+		},
+		"image": "https://quillium.bryanhu.com/og-image.png",
+		"isPartOf": {
+			"@type": "Blog",
+			"name": "Quillium Blog",
+			"url": "https://quillium.bryanhu.com/blog"
 		},
 		"url": "https://quillium.bryanhu.com/ai",
 		"mainEntityOfPage": "https://quillium.bryanhu.com/ai"

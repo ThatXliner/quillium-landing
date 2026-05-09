@@ -81,6 +81,7 @@
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@quillium" />
 	<meta name="twitter:title" content="Quillium — The Non-Linear Writing App" />
 	<meta
 		name="twitter:description"
@@ -97,7 +98,7 @@
 			'A writing app that lets you write in branches. Fork any sentence, keep every version, and never lose a draft.',
 		url: 'https://quillium.bryanhu.com',
 		applicationCategory: 'ProductivityApplication',
-		operatingSystem: 'Web',
+		operatingSystem: 'macOS, Windows, Linux',
 		offers: {
 			'@type': 'Offer',
 			price: '0',

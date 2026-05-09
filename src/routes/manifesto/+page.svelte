@@ -52,6 +52,24 @@
 			rel="stylesheet"
 		/>
 	</noscript>
+		<!-- Structured Data: Article -->
+		{@html `<script type="application/ld+json">${JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Article",
+			"headline": "Manifesto — Quillium",
+			"description": "Writing is thinking, and thinking is non-linear. The Quillium manifesto on treating non-linearity as a feature, not a problem to manage.",
+			"author": {
+				"@type": "Person",
+				"name": "Bryan Hu"
+			},
+			"publisher": {
+				"@type": "Organization",
+				"name": "Quillium",
+				"url": "https://quillium.bryanhu.com"
+			},
+			"url": "https://quillium.bryanhu.com/manifesto",
+			"mainEntityOfPage": "https://quillium.bryanhu.com/manifesto"
+		})}<\/script>`}
 </svelte:head>
 
 <Nav />

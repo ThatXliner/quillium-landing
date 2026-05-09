@@ -53,8 +53,14 @@ ${pages.map((page) => `	<url>
 ${posts.map((post) => `	<url>
 		<loc>${site}/blog/${post.slug}</loc>
 		<lastmod>${post.updated ?? post.date}</lastmod>
+		<changefreq>monthly</changefreq>
 		<priority>0.7</priority>
 	</url>`).join('\n')}
+	<url>
+		<loc>${site}/rss.xml</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.3</priority>
+	</url>
 </urlset>`;
 
 	return new Response(xml, {

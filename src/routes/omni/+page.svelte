@@ -205,6 +205,39 @@
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
 		rel="stylesheet"
 	/>
+		<meta name="twitter:site" content="@quillium" />
+
+		<!-- Structured Data: FAQPage -->
+		{@html `<script type="application/ld+json">${JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "FAQPage",
+			"mainEntity": [
+				{
+					"@type": "Question",
+					"name": "When will Omni ship?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "It's currently available through the waitlist!"
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "Why is this a paid add-on?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Running a real-time relay server costs real money. We'd rather charge honestly for infrastructure than mine your data. The free app stays free because it doesn't rely on our servers."
+					}
+				},
+				{
+					"@type": "Question",
+					"name": "What if I cancel?",
+					"acceptedAnswer": {
+						"@type": "Answer",
+						"text": "Your documents were always stored on your local device first. Omni is only a layer on top, not a replacement."
+					}
+				}
+			]
+		})}<\/script>`}
 </svelte:head>
 
 <Nav />

@@ -3,8 +3,8 @@
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { Pen, Lock, ShieldCheck } from '@lucide/svelte';
-
-	gsap.registerPlugin(ScrollTrigger);
+	import { browser } from '$app/environment';
+	if (browser) gsap.registerPlugin(ScrollTrigger);
 
 	import revisionImg from '$lib/assets/screenshots/05-revision-active.png';
 	import commentImg from '$lib/assets/screenshots/04-comment-active.png';

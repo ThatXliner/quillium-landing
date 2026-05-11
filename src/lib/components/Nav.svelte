@@ -34,7 +34,7 @@
 		<!-- Desktop links -->
 		<div class="hidden items-center gap-8 md:flex">
 			<a
-				href="/#features"
+				href="/features"
 				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
 				>Features</a
 			>
@@ -42,6 +42,11 @@
 				href="/manifesto"
 				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
 				>Manifesto</a
+			>
+			<a
+				href="/omni"
+				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				>Omni</a
 			>
 			<a
 				href="/#download"
@@ -83,8 +88,9 @@
 	<!-- Mobile dropdown -->
 	{#if menuOpen}
 		<div class="mobile-menu flex flex-col gap-1 md:hidden" transition:slide={{ duration: 250 }}>
-			<a href="/#features" class="mobile-link" onclick={closeMenu}>Features</a>
+			<a href="/features" class="mobile-link" onclick={closeMenu}>Features</a>
 			<a href="/manifesto" class="mobile-link" onclick={closeMenu}>Manifesto</a>
+			<a href="/omni" class="mobile-link" onclick={closeMenu}>Omni</a>
 			<a href="/#download" class="mobile-link" onclick={closeMenu}>Download</a>
 			<a href="/blog" class="mobile-link" onclick={closeMenu}>Blog</a>
 			<a href="/pricing" class="mobile-link" onclick={closeMenu}>Pricing</a>

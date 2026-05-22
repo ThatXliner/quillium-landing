@@ -9,13 +9,11 @@
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { dev } from '$app/environment';
 
 	let { data } = $props();
 
-	let heroScrollEnabled = $state(false);
 	let isDesktop = $state(true);
-	let showScrollHero = $derived(heroScrollEnabled && isDesktop);
+	let showScrollHero = $derived(isDesktop);
 
 	onMount(() => {
 		if (data.release.version) {
@@ -25,16 +23,6 @@
 		const mql = matchMedia('(min-width: 768px)');
 		isDesktop = mql.matches;
 		mql.addEventListener('change', (e) => (isDesktop = e.matches));
-
-		const params = new URLSearchParams(window.location.search);
-		if (params.get('hero') === 'scroll' && dev) {
-			heroScrollEnabled = true;
-		} else {
-			posthog.onFeatureFlags(() => {
-				const flag = posthog.getFeatureFlag('hero-scroll-experiment');
-				heroScrollEnabled = flag === 'scroll';
-			});
-		}
 
 		initReveal();
 

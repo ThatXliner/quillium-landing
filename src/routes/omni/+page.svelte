@@ -4,6 +4,7 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import posthog from 'posthog-js';
 	import { initReveal } from '$lib/reveal';
+	import { isMobile } from '$lib/breakpoints';
 	import Nav from '$lib/components/Nav.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import {
@@ -63,8 +64,7 @@
 		initReveal();
 
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		const isMobile = window.innerWidth <= 768;
-		if (prefersReducedMotion || isMobile) return;
+		if (prefersReducedMotion || isMobile()) return;
 
 		gsap.registerPlugin(ScrollTrigger);
 

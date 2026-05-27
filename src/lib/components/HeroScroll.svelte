@@ -4,6 +4,7 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { Pen, Lock, ShieldCheck } from '@lucide/svelte';
 	import { browser } from '$app/environment';
+	import { isMobile } from '$lib/breakpoints';
 	if (browser) gsap.registerPlugin(ScrollTrigger);
 
 	import revisionImg from '$lib/assets/screenshots/05-revision-active.png';
@@ -32,10 +33,9 @@
 	let showPeriod = $state(false);
 	let showCursor = $state(true);
 	let scrollCtx: ScrollTrigger | null = null;
-	let isMobile = $state(false);
 
 	onMount(() => {
-		isMobile = window.innerWidth < 768;
+		const mobile = isMobile();
 
 		const ua = navigator.userAgent.toLowerCase();
 		if (ua.includes('mac')) detected = 'mac';
@@ -59,7 +59,7 @@
 		}, 100);
 
 		// Mobile: skip all GSAP setup, ensure elements visible
-		if (isMobile) {
+		if (mobile) {
 			document.querySelectorAll<HTMLElement>('#shot-editor, #shot-revision, #shot-comment, #shot-inline, #shot-library').forEach(el => {
 				el.style.opacity = '1';
 				el.style.transform = 'none';

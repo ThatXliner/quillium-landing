@@ -9,20 +9,21 @@
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { MOBILE_BREAKPOINT } from '$lib/breakpoints';
 
 	let { data } = $props();
 
-	let isDesktop = $state(false);
-	let showScrollHero = $derived(isDesktop);
+	let isMobile = $state(true);
+	let showScrollHero = $derived(!isMobile);
 
 	onMount(() => {
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
 		}
 
-		const mql = matchMedia('(min-width: 768px)');
-		isDesktop = mql.matches;
-		mql.addEventListener('change', (e) => (isDesktop = e.matches));
+		const mql = matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+		isMobile = mql.matches;
+		mql.addEventListener('change', (e) => (isMobile = e.matches));
 
 		initReveal();
 

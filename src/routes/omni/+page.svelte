@@ -63,7 +63,8 @@
 		initReveal();
 
 		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (prefersReducedMotion) return;
+		const isMobile = window.innerWidth <= 768;
+		if (prefersReducedMotion || isMobile) return;
 
 		gsap.registerPlugin(ScrollTrigger);
 

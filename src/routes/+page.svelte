@@ -12,7 +12,7 @@
 
 	let { data } = $props();
 
-	let isDesktop = $state(true);
+	let isDesktop = $state(false);
 	let showScrollHero = $derived(isDesktop);
 
 	onMount(() => {

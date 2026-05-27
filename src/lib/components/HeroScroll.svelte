@@ -58,7 +58,19 @@
 			}
 		}, 100);
 
-		if (isMobile) return () => clearInterval(interval);
+		// Mobile: skip all GSAP setup, ensure elements visible
+		if (isMobile) {
+			document.querySelectorAll<HTMLElement>('#shot-editor, #shot-revision, #shot-comment, #shot-inline, #shot-library').forEach(el => {
+				el.style.opacity = '1';
+				el.style.transform = 'none';
+			});
+			document.querySelectorAll<HTMLElement>('#copy-editor, #copy-branches, #copy-comments, #copy-inline, #copy-safety').forEach(el => {
+				el.style.opacity = '1';
+				el.style.transform = 'none';
+				el.style.pointerEvents = 'auto';
+			});
+			return () => clearInterval(interval);
+		}
 
 		const stage = document.getElementById('features');
 		if (!stage) return () => clearInterval(interval);

@@ -121,18 +121,3 @@ html {
 		color: rgba(0, 0, 0, 0.55);
 	}
 }
-
-/* ── Disable animations on mobile ── */
-@media (max-width: 768px) {
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.001ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.001ms !important;
-	}
-	.reveal {
-		opacity: 1;
-		transform: none;
-	}
-}

@@ -3,17 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const isMobile = () => typeof window !== 'undefined' && window.innerWidth <= 768;
-
 export function initReveal() {
-	if (isMobile()) {
-		gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
-			el.style.opacity = '1';
-			el.style.transform = 'none';
-		});
-		return;
-	}
-
 	gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
 		const delay = el.classList.contains('reveal-delay-1')
 			? 0.1

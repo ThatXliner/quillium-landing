@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { PenLine, WifiOff, ExternalLink, CircleDollarSign, Download } from '@lucide/svelte';
+	\timport { PenLine, WifiOff, ExternalLink, CircleDollarSign, Download, Ban } from '@lucide/svelte';
 </script>
 
 <svelte:head>
@@ -129,6 +129,18 @@
 								href="/blog/free-isnt-generosity"
 								class="text-[#3b82f6] no-underline hover:underline">That's the point</a
 							>
+						</p>
+					</div>
+				</div>
+				<div class="promise-cell">
+					<Ban class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
+					<div>
+						<p class="promise-title">No AI writing, no shortcuts</p>
+						<p class="promise-body">
+							Quillium&#39;s AI features are for <em>feedback</em>, not generation. Off by default,
+							requires your own API key. <a
+								href="/blog/quillium-is-not-an-ai-app"
+								class="text-[#3b82f6] no-underline hover:underline">Write every word.</a>
 						</p>
 					</div>
 				</div>

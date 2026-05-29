@@ -35,27 +35,32 @@
 		<div class="hidden items-center gap-8 md:flex">
 			<a
 				href="/#features"
-				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88 contrast-more:text-black/60"
 				>Features</a
 			>
 			<a
+				href="/omni"
+				class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88 contrast-more:text-black/60"
+				>Omni</a
+			>
+			<a
 				href="/manifesto"
-				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88 contrast-more:text-black/60"
 				>Manifesto</a
 			>
 			<a
 				href="/#download"
-				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88 contrast-more:text-black/60"
 				>Download</a
 			>
 			<a
 				href="/blog"
-				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88 contrast-more:text-black/60"
 				>Blog</a
 			>
 			<a
 				href="/pricing"
-				class="text-[0.8rem] font-medium text-black/50 contrast-more:text-black/60 no-underline transition-colors duration-300 hover:text-black/88"
+				class="text-[0.8rem] font-medium text-black/50 no-underline transition-colors duration-300 hover:text-black/88 contrast-more:text-black/60"
 				>Pricing</a
 			>
 			<a

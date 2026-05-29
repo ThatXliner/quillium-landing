@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	\timport { PenLine, WifiOff, ExternalLink, CircleDollarSign, Download, Ban } from '@lucide/svelte';
+	import { PenLine, WifiOff, ExternalLink, CircleDollarSign, Download, Ban } from '@lucide/svelte';
 </script>
 
 <svelte:head>

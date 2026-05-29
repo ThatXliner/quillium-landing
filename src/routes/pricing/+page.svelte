@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Nav from '$lib/components/Nav.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { PenLine, WifiOff, ExternalLink, CircleDollarSign, Download, Ban } from '@lucide/svelte';
+	import { PenLine, WifiOff, ExternalLink, CircleDollarSign, Download } from '@lucide/svelte';
 </script>
 
 <svelte:head>
@@ -31,38 +31,39 @@
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
 		rel="stylesheet"
 	/>
-		<meta name="twitter:site" content="@quillium" />
+	<meta name="twitter:site" content="@quillium" />
 
-		<!-- Structured Data: Product (Omni subscription) + SoftwareApplication (free) -->
-		{@html `<script type="application/ld+json">${JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "Product",
-			"name": "Quillium Omni",
-			"description": "Cloud sync across devices and real-time collaboration for Quillium, the non-linear writing app.",
-			"offers": {
-				"@type": "Offer",
-				"price": "20",
-				"priceCurrency": "USD",
-				"priceType": "monthly",
-				"availability": "https://schema.org/PreOrder",
-				"description": "Expected monthly pricing. Final price depends on number of subscribers."
-			}
-		})}<\/script>`}
-		{@html `<script type="application/ld+json">${JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "SoftwareApplication",
-			"name": "Quillium",
-			"description": "The non-linear writing app. Free forever with no locked features.",
-			"url": "https://quillium.bryanhu.com",
-			"applicationCategory": "ProductivityApplication",
-			"operatingSystem": "macOS, Windows, Linux",
-			"offers": {
-				"@type": "Offer",
-				"price": "0",
-				"priceCurrency": "USD",
-				"availability": "https://schema.org/InStock"
-			}
-		})}<\/script>`}
+	<!-- Structured Data: Product (Omni subscription) + SoftwareApplication (free) -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'Product',
+		name: 'Quillium Omni',
+		description:
+			'Cloud sync across devices and real-time collaboration for Quillium, the non-linear writing app.',
+		offers: {
+			'@type': 'Offer',
+			price: '20',
+			priceCurrency: 'USD',
+			priceType: 'monthly',
+			availability: 'https://schema.org/PreOrder',
+			description: 'Expected monthly pricing. Final price depends on number of subscribers.'
+		}
+	})}<\/script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'SoftwareApplication',
+		name: 'Quillium',
+		description: 'The non-linear writing app. Free forever with no locked features.',
+		url: 'https://quillium.bryanhu.com',
+		applicationCategory: 'ProductivityApplication',
+		operatingSystem: 'macOS, Windows, Linux',
+		offers: {
+			'@type': 'Offer',
+			price: '0',
+			priceCurrency: 'USD',
+			availability: 'https://schema.org/InStock'
+		}
+	})}<\/script>`}
 </svelte:head>
 
 <Nav />
@@ -129,18 +130,6 @@
 								href="/blog/free-isnt-generosity"
 								class="text-[#3b82f6] no-underline hover:underline">That's the point</a
 							>
-						</p>
-					</div>
-				</div>
-				<div class="promise-cell">
-					<Ban class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
-					<div>
-						<p class="promise-title">No AI writing, no shortcuts</p>
-						<p class="promise-body">
-							Quillium&#39;s AI features are for <em>feedback</em>, not generation. Off by default,
-							requires your own API key. <a
-								href="/blog/quillium-is-not-an-ai-app"
-								class="text-[#3b82f6] no-underline hover:underline">Write every word.</a>
 						</p>
 					</div>
 				</div>

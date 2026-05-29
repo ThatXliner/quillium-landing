@@ -257,6 +257,11 @@
 		<!-- Waitlist form -->
 		<div class="mx-auto mt-10 max-w-lg">
 			{#if !submitted}
+				<div class="waitlist-preamble">
+					<Cloud size={14} strokeWidth={1.5} />
+					<p>Priority access goes to active Quillium users.
+						<a href="/#download" class="underline">Download the app first</a> to move up the list.</p>
+				</div>
 				<form onsubmit={handleSubmit} class="flex gap-2 max-[440px]:flex-col">
 					<input
 						type="email"
@@ -283,6 +288,7 @@
 				<div class="success-card">
 					<Check size={18} strokeWidth={2} />
 					<p>You're on the list. We'll be in touch when Omni opens up.</p>
+					<p class="mt-2 text-[0.75rem] text-black/40">Make sure you've <a href="/#download" class="underline">downloaded Quillium</a> — active users get waitlist priority.</p>
 				</div>
 			{/if}
 		</div>
@@ -1295,5 +1301,24 @@
 	.section-heading .italic {
 		font-style: italic;
 		color: rgba(0, 0, 0, 0.55);
+	}
+
+	.waitlist-preamble {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 14px;
+		margin-bottom: 12px;
+		border-radius: 10px;
+		background: rgba(59, 130, 246, 0.06);
+		border: 1px solid rgba(59, 130, 246, 0.1);
+		font-size: 0.78rem;
+		color: rgba(0, 0, 0, 0.5);
+		line-height: 1.5;
+		text-align: left;
+	}
+	.waitlist-preamble a {
+		color: #3b82f6;
+		text-decoration: underline;
 	}
 </style>

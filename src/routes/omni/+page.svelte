@@ -206,39 +206,39 @@
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap"
 		rel="stylesheet"
 	/>
-		<meta name="twitter:site" content="@quillium" />
+	<meta name="twitter:site" content="@quillium" />
 
-		<!-- Structured Data: FAQPage -->
-		{@html `<script type="application/ld+json">${JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "FAQPage",
-			"mainEntity": [
-				{
-					"@type": "Question",
-					"name": "When will Omni ship?",
-					"acceptedAnswer": {
-						"@type": "Answer",
-						"text": "It's currently available through the waitlist!"
-					}
-				},
-				{
-					"@type": "Question",
-					"name": "Why is this a paid add-on?",
-					"acceptedAnswer": {
-						"@type": "Answer",
-						"text": "Running a real-time relay server costs real money. We'd rather charge honestly for infrastructure than mine your data. The free app stays free because it doesn't rely on our servers."
-					}
-				},
-				{
-					"@type": "Question",
-					"name": "What if I cancel?",
-					"acceptedAnswer": {
-						"@type": "Answer",
-						"text": "Your documents were always stored on your local device first. Omni is only a layer on top, not a replacement."
-					}
+	<!-- Structured Data: FAQPage -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: [
+			{
+				'@type': 'Question',
+				name: 'When will Omni ship?',
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: "It's currently available through the waitlist!"
 				}
-			]
-		})}<\/script>`}
+			},
+			{
+				'@type': 'Question',
+				name: 'Why is this a paid add-on?',
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: "Running a real-time relay server costs real money. We'd rather charge honestly for infrastructure than mine your data. The free app stays free because it doesn't rely on our servers."
+				}
+			},
+			{
+				'@type': 'Question',
+				name: 'What if I cancel?',
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: 'Your documents were always stored on your local device first. Omni is only a layer on top, not a replacement.'
+				}
+			}
+		]
+	})}<\/script>`}
 </svelte:head>
 
 <Nav />
@@ -257,11 +257,11 @@
 		<!-- Waitlist form -->
 		<div class="mx-auto mt-10 max-w-lg">
 			{#if !submitted}
-				<div class="waitlist-preamble">
-					<Cloud size={14} strokeWidth={1.5} />
-					<p>Priority access goes to active Quillium users.
-						<a href="/#download" class="underline">Download the app first</a> to move up the list.</p>
-				</div>
+				<p class="mb-3 text-center text-sm leading-[1.5] text-black/50 italic">
+					Priority is given to active users.
+					<a href="/#download" class="underline">Download the app first</a> to move up the list.
+				</p>
+
 				<form onsubmit={handleSubmit} class="flex gap-2 max-[440px]:flex-col">
 					<input
 						type="email"
@@ -288,7 +288,10 @@
 				<div class="success-card">
 					<Check size={18} strokeWidth={2} />
 					<p>You're on the list. We'll be in touch when Omni opens up.</p>
-					<p class="mt-2 text-[0.75rem] text-black/40">Make sure you've <a href="/#download" class="underline">downloaded Quillium</a> — active users get waitlist priority.</p>
+					<p class="mt-2 text-[0.75rem] text-black/40">
+						Make sure you've <a href="/#download" class="underline">downloaded Quillium</a> — active users
+						get waitlist priority.
+					</p>
 				</div>
 			{/if}
 		</div>
@@ -1301,24 +1304,5 @@
 	.section-heading .italic {
 		font-style: italic;
 		color: rgba(0, 0, 0, 0.55);
-	}
-
-	.waitlist-preamble {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 10px 14px;
-		margin-bottom: 12px;
-		border-radius: 10px;
-		background: rgba(59, 130, 246, 0.06);
-		border: 1px solid rgba(59, 130, 246, 0.1);
-		font-size: 0.78rem;
-		color: rgba(0, 0, 0, 0.5);
-		line-height: 1.5;
-		text-align: left;
-	}
-	.waitlist-preamble a {
-		color: #3b82f6;
-		text-decoration: underline;
 	}
 </style>

@@ -5,13 +5,15 @@ date: "2026-04-11"
 author: "Bryan Hu"
 ---
 
-There's a [blog post from 2015](https://mjwrightnz.wordpress.com/2015/08/03/why-i-think-track-changes-sucks-as-an-editing-tool/) by Matthew Wright called "Why I Think Track Changes Sucks as an Editing Tool." He's a New Zealand editor, and his core complaint is simple: [Track Changes](https://support.microsoft.com/en-us/office/track-changes-in-word-197ba630-0f5f-4a8e-9a77-3712475e806a) was designed for office workers passing memos back and forth, not for people doing real line-editing on prose. He's right, and the situation hasn't improved in the eleven years since he wrote it.
+There's a [blog post from 2015](https://mjwrightnz.wordpress.com/2015/08/03/why-i-think-track-changes-sucks-as-an-editing-tool/) by Matthew Wright called "Why I Think Track Changes Sucks as an Editing Tool." He's a New Zealand editor, and his core complaint is simple: [Track Changes](https://support.microsoft.com/en-us/office/track-changes-in-word-197ba630-0f5f-4a8e-9a77-3712475e806a) was designed for office workers passing memos back and forth, not for people doing real line-editing on prose.
 
-Track Changes does one thing: it shows you what someone added and what someone deleted, inline, in a single linear diff. That's useful if you're a manager reviewing a contract and you want to see exactly which clauses your lawyer changed. It is almost useless if you're a writer trying to revise.
+Track Changes does one thing: it shows you what someone added and what someone deleted, inline, in a single linear diff. That's useful if you're a manager reviewing a contract and you want to see exactly which clauses your lawyer changed. 
+
+Matthew is (W)right, and the situation hasn't improved in the eleven years since he wrote that blog: Track Changes is almost useless if you're a writer trying to revise.
 
 ## The diff is not the point
 
-When you're revising a piece of writing, you're not making a list of surgical edits to an otherwise finished document. You're *rethinking*. You're trying a different opening, restructuring an argument, cutting a paragraph and seeing if the piece still holds without it. You might rewrite the same sentence five different ways before you figure out what you actually mean.
+When you're revising a piece of writing, you're *rethinking*. You're trying a different opening, restructuring an argument, cutting a paragraph and seeing if the piece still holds without it. You might rewrite the same sentence five different ways before you figure out what you actually mean.
 
 Track Changes can't represent any of that. It shows you insertions and deletions on a single timeline. If you rewrite a sentence, Track Changes doesn't show you "here are two versions of this sentence." It shows you a red strikethrough of the old words and a blue insertion of the new words, jammed together in a way that makes both versions harder to read than either one alone.
 
@@ -45,7 +47,7 @@ And because every branch is scoped to the specific text it belongs to, you can m
 
 I'm not saying Track Changes is useless. If you're an editor sending a marked-up manuscript back to an author, or a lawyer redlining a contract, the linear diff is exactly what you need. It's a communication tool for saying "here's what I changed, do you agree?"
 
-But that's proofreading. That's copyediting. And yes, you could argue that copyediting *is* revision, that every stage of editing is part of the same process. Fair enough.
+But that's proofreading or copyediting. And yes, you could argue that copyediting *is* revision, and that every stage of editing is part of the same process.
 
 But there's a reason writers talk about "revising" and "copyediting" as different activities. Revision is when you're still figuring out what the piece is. Copyediting is when you already know and you're cleaning it up. Track Changes is fine for the cleaning-up part. It's the figuring-out part where it falls apart, and that's where most of the actual writing happens.
 

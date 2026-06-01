@@ -15,7 +15,7 @@ Matthew is (W)right, and the situation hasn't improved in the eleven years since
 
 When you're revising a piece of writing, you're *rethinking*. You're trying a different opening, restructuring an argument, cutting a paragraph and seeing if the piece still holds without it. You might rewrite the same sentence five different ways before you figure out what you actually mean.
 
-Track Changes can't represent any of that. It shows you insertions and deletions on a single timeline. If you rewrite a sentence, Track Changes doesn't show you "here are two versions of this sentence." It shows you a red strikethrough of the old words and a blue insertion of the new words, jammed together in a way that makes both versions harder to read than either one alone.
+Track Changes can't represent any of that. It shows you insertions and deletions on a single timeline. If you rewrite a sentence, Track Changes doesn't show you "here are two versions of this sentence." Instead, it shows you a red strikethrough of the old words and a blue insertion of the new words, jammed together in a way that makes both versions harder to read than either one alone.
 
 And if you rewrite it a *third* time? Now you have a strikethrough of the strikethrough, nested colored text, and a document that looks like a crime scene. What a mess! The more you revise, the less readable the diff becomes. The tool actively punishes you for doing the thing writing requires.
 

@@ -7,7 +7,7 @@ author: "Bryan Hu"
 
 There's a [blog post from 2015](https://mjwrightnz.wordpress.com/2015/08/03/why-i-think-track-changes-sucks-as-an-editing-tool/) by Matthew Wright called "Why I Think Track Changes Sucks as an Editing Tool." He's a New Zealand editor, and his core complaint is simple: [Track Changes](https://support.microsoft.com/en-us/office/track-changes-in-word-197ba630-0f5f-4a8e-9a77-3712475e806a) was designed for office workers passing memos back and forth, not for people doing real line-editing on prose.
 
-Track Changes does one thing, which is to show you what someone added and what someone deleted, inline, in a single linear diff. That is useful if you are a manager reviewing a contract and you want to see exactly which clauses your lawyer changed.
+Track Changes does one thing: show you what someone added and what someone deleted, inline, in a single linear diff. That's useful if you are a manager reviewing a contract and you want to see exactly which clauses your lawyer changed.
 
 Matthew is (W)right, and the situation hasn't improved in the eleven years since he wrote that blog: Track Changes is almost useless if you're a writer trying to revise.
 
@@ -17,7 +17,7 @@ When you're revising a piece of writing, you're *rethinking*. You're trying a di
 
 Track Changes can't represent any of that. It shows you insertions and deletions on a single timeline. If you rewrite a sentence, Track Changes doesn't show you "here are two versions of this sentence." Instead, it shows you a red strikethrough of the old words and a blue insertion of the new words, jammed together in a way that makes both versions harder to read than either one alone.
 
-And if you rewrite it a *third* time, you end up with a strikethrough of the strikethrough, nested colored text, and a document that looks like a crime scene. The more you revise, the less readable the diff becomes, so the tool actively punishes you for doing the thing that writing requires.
+And if you rewrite it a *third* time? You end up with a strikethrough of the strikethrough, nested colored text, and a document that *looks like a crime scene.* The more you revise, the less readable the diff becomes, so *the tool actively punishes you for doing the thing that writing requires!*
 
 ## Scrivener tried, sort of
 
@@ -29,11 +29,9 @@ The pattern across all of these tools is the same, in that revision is treated a
 
 ## What revision actually looks like
 
-When I watch how I revise (and how every writer I've talked to revises), it looks nothing like a linear diff. It looks like a tree.
+You write a paragraph, try a different version, or in the end you can't decide and want to keep both because you won't know which is better until the next paragraph takes shape. Maybe you try a third version combining the opening of version one with the closing of version two. Either way you want all of these alive, visible, and easy to switch between.
 
-You write a paragraph. You try a different version. You keep both, because you won't know which is better until the next paragraph takes shape. Maybe you try a third version that combines the opening of version one with the closing of version two. You want all of these alive, visible, and easy to switch between.
-
-Track Changes gives you a diff, Scrivener gives you colored text, and Google Docs gives you a timeline you can scrub through. None of them give you what you actually want, which is the ability to hold multiple versions of the same passage in parallel and decide later.
+Track Changes gives you a diff, Scrivener gives you colored text, and Google Docs gives you a timeline you can scrub through. None of them give you what you actually want, which is *the ability to hold multiple versions of the same passage in parallel and decide later.*
 
 ## Branching instead of tracking
 

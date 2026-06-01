@@ -35,11 +35,7 @@ Track Changes gives you a diff, Scrivener gives you colored text, and Google Doc
 
 ## Branching instead of tracking
 
-This is what I built Quillium to do. Instead of tracking changes to a single version of your text, you branch. Select a sentence, fork it, write an alternative. Both versions live in the document, side by side. You can switch between them, compare them, fork again. Nothing gets destroyed, nothing gets buried in a diff.
-
-The mental model is different from Track Changes in a way that matters, because where Track Changes asks "what changed?", Quillium asks "what are my options?" Writers need the second question a lot more than they need the first.
-
-And because every branch is scoped to the specific text it belongs to, you can mix and match freely, taking the formal opening from version one, the conversational middle from version two, and the ending you just wrote ten minutes ago. You don't have to accept or reject changes across the whole document, because you can pick the best version of each piece independently.
+This is what I built Quillium to do. Instead of tracking changes to a single version of your text, *you* do the branching: select a sentence, fork it, and write an alternative. Both versions live in the document, side by side. You can switch between them, compare them, fork again. Where Track Changes asks "what changed?", Quillium asks "what are my options?"
 
 ## Track Changes has its place
 

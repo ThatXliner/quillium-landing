@@ -41,8 +41,8 @@ This is what I built Quillium to do. Instead of tracking changes to a single ver
 
 I'm not saying Track Changes is useless. If you're an editor sending a marked-up manuscript back to an author, or a lawyer redlining a contract, the linear diff is exactly what you need, because it works as a communication tool for saying "here's what I changed, do you agree?"
 
-But that's proofreading or copyediting. And yes, you could argue that copyediting *is* revision, and that every stage of editing is part of the same process.
+But that's proofreading or copyediting. And yes: while you could argue that copyediting *is* revision and that every stage of editing is part of the same process, there's a reason writers talk about "revising" and "copyediting" as different activities.
 
-But there's a reason writers talk about "revising" and "copyediting" as different activities. Revision is when you're still figuring out what the piece is, whereas copyediting is when you already know and you're cleaning it up. Track Changes is fine for the cleaning-up part, but it falls apart in the figuring-out part, and that's where most of the actual writing happens.
+Revision is when you're still figuring out what the piece is, whereas copyediting is when you already know and you're cleaning it up. Track Changes is fine for the cleaning-up part, but it falls apart in the figuring-out part, and that's where most of the actual writing happens.
 
 If Track Changes has been getting in your way more than helping, [give Quillium a shot](/#download).

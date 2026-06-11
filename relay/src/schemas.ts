@@ -1,7 +1,7 @@
 /**
  * schemas.ts -- Zod validation schemas for WebSocket messages.
  *
- * Validates client handshake data and collab protocol messages.
+ * Validates client handshake data and defines protocol error codes.
  * Per D-32/D-33: Validates JWT presence and document ID on connect.
  */
 import { z } from "zod";
@@ -41,39 +41,3 @@ export const PersistErrorCode = {
 } as const;
 
 export type PersistErrorCode = (typeof PersistErrorCode)[keyof typeof PersistErrorCode];
-
-/**
- * ChangeSet structure from @codemirror/state.
- * CodeMirror's ChangeSet.toJSON() returns an array, not an object.
- * Skip strict validation here — CodeMirror.fromJSON() does the real parsing.
- */
-export const ChangeSetSchema = z.any();
-
-/**
- * Update structure from @codemirror/collab.
- */
-export const UpdateSchema = z.object({
-    clientID: z.string(),
-    changes: ChangeSetSchema,
-});
-
-export type Update = z.infer<typeof UpdateSchema>;
-
-/**
- * pullUpdates request: client asks for updates since version.
- */
-export const PullUpdatesRequestSchema = z.object({
-    version: z.number().int().nonnegative(),
-});
-
-export type PullUpdatesRequest = z.infer<typeof PullUpdatesRequestSchema>;
-
-/**
- * pushUpdates request: client sends new updates.
- */
-export const PushUpdatesRequestSchema = z.object({
-    version: z.number().int().nonnegative(),
-    updates: z.array(UpdateSchema).min(1),
-});
-
-export type PushUpdatesRequest = z.infer<typeof PushUpdatesRequestSchema>;

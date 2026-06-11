@@ -544,7 +544,9 @@
 			</h2>
 		</div>
 
-		<div class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60">
+		<div
+			class="mx-auto flex h-full w-fit flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60"
+		>
 			<div class="border-b border-black/5 px-5 py-4">
 				<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
 					Quillium Omni

@@ -35,3 +35,6 @@ brand-bible.html
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Marketing video generation pipeline (Remotion)
+video/

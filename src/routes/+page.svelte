@@ -5,16 +5,24 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
 	import HeroScroll from '$lib/components/HeroScroll.svelte';
+	import HeroVideo from '$lib/components/HeroVideo.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { MOBILE_BREAKPOINT } from '$lib/breakpoints';
 
+	// Set this once the marketing video is uploaded (YouTube video id).
+	const HERO_VIDEO_ID: string = 'YKsJSmKGITA';
+
 	let { data } = $props();
 
 	let isMobile = $state(true);
-	let showScrollHero = $derived(!isMobile);
+	// `hero-layout` experiment: 'video' => video-first hero, else current scroll hero.
+	// Falls back to the scroll hero until the flag loads or if no video id is set.
+	let heroVariant = $state('control');
+	let showVideoHero = $derived(heroVariant === 'video' && HERO_VIDEO_ID !== '');
+	let showScrollHero = $derived(!isMobile && !showVideoHero);
 
 	onMount(() => {
 		if (data.release.version) {
@@ -24,6 +32,11 @@
 		const mql = matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
 		isMobile = mql.matches;
 		mql.addEventListener('change', (e) => (isMobile = e.matches));
+
+		posthog.onFeatureFlags(() => {
+			const variant = posthog.getFeatureFlag('hero-layout');
+			if (typeof variant === 'string') heroVariant = variant;
+		});
 
 		initReveal();
 
@@ -70,7 +83,7 @@
 
 	<!-- Twitter Card -->
 	<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content="@quillium" />
+	<meta name="twitter:site" content="@quillium" />
 	<meta name="twitter:title" content="Quillium — The Non-Linear Writing App" />
 	<meta
 		name="twitter:description"
@@ -116,12 +129,16 @@
 
 <Nav />
 <main>
-	{#if showScrollHero}
+	{#if showVideoHero}
+		<HeroVideo release={data.release} videoId={HERO_VIDEO_ID} />
+	{:else if showScrollHero}
 		<HeroScroll release={data.release} />
 	{:else}
 		<Hero release={data.release} />
 	{/if}
 
+	<!-- The scroll hero already embeds the full demonstration; every other
+	     layout (mobile + video-first) shows the standalone demo sections. -->
 	{#if !showScrollHero}
 		<Showcase />
 

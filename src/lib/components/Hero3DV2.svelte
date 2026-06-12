@@ -19,8 +19,43 @@
 		if (detected === 'mac') return findAsset('_aarch64.dmg');
 		if (detected === 'windows') return findAsset('_x64-setup.exe');
 		if (detected === 'linux') return findAsset('_amd64.deb');
-		return '#download';
+		return `https://github.com/${REPO}/releases/latest`;
 	});
+
+	// Per-platform binaries, mirroring the retired Download section: each
+	// platform name opens an accordion with its primary + alternate builds
+	const PLATFORM_ORDER = ['mac', 'windows', 'linux'] as const;
+	type PlatformKey = (typeof PLATFORM_ORDER)[number];
+	const DOWNLOADS: Record<
+		PlatformKey,
+		{ label: string; primary: { name: string; url: string }; alt: { name: string; url: string }[] }
+	> = {
+		mac: {
+			label: 'macOS',
+			primary: { name: '.dmg', url: findAsset('_aarch64.dmg') },
+			alt: [{ name: '.app.tar.gz', url: findAsset('_aarch64.app.tar.gz') }]
+		},
+		windows: {
+			label: 'Windows',
+			primary: { name: '.exe', url: findAsset('_x64-setup.exe') },
+			alt: [{ name: '.msi', url: findAsset('_x64_en-US.msi') }]
+		},
+		linux: {
+			label: 'Linux',
+			primary: { name: '.deb', url: findAsset('_amd64.deb') },
+			alt: [
+				{ name: '.rpm', url: findAsset('.x86_64.rpm') },
+				{ name: '.AppImage', url: findAsset('_amd64.AppImage') }
+			]
+		}
+	};
+	let openPlatform = $state<PlatformKey | null>(null);
+
+	// download_clicked is the experiment's primary funnel metric — every real
+	// download link here must fire it, exactly like the old Download section
+	function trackDownload(url: string) {
+		posthog.capture('download_clicked', { url, platform: detected });
+	}
 
 	let wrapperEl = $state<HTMLDivElement>();
 	let sceneEl = $state<HTMLDivElement>();
@@ -460,6 +495,38 @@
 	}
 </script>
 
+{#snippet platformPicker(centered: boolean)}
+	<p class="platforms-row" class:platforms-row--centered={centered}>
+		{#each PLATFORM_ORDER as key (key)}
+			<button
+				class="platform-toggle"
+				class:platform--detected={detected === key}
+				class:platform--open={openPlatform === key}
+				aria-expanded={openPlatform === key}
+				onclick={() => (openPlatform = openPlatform === key ? null : key)}
+			>
+				{DOWNLOADS[key].label}<span aria-hidden="true">{openPlatform === key ? ' ▴' : ' ▾'}</span>
+			</button>
+		{/each}
+	</p>
+	{#if openPlatform}
+		{@const p = DOWNLOADS[openPlatform]}
+		<div class="platform-binaries" class:platform-binaries--centered={centered}>
+			<a
+				href={p.primary.url}
+				class="binary binary--primary"
+				onclick={() => trackDownload(p.primary.url)}>{p.primary.name}</a
+			>
+			{#each p.alt as alt (alt.name)}
+				<a href={alt.url} class="binary" onclick={() => trackDownload(alt.url)}>{alt.name}</a>
+			{/each}
+			{#if openPlatform === 'windows'}
+				<p class="binary-note">Not code-signed. Windows may show a warning.</p>
+			{/if}
+		</div>
+	{/if}
+{/snippet}
+
 <!-- ==================== HERO (3D v2 — the flight IS the page) ==================== -->
 <div bind:this={wrapperEl} class="hero-flight" class:static-mode={staticMode}>
 	<div class="stage">
@@ -478,20 +545,15 @@
 					<a
 						href={downloadUrl}
 						class="btn-primary"
-						onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
+						onclick={() => {
+							posthog.capture('cta_clicked', { cta: 'download', location: 'hero' });
+							trackDownload(downloadUrl);
+						}}
 					>
 						Download Now
 					</a>
 				</div>
-				<p class="platforms-row platforms-row--centered">
-					<a href={findAsset('_aarch64.dmg')} class:platform--detected={detected === 'mac'}>macOS</a
-					>
-					<a href={findAsset('_x64-setup.exe')} class:platform--detected={detected === 'windows'}
-						>Windows</a
-					>
-					<a href={findAsset('_amd64.deb')} class:platform--detected={detected === 'linux'}>Linux</a
-					>
-				</p>
+				{@render platformPicker(true)}
 				<p class="fine-print">
 					By downloading, you agree to the <a href="/terms">Terms of Service</a>
 				</p>
@@ -528,14 +590,16 @@
 					</div>
 				</div>
 				<div class="chapter-copy">
-					<h2 class="chapter-heading">Fork any sentence.</h2>
-					<p class="chapter-sub">Tap a version — nothing is overwritten.</p>
+					<h2 class="chapter-heading w-lg">Fork any sentence.</h2>
+					<p class="chapter-sub">Because you have more than just one idea in your head</p>
 				</div>
 			</div>
 
 			<div bind:this={chapterEls[2]} class="chapter chapter-3">
 				<h2 class="chapter-heading">Keep every version.</h2>
-				<p class="chapter-sub">Each branch keeps its own words, its own voice.</p>
+				<p class="chapter-sub">
+					Write a sentence three different ways, and pick the one that lands.
+				</p>
 			</div>
 
 			<div bind:this={chapterEls[3]} class="chapter chapter-4">
@@ -598,42 +662,23 @@
 			</div>
 
 			<div bind:this={chapterEls[4]} class="chapter chapter-5">
-				<h2 class="chapter-heading">Decide later.</h2>
-				<p class="chapter-sub">
+				<h2 class="chapter-heading mb-10">Start writing sideways.</h2>
+				<!-- <p class="chapter-sub">
 					Write a sentence three different ways, and pick the one that lands.
-				</p>
+				</p> -->
 				<div class="cta-row">
 					<a
 						href={downloadUrl}
 						class="btn-primary"
-						onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero' })}
+						onclick={() => {
+							posthog.capture('cta_clicked', { cta: 'download', location: 'hero' });
+							trackDownload(downloadUrl);
+						}}
 					>
 						Download Now
 					</a>
 				</div>
-				<p class="platforms-row">
-					<a
-						href={findAsset('_aarch64.dmg')}
-						class:platform--detected={detected === 'mac'}
-						onclick={() =>
-							posthog.capture('cta_clicked', { cta: 'download-platform', platform: 'mac' })}
-						>macOS</a
-					>
-					<a
-						href={findAsset('_x64-setup.exe')}
-						class:platform--detected={detected === 'windows'}
-						onclick={() =>
-							posthog.capture('cta_clicked', { cta: 'download-platform', platform: 'windows' })}
-						>Windows</a
-					>
-					<a
-						href={findAsset('_amd64.deb')}
-						class:platform--detected={detected === 'linux'}
-						onclick={() =>
-							posthog.capture('cta_clicked', { cta: 'download-platform', platform: 'linux' })}
-						>Linux</a
-					>
-				</p>
+				{@render platformPicker(false)}
 				<p class="fine-print">
 					By downloading, you agree to the <a href="/terms">Terms of Service</a>
 				</p>
@@ -1010,7 +1055,8 @@
 		text-overflow: ellipsis;
 	}
 
-	/* Compact platform picker, folded into the finale */
+	/* Compact platform picker, folded into the finale: names toggle an
+	   accordion listing that platform's binaries */
 	.platforms-row {
 		display: flex;
 		flex-wrap: wrap;
@@ -1022,18 +1068,68 @@
 	.platforms-row--centered {
 		justify-content: center;
 	}
-	.platforms-row a {
+	.platform-toggle {
+		padding: 0;
+		border: none;
+		background: none;
+		font: inherit;
+		font-family: 'Inter', sans-serif;
 		color: rgba(247, 241, 227, 0.55);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+		transition: color 300ms ease;
+	}
+	.platform-toggle:hover {
+		color: rgba(247, 241, 227, 0.95);
+	}
+	.platform-toggle.platform--detected {
+		color: rgba(247, 241, 227, 0.92);
+		font-weight: 600;
+	}
+	.platform-toggle.platform--open {
+		color: rgba(247, 241, 227, 0.98);
+	}
+	.platform-binaries {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		align-items: baseline;
+		gap: 0.45rem 1.3rem;
+		width: fit-content;
+		margin: 0.8rem 0 0 auto;
+		padding: 0.65rem 0.95rem;
+		border: 1px solid rgba(247, 241, 227, 0.16);
+		border-radius: 10px;
+		background: rgba(247, 241, 227, 0.05);
+		font-size: 0.8rem;
+	}
+	.platform-binaries--centered {
+		justify-content: center;
+		margin-inline: auto;
+	}
+	.binary {
+		color: rgba(247, 241, 227, 0.65);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		transition: color 300ms ease;
 	}
-	.platforms-row a:hover {
+	.binary:hover {
 		color: rgba(247, 241, 227, 0.95);
 	}
-	.platforms-row a.platform--detected {
-		color: rgba(247, 241, 227, 0.92);
+	.binary--primary {
+		color: rgba(247, 241, 227, 0.95);
 		font-weight: 600;
+	}
+	.binary-note {
+		flex-basis: 100%;
+		margin: 0;
+		font-size: 0.65rem;
+		color: rgba(245, 158, 11, 0.75);
+		text-align: right;
+	}
+	.platform-binaries--centered .binary-note {
+		text-align: center;
 	}
 
 	.trust-row {
@@ -1115,8 +1211,12 @@
 			text-align: center;
 		}
 		.chapter-5 .trust-row,
-		.chapter-5 .platforms-row {
+		.chapter-5 .platforms-row,
+		.chapter-5 .platform-binaries {
 			justify-content: center;
+		}
+		.chapter-5 .platform-binaries {
+			margin-inline: auto;
 		}
 		.draft-chip {
 			max-width: 230px;

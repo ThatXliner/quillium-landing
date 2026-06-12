@@ -18,12 +18,46 @@ html {
 
 /* ── Shared ── */
 /* Sections after the hero; positioned so they paint above the 3D flight
-   hero's sticky stage and can slide over its dawn. Inert for other variants.
-   The footer needs the same treatment or the stage paints over it. */
+   hero's sticky stage. Inert for other variants. The footer needs the same
+   treatment or the stage paints over it. */
 .post-hero,
 footer {
 	position: relative;
 	background: #f5f4f1;
+}
+
+/* While the 3D flight page owns the document (html[data-nav-dark], set by
+   Hero3DV2), the footer goes dark too — the night sky runs straight into it,
+   no boundary to soften. */
+[data-nav-dark] footer {
+	background: #171310;
+	border-color: rgba(255, 255, 255, 0.08);
+}
+[data-nav-dark] footer p {
+	color: rgba(247, 241, 227, 0.5);
+}
+[data-nav-dark] footer a,
+[data-nav-dark] footer button {
+	color: rgba(247, 241, 227, 0.6);
+}
+[data-nav-dark] footer a:hover,
+[data-nav-dark] footer button:hover {
+	color: rgba(247, 241, 227, 0.95);
+}
+[data-nav-dark] footer input {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.15);
+	color: rgba(247, 241, 227, 0.92);
+}
+[data-nav-dark] footer input::placeholder {
+	color: rgba(247, 241, 227, 0.35);
+}
+[data-nav-dark] footer form button {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.15);
+}
+[data-nav-dark] footer form button:hover {
+	background: rgba(255, 255, 255, 0.16);
 }
 .warm-divider {
 	height: 1px;

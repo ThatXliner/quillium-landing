@@ -4,7 +4,12 @@
 body {
 	background-color: #f5f4f1;
 	color: rgba(0, 0, 0, 0.88);
-	font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+	font-family:
+		'Inter',
+		-apple-system,
+		BlinkMacSystemFont,
+		system-ui,
+		sans-serif;
 	-webkit-font-smoothing: antialiased;
 }
 html {
@@ -12,6 +17,14 @@ html {
 }
 
 /* ── Shared ── */
+/* Sections after the hero; positioned so they paint above the 3D flight
+   hero's sticky stage and can slide over its dawn. Inert for other variants.
+   The footer needs the same treatment or the stage paints over it. */
+.post-hero,
+footer {
+	position: relative;
+	background: #f5f4f1;
+}
 .warm-divider {
 	height: 1px;
 	background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.08), transparent);
@@ -63,11 +76,15 @@ html {
 	border: none;
 	cursor: pointer;
 	white-space: nowrap;
-	box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		0 4px 16px rgba(59, 130, 246, 0.3),
+		0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .btn-primary:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4), 0 3px 6px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		0 6px 24px rgba(59, 130, 246, 0.4),
+		0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* ── Feature mock buttons (used in Features.svelte carousels) ── */
@@ -83,7 +100,9 @@ html {
 	font-family: 'Inter', sans-serif;
 	transition: background 0.15s;
 }
-.btn-accept:hover { background: #9333ea; }
+.btn-accept:hover {
+	background: #9333ea;
+}
 .btn-dismiss {
 	background: transparent;
 	color: rgba(0, 0, 0, 0.4);

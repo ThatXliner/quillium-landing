@@ -149,9 +149,9 @@
 
 	<!-- Every variant gets the standard demo sections below the hero, except the
 	     two self-contained ones: the scroll hero and the 3D flight hero — their
-	     scroll journeys ARE the feature demonstration. The .post-hero wrapper
-	     paints above the flight hero's sticky stage so it can slide over the
-	     dawn (see Hero3DV2's negative bottom margin). -->
+	     scroll journeys ARE the feature demonstration. The flight hero also
+	     folds the download/platform picker into its finale, so it skips the
+	     Download section entirely. -->
 	<div class="post-hero">
 		{#if !showScrollHero && !show3DV2Hero}
 			<Showcase />
@@ -163,7 +163,9 @@
 			<div class="warm-divider section-divider"></div>
 		{/if}
 
-		<Download release={data.release} />
+		{#if !show3DV2Hero}
+			<Download release={data.release} />
+		{/if}
 	</div>
 </main>
 

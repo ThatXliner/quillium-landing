@@ -27,7 +27,17 @@
 	let chapterEls: HTMLDivElement[] = $state([]);
 	let staticMode = $state(false); // reduced motion or WebGL failure
 
-	// The same three drafts as Hero3D — continuity across variants
+	// Nav theme: dark while the hero is on screen
+	let heroVisible = false;
+	let navDarkApplied: boolean | undefined;
+	function syncNav() {
+		if (heroVisible !== navDarkApplied) {
+			navDarkApplied = heroVisible;
+			document.documentElement.toggleAttribute('data-nav-dark', heroVisible);
+		}
+	}
+
+	// The three drafts of one sentence — the product story
 	const DRAFTS = [
 		'The rain found her before the door did.',
 		'She stepped out into the waiting rain.',
@@ -36,14 +46,29 @@
 
 	const CREAM = '#f7f1e3';
 
-	// Scroll progress windows for the four copy chapters
-	// Last chapter's end sits past 1 so it never fades back out
+	// Scroll progress windows for the five chapters — the full product story
+	// lives in the flight; this variant has no separate feature or download
+	// sections. The journey ENDS on chapter 5: it carries the CTA and the
+	// platform picker, never fades out (end > 1), and the planes keep gliding.
 	const CHAPTERS: [number, number][] = [
-		[0.0, 0.2],
-		[0.26, 0.46],
-		[0.52, 0.74],
-		[0.82, 1.2]
+		[0.0, 0.15],
+		[0.2, 0.38],
+		[0.45, 0.56],
+		[0.61, 0.73],
+		[0.8, 1.2]
 	];
+	// Chapters with interactive fragments (and the CTA) accept pointer events
+	const INTERACTIVE = new Set([1, 3, 4]);
+
+	// Interactive fragment state: chapter 2's fork card and chapter 4's
+	// nested-revision card (outer take + the nest that lives inside Take 2)
+	let activeDraft = $state(0);
+	const NESTED = ['waiting rain', "storm's first breath"];
+	let nestedOuter = $state(1); // Take 2 active by default so the nest is visible
+	let activeNested = $state(0);
+
+	const CHIP_COLORS = ['#3b82f6', '#a855f7', '#22c55e'];
+	let chipEls: HTMLDivElement[] = $state([]);
 
 	onMount(() => {
 		const ua = navigator.userAgent.toLowerCase();
@@ -58,7 +83,8 @@
 		// the top sliver of the viewport, so it flips back once the hero scrolls past.
 		const navIo = new IntersectionObserver(
 			([entry]) => {
-				document.documentElement.toggleAttribute('data-nav-dark', entry.isIntersecting);
+				heroVisible = entry.isIntersecting;
+				syncNav();
 			},
 			{ rootMargin: '0px 0px -99% 0px' }
 		);
@@ -237,20 +263,8 @@
 		const motes = new THREE.Points(moteGeo, moteMat);
 		scene.add(motes);
 
-		// ── Draft sentences floating beside each stream ──────────────
-		const sprites = DRAFTS.map((text, i) => {
-			const tex = track(makeTextTexture(THREE, text));
-			tex.colorSpace = THREE.SRGBColorSpace;
-			const mat = track(
-				new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0, depthWrite: false })
-			);
-			const sprite = new THREE.Sprite(mat);
-			sprite.scale.set(4.5, 0.9, 1);
-			const anchor = flightCurves[i].getPoint(0.78);
-			sprite.position.set(anchor.x, anchor.y + 0.75, anchor.z);
-			scene.add(sprite);
-			return mat;
-		});
+		// Scratch vector for projecting the DOM draft chips onto the planes
+		const chipV = new THREE.Vector3();
 
 		// ── Camera path ──────────────────────────────────────────────
 		const camCurve = new THREE.CatmullRomCurve3(
@@ -318,8 +332,9 @@
 			// left half and the copy the right; the scene dims only slightly. On
 			// narrow screens the copy sits over the scene, so dim harder instead.
 			const wide = camera.aspect > 1.1;
-			const finale = window01(progress, 0.76, 0.9);
+			const finale = window01(progress, 0.72, 0.84);
 			const dim = 1 - (wide ? 0.3 : 0.72) * finale;
+
 			planeMat.opacity = dim;
 			trails.forEach(({ core, halo }) => {
 				core.uniforms.uHead.value = ft;
@@ -334,9 +349,20 @@
 			// Looking right of the planes frames them left, under the closing copy
 			camera.lookAt(lookTarget.x + (wide ? finale * 3.4 : 0), lookTarget.y, lookTarget.z);
 
-			// Draft sentences appear in chapter 3
-			const spriteAlpha = window01(progress, 0.55, 0.8) * (1 - window01(progress, 0.95, 1.0));
-			sprites.forEach((m) => (m.opacity = spriteAlpha * 0.92));
+			// Draft chips: DOM fragments pinned above each plane — projected every
+			// frame, so they ride the flight (and bob) with their plane
+			const [c3a, c3b] = CHAPTERS[2];
+			const chipAlpha =
+				window01(progress, c3a, c3a + 0.05) * (1 - window01(progress, c3b - 0.04, c3b + 0.01));
+			chipEls.forEach((el, i) => {
+				if (!el) return;
+				chipV.copy(planes[i].mesh.position);
+				chipV.y += 0.55;
+				chipV.project(camera);
+				el.style.left = `${(chipV.x * 0.5 + 0.5) * (host.clientWidth || 1)}px`;
+				el.style.top = `${(-chipV.y * 0.5 + 0.5) * (host.clientHeight || 1)}px`;
+				el.style.opacity = String(chipAlpha);
+			});
 
 			motes.rotation.y = t * 0.01;
 			motes.rotation.z = t * 0.004;
@@ -352,7 +378,7 @@
 				const alpha = alphaIn * (1 - window01(progress, b - 0.04, b + 0.01));
 				el.style.opacity = String(alpha);
 				el.style.setProperty('--off', `${(1 - alpha) * 28}px`);
-				el.style.pointerEvents = alpha > 0.5 && i === 3 ? 'auto' : 'none';
+				el.style.pointerEvents = alpha > 0.5 && INTERACTIVE.has(i) ? 'auto' : 'none';
 			});
 		};
 
@@ -375,8 +401,12 @@
 		});
 		io.observe(wrapper);
 
-		if (reduceMotion) applyFrame(0);
-		else tick();
+		if (reduceMotion) {
+			applyFrame(0);
+			updateChapters();
+		} else {
+			tick();
+		}
 
 		return () => {
 			st?.kill();
@@ -428,29 +458,9 @@
 		ctx.fillRect(0, 0, 64, 64);
 		return new THREE.CanvasTexture(c);
 	}
-
-	function makeTextTexture(THREE: ThreeNS, text: string) {
-		const c = document.createElement('canvas');
-		c.width = 1280;
-		c.height = 256;
-		const ctx = c.getContext('2d')!;
-		ctx.fillStyle = 'rgba(255, 250, 235, 0.96)';
-		const quoted = `“${text}”`;
-		let size = 60;
-		do {
-			ctx.font = `italic ${size}px Newsreader, Georgia, serif`;
-			size -= 2;
-		} while (ctx.measureText(quoted).width > 1200 && size > 30);
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'middle';
-		ctx.shadowColor = 'rgba(255, 240, 200, 0.5)';
-		ctx.shadowBlur = 18;
-		ctx.fillText(quoted, 640, 128);
-		return new THREE.CanvasTexture(c);
-	}
 </script>
 
-<!-- ==================== HERO (3D v2 — scroll flight) ==================== -->
+<!-- ==================== HERO (3D v2 — the flight IS the page) ==================== -->
 <div bind:this={wrapperEl} class="hero-flight" class:static-mode={staticMode}>
 	<div class="stage">
 		<div bind:this={sceneEl} class="scene-host" aria-hidden="true"></div>
@@ -472,8 +482,16 @@
 					>
 						Download Now
 					</a>
-					<a href="#features" class="btn-ghost">See how it works</a>
 				</div>
+				<p class="platforms-row platforms-row--centered">
+					<a href={findAsset('_aarch64.dmg')} class:platform--detected={detected === 'mac'}>macOS</a
+					>
+					<a href={findAsset('_x64-setup.exe')} class:platform--detected={detected === 'windows'}
+						>Windows</a
+					>
+					<a href={findAsset('_amd64.deb')} class:platform--detected={detected === 'linux'}>Linux</a
+					>
+				</p>
 				<p class="fine-print">
 					By downloading, you agree to the <a href="/terms">Terms of Service</a>
 				</p>
@@ -487,8 +505,32 @@
 			</div>
 
 			<div bind:this={chapterEls[1]} class="chapter chapter-2">
-				<h2 class="chapter-heading">Fork any sentence.</h2>
-				<p class="chapter-sub">One draft becomes three. Nothing is overwritten.</p>
+				<div class="demo-duo" role="group" aria-label="Revision demo — pick a version">
+					<div class="demo-doc">
+						<p>The evening had been threatening for hours.</p>
+						<p><mark class="demo-highlight">{DRAFTS[activeDraft]}</mark></p>
+						<p>She did not reach for the umbrella.</p>
+					</div>
+					<div class="demo-card demo-card--annotation">
+						<p class="demo-label">Revision</p>
+						<div class="demo-pills">
+							{#each ['Original', 'Take 2', 'Take 3'] as label, i (label)}
+								<button
+									class="demo-pill"
+									class:demo-pill--active={activeDraft === i}
+									onclick={() => (activeDraft = i)}
+								>
+									{label}
+								</button>
+							{/each}
+						</div>
+						<p class="demo-new" aria-hidden="true">+ New version</p>
+					</div>
+				</div>
+				<div class="chapter-copy">
+					<h2 class="chapter-heading">Fork any sentence.</h2>
+					<p class="chapter-sub">Tap a version — nothing is overwritten.</p>
+				</div>
 			</div>
 
 			<div bind:this={chapterEls[2]} class="chapter chapter-3">
@@ -497,6 +539,65 @@
 			</div>
 
 			<div bind:this={chapterEls[3]} class="chapter chapter-4">
+				<div class="chapter-copy">
+					<h2 class="chapter-heading">Branch inside a branch.</h2>
+					<p class="chapter-sub">Let the rabbit hole go deep.</p>
+				</div>
+				<div
+					class="demo-duo"
+					role="group"
+					aria-label="Nested revision demo — pick a take, then a phrase"
+				>
+					<div class="demo-doc">
+						<p>The evening had been threatening for hours.</p>
+						<p>
+							{#if nestedOuter === 1}
+								<mark class="demo-highlight"
+									>She stepped out into the <mark class="demo-nest">{NESTED[activeNested]}</mark
+									>.</mark
+								>
+							{:else}
+								<mark class="demo-highlight">{DRAFTS[nestedOuter]}</mark>
+							{/if}
+						</p>
+						<p>She did not reach for the umbrella.</p>
+					</div>
+					<div class="demo-card demo-card--annotation">
+						<p class="demo-label">Revision</p>
+						<div class="demo-pills">
+							{#each ['Original', 'Take 2', 'Take 3'] as label, i (label)}
+								<button
+									class="demo-pill"
+									class:demo-pill--active={nestedOuter === i}
+									onclick={() => (nestedOuter = i)}
+								>
+									{label}
+								</button>
+							{/each}
+						</div>
+						{#if nestedOuter === 1}
+							<div class="demo-card demo-card--nested">
+								<p class="demo-label">Nested revision</p>
+								<div class="demo-pills">
+									{#each NESTED as phrase, i (phrase)}
+										<button
+											class="demo-pill"
+											class:demo-pill--active={activeNested === i}
+											onclick={() => (activeNested = i)}
+										>
+											v{i + 1}
+										</button>
+									{/each}
+								</div>
+							</div>
+						{:else}
+							<p class="demo-new" aria-hidden="true">+ New version</p>
+						{/if}
+					</div>
+				</div>
+			</div>
+
+			<div bind:this={chapterEls[4]} class="chapter chapter-5">
 				<h2 class="chapter-heading">Decide later.</h2>
 				<p class="chapter-sub">
 					Write a sentence three different ways, and pick the one that lands.
@@ -509,26 +610,62 @@
 					>
 						Download Now
 					</a>
-					<a href="#features" class="btn-ghost">See how it works</a>
 				</div>
+				<p class="platforms-row">
+					<a
+						href={findAsset('_aarch64.dmg')}
+						class:platform--detected={detected === 'mac'}
+						onclick={() =>
+							posthog.capture('cta_clicked', { cta: 'download-platform', platform: 'mac' })}
+						>macOS</a
+					>
+					<a
+						href={findAsset('_x64-setup.exe')}
+						class:platform--detected={detected === 'windows'}
+						onclick={() =>
+							posthog.capture('cta_clicked', { cta: 'download-platform', platform: 'windows' })}
+						>Windows</a
+					>
+					<a
+						href={findAsset('_amd64.deb')}
+						class:platform--detected={detected === 'linux'}
+						onclick={() =>
+							posthog.capture('cta_clicked', { cta: 'download-platform', platform: 'linux' })}
+						>Linux</a
+					>
+				</p>
 				<p class="fine-print">
 					By downloading, you agree to the <a href="/terms">Terms of Service</a>
 				</p>
+				<p class="trust-row">
+					<a href="/blog/quillium-is-not-an-ai-app">Write every word (No AI bs).</a>
+					<a href="/blog/quillium-privacy">Fully private.</a>
+					<a href="/blog/how-quillium-keeps-your-writing-safe">Safe and secure.</a>
+				</p>
 			</div>
+
+			{#each DRAFTS as draft, i (draft)}
+				<div bind:this={chipEls[i]} class="draft-chip" aria-hidden="true">
+					<span class="chip-pill" style="background: {CHIP_COLORS[i]}">Draft {'ABC'[i]}</span>
+					<span class="chip-text">“{draft}”</span>
+				</div>
+			{/each}
 		{/if}
 	</div>
 	<span class="sr-only">
 		Three paper planes fly through a dark sky of drifting paper motes, one glowing ink trail
 		splitting into three — each carrying a different draft of the same sentence: {DRAFTS.map(
 			(d) => `“${d}”`
-		).join(', ')}
+		).join(', ')}. Pieces of the Quillium interface accompany the flight: a revision card with
+		version pills that swap between the three takes, and a nested revision card that swaps a phrase
+		inside one of them.
 	</span>
 </div>
 
 <style>
 	.hero-flight {
 		position: relative;
-		height: 380vh;
+		height: 520vh;
 		background: #171310;
 	}
 	.hero-flight.static-mode {
@@ -589,27 +726,49 @@
 		top: 50%;
 		transform: translateY(-50%) translateY(var(--off, 28px));
 	}
+	/* Fork chapter: interactive card left, copy right; the fork animates in
+	   the gap between them */
 	.chapter-2 {
-		right: clamp(1rem, 9vw, 11rem);
-		top: 44%;
+		left: 50%;
+		top: 46%;
+		transform: translate(-50%, -50%) translateY(var(--off, 28px));
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: clamp(2rem, 10vw, 9rem);
+		width: min(92vw, 1060px);
+		max-width: none;
+	}
+	.chapter-2 .chapter-copy {
 		text-align: right;
-		transform: translateY(var(--off, 28px));
 	}
 	.chapter-3 {
 		left: clamp(1rem, 9vw, 11rem);
 		top: 58%;
 		transform: translateY(var(--off, 28px));
 	}
+	/* Nested chapter: mirror of the fork chapter */
 	.chapter-4 {
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%) translateY(var(--off, 28px));
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: clamp(2rem, 10vw, 9rem);
+		width: min(92vw, 1060px);
+		max-width: none;
+	}
+	.chapter-5 {
 		right: clamp(1rem, 8vw, 9rem);
 		top: 50%;
 		transform: translateY(-50%) translateY(var(--off, 28px));
 		text-align: right;
 	}
-	.chapter-4 .cta-row {
+	.chapter-5 .cta-row {
 		justify-content: flex-end;
 	}
-	.chapter-4 .fine-print {
+	.chapter-5 .fine-print {
 		text-align: right;
 	}
 
@@ -680,24 +839,6 @@
 		gap: 1rem;
 		margin-top: 1.8rem;
 	}
-	.btn-ghost {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.75rem 1.5rem;
-		border-radius: 10px;
-		border: 1px solid rgba(247, 241, 227, 0.35);
-		color: #f7f1e3;
-		font-size: 0.95rem;
-		font-weight: 500;
-		text-decoration: none;
-		transition:
-			border-color 300ms ease,
-			background 300ms ease;
-	}
-	.btn-ghost:hover {
-		border-color: rgba(247, 241, 227, 0.7);
-		background: rgba(247, 241, 227, 0.08);
-	}
 	.fine-print {
 		margin: 1rem 0 0;
 		font-size: 0.7rem;
@@ -707,6 +848,213 @@
 		color: rgba(247, 241, 227, 0.7);
 		text-decoration: underline;
 		text-underline-offset: 2px;
+	}
+
+	/* ── UI fragments (re-rendered app pieces, Linear-style) ── */
+	/* Mini document + annotation card, mimicking the app's annotation layout */
+	.demo-duo {
+		display: flex;
+		align-items: flex-start;
+		flex-shrink: 0;
+	}
+	/* Sit below the flight line so the planes pass above, not behind */
+	.chapter-2 .demo-duo {
+		margin-top: clamp(4rem, 18vh, 11rem);
+	}
+	.chapter-4 .demo-duo {
+		margin-top: clamp(1rem, 6vh, 3.5rem);
+	}
+	.demo-doc {
+		width: min(56vw, 300px);
+		padding: 1.05rem 1.15rem;
+		border-radius: 10px;
+		background: #fffdf8;
+		box-shadow:
+			0 24px 64px rgba(0, 0, 0, 0.5),
+			0 4px 12px rgba(0, 0, 0, 0.3);
+		font-family: Georgia, serif;
+		font-size: 0.88rem;
+		line-height: 1.65;
+		color: rgba(0, 0, 0, 0.82);
+		text-align: left;
+	}
+	.demo-doc p {
+		margin: 0 0 0.55em;
+	}
+	.demo-doc p:last-child {
+		margin-bottom: 0;
+	}
+	.demo-highlight {
+		background: rgba(168, 85, 247, 0.16);
+		border-radius: 3px;
+		padding: 0 0.12em;
+		color: inherit;
+	}
+	/* The nested phrase inside an already-highlighted sentence: one tier deeper */
+	.demo-doc .demo-nest {
+		background: rgba(168, 85, 247, 0.34);
+		border-radius: 3px;
+		padding: 0 0.1em;
+		color: inherit;
+	}
+	.demo-card.demo-card--annotation {
+		width: min(40vw, 215px);
+		margin-left: -1.4rem;
+		margin-top: 2.6rem;
+	}
+	.demo-new {
+		margin: 0.65rem 0 0;
+		font-size: 0.68rem;
+		font-weight: 500;
+		font-family: 'Inter', sans-serif;
+		color: rgba(168, 85, 247, 0.65);
+	}
+	.demo-card {
+		flex-shrink: 0;
+		width: min(86vw, 330px);
+		padding: 1.1rem 1.2rem 1.2rem;
+		border-radius: 14px;
+		background: #fffdf8;
+		box-shadow:
+			0 24px 64px rgba(0, 0, 0, 0.5),
+			0 4px 12px rgba(0, 0, 0, 0.3);
+		text-align: left;
+	}
+	.demo-card--nested {
+		width: auto;
+		margin-top: 0.9rem;
+		padding: 0.7rem 0.85rem 0.8rem;
+		border: 1px solid rgba(168, 85, 247, 0.25);
+		background: rgba(168, 85, 247, 0.05);
+		box-shadow: none;
+	}
+	.demo-label {
+		margin: 0 0 0.6rem;
+		font-size: 0.62rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: #a855f7;
+	}
+	.demo-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 0.75rem;
+	}
+	.demo-card--nested .demo-pills {
+		margin-bottom: 0;
+	}
+	.demo-pill {
+		padding: 0.25rem 0.7rem;
+		border: none;
+		border-radius: 9999px;
+		font-size: 0.72rem;
+		font-weight: 500;
+		font-family: 'Inter', sans-serif;
+		background: rgba(0, 0, 0, 0.06);
+		color: rgba(0, 0, 0, 0.6);
+		cursor: pointer;
+		transition:
+			background 200ms ease,
+			color 200ms ease;
+	}
+	.demo-pill:hover {
+		background: rgba(0, 0, 0, 0.1);
+	}
+	.demo-pill--active {
+		background: #a855f7;
+		color: #fff;
+	}
+	.demo-pill--active:hover {
+		background: #9333ea;
+	}
+	.demo-nest {
+		background: rgba(168, 85, 247, 0.14);
+		border-radius: 4px;
+		padding: 0 0.15em;
+	}
+
+	/* ── Draft chips pinned to the 3D streams ── */
+	.draft-chip {
+		position: absolute;
+		left: -9999px;
+		top: -9999px;
+		transform: translate(-50%, -50%);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		max-width: 300px;
+		padding: 0.45rem 0.7rem;
+		border-radius: 10px;
+		background: #fffdf8;
+		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+		opacity: 0;
+		pointer-events: none;
+		white-space: nowrap;
+	}
+	.chip-pill {
+		flex-shrink: 0;
+		padding: 0.12rem 0.5rem;
+		border-radius: 9999px;
+		font-size: 0.62rem;
+		font-weight: 600;
+		color: #fff;
+	}
+	.chip-text {
+		font-family: Georgia, serif;
+		font-style: italic;
+		font-size: 0.82rem;
+		color: rgba(0, 0, 0, 0.8);
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	/* Compact platform picker, folded into the finale */
+	.platforms-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.4rem 1.4rem;
+		margin: 0.9rem 0 0;
+		font-size: 0.82rem;
+	}
+	.platforms-row--centered {
+		justify-content: center;
+	}
+	.platforms-row a {
+		color: rgba(247, 241, 227, 0.55);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		transition: color 300ms ease;
+	}
+	.platforms-row a:hover {
+		color: rgba(247, 241, 227, 0.95);
+	}
+	.platforms-row a.platform--detected {
+		color: rgba(247, 241, 227, 0.92);
+		font-weight: 600;
+	}
+
+	.trust-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.5rem 1.2rem;
+		margin: 1.6rem 0 0;
+		padding-top: 1rem;
+		border-top: 2px solid;
+		border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05) 1;
+		font-size: 0.82rem;
+	}
+	.trust-row a {
+		color: rgba(247, 241, 227, 0.6);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		transition: color 300ms ease;
+	}
+	.trust-row a:hover {
+		color: rgba(247, 241, 227, 0.95);
 	}
 
 	.sr-only {
@@ -725,35 +1073,56 @@
 		.chapter-1,
 		.chapter-2,
 		.chapter-3,
-		.chapter-4 {
+		.chapter-4,
+		.chapter-5 {
 			left: 50%;
 			right: auto;
 			width: 100%;
 			max-width: 26rem;
 			text-align: center;
-			transform: translateX(-50%) translateY(var(--off, 28px));
-		}
-		.chapter-1,
-		.chapter-4 {
 			transform: translate(-50%, -50%) translateY(var(--off, 28px));
 		}
 		.chapter-1 {
 			top: 42%;
 		}
-		.chapter-2 {
-			top: 36%;
-		}
-		.chapter-3 {
-			top: 54%;
-		}
+		.chapter-2,
 		.chapter-4 {
 			top: 50%;
+			flex-direction: column;
+			gap: 1.4rem;
 		}
-		.chapter-4 .cta-row {
+		.chapter-2 {
+			flex-direction: column-reverse;
+		}
+		.demo-duo {
+			margin-top: 0;
+		}
+		.chapter-2 .chapter-copy,
+		.chapter-4 .chapter-copy {
+			text-align: center;
+		}
+		.chapter-3 {
+			top: 40%;
+			transform: translateX(-50%) translateY(var(--off, 28px));
+		}
+		.chapter-5 {
+			top: 50%;
+		}
+		.chapter-5 .cta-row {
 			justify-content: center;
 		}
-		.chapter-4 .fine-print {
+		.chapter-5 .fine-print {
 			text-align: center;
+		}
+		.chapter-5 .trust-row,
+		.chapter-5 .platforms-row {
+			justify-content: center;
+		}
+		.draft-chip {
+			max-width: 230px;
+		}
+		.chip-text {
+			font-size: 0.72rem;
 		}
 	}
 </style>

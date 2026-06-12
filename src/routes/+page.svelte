@@ -6,7 +6,6 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import HeroScroll from '$lib/components/HeroScroll.svelte';
 	import HeroVideo from '$lib/components/HeroVideo.svelte';
-	import Hero3D from '$lib/components/Hero3D.svelte';
 	import Hero3DV2 from '$lib/components/Hero3DV2.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
@@ -20,15 +19,13 @@
 	let { data } = $props();
 
 	let isMobile = $state(true);
-	// `hero-layout` experiment: 'video' => video-first hero, '3d' => Three.js
-	// branching-ink hero, '3d-variant-2' => scroll-driven flight scene, else
-	// current scroll hero. Falls back to the scroll hero until the flag loads
-	// or if no video id is set.
+	// `hero-layout` experiment: 'video' => video-first hero, '3d-variant-2' =>
+	// scroll-driven flight scene, else current scroll hero. Falls back to the
+	// scroll hero until the flag loads or if no video id is set.
 	let heroVariant = $state('control');
 	let showVideoHero = $derived(heroVariant === 'video' && HERO_VIDEO_ID !== '');
-	let show3DHero = $derived(heroVariant === '3d');
 	let show3DV2Hero = $derived(heroVariant === '3d-variant-2');
-	let showScrollHero = $derived(!isMobile && !showVideoHero && !show3DHero && !show3DV2Hero);
+	let showScrollHero = $derived(!isMobile && !showVideoHero && !show3DV2Hero);
 
 	onMount(() => {
 		if (data.release.version) {
@@ -39,7 +36,7 @@
 		isMobile = mql.matches;
 		mql.addEventListener('change', (e) => (isMobile = e.matches));
 
-		// `?hero=video|3d|control` forces a variant (QA / dev, where flags don't load)
+		// `?hero=video|3d-variant-2|control` forces a variant (QA / dev, where flags don't load)
 		const heroOverride = new URLSearchParams(location.search).get('hero');
 		if (heroOverride) heroVariant = heroOverride;
 
@@ -142,8 +139,6 @@
 <main>
 	{#if showVideoHero}
 		<HeroVideo videoId={HERO_VIDEO_ID} />
-	{:else if show3DHero}
-		<Hero3D release={data.release} />
 	{:else if show3DV2Hero}
 		<Hero3DV2 release={data.release} />
 	{:else if showScrollHero}
@@ -153,18 +148,23 @@
 	{/if}
 
 	<!-- Every variant gets the standard demo sections below the hero, except the
-	     scroll hero — its pinned scroll IS the feature demonstration. -->
-	{#if !showScrollHero}
-		<Showcase />
+	     two self-contained ones: the scroll hero and the 3D flight hero — their
+	     scroll journeys ARE the feature demonstration. The .post-hero wrapper
+	     paints above the flight hero's sticky stage so it can slide over the
+	     dawn (see Hero3DV2's negative bottom margin). -->
+	<div class="post-hero">
+		{#if !showScrollHero && !show3DV2Hero}
+			<Showcase />
 
-		<div class="warm-divider section-divider"></div>
+			<div class="warm-divider section-divider"></div>
 
-		<Features />
+			<Features />
 
-		<div class="warm-divider section-divider"></div>
-	{/if}
+			<div class="warm-divider section-divider"></div>
+		{/if}
 
-	<Download release={data.release} />
+		<Download release={data.release} />
+	</div>
 </main>
 
 <Footer />

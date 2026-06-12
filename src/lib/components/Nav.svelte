@@ -110,6 +110,47 @@
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
 		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+		transition:
+			background 300ms ease,
+			border-color 300ms ease;
+	}
+
+	/* Dark treatment while a dark hero section sits under the nav
+	   (html[data-nav-dark] is toggled by that section) */
+	:global([data-nav-dark]) .nav-fixed {
+		background: rgba(23, 19, 16, 0.72);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+	:global([data-nav-dark]) .nav-fixed a {
+		color: rgba(247, 241, 227, 0.65);
+	}
+	:global([data-nav-dark]) .nav-fixed a:hover {
+		color: rgba(247, 241, 227, 0.95);
+	}
+	:global([data-nav-dark]) .nav-fixed a[href='/'] {
+		color: rgba(247, 241, 227, 0.95);
+	}
+	:global([data-nav-dark]) .nav-fixed .mobile-menu-btn {
+		color: rgba(247, 241, 227, 0.75);
+	}
+	:global([data-nav-dark]) .nav-fixed .mobile-menu {
+		background: rgba(23, 19, 16, 0.95);
+		border-color: rgba(255, 255, 255, 0.08);
+	}
+	:global([data-nav-dark]) .nav-fixed .mobile-link {
+		color: rgba(247, 241, 227, 0.65);
+	}
+	:global([data-nav-dark]) .nav-fixed .mobile-link:hover {
+		color: rgba(247, 241, 227, 0.95);
+	}
+	/* The beta badge keeps its green identity on dark */
+	:global([data-nav-dark]) .nav-fixed a.uppercase,
+	:global([data-nav-dark]) .nav-fixed .mobile-link--beta {
+		color: rgba(34, 197, 94, 0.85);
+	}
+	:global([data-nav-dark]) .nav-fixed a.uppercase:hover,
+	:global([data-nav-dark]) .nav-fixed .mobile-link--beta:hover {
+		color: #22c55e;
 	}
 	.mobile-menu-btn {
 		background: none;

@@ -1,15 +1,8 @@
 <script lang="ts">
 	import { Pen, Lock, ShieldCheck } from '@lucide/svelte';
-	import Download from './Download.svelte';
 	import VideoEmbed from './VideoEmbed.svelte';
 
-	let {
-		release,
-		videoId
-	}: {
-		release: { version: string | null; assets: { name: string; url: string }[] };
-		videoId: string;
-	} = $props();
+	let { videoId }: { videoId: string } = $props();
 </script>
 
 <section class="hero-video-section">
@@ -47,8 +40,6 @@
 			<VideoEmbed {videoId} location="hero-video" />
 		</div>
 	</div>
-
-	<Download {release} />
 </section>
 
 <style>

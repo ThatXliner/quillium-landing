@@ -6,6 +6,8 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import HeroScroll from '$lib/components/HeroScroll.svelte';
 	import HeroVideo from '$lib/components/HeroVideo.svelte';
+	import Hero3D from '$lib/components/Hero3D.svelte';
+	import Hero3DV2 from '$lib/components/Hero3DV2.svelte';
 	import Showcase from '$lib/components/Showcase.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
@@ -18,11 +20,15 @@
 	let { data } = $props();
 
 	let isMobile = $state(true);
-	// `hero-layout` experiment: 'video' => video-first hero, else current scroll hero.
-	// Falls back to the scroll hero until the flag loads or if no video id is set.
+	// `hero-layout` experiment: 'video' => video-first hero, '3d' => Three.js
+	// branching-ink hero, '3d-variant-2' => scroll-driven flight scene, else
+	// current scroll hero. Falls back to the scroll hero until the flag loads
+	// or if no video id is set.
 	let heroVariant = $state('control');
 	let showVideoHero = $derived(heroVariant === 'video' && HERO_VIDEO_ID !== '');
-	let showScrollHero = $derived(!isMobile && !showVideoHero);
+	let show3DHero = $derived(heroVariant === '3d');
+	let show3DV2Hero = $derived(heroVariant === '3d-variant-2');
+	let showScrollHero = $derived(!isMobile && !showVideoHero && !show3DHero && !show3DV2Hero);
 
 	onMount(() => {
 		if (data.release.version) {
@@ -33,7 +39,12 @@
 		isMobile = mql.matches;
 		mql.addEventListener('change', (e) => (isMobile = e.matches));
 
+		// `?hero=video|3d|control` forces a variant (QA / dev, where flags don't load)
+		const heroOverride = new URLSearchParams(location.search).get('hero');
+		if (heroOverride) heroVariant = heroOverride;
+
 		posthog.onFeatureFlags(() => {
+			if (heroOverride) return;
 			const variant = posthog.getFeatureFlag('hero-layout');
 			if (typeof variant === 'string') heroVariant = variant;
 		});
@@ -130,17 +141,20 @@
 <Nav />
 <main>
 	{#if showVideoHero}
-		<HeroVideo release={data.release} videoId={HERO_VIDEO_ID} />
+		<HeroVideo videoId={HERO_VIDEO_ID} />
+	{:else if show3DHero}
+		<Hero3D release={data.release} />
+	{:else if show3DV2Hero}
+		<Hero3DV2 release={data.release} />
 	{:else if showScrollHero}
 		<HeroScroll release={data.release} />
 	{:else}
 		<Hero release={data.release} />
 	{/if}
 
-	<!-- The scroll hero already embeds the full demonstration; mobile keeps the
-	     standalone demo sections. The video experiment is intentionally
-	     self-contained. -->
-	{#if !showScrollHero && !showVideoHero}
+	<!-- Every variant gets the standard demo sections below the hero, except the
+	     scroll hero — its pinned scroll IS the feature demonstration. -->
+	{#if !showScrollHero}
 		<Showcase />
 
 		<div class="warm-divider section-divider"></div>
@@ -150,9 +164,7 @@
 		<div class="warm-divider section-divider"></div>
 	{/if}
 
-	{#if !showVideoHero}
-		<Download release={data.release} />
-	{/if}
+	<Download release={data.release} />
 </main>
 
 <Footer />

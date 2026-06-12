@@ -137,9 +137,10 @@
 		<Hero release={data.release} />
 	{/if}
 
-	<!-- The scroll hero already embeds the full demonstration; every other
-	     layout (mobile + video-first) shows the standalone demo sections. -->
-	{#if !showScrollHero}
+	<!-- The scroll hero already embeds the full demonstration; mobile keeps the
+	     standalone demo sections. The video experiment is intentionally
+	     self-contained. -->
+	{#if !showScrollHero && !showVideoHero}
 		<Showcase />
 
 		<div class="warm-divider section-divider"></div>
@@ -149,7 +150,9 @@
 		<div class="warm-divider section-divider"></div>
 	{/if}
 
-	<Download release={data.release} />
+	{#if !showVideoHero}
+		<Download release={data.release} />
+	{/if}
 </main>
 
 <Footer />

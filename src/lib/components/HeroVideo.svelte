@@ -1,37 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { Pen, Lock, ShieldCheck } from '@lucide/svelte';
-	import posthog from 'posthog-js';
+	import Download from './Download.svelte';
 	import VideoEmbed from './VideoEmbed.svelte';
 
 	let {
 		release,
 		videoId
 	}: {
-		release: { assets: { name: string; url: string }[] };
+		release: { version: string | null; assets: { name: string; url: string }[] };
 		videoId: string;
 	} = $props();
-
-	function findAsset(pattern: string): string {
-		const match = release.assets.find((a: { url: string }) => a.url.includes(pattern));
-		if (match) return match.url;
-		return `https://github.com/ThatXliner/quillium-releases/releases/latest`;
-	}
-
-	let detected = $state('unknown');
-	let downloadUrl = $derived.by(() => {
-		if (detected === 'mac') return findAsset('_aarch64.dmg');
-		if (detected === 'windows') return findAsset('_x64-setup.exe');
-		if (detected === 'linux') return findAsset('_amd64.deb');
-		return '#download';
-	});
-
-	onMount(() => {
-		const ua = navigator.userAgent.toLowerCase();
-		if (ua.includes('mac')) detected = 'mac';
-		else if (ua.includes('win')) detected = 'windows';
-		else if (ua.includes('linux')) detected = 'linux';
-	});
 </script>
 
 <section class="hero-video-section">
@@ -50,46 +28,40 @@
 			</p>
 		</div>
 
+		<div
+			class="trust-row"
+			style="border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;"
+		>
+			<a href="/blog/quillium-is-not-an-ai-app" class="trust-link"
+				><Pen size={14} strokeWidth={2} class="opacity-60" /> Write every word (No AI bs).</a
+			>
+			<a href="/blog/quillium-privacy" class="trust-link"
+				><Lock size={14} strokeWidth={2} class="opacity-60" /> Fully private.</a
+			>
+			<a href="/blog/how-quillium-keeps-your-writing-safe" class="trust-link"
+				><ShieldCheck size={14} strokeWidth={2} class="opacity-60" /> Safe and secure.</a
+			>
+		</div>
+
 		<div class="hero-media">
 			<VideoEmbed {videoId} location="hero-video" />
 		</div>
-
-		<div class="hero-actions">
-			<a
-				href={downloadUrl}
-				class="btn-primary"
-				onclick={() => posthog.capture('cta_clicked', { cta: 'download', location: 'hero-video' })}
-				>Download Now</a
-			>
-			<div
-				class="trust-row"
-				style="border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;"
-			>
-				<a href="/blog/quillium-is-not-an-ai-app" class="trust-link"
-					><Pen size={14} strokeWidth={2} class="opacity-60" /> Write every word (No AI bs).</a
-				>
-				<a href="/blog/quillium-privacy" class="trust-link"
-					><Lock size={14} strokeWidth={2} class="opacity-60" /> Fully private.</a
-				>
-				<a href="/blog/how-quillium-keeps-your-writing-safe" class="trust-link"
-					><ShieldCheck size={14} strokeWidth={2} class="opacity-60" /> Safe and secure.</a
-				>
-			</div>
-		</div>
 	</div>
+
+	<Download {release} />
 </section>
 
 <style>
 	.hero-video-section {
 		width: 100%;
 		background: #f5f4f1;
-		padding: clamp(2.5rem, 6vw, 5rem) 1.25rem clamp(2rem, 4vw, 3.5rem);
+		padding: clamp(2.5rem, 6vw, 5rem) 1.25rem 0;
 	}
 	.hero-video-inner {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: clamp(1.75rem, 3.5vw, 2.75rem);
+		gap: clamp(1.5rem, 3vw, 2.25rem);
 		width: min(94vw, 980px);
 		margin: 0 auto;
 	}
@@ -139,18 +111,13 @@
 	.hero-media {
 		width: 100%;
 	}
-	.hero-actions {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.25rem;
-	}
 	.trust-row {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		gap: 0.85rem;
-		padding-top: 1rem;
+		width: min(100%, 720px);
+		padding-top: 0.9rem;
 		border-top: 2px solid;
 	}
 	.trust-link {

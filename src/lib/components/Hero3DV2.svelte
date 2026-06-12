@@ -678,7 +678,7 @@
 						Download Now
 					</a>
 				</div>
-				{@render platformPicker(false)}
+				{@render platformPicker(true)}
 				<p class="fine-print">
 					By downloading, you agree to the <a href="/terms">Terms of Service</a>
 				</p>
@@ -808,13 +808,13 @@
 		right: clamp(1rem, 8vw, 9rem);
 		top: 50%;
 		transform: translateY(-50%) translateY(var(--off, 28px));
-		text-align: right;
+		text-align: center;
 	}
 	.chapter-5 .cta-row {
-		justify-content: flex-end;
+		justify-content: center;
 	}
 	.chapter-5 .fine-print {
-		text-align: right;
+		text-align: center;
 	}
 
 	.eyebrow {
@@ -1060,7 +1060,7 @@
 	.platforms-row {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: flex-end;
+		justify-content: center;
 		gap: 0.4rem 1.4rem;
 		margin: 0.9rem 0 0;
 		font-size: 0.82rem;
@@ -1093,11 +1093,11 @@
 	.platform-binaries {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: flex-end;
+		justify-content: center;
 		align-items: baseline;
 		gap: 0.45rem 1.3rem;
 		width: fit-content;
-		margin: 0.8rem 0 0 auto;
+		margin: 0.8rem auto 0;
 		padding: 0.65rem 0.95rem;
 		border: 1px solid rgba(247, 241, 227, 0.16);
 		border-radius: 10px;
@@ -1135,7 +1135,7 @@
 	.trust-row {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: flex-end;
+		justify-content: center;
 		gap: 0.5rem 1.2rem;
 		margin: 1.6rem 0 0;
 		padding-top: 1rem;

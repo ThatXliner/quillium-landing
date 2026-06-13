@@ -76,10 +76,19 @@
 		return variant !== 'none';
 	}
 
-	// Nav theme: the flight now lives on a light paper sky, so the nav and
-	// footer keep their native light treatment — nothing to toggle here. (Kept
-	// as a no-op so the IntersectionObserver wiring below stays unchanged.)
+	// Theme: light by default, dark only under `prefers-color-scheme: dark`. The
+	// whole rest of the app is light-only, so a dark hero would sit under a light
+	// nav/footer — to keep them in step we flip the same `data-nav-dark` attribute
+	// the dark hero originally used (nav, footer and this component's CSS all key
+	// off it). It's set whenever the dark media query matches while the hero is
+	// mounted, and cleared on unmount.
 	let heroVisible = false;
+	let darkApplied: boolean | undefined;
+	function applyTheme(dark: boolean) {
+		if (dark === darkApplied) return;
+		darkApplied = dark;
+		document.documentElement.toggleAttribute('data-nav-dark', dark);
+	}
 	function syncNav() {}
 
 	// The three drafts of one sentence — the product story
@@ -89,12 +98,32 @@
 		'Rain met her at the threshold.'
 	];
 
-	// Light-mode palette: the sky is the app's own background (#f5f4f1) so the
-	// hero is seamless with every other variant; the planes keep the original
-	// cream — the warm key/ambient still carve the folds with light and shadow,
-	// so cream paper reads against the soft-grey sky just as it did on the dark.
-	const PAPER_SKY = '#f5f4f1';
+	// The planes are always cream — folded paper reads on either sky. Everything
+	// else swaps with the OS theme. `sky` matches each mode's app background
+	// (#f5f4f1 light / #171310 dark) so the hero is seamless with the sections
+	// around it. `mote` carries colour + how the dust blends: additive glow on the
+	// dark sky, normal-blended ink dust on the light one (additive would vanish).
+	//
+	// Smoke is built per theme from each draft's identity hue (#3b82f6 / #a855f7 /
+	// #22c55e): on dark it's a faint tint of cream → light wisps; on light it's
+	// the hue darkened toward neutral grey → ink wisps that paint onto the paper.
 	const CREAM = '#f7f1e3';
+	const THEMES = {
+		light: {
+			sky: '#f5f4f1',
+			mote: { color: 0x726f6a, opacity: 0.28, additive: false },
+			smoke: { base: '#676360', toward: 'hue', mix: 0.3 }
+		},
+		dark: {
+			sky: '#171310',
+			mote: { color: 0xfff6e0, opacity: 0.45, additive: true },
+			smoke: { base: '#f3ecdd', toward: 'pastel', mix: 0.16 }
+		}
+	} as const;
+	type Theme = (typeof THEMES)[keyof typeof THEMES];
+	// Draft identity hues and their pale tints (used by the dark smoke recipe)
+	const DRAFT_HUES = ['#3b82f6', '#a855f7', '#22c55e'];
+	const DRAFT_PASTELS = ['#cfe0ff', '#ecd6ff', '#d6ffe0'];
 
 	// Scroll progress windows for the five chapters — the full product story
 	// lives in the flight; this variant has no separate feature or download
@@ -129,9 +158,14 @@
 		const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduceMotion) staticMode = true;
 
-		// The flight sky is light now, so the nav/footer keep their default light
-		// styling — no theme flip. The observer is retained (cheap, harmless) in
-		// case we want hero-presence signals later; syncNav is a no-op.
+		// Theme follows the OS. Apply the CSS flip right away (before the scene
+		// builds) so the chapters/cards/nav/footer never flash the wrong palette,
+		// and keep the matchMedia around to react if the user toggles theme live.
+		const darkMq = matchMedia('(prefers-color-scheme: dark)');
+		applyTheme(darkMq.matches);
+
+		// The observer is retained (cheap, harmless) in case we want hero-presence
+		// signals later; syncNav is a no-op now that theme is OS-driven.
 		const navIo = new IntersectionObserver(
 			([entry]) => {
 				heroVisible = entry.isIntersecting;
@@ -143,16 +177,27 @@
 
 		let destroyed = false;
 		let cleanupScene: (() => void) | undefined;
+		// Set once the scene is built; lets a live theme flip recolour the running
+		// scene (sky, fog, smoke, dust) without tearing the whole thing down.
+		let recolorScene: ((theme: Theme) => void) | undefined;
+		const onThemeChange = (e: MediaQueryListEvent) => {
+			applyTheme(e.matches);
+			recolorScene?.(e.matches ? THEMES.dark : THEMES.light);
+		};
+		darkMq.addEventListener('change', onThemeChange);
 
 		const smoke = resolveSmoke();
 		// Surface which trail treatment this view got, so the experiment can read
 		// it off pageviews/events without re-deriving the flag downstream.
 		posthog.capture('hero_3d_smoke_variant', { smoke: smoke ? 'smoke' : 'none' });
 
-		initScene(reduceMotion, smoke)
-			.then((cleanup) => {
-				if (destroyed) cleanup?.();
-				else cleanupScene = cleanup;
+		initScene(reduceMotion, smoke, darkMq.matches ? THEMES.dark : THEMES.light)
+			.then(({ cleanup, recolor }) => {
+				if (destroyed) cleanup();
+				else {
+					cleanupScene = cleanup;
+					recolorScene = recolor;
+				}
 			})
 			.catch(() => {
 				staticMode = true;
@@ -161,11 +206,17 @@
 		return () => {
 			destroyed = true;
 			navIo.disconnect();
+			darkMq.removeEventListener('change', onThemeChange);
+			applyTheme(false);
 			cleanupScene?.();
 		};
 	});
 
-	async function initScene(reduceMotion: boolean, smokeOn: boolean): Promise<() => void> {
+	async function initScene(
+		reduceMotion: boolean,
+		smokeOn: boolean,
+		theme: Theme
+	): Promise<{ cleanup: () => void; recolor: (t: Theme) => void }> {
 		const THREE = await import('three');
 		const host = sceneEl;
 		const wrapper = wrapperEl;
@@ -178,13 +229,14 @@
 		host.appendChild(renderer.domElement);
 
 		const scene = new THREE.Scene();
-		scene.background = new THREE.Color(PAPER_SKY);
-		// Fog matches the sky so distant planes melt into the paper, just hazier.
-		scene.fog = new THREE.Fog(PAPER_SKY, 16, 38);
+		scene.background = new THREE.Color(theme.sky);
+		// Fog matches the sky so distant planes melt into it, just hazier.
+		scene.fog = new THREE.Fog(theme.sky, 16, 38);
 		const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 60);
 
-		// Same warm daylight as the original dark scene, just unchanged — the only
-		// thing flipped for light mode is the colours, not the lighting rig.
+		// Warm daylight — the lighting rig is the same in both themes; only the
+		// colours of the sky, smoke and dust swap. The cream planes pick up the
+		// key the same way whether they fly on a light or dark sky.
 		scene.add(new THREE.AmbientLight(0xfff3df, 0.5));
 		const key = new THREE.DirectionalLight(0xfff3df, 2.2);
 		key.position.set(3, 5, 6);
@@ -346,15 +398,13 @@
 					gl_FragColor = vec4(uColor, a);
 				}`;
 
-		// On the paper sky the trails read as colored ink wisps rather than glowing
-		// vapor: each carries its draft's hue, deep enough to darken the paper it
-		// drifts over (NormalBlending paints these over the #f5f4f1 background). The
-		// grey anchor is neutral so the ink stays colour-true, not muddy/yellow.
-		const SMOKE_COLORS = [
-			new THREE.Color('#3b82f6').lerp(new THREE.Color('#676360'), 0.3),
-			new THREE.Color('#a855f7').lerp(new THREE.Color('#676360'), 0.3),
-			new THREE.Color('#22c55e').lerp(new THREE.Color('#676360'), 0.3)
-		];
+		// Per-theme trail colour for draft i. Dark: a faint draft-tinted cream that
+		// glows as light vapour. Light: the draft's hue darkened toward neutral
+		// grey, so it reads as a colour-true ink wisp painted onto the paper.
+		const smokeColor = (i: number, t: Theme) =>
+			t.smoke.toward === 'pastel'
+				? new THREE.Color(t.smoke.base).lerp(new THREE.Color(DRAFT_PASTELS[i]), t.smoke.mix)
+				: new THREE.Color(DRAFT_HUES[i]).lerp(new THREE.Color(t.smoke.base), t.smoke.mix);
 
 		const tubeSegments = isMobile ? 240 : 400;
 		const makeSmokeMaterial = (color: InstanceType<ThreeNS['Color']>, opacity: number, scale: number) =>
@@ -381,11 +431,11 @@
 		// haze, so the smoke has depth and a soft outer falloff. Both are fixed-
 		// radius *envelopes*; the shader tapers the filled cross-section by age so
 		// the trail starts thin at the plane and spreads out behind it.
-		const smokeTrails: { mat: InstanceType<ThreeNS['ShaderMaterial']> }[] = [];
+		const smokeTrails: { mat: InstanceType<ThreeNS['ShaderMaterial']>; draft: number }[] = [];
 		if (smokeOn) {
 			flightCurves.forEach((curve, i) => {
-				const core = makeSmokeMaterial(SMOKE_COLORS[i], 0.5, 5.5);
-				const haze = makeSmokeMaterial(SMOKE_COLORS[i], 0.16, 3.5);
+				const core = makeSmokeMaterial(smokeColor(i, theme), 0.5, 5.5);
+				const haze = makeSmokeMaterial(smokeColor(i, theme), 0.16, 3.5);
 				const coreMesh = new THREE.Mesh(
 					track(new THREE.TubeGeometry(curve, tubeSegments, 0.28, 14, false)),
 					core
@@ -395,7 +445,7 @@
 					haze
 				);
 				scene.add(coreMesh, hazeMesh);
-				smokeTrails.push({ mat: core }, { mat: haze });
+				smokeTrails.push({ mat: core, draft: i }, { mat: haze, draft: i });
 			});
 		}
 
@@ -410,18 +460,19 @@
 		const moteGeo = track(new THREE.BufferGeometry());
 		moteGeo.setAttribute('position', new THREE.BufferAttribute(motePos, 3));
 		const moteTex = track(makeMoteTexture(THREE));
-		// Soft ink dust: dark warm specks painted onto the paper (NormalBlending),
-		// not glowing motes. Additive blending would vanish on a light sky.
+		// Drifting dust. Dark: warm-white motes that glow against the night sky
+		// (AdditiveBlending). Light: dark ink specks painted onto the paper
+		// (NormalBlending) — additive would simply vanish on a bright background.
 		const moteMat = track(
 			new THREE.PointsMaterial({
-				color: 0x726f6a,
+				color: theme.mote.color,
 				size: 0.07,
 				map: moteTex,
 				transparent: true,
-				opacity: 0.28,
+				opacity: theme.mote.opacity,
 				sizeAttenuation: true,
 				depthWrite: false,
-				blending: THREE.NormalBlending
+				blending: theme.mote.additive ? THREE.AdditiveBlending : THREE.NormalBlending
 			})
 		);
 		const motes = new THREE.Points(moteGeo, moteMat);
@@ -575,7 +626,22 @@
 			tick();
 		}
 
-		return () => {
+		// Live theme flip: recolour the sky/fog/smoke/dust in place. Geometry,
+		// camera and motion are theme-agnostic, so there's nothing to rebuild.
+		const recolor = (t: Theme) => {
+			(scene.background as InstanceType<ThreeNS['Color']>).set(t.sky);
+			scene.fog!.color.set(t.sky);
+			smokeTrails.forEach(({ mat, draft }) =>
+				mat.uniforms.uColor.value.copy(smokeColor(draft, t))
+			);
+			moteMat.color.set(t.mote.color);
+			moteMat.opacity = t.mote.opacity;
+			moteMat.blending = t.mote.additive ? THREE.AdditiveBlending : THREE.NormalBlending;
+			moteMat.needsUpdate = true; // blending mode change needs a recompile
+			if (reduceMotion) renderer.render(scene, camera); // static view won't redraw itself
+		};
+
+		const cleanup = () => {
 			st?.kill();
 			io.disconnect();
 			ro.disconnect();
@@ -584,6 +650,8 @@
 			renderer.dispose();
 			renderer.domElement.remove();
 		};
+
+		return { cleanup, recolor };
 	}
 
 	function window01(v: number, a: number, b: number) {
@@ -1294,6 +1362,92 @@
 	}
 	.trust-row a:hover {
 		color: rgba(0, 0, 0, 0.9);
+	}
+
+	/* ── Dark mode (OS preference) ──
+	   Restores the original night-flight palette: dark sky, cream copy, dark
+	   scrims, heavier card shadows. The Three.js scene swaps its own colours in
+	   JS; this only covers the DOM layer over the canvas. Nav and footer flip via
+	   the shared [data-nav-dark] attribute (set by this component in dark mode). */
+	@media (prefers-color-scheme: dark) {
+		.hero-flight {
+			background: #171310;
+		}
+		.static-mode .scene-host::after {
+			background: rgba(23, 19, 16, 0.45);
+		}
+		.chapter::before {
+			background: radial-gradient(ellipse at center, rgba(23, 19, 16, 0.72), transparent 72%);
+		}
+		.eyebrow {
+			color: rgba(247, 241, 227, 0.72);
+		}
+		.headline,
+		.chapter-heading {
+			color: #f7f1e3;
+		}
+		.subhead,
+		.chapter-sub {
+			color: rgba(247, 241, 227, 0.78);
+		}
+		.scroll-hint {
+			color: rgba(247, 241, 227, 0.55);
+		}
+		.fine-print {
+			color: rgba(247, 241, 227, 0.55);
+		}
+		.fine-print a {
+			color: rgba(247, 241, 227, 0.7);
+		}
+		/* Cards stay light paper, but go back to the deeper drop-shadow that read
+		   well against the night sky */
+		.demo-doc,
+		.demo-card {
+			background: #fffdf8;
+			border-color: transparent;
+			box-shadow:
+				0 24px 64px rgba(0, 0, 0, 0.5),
+				0 4px 12px rgba(0, 0, 0, 0.3);
+		}
+		.draft-chip {
+			background: #fffdf8;
+			border-color: transparent;
+			box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+		}
+		.platform-toggle {
+			color: rgba(247, 241, 227, 0.55);
+		}
+		.platform-toggle:hover {
+			color: rgba(247, 241, 227, 0.95);
+		}
+		.platform-toggle.platform--detected {
+			color: rgba(247, 241, 227, 0.92);
+		}
+		.platform-toggle.platform--open {
+			color: rgba(247, 241, 227, 0.98);
+		}
+		.platform-binaries {
+			border-color: rgba(247, 241, 227, 0.16);
+			background: rgba(247, 241, 227, 0.05);
+		}
+		.binary {
+			color: rgba(247, 241, 227, 0.65);
+		}
+		.binary:hover {
+			color: rgba(247, 241, 227, 0.95);
+		}
+		.binary--primary {
+			color: rgba(247, 241, 227, 0.95);
+		}
+		.binary-note {
+			color: rgba(245, 158, 11, 0.75);
+		}
+		.trust-row a {
+			color: rgba(247, 241, 227, 0.6);
+		}
+		.trust-row a:hover {
+			color: rgba(247, 241, 227, 0.95);
+		}
 	}
 
 	.sr-only {

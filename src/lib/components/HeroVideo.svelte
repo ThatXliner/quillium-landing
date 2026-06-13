@@ -1,8 +1,20 @@
 <script lang="ts">
 	import { Pen, Lock, ShieldCheck } from '@lucide/svelte';
 	import VideoEmbed from './VideoEmbed.svelte';
+	import DownloadButton from './DownloadButton.svelte';
 
-	let { videoId }: { videoId: string } = $props();
+	interface ReleaseAsset {
+		name: string;
+		url: string;
+	}
+
+	let {
+		videoId,
+		release
+	}: {
+		videoId: string;
+		release: { version: string | null; assets: ReleaseAsset[] };
+	} = $props();
 </script>
 
 <section class="hero-video-section">
@@ -19,6 +31,10 @@
 				Write a sentence three different ways, and decide which to pick later. Branch any phrase
 				without losing a single word.
 			</p>
+		</div>
+
+		<div class="hero-cta">
+			<DownloadButton {release} location="hero-video" />
 		</div>
 
 		<div
@@ -101,6 +117,12 @@
 		font-size: 1.1rem;
 		line-height: 1.6;
 		color: var(--text-soft);
+	}
+	.hero-cta {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
 	}
 	.hero-media {
 		width: 100%;

@@ -160,7 +160,7 @@
 <Nav />
 <main>
 	{#if showVideoHero}
-		<HeroVideo videoId={HERO_VIDEO_ID} />
+		<HeroVideo videoId={HERO_VIDEO_ID} release={data.release} />
 	{:else if show3DV2Hero}
 		<Hero3DV2 release={data.release} />
 	{:else if showScrollHero}

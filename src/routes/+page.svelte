@@ -149,18 +149,24 @@
 
 	<!-- Every variant gets the standard demo sections below the hero, except the
 	     two self-contained ones: the scroll hero and the 3D flight hero — their
-	     scroll journeys ARE the feature demonstration. The flight hero also
-	     folds the download/platform picker into its finale, so it skips the
-	     Download section entirely. -->
+	     scroll journeys ARE the feature demonstration. The 3D flight hero is a
+	     middle case: its chapters demo the core branching story (so it skips the
+	     Showcase carousel) and its chapter-5 finale folds in the download CTA and
+	     platform picker (so it skips the Download section), but it still shows the
+	     scrollable Features list below to round out the product story. -->
 	<div class="post-hero">
 		{#if !showScrollHero && !show3DV2Hero}
 			<Showcase />
 
 			<div class="warm-divider section-divider"></div>
+		{/if}
 
+		{#if !showScrollHero}
 			<Features />
 
-			<div class="warm-divider section-divider"></div>
+			{#if !show3DV2Hero}
+				<div class="warm-divider section-divider"></div>
+			{/if}
 		{/if}
 
 		{#if !show3DV2Hero}

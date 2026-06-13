@@ -19,10 +19,13 @@
 	let { data } = $props();
 
 	let isMobile = $state(true);
-	// `hero-layout` experiment: 'video' => video-first hero, '3d-variant-2' =>
-	// scroll-driven flight scene, else current scroll hero. Falls back to the
-	// scroll hero until the flag loads or if no video id is set.
-	let heroVariant = $state('control');
+	// Hero variant. The video hero is the default for everyone: it's the single
+	// strongest conversion asset (a real product demo) and was previously hidden
+	// behind the `hero-layout` A/B test, which couldn't reach significance at the
+	// site's current traffic. The flag/experiment plumbing is kept ONLY as a
+	// `?hero=<variant>` QA override (see onMount) — values: 'video' (default),
+	// '3d-variant-2' (scroll-driven flight), 'control' (scroll/static hero).
+	let heroVariant = $state('video');
 	let showVideoHero = $derived(heroVariant === 'video' && HERO_VIDEO_ID !== '');
 	let show3DV2Hero = $derived(heroVariant === '3d-variant-2');
 	let showScrollHero = $derived(!isMobile && !showVideoHero && !show3DV2Hero);
@@ -60,15 +63,11 @@
 		isMobile = mql.matches;
 		mql.addEventListener('change', (e) => (isMobile = e.matches));
 
-		// `?hero=video|3d-variant-2|control` forces a variant (QA / dev, where flags don't load)
+		// `?hero=video|3d-variant-2|control` forces a variant for QA. The video hero
+		// is the default for all visitors; the `hero-layout` flag no longer overrides
+		// it (the experiment was ended — too little traffic to ever conclude).
 		const heroOverride = new URLSearchParams(location.search).get('hero');
 		if (heroOverride) heroVariant = heroOverride;
-
-		posthog.onFeatureFlags(() => {
-			if (heroOverride) return;
-			const variant = posthog.getFeatureFlag('hero-layout');
-			if (typeof variant === 'string') heroVariant = variant;
-		});
 
 		// Smooth scroll for anchor links
 		document.querySelectorAll('a[href^="#"]').forEach((link) => {

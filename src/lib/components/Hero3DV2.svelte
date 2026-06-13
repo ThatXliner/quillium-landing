@@ -62,6 +62,20 @@
 	let chapterEls: HTMLDivElement[] = $state([]);
 	let staticMode = $state(false); // reduced motion or WebGL failure
 
+	// `hero-3d-smoke` experiment (a sub-split of the 3d-variant-2 arm of the
+	// hero-layout experiment): 'smoke' => curl-noise smoke trails behind the
+	// planes, 'none' => clean smokeless flight. Read once before the scene is
+	// built so the renderer can skip the whole particle system on 'none'.
+	// `?smoke=on|off` forces it for QA, where flags don't load.
+	function resolveSmoke(): boolean {
+		const override = new URLSearchParams(location.search).get('smoke');
+		if (override === 'on') return true;
+		if (override === 'off') return false;
+		const variant = posthog.getFeatureFlag('hero-3d-smoke');
+		// Default to smoke until the flag resolves or for anyone not in the test
+		return variant !== 'none';
+	}
+
 	// Nav theme: dark while the hero is on screen
 	let heroVisible = false;
 	let navDarkApplied: boolean | undefined;
@@ -128,7 +142,12 @@
 		let destroyed = false;
 		let cleanupScene: (() => void) | undefined;
 
-		initScene(reduceMotion)
+		const smoke = resolveSmoke();
+		// Surface which trail treatment this view got, so the experiment can read
+		// it off pageviews/events without re-deriving the flag downstream.
+		posthog.capture('hero_3d_smoke_variant', { smoke: smoke ? 'smoke' : 'none' });
+
+		initScene(reduceMotion, smoke)
 			.then((cleanup) => {
 				if (destroyed) cleanup?.();
 				else cleanupScene = cleanup;
@@ -145,7 +164,7 @@
 		};
 	});
 
-	async function initScene(reduceMotion: boolean): Promise<() => void> {
+	async function initScene(reduceMotion: boolean, smokeOn: boolean): Promise<() => void> {
 		const THREE = await import('three');
 		const host = sceneEl;
 		const wrapper = wrapperEl;
@@ -210,49 +229,7 @@
 				)
 		);
 
-		// ── Glowing trails (revealed behind each plane) ──────────────
-		const makeTrailMaterial = (opacity: number) =>
-			track(
-				new THREE.ShaderMaterial({
-					transparent: true,
-					depthWrite: false,
-					blending: THREE.AdditiveBlending,
-					uniforms: {
-						uHead: { value: 0 },
-						uTaper: { value: 0.38 },
-						uColor: { value: new THREE.Color('#fff6e0') },
-						uOpacity: { value: opacity }
-					},
-					vertexShader: /* glsl */ `
-						varying float vT;
-						void main() {
-							vT = uv.x;
-							gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-						}`,
-					fragmentShader: /* glsl */ `
-						uniform float uHead;
-						uniform float uTaper;
-						uniform vec3 uColor;
-						uniform float uOpacity;
-						varying float vT;
-						void main() {
-							float ahead = 1.0 - smoothstep(uHead - 0.005, uHead, vT);
-							float tail = smoothstep(uHead - uTaper, uHead - uTaper * 0.2, vT);
-							float a = ahead * tail * uOpacity;
-							if (a < 0.003) discard;
-							gl_FragColor = vec4(uColor, a);
-						}`
-				})
-			);
-
-		const trails = flightCurves.map((curve) => {
-			const core = makeTrailMaterial(0.95);
-			const halo = makeTrailMaterial(0.16);
-			const coreMesh = new THREE.Mesh(track(new THREE.TubeGeometry(curve, 300, 0.035, 8)), core);
-			const haloMesh = new THREE.Mesh(track(new THREE.TubeGeometry(curve, 300, 0.13, 8)), halo);
-			scene.add(coreMesh, haloMesh);
-			return { core, halo };
-		});
+		const planeCount = flightCurves.length;
 
 		// ── Paper planes (the doves) ─────────────────────────────────
 		const planeGeo = track(makePaperPlaneGeometry(THREE));
@@ -271,6 +248,135 @@
 			scene.add(mesh);
 			return { mesh, curve, stagger: (i - 1) * 0.026, phase: i * 2.4 };
 		});
+
+		// ── Wispy smoke trails — scroll-revealed ribbons behind each plane ──
+		// A soft tube swept along each flight curve. It is REVEALED up to the
+		// scroll-driven flight head (uHead): scroll down draws more of the trail,
+		// scroll back up and it's still there — scrubbing a video of smoke being
+		// laid down. It trails the exact path the plane flew.
+		//
+		// The organic look comes from DOMAIN-WARPED fbm: the noise coordinates are
+		// themselves displaced by noise, which turns regular noise into flowing,
+		// marbled, vapor-like shapes that carve soft wisps out of the ribbon.
+		const smokeTrailVert = /* glsl */ `
+			varying vec2 vUv;
+			void main() {
+				vUv = uv;                 // x = along the flight path, y = around the tube
+				gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+			}`;
+		const smokeTrailFrag = /* glsl */ `
+			precision highp float;
+			varying vec2 vUv;
+			uniform float uHead;     // revealed extent along the path (scroll position)
+			uniform float uTime;     // only drifts the warp so the smoke breathes
+			uniform float uDim;      // finale dim
+			uniform float uOpacity;  // layer base opacity
+			uniform vec3 uColor;
+			uniform float uScale;    // wisp frequency along the ribbon
+
+			// Cheap sin-free hash (integer bit-mix) — far cheaper than the
+				// classic fract(sin(...)) and good enough for smoke.
+				vec3 hash3(vec3 p) {
+					p = fract(p * vec3(0.1031, 0.1030, 0.0973));
+					p += dot(p, p.yxz + 33.33);
+					return fract((p.xxy + p.yxx) * p.zyx) * 2.0 - 1.0;
+				}
+				float vnoise(vec3 p) {
+					vec3 i = floor(p), f = fract(p);
+					vec3 u = f * f * (3.0 - 2.0 * f);
+					return mix(
+						mix(mix(dot(hash3(i + vec3(0,0,0)), f - vec3(0,0,0)),
+						        dot(hash3(i + vec3(1,0,0)), f - vec3(1,0,0)), u.x),
+						    mix(dot(hash3(i + vec3(0,1,0)), f - vec3(0,1,0)),
+						        dot(hash3(i + vec3(1,1,0)), f - vec3(1,1,0)), u.x), u.y),
+						mix(mix(dot(hash3(i + vec3(0,0,1)), f - vec3(0,0,1)),
+						        dot(hash3(i + vec3(1,0,1)), f - vec3(1,0,1)), u.x),
+						    mix(dot(hash3(i + vec3(0,1,1)), f - vec3(0,1,1)),
+						        dot(hash3(i + vec3(1,1,1)), f - vec3(1,1,1)), u.x), u.y),
+						u.z);
+				}
+				// 3 octaves is plenty once domain warping adds apparent detail.
+				float fbm(vec3 p) {
+					float a = 0.5, s = 0.0;
+					for (int i = 0; i < 3; i++) { s += a * vnoise(p); p *= 2.03; a *= 0.5; }
+					return s;
+				}
+
+				void main() {
+					// reveal: only the path behind the flight head is drawn, and it STAYS
+					// (no time term here, so scrolling scrubs the trail in/out)
+					float revealed = 1.0 - smoothstep(uHead - 0.015, uHead + 0.02, vUv.x);
+					if (revealed <= 0.0) discard;
+					float birth = smoothstep(0.0, 0.05, vUv.x); // feather the very start
+
+					// soft cross-section — fade hard toward the tube surface, no rim
+					float radial = 1.0 - abs(vUv.y - 0.5) * 2.0;
+					radial = pow(clamp(radial, 0.0, 1.0), 1.3);
+
+					// Single-pass domain warp: warp the lookup by one noise vector, then
+					// sample fbm there. 3 fbm calls total (was 14) but keeps the flowing,
+					// marbled, torn-wisp look. uTime only drifts it (breathing).
+					vec3 sp = vec3(vUv.x * uScale, vUv.y * 2.2, uTime * 0.08);
+					vec3 q = vec3(fbm(sp), fbm(sp + vec3(3.1, 1.7, 8.2)), fbm(sp + vec3(6.3, 4.4, 2.5)));
+					float d = fbm(sp + 3.2 * q);
+
+					// remap into soft, torn wisps with holes (negatives vanish); reuse q.x
+					// for a cheap finer-detail tear (no extra noise call)
+					float wisp = smoothstep(-0.15, 0.55, d);
+					wisp *= 0.6 + 0.4 * smoothstep(-0.3, 0.5, q.x);
+
+					float a = revealed * birth * radial * wisp * uOpacity * uDim;
+					if (a < 0.003) discard;
+					gl_FragColor = vec4(uColor, a);
+				}`;
+
+		// Warm cream nudged toward each draft's hue
+		const SMOKE_COLORS = [
+			new THREE.Color('#f3ecdd').lerp(new THREE.Color('#cfe0ff'), 0.16),
+			new THREE.Color('#f3ecdd').lerp(new THREE.Color('#ecd6ff'), 0.16),
+			new THREE.Color('#f3ecdd').lerp(new THREE.Color('#d6ffe0'), 0.16)
+		];
+
+		const tubeSegments = isMobile ? 240 : 400;
+		const makeSmokeMaterial = (color: InstanceType<ThreeNS['Color']>, opacity: number, scale: number) =>
+			track(
+				new THREE.ShaderMaterial({
+					transparent: true,
+					depthWrite: false,
+					blending: THREE.NormalBlending,
+					side: THREE.DoubleSide,
+					vertexShader: smokeTrailVert,
+					fragmentShader: smokeTrailFrag,
+					uniforms: {
+						uHead: { value: 0 },
+						uTime: { value: 0 },
+						uDim: { value: 1 },
+						uOpacity: { value: opacity },
+						uColor: { value: color },
+						uScale: { value: scale }
+					}
+				})
+			);
+
+		// Two coaxial tubes per plane: a tighter brighter core + a broad faint
+		// haze, so the smoke has depth and a soft outer falloff.
+		const smokeTrails: { mat: InstanceType<ThreeNS['ShaderMaterial']> }[] = [];
+		if (smokeOn) {
+			flightCurves.forEach((curve, i) => {
+				const core = makeSmokeMaterial(SMOKE_COLORS[i], 0.42, 5.5);
+				const haze = makeSmokeMaterial(SMOKE_COLORS[i], 0.13, 3.5);
+				const coreMesh = new THREE.Mesh(
+					track(new THREE.TubeGeometry(curve, tubeSegments, 0.28, 14, false)),
+					core
+				);
+				const hazeMesh = new THREE.Mesh(
+					track(new THREE.TubeGeometry(curve, tubeSegments, 0.85, 14, false)),
+					haze
+				);
+				scene.add(coreMesh, hazeMesh);
+				smokeTrails.push({ mat: core }, { mat: haze });
+			});
+		}
 
 		// ── Drifting paper motes ─────────────────────────────────────
 		const moteCount = isMobile ? 600 : 1400;
@@ -371,11 +477,14 @@
 			const dim = 1 - (wide ? 0.3 : 0.72) * finale;
 
 			planeMat.opacity = dim;
-			trails.forEach(({ core, halo }) => {
-				core.uniforms.uHead.value = ft;
-				halo.uniforms.uHead.value = ft;
-				core.uniforms.uOpacity.value = 0.95 * dim;
-				halo.uniforms.uOpacity.value = 0.16 * dim;
+
+			// Smoke trails: uHead = the flight head (scroll position), so the ribbon
+			// is revealed/scrubbed in and out with scroll and trails the flown path.
+			// uTime only drifts the warp so the smoke breathes; it never dissipates.
+			smokeTrails.forEach(({ mat }) => {
+				mat.uniforms.uHead.value = ft;
+				mat.uniforms.uTime.value = t;
+				mat.uniforms.uDim.value = dim;
 			});
 
 			camCurve.getPoint(progress, camera.position);

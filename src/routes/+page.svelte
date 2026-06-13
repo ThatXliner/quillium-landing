@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import posthog from 'posthog-js';
 	import { initReveal } from '$lib/reveal';
 	import Nav from '$lib/components/Nav.svelte';
@@ -31,12 +31,25 @@
 	// - scroll hero: self-contained, shows nothing below.
 	// - 3D flight hero: chapters demo the branching story (skip Showcase) and the
 	//   chapter-5 finale is the download CTA (skip Download), but keep Features.
-	// - video hero: leads with the marketing video, so it keeps Showcase + Download
-	//   but skips Features to stay focused on the video.
+	// - video hero: the marketing video replaces the Showcase carousel, so it skips
+	//   Showcase but keeps Features + Download below.
 	// - control / mobile: the full Showcase → Features → Download stack.
-	let showShowcase = $derived(!showScrollHero && !show3DV2Hero);
-	let showFeatures = $derived(!showScrollHero && !showVideoHero);
+	let showShowcase = $derived(!showScrollHero && !show3DV2Hero && !showVideoHero);
+	let showFeatures = $derived(!showScrollHero);
 	let showDownload = $derived(!showScrollHero && !show3DV2Hero);
+
+	// The hero variant resolves on the client (URL override or PostHog flag), which
+	// swaps the post-hero layout *after* SSR. Re-wire the reveal animations once the
+	// new DOM has flushed so freshly-rendered `.reveal` sections (e.g. the Features
+	// list under hero=video) fade in instead of staying stuck at opacity:0.
+	// initReveal() is idempotent, so re-running it only picks up new nodes.
+	$effect(() => {
+		// Reading the flags registers them as dependencies, so the effect re-runs
+		// whenever the post-hero layout changes; JSON.stringify keeps the read from
+		// being dead-code-eliminated.
+		JSON.stringify([showShowcase, showFeatures, showDownload, showVideoHero, show3DV2Hero]);
+		tick().then(() => initReveal());
+	});
 
 	onMount(() => {
 		if (data.release.version) {
@@ -56,8 +69,6 @@
 			const variant = posthog.getFeatureFlag('hero-layout');
 			if (typeof variant === 'string') heroVariant = variant;
 		});
-
-		initReveal();
 
 		// Smooth scroll for anchor links
 		document.querySelectorAll('a[href^="#"]').forEach((link) => {

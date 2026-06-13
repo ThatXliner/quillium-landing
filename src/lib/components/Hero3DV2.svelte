@@ -64,18 +64,12 @@
 	let chapterEls: HTMLDivElement[] = $state([]);
 	let staticMode = $state(false); // reduced motion or WebGL failure
 
-	// `hero-3d-smoke` experiment (a sub-split of the 3d-variant-2 arm of the
-	// hero-layout experiment): 'smoke' => curl-noise smoke trails behind the
-	// planes, 'none' => clean smokeless flight. Read once before the scene is
-	// built so the renderer can skip the whole particle system on 'none'.
-	// `?smoke=on|off` forces it for QA, where flags don't load.
+	// Smoke trails (curl-noise ribbons behind the planes) are ON for everyone.
+	// This was once the `hero-3d-smoke` A/B (smoke vs clean flight); that test is
+	// over and we just want the smoke — it looks good. `?smoke=off` still disables
+	// it for QA. See GitHub issue to re-run the 50/50 test if/when perf matters.
 	function resolveSmoke(): boolean {
-		const override = new URLSearchParams(location.search).get('smoke');
-		if (override === 'on') return true;
-		if (override === 'off') return false;
-		const variant = posthog.getFeatureFlag('hero-3d-smoke');
-		// Default to smoke until the flag resolves or for anyone not in the test
-		return variant !== 'none';
+		return new URLSearchParams(location.search).get('smoke') !== 'off';
 	}
 
 	// Theme follows `prefers-color-scheme`. The whole app is now token-driven, so
@@ -179,8 +173,8 @@
 		darkMq.addEventListener('change', onThemeChange);
 
 		const smoke = resolveSmoke();
-		// Surface which trail treatment this view got, so the experiment can read
-		// it off pageviews/events without re-deriving the flag downstream.
+		// Record whether smoke rendered (now always on unless ?smoke=off for QA) so
+		// it's still queryable if we revive the smoke-vs-clean A/B later.
 		posthog.capture('hero_3d_smoke_variant', { smoke: smoke ? 'smoke' : 'none' });
 
 		initScene(reduceMotion, smoke, darkMq.matches ? THEMES.dark : THEMES.light)

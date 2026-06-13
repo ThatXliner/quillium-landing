@@ -45,8 +45,11 @@
 <style>
 	.hero-video-section {
 		width: 100%;
-		background: #f5f4f1;
+		background: var(--bg);
 		padding: clamp(2.5rem, 6vw, 5rem) 1.25rem 0;
+		transition:
+			background-color 300ms ease,
+			color 300ms ease;
 	}
 	.hero-video-inner {
 		display: flex;
@@ -79,7 +82,7 @@
 		font-weight: 600;
 		letter-spacing: 0.13em;
 		text-transform: uppercase;
-		color: rgba(0, 0, 0, 0.35);
+		color: var(--text-faint);
 	}
 	.headline {
 		margin: 0 0 1rem;
@@ -87,7 +90,7 @@
 		line-height: 1.12;
 		letter-spacing: -0.03em;
 		font-weight: 400;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 	}
 	.headline .italic {
 		font-style: italic;
@@ -97,7 +100,7 @@
 		max-width: 600px;
 		font-size: 1.1rem;
 		line-height: 1.6;
-		color: rgba(0, 0, 0, 0.5);
+		color: var(--text-soft);
 	}
 	.hero-media {
 		width: 100%;
@@ -116,12 +119,12 @@
 		align-items: center;
 		gap: 0.3rem;
 		font-size: 0.9rem;
-		color: rgba(0, 0, 0, 0.5);
+		color: var(--text-soft);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		transition: color 0.3s;
 	}
 	.trust-link:hover {
-		color: rgba(0, 0, 0, 0.7);
+		color: var(--text);
 	}
 </style>

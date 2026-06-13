@@ -257,7 +257,7 @@
 		<!-- Waitlist form -->
 		<div class="mx-auto mt-10 max-w-lg">
 			{#if !submitted}
-				<p class="mb-3 text-center text-sm leading-[1.5] text-black/50 italic">
+				<p class="mb-3 text-center text-sm leading-[1.5] text-[color:var(--text-soft)] italic">
 					Priority is given to active users.
 					<a href="/#download" class="underline">Download the app first</a> to move up the list.
 				</p>
@@ -279,16 +279,16 @@
 					</button>
 				</form>
 				{#if error}
-					<p class="mt-3 text-[0.8rem] text-[#ef4444]">{error}</p>
+					<p class="mt-3 text-[0.8rem] text-[color:var(--accent-red)]">{error}</p>
 				{/if}
-				<p class="mt-4 text-[0.72rem] text-black/35">
+				<p class="mt-4 text-[0.72rem] text-[color:var(--text-faint)]">
 					No spam. You'll hear from us when Omni is ready for early testers.
 				</p>
 			{:else}
 				<div class="success-card">
 					<Check size={18} strokeWidth={2} />
 					<p>You're on the list. We'll be in touch when Omni opens up.</p>
-					<p class="mt-2 text-[0.75rem] text-black/40">
+					<p class="mt-2 text-[0.75rem] text-[color:var(--text-faint)]">
 						Make sure you've <a href="/#download" class="underline">downloaded Quillium</a> — active users
 						get waitlist priority.
 					</p>
@@ -319,7 +319,7 @@
 		<div class="reveal mb-16 max-w-xl">
 			<p class="section-eyebrow">What Omni adds</p>
 			<h2 class="section-heading">Two things, bundled.</h2>
-			<p class="mt-4 text-[0.95rem] leading-[1.7] text-black/55">
+			<p class="mt-4 text-[0.95rem] leading-[1.7] text-[color:var(--text-soft)]">
 				Cloud sync across your devices, and real-time collaboration with other people. One
 				subscription, both included.
 			</p>
@@ -545,16 +545,16 @@
 		</div>
 
 		<div
-			class="mx-auto flex h-full w-fit flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60"
+			class="mx-auto flex h-full w-fit flex-col overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]"
 		>
-			<div class="border-b border-black/5 px-5 py-4">
-				<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
+			<div class="border-b border-[color:var(--border)] px-5 py-4">
+				<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-[color:var(--text-faint)] uppercase">
 					Quillium Omni
 				</p>
-				<p class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/65 italic">
-					~$20<span class="text-[0.85rem] text-black/30">/month</span>
+				<p class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-[color:var(--text-soft)] italic">
+					~$20<span class="text-[0.85rem] text-[color:var(--text-faint)]">/month</span>
 				</p>
-				<p class="mt-1 text-[0.7rem] text-black/28">
+				<p class="mt-1 text-[0.7rem] text-[color:var(--text-faint)]">
 					The more users we have, the cheaper we can make it.
 				</p>
 			</div>
@@ -567,7 +567,7 @@
 				</ul>
 				<a
 					href="/pricing#paid"
-					class="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.75rem] font-medium text-[#3b82f6] no-underline hover:underline"
+					class="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.75rem] font-medium text-[color:var(--accent-blue)] no-underline hover:underline"
 				>
 					See the full pricing story
 					<ArrowRight size={12} strokeWidth={2} />
@@ -621,11 +621,11 @@
 	<!-- ============ FINAL CTA ============ -->
 	<section class="mx-auto max-w-2xl text-center">
 		<h2
-			class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-black/88"
+			class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-[color:var(--text-strong)]"
 		>
 			Be first in line.
 		</h2>
-		<p class="mb-8 text-[0.95rem] text-black/50">
+		<p class="mb-8 text-[0.95rem] text-[color:var(--text-soft)]">
 			Join the waitlist and we'll reach out when early access opens.
 		</p>
 
@@ -647,7 +647,7 @@
 				</button>
 			</form>
 			{#if error}
-				<p class="mt-3 text-[0.8rem] text-[#ef4444]">{error}</p>
+				<p class="mt-3 text-[0.8rem] text-[color:var(--accent-red)]">{error}</p>
 			{/if}
 		{:else}
 			<div class="mx-auto max-w-[28rem]">
@@ -670,17 +670,17 @@
 		line-height: 1.05;
 		font-weight: 400;
 		letter-spacing: -0.03em;
-		color: rgba(0, 0, 0, 0.9);
+		color: var(--text-strong);
 		margin: 0 0 28px 0;
 	}
 	.hero-heading .italic {
 		font-style: italic;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 	}
 	.hero-lead {
 		font-size: 1.05rem;
 		line-height: 1.8;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 		max-width: 38rem;
 		margin: 0 auto;
 	}
@@ -690,18 +690,18 @@
 		min-width: 0;
 		flex: 1;
 		border-radius: 10px;
-		border: 1px solid rgba(0, 0, 0, 0.1);
-		background: rgba(255, 255, 255, 0.7);
+		border: 1px solid var(--border);
+		background: var(--surface-2);
 		padding: 12px 16px;
 		font-family: 'Inter', sans-serif;
 		font-size: 0.9rem;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		transition:
 			border-color 200ms,
 			box-shadow 200ms;
 	}
 	.waitlist-input::placeholder {
-		color: rgba(0, 0, 0, 0.3);
+		color: var(--text-faint);
 	}
 	.waitlist-input:focus {
 		outline: none;
@@ -717,7 +717,7 @@
 		border-radius: 10px;
 		background: rgba(34, 197, 94, 0.08);
 		border: 1px solid rgba(34, 197, 94, 0.2);
-		color: #15803d;
+		color: var(--text);
 		font-size: 0.85rem;
 	}
 	.success-card p {
@@ -746,7 +746,7 @@
 		font-weight: 600;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
-		color: rgba(0, 0, 0, 0.5);
+		color: var(--text-soft);
 	}
 
 	/* ── Feature rows ── */
@@ -785,14 +785,14 @@
 		font-family: 'Newsreader', Georgia, serif;
 		font-size: 1.65rem;
 		font-weight: 400;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		margin: 0 0 12px 0;
 		line-height: 1.2;
 		letter-spacing: -0.01em;
 	}
 	.feature-lead {
 		font-size: 15.5px;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		line-height: 1.8;
 		margin: 0;
 	}
@@ -806,7 +806,7 @@
 		margin: 12px 0 0 0;
 		font-size: 0.72rem;
 		line-height: 1.55;
-		color: rgba(0, 0, 0, 0.4);
+		color: var(--text-faint);
 	}
 	.feature-footnote sup,
 	.feature-lead sup {
@@ -860,8 +860,8 @@
 		border-radius: 18px;
 		background:
 			radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 65%),
-			rgba(255, 255, 255, 0.5);
-		border: 1px solid rgba(0, 0, 0, 0.05);
+			var(--surface);
+		border: 1px solid var(--border);
 	}
 	.sync-lines {
 		position: absolute;
@@ -920,10 +920,10 @@
 		padding: 20px 22px;
 		min-width: 112px;
 		border-radius: 14px;
-		background: rgba(255, 255, 255, 0.95);
-		border: 1px solid rgba(0, 0, 0, 0.06);
-		color: rgba(0, 0, 0, 0.65);
-		box-shadow: 0 4px 14px rgba(44, 42, 39, 0.06);
+		background: var(--surface);
+		border: 1px solid var(--border);
+		color: var(--text-soft);
+		box-shadow: 0 4px 14px rgba(var(--shadow-color), 0.06);
 		transform-origin: center;
 		animation: sprout 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 	}
@@ -990,7 +990,7 @@
 		font-weight: 600;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
-		color: rgba(0, 0, 0, 0.4);
+		color: var(--text-faint);
 	}
 	.device-label sup {
 		font-size: 0.85em;
@@ -1011,7 +1011,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: white;
+		background: var(--surface);
 		border: 1px solid rgba(59, 130, 246, 0.25);
 		color: #3b82f6;
 		box-shadow: 0 6px 18px rgba(59, 130, 246, 0.18);
@@ -1044,21 +1044,21 @@
 		gap: 12px;
 		padding: 20px;
 		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.7);
-		border: 1px solid rgba(0, 0, 0, 0.05);
+		background: var(--surface);
+		border: 1px solid var(--border);
 	}
 	.doc-snippet {
 		padding: 16px 18px;
 		border-radius: 10px;
-		background: #fdfcfa;
-		border: 1px solid rgba(0, 0, 0, 0.04);
+		background: var(--surface-2);
+		border: 1px solid var(--border);
 	}
 	.doc-snippet p {
 		margin: 0;
 		font-family: 'Newsreader', Georgia, serif;
 		font-size: 0.95rem;
 		line-height: 1.7;
-		color: rgba(0, 0, 0, 0.75);
+		color: var(--text);
 	}
 	.highlight-yellow {
 		background: rgba(245, 158, 11, 0.22);
@@ -1075,8 +1075,8 @@
 		gap: 10px;
 		padding: 10px 12px;
 		border-radius: 10px;
-		background: rgba(255, 255, 255, 0.8);
-		border: 1px solid rgba(0, 0, 0, 0.05);
+		background: var(--surface);
+		border: 1px solid var(--border);
 	}
 	.annotation--you {
 		margin-left: 20px;
@@ -1100,13 +1100,13 @@
 	.annotation-author {
 		font-size: 0.68rem;
 		font-weight: 600;
-		color: rgba(0, 0, 0, 0.5);
+		color: var(--text-soft);
 		margin: 0 0 2px 0;
 		letter-spacing: 0.02em;
 	}
 	.annotation-text {
 		font-size: 0.82rem;
-		color: rgba(0, 0, 0, 0.7);
+		color: var(--text);
 		margin: 0;
 		line-height: 1.5;
 	}
@@ -1120,15 +1120,15 @@
 		gap: 14px;
 		padding: 24px;
 		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.7);
-		border: 1px solid rgba(0, 0, 0, 0.05);
+		background: var(--surface);
+		border: 1px solid var(--border);
 	}
 	.branch-label {
 		font-size: 0.68rem;
 		font-weight: 600;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: rgba(0, 0, 0, 0.4);
+		color: var(--text-faint);
 		margin: 0 0 4px 0;
 	}
 	.branch-tree {
@@ -1142,13 +1142,13 @@
 		font-size: 0.72rem;
 		padding: 4px 10px;
 		border-radius: 6px;
-		background: rgba(0, 0, 0, 0.04);
-		color: rgba(0, 0, 0, 0.55);
-		border: 1px solid rgba(0, 0, 0, 0.05);
+		background: var(--surface-2);
+		color: var(--text-soft);
+		border: 1px solid var(--border);
 	}
 	.branch-node--active {
-		background: rgba(0, 0, 0, 0.06);
-		color: rgba(0, 0, 0, 0.7);
+		background: var(--surface-2);
+		color: var(--text);
 		font-weight: 600;
 	}
 	.branch-node--you {
@@ -1159,11 +1159,11 @@
 	.branch-line {
 		width: 2px;
 		height: 16px;
-		background: rgba(0, 0, 0, 0.1);
+		background: var(--border-strong);
 		margin-left: 14px;
 	}
 	.branch-line--fork {
-		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(168, 85, 247, 0.3));
+		background: linear-gradient(to bottom, var(--border-strong), rgba(168, 85, 247, 0.3));
 	}
 	.branch-row {
 		display: flex;
@@ -1177,11 +1177,11 @@
 		gap: 6px;
 		padding: 3px 9px;
 		border-radius: 9999px;
-		background: rgba(0, 0, 0, 0.03);
-		border: 1px solid rgba(0, 0, 0, 0.06);
+		background: var(--surface-2);
+		border: 1px solid var(--border);
 		font-size: 0.68rem;
 		font-weight: 500;
-		color: rgba(0, 0, 0, 0.5);
+		color: var(--text-soft);
 	}
 	.viewer-dot {
 		width: 6px;
@@ -1192,7 +1192,7 @@
 		margin: 8px 0 0 0;
 		font-size: 0.72rem;
 		line-height: 1.55;
-		color: rgba(0, 0, 0, 0.45);
+		color: var(--text-faint);
 	}
 
 	/* ── Offline demo ── */
@@ -1204,8 +1204,8 @@
 		gap: 16px;
 		padding: 24px;
 		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.7);
-		border: 1px solid rgba(0, 0, 0, 0.05);
+		background: var(--surface);
+		border: 1px solid var(--border);
 	}
 	.offline-badge {
 		display: inline-flex;
@@ -1214,8 +1214,8 @@
 		align-self: flex-start;
 		padding: 4px 10px;
 		border-radius: 9999px;
-		background: rgba(0, 0, 0, 0.05);
-		color: rgba(0, 0, 0, 0.5);
+		background: var(--surface-2);
+		color: var(--text-soft);
 		font-size: 0.72rem;
 		font-weight: 500;
 	}
@@ -1228,7 +1228,7 @@
 	.offline-line {
 		height: 8px;
 		border-radius: 4px;
-		background: rgba(0, 0, 0, 0.08);
+		background: var(--border);
 		width: 100%;
 	}
 	.offline-line--short {
@@ -1257,7 +1257,7 @@
 		color: #16a34a;
 		margin: 0;
 		padding-top: 10px;
-		border-top: 1px dashed rgba(0, 0, 0, 0.08);
+		border-top: 1px dashed var(--border);
 	}
 
 	/* ── Check items (shared with /pricing card style) ── */
@@ -1266,7 +1266,7 @@
 		align-items: flex-start;
 		gap: 8px;
 		font-size: 0.8rem;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 	}
 	.check-item::before {
 		content: '';
@@ -1283,7 +1283,7 @@
 	/* ── FAQ ── */
 	.faq-row {
 		padding-bottom: 24px;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		border-bottom: 1px solid var(--border);
 	}
 	.faq-row:last-child {
 		border-bottom: none;
@@ -1291,13 +1291,13 @@
 	.faq-q {
 		font-family: 'Newsreader', Georgia, serif;
 		font-size: 1.1rem;
-		color: rgba(0, 0, 0, 0.85);
+		color: var(--text-strong);
 		margin: 0 0 8px 0;
 		font-weight: 500;
 	}
 	.faq-a {
 		font-size: 0.92rem;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 		line-height: 1.75;
 		margin: 0;
 	}
@@ -1305,6 +1305,6 @@
 	/* ── Section utilities ── */
 	.section-heading .italic {
 		font-style: italic;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 	}
 </style>

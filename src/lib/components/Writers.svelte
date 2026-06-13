@@ -14,7 +14,7 @@
 		<div class="writers-list">
 			<div class="reveal writer-card">
 				<div class="writer-icon-wrap">
-					<BookOpen size={22} strokeWidth={1.4} color="#5a554f" />
+					<BookOpen size={22} strokeWidth={1.4} color="var(--text-soft)" />
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Novelist</h3>
@@ -26,7 +26,7 @@
 
 			<div class="reveal reveal-delay-1 writer-card">
 				<div class="writer-icon-wrap">
-					<PenLine size={22} strokeWidth={1.4} color="#5a554f" />
+					<PenLine size={22} strokeWidth={1.4} color="var(--text-soft)" />
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Essayist</h3>
@@ -38,7 +38,7 @@
 
 			<div class="reveal reveal-delay-2 writer-card">
 				<div class="writer-icon-wrap">
-					<Clock size={22} strokeWidth={1.4} color="#5a554f" />
+					<Clock size={22} strokeWidth={1.4} color="var(--text-soft)" />
 				</div>
 				<div class="writer-content">
 					<h3 class="writer-name">The Memoirist</h3>
@@ -53,8 +53,11 @@
 <style>
 	/* ── Writers ── */
 	.writers-section {
-		background: #faf9f7;
+		background: var(--surface-2);
 		padding: 56px 24px;
+		transition:
+			background-color 300ms ease,
+			color 300ms ease;
 	}
 	@media (min-width: 768px) {
 		.writers-section {
@@ -72,7 +75,7 @@
 	.writers-subhead {
 		margin-top: 16px;
 		font-size: 15.5px;
-		color: #5a554f;
+		color: var(--text-soft);
 		line-height: 1.75;
 	}
 	.writers-list {
@@ -92,15 +95,15 @@
 		max-width: 48rem;
 	}
 	.writer-card:hover {
-		border-left-color: #3b82f6;
+		border-left-color: var(--accent-blue);
 		background: rgba(59, 130, 246, 0.03);
 	}
 	.writer-icon-wrap {
 		width: 44px;
 		height: 44px;
 		border-radius: 10px;
-		background: #f7f5f2;
-		border: 1px solid #e8e3db;
+		background: var(--surface-2);
+		border: 1px solid var(--border);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -110,19 +113,19 @@
 		font-family: 'Lora', Georgia, serif;
 		font-size: 1.35rem;
 		font-weight: 600;
-		color: #1e1c1a;
+		color: var(--text-strong);
 		margin: 0 0 8px 0;
 	}
 	.writer-bio {
 		font-size: 15px;
-		color: #5a554f;
+		color: var(--text-soft);
 		line-height: 1.8;
 		margin: 0;
 		font-family: 'Inter', sans-serif;
 	}
 	.writer-divider {
 		height: 1px;
-		background: #f0ede8;
+		background: var(--border);
 		max-width: 33rem;
 		margin-left: 68px;
 	}

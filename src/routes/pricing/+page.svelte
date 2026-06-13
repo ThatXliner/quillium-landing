@@ -73,30 +73,32 @@
 		<!-- Header -->
 		<header class="mb-16">
 			<h1
-				class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(2.5rem,6vw,3.75rem)] leading-[1.05] font-normal tracking-[-0.03em] text-black/90"
+				class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(2.5rem,6vw,3.75rem)] leading-[1.05] font-normal tracking-[-0.03em] text-[color:var(--text-strong)]"
 			>
 				Quillium is <span class="italic">free</span>.
 			</h1>
-			<p class="max-w-xl text-[0.95rem] leading-relaxed text-black/45">
+			<p class="max-w-xl text-[0.95rem] leading-relaxed text-[color:var(--text-soft)]">
 				No tiers. No locked features. One optional add-on, someday, if you want it.
 			</p>
 		</header>
 
 		<!-- Promises: 2×2 grid -->
 		<section class="mb-20">
-			<p class="mb-6 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+			<p
+				class="mb-6 text-[0.7rem] font-semibold tracking-[0.1em] text-[color:var(--text-faint)] uppercase"
+			>
 				What will always be free
 			</p>
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 				<div class="promise-cell">
-					<PenLine class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
+					<PenLine class="promise-icon" size={24} strokeWidth={1.5} color="var(--text-faint)" />
 					<div>
 						<p class="promise-title">The full editor</p>
 						<p class="promise-body">Branches, annotations—everything. We don't gate features.</p>
 					</div>
 				</div>
 				<div class="promise-cell">
-					<WifiOff class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
+					<WifiOff class="promise-icon" size={24} strokeWidth={1.5} color="var(--text-faint)" />
 					<div>
 						<p class="promise-title">Local-first &amp; offline</p>
 						<p class="promise-body">
@@ -108,7 +110,7 @@
 					</div>
 				</div>
 				<div class="promise-cell">
-					<ExternalLink class="promise-icon" size={24} strokeWidth={1.5} color="rgba(0,0,0,0.25)" />
+					<ExternalLink class="promise-icon" size={24} strokeWidth={1.5} color="var(--text-faint)" />
 					<div>
 						<p class="promise-title">Your data, your exit</p>
 						<p class="promise-body">
@@ -121,7 +123,7 @@
 						class="promise-icon"
 						size={24}
 						strokeWidth={1.5}
-						color="rgba(0,0,0,0.25)"
+						color="var(--text-faint)"
 					/>
 					<div>
 						<p class="promise-title">Everything that matters</p>
@@ -143,21 +145,21 @@
 				class="mb-8 flex items-center gap-3 rounded-lg border border-amber-400/20 bg-amber-400/6 px-4 py-3"
 			>
 				<span
-					class="shrink-0 rounded bg-amber-400/15 px-2 py-0.5 text-[0.6rem] font-bold tracking-[0.08em] text-amber-600 uppercase"
+					class="shrink-0 rounded bg-amber-400/15 px-2 py-0.5 text-[0.6rem] font-bold tracking-[0.08em] text-[color:var(--accent-amber-text)] uppercase"
 					>Note</span
 				>
-				<p class="m-0 text-[0.8rem] text-black/55">
-					These are <strong class="text-black/75">future plans</strong>. Right now everything is
-					simply free, no strings attached.
+				<p class="m-0 text-[0.8rem] text-[color:var(--text-soft)]">
+					These are <strong class="text-[color:var(--text)]">future plans</strong>. Right now
+					everything is simply free, no strings attached.
 				</p>
 			</div>
 
 			<div class="mb-6 flex items-baseline gap-2">
-				<p class="text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+				<p class="text-[0.7rem] font-semibold tracking-[0.1em] text-[color:var(--text-faint)] uppercase">
 					What you can pay for, eventually
 				</p>
 				<span
-					class="rounded-full border border-black/8 px-2 py-0.5 text-[0.6rem] font-medium text-black/30"
+					class="rounded-full border border-[color:var(--border)] px-2 py-0.5 text-[0.6rem] font-medium text-[color:var(--text-faint)]"
 					>Coming later</span
 				>
 			</div>
@@ -165,18 +167,20 @@
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-start">
 				<!-- Omni card -->
 				<div
-					class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60"
+					class="flex h-full flex-col overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]"
 				>
-					<div class="border-b border-black/5 px-5 py-4">
-						<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
+					<div class="border-b border-[color:var(--border)] px-5 py-4">
+						<p
+							class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-[color:var(--text-faint)] uppercase"
+						>
 							Quillium Omni
 						</p>
 						<p
-							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/65 italic"
+							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-[color:var(--text-soft)] italic"
 						>
-							~$20<span class="text-[0.85rem] text-black/30">/month</span>
+							~$20<span class="text-[0.85rem] text-[color:var(--text-faint)]">/month</span>
 						</p>
-						<p class="mt-1 text-[0.7rem] text-black/28">
+						<p class="mt-1 text-[0.7rem] text-[color:var(--text-faint)]">
 							The more users we have, the cheaper we can make it.
 						</p>
 					</div>
@@ -188,7 +192,7 @@
 							</li>
 							<li class="check-item">Cancel anytime; local data unaffected</li>
 						</ul>
-						<p class="mt-auto pt-3 text-[0.7rem] text-black/28">
+						<p class="mt-auto pt-3 text-[0.7rem] text-[color:var(--text-faint)]">
 							Mobile is free for everyone: sync just works better with a plan.
 						</p>
 						<a
@@ -202,18 +206,20 @@
 
 				<!-- Custom build card -->
 				<div
-					class="flex h-full flex-col overflow-hidden rounded-xl border border-black/6 bg-white/60"
+					class="flex h-full flex-col overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]"
 				>
-					<div class="border-b border-black/5 px-5 py-4">
-						<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-black/30 uppercase">
+					<div class="border-b border-[color:var(--border)] px-5 py-4">
+						<p
+							class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-[color:var(--text-faint)] uppercase"
+						>
 							Custom Build
 						</p>
 						<p
-							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-black/65 italic"
+							class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-[color:var(--text-soft)] italic"
 						>
-							~$1k <span class="text-[0.85rem] text-black/30"> one-time</span>
+							~$1k <span class="text-[0.85rem] text-[color:var(--text-faint)]"> one-time</span>
 						</p>
-						<p class="mt-1 text-[0.7rem] text-black/28">Rough estimate. Depends on scope.</p>
+						<p class="mt-1 text-[0.7rem] text-[color:var(--text-faint)]">Rough estimate. Depends on scope.</p>
 					</div>
 					<div class="flex flex-1 flex-col px-5 py-4">
 						<ul class="space-y-2">
@@ -227,7 +233,7 @@
 								> to discuss
 							</li>
 						</ul>
-						<p class="mt-auto pt-3 text-[0.7rem] text-black/28">
+						<p class="mt-auto pt-3 text-[0.7rem] text-[color:var(--text-faint)]">
 							Not sure if this fits? Just ask — we'll tell you honestly.
 						</p>
 					</div>
@@ -237,7 +243,9 @@
 
 		<!-- Why this model -->
 		<section class="mt-20 mb-16">
-			<p class="mb-5 text-[0.7rem] font-semibold tracking-[0.1em] text-black/30 uppercase">
+			<p
+				class="mb-5 text-[0.7rem] font-semibold tracking-[0.1em] text-[color:var(--text-faint)] uppercase"
+			>
 				Why this model
 			</p>
 			<div class="space-y-5">
@@ -273,8 +281,8 @@
 		</section>
 
 		<!-- CTA -->
-		<div class="border-t border-black/6 pt-10 text-center">
-			<p class="mb-4 font-[Newsreader,Georgia,serif] text-[1.5rem] text-black/70 italic">
+		<div class="border-t border-[color:var(--border)] pt-10 text-center">
+			<p class="mb-4 font-[Newsreader,Georgia,serif] text-[1.5rem] text-[color:var(--text)] italic">
 				Ready to write?
 			</p>
 			<a href="/#download" class="btn-primary inline-flex items-center gap-2">
@@ -295,23 +303,23 @@
 		gap: 12px;
 		padding: 16px 18px;
 		border-radius: 12px;
-		border: 1px solid rgba(0, 0, 0, 0.06);
-		background: rgba(255, 255, 255, 0.5);
+		border: 1px solid var(--border);
+		background: var(--surface);
 	}
 	.promise-icon {
-		color: rgba(0, 0, 0, 0.25);
+		color: var(--text-faint);
 		margin-top: 1px;
 		flex-shrink: 0;
 	}
 	.promise-title {
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: rgba(0, 0, 0, 0.78);
+		color: var(--text);
 		margin: 0 0 4px 0;
 	}
 	.promise-body {
 		font-size: 0.8rem;
-		color: rgba(0, 0, 0, 0.4);
+		color: var(--text-soft);
 		line-height: 1.6;
 		margin: 0;
 	}
@@ -322,7 +330,7 @@
 		align-items: flex-start;
 		gap: 8px;
 		font-size: 0.8rem;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 	}
 	.check-item::before {
 		content: '';
@@ -352,16 +360,16 @@
 	.why-label {
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: rgba(0, 0, 0, 0.65);
+		color: var(--text-soft);
 		margin: 0;
 	}
 	.why-text {
 		font-size: 0.825rem;
-		color: rgba(0, 0, 0, 0.42);
+		color: var(--text-soft);
 		line-height: 1.65;
 		margin: 0;
 	}
 	.why-text a {
-		color: #3b82f6;
+		color: var(--accent-blue);
 	}
 </style>

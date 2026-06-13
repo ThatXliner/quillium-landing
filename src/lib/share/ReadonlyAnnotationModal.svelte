@@ -170,9 +170,9 @@
 								<button
 									class="version-trigger flex items-center gap-1 rounded-md py-0.5 pr-1.5 pl-2 text-[10px] font-medium transition-all duration-150 {isCurrent
 										? 'bg-purple-100/70 text-purple-700/80 ring-1 ring-purple-200/60 hover:bg-purple-100'
-										: 'bg-black/5 text-black/45 ring-1 ring-black/10 hover:bg-black/8'} {openDropdown ===
+										: 'bg-[color:var(--surface-2)] text-[color:var(--text-faint)] ring-1 ring-[color:var(--border)] hover:bg-[color:var(--border)]'} {openDropdown ===
 									ci
-										? 'ring-2 ' + (isCurrent ? 'ring-purple-300/60' : 'ring-black/20')
+										? 'ring-2 ' + (isCurrent ? 'ring-purple-300/60' : 'ring-[color:var(--border-strong)]')
 										: ''}"
 									type="button"
 									onclick={(event) => {
@@ -188,7 +188,7 @@
 										size={9}
 										class="transition-transform duration-200 {openDropdown === ci
 											? 'rotate-180'
-											: ''} {isCurrent ? 'text-purple-400/70' : 'text-black/30'}"
+											: ''} {isCurrent ? 'text-purple-400/70' : 'text-[color:var(--text-faint)]'}"
 									/>
 								</button>
 
@@ -473,8 +473,11 @@
 		height: 72vh;
 		overflow: hidden;
 		border-radius: 1rem;
-		background: white;
-		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+		background: var(--surface);
+		box-shadow: 0 25px 50px -12px rgba(var(--shadow-color), 0.25);
+		transition:
+			background-color 300ms ease,
+			color 300ms ease;
 	}
 
 	.revision-modal-inner {
@@ -530,7 +533,7 @@
 		gap: 0.25rem;
 		border-radius: 0.375rem;
 		padding: 0.25rem 0.25rem 0.25rem 0.375rem;
-		color: rgba(0, 0, 0, 0.3);
+		color: var(--text-faint);
 		transition:
 			background-color 0.15s ease,
 			color 0.15s ease;
@@ -540,12 +543,12 @@
 		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 		font-size: 9px;
 		line-height: 1;
-		color: rgba(0, 0, 0, 0.2);
+		color: var(--text-faint);
 	}
 
 	.modal-close:hover {
-		background: rgba(0, 0, 0, 0.05);
-		color: rgba(0, 0, 0, 0.6);
+		background: var(--border);
+		color: var(--text-soft);
 	}
 
 	.version-popover {
@@ -558,11 +561,11 @@
 		overflow: hidden;
 		border: 1px solid rgba(147, 112, 219, 0.15);
 		border-radius: 10px;
-		background: white;
+		background: var(--surface);
 		padding: 4px;
 		box-shadow:
-			0 8px 24px -4px rgba(0, 0, 0, 0.12),
-			0 2px 8px -2px rgba(0, 0, 0, 0.08);
+			0 8px 24px -4px rgba(var(--shadow-color), 0.12),
+			0 2px 8px -2px rgba(var(--shadow-color), 0.08);
 	}
 
 	.version-option {
@@ -572,7 +575,7 @@
 		gap: 6px;
 		border-radius: 6px;
 		padding: 5px 8px;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		font-size: 11px;
 		cursor: pointer;
 		transition:
@@ -606,8 +609,8 @@
 		min-height: 0;
 		flex-shrink: 0;
 		flex-direction: column;
-		border-right: 1px solid rgba(243, 232, 255, 0.6);
-		background: rgba(250, 245, 255, 0.9);
+		border-right: 1px solid var(--tint-purple-border);
+		background: var(--tint-purple-active);
 	}
 
 	.thread-panel-header {
@@ -651,7 +654,7 @@
 		font-family: var(--doc-font-family, system-ui, sans-serif);
 		font-size: 15px;
 		line-height: 1.7;
-		color: rgba(0, 0, 0, 0.76);
+		color: var(--text);
 	}
 
 	.revision-right-panel {
@@ -811,12 +814,12 @@
 		min-width: 0;
 		flex: 1;
 		overflow-y: auto;
-		border-right: 1px solid rgba(240, 253, 244, 1);
+		border-right: 1px solid var(--border);
 		padding: 1.25rem 1.5rem;
 		font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 		font-size: 0.875rem;
 		line-height: 1.65;
-		color: rgba(0, 0, 0, 0.72);
+		color: var(--text);
 	}
 
 	.diff-delete,
@@ -858,7 +861,7 @@
 	.ai-comment p {
 		font-size: 11px;
 		line-height: 1.5;
-		color: rgba(0, 0, 0, 0.55);
+		color: var(--text-soft);
 	}
 
 	.suggestion-sidebar .replacement-stack {
@@ -870,20 +873,24 @@
 	.replacement-card {
 		border: 1px solid rgba(34, 197, 94, 0.16);
 		border-radius: 0.65rem;
-		background: rgba(255, 255, 255, 0.6);
+		background: var(--surface-2);
 		padding: 0.75rem;
 	}
 
 	.replacement-card.is-active {
-		border-color: rgba(74, 222, 128, 0.5);
-		background: rgba(220, 252, 231, 0.8);
+		border-color: var(--tint-green-border);
+		background: var(--tint-green-active);
 		box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.4);
 	}
 
 	.replacement-card p {
 		font-size: 0.82rem;
 		line-height: 1.55;
-		color: rgba(0, 0, 0, 0.68);
+		color: var(--text);
+	}
+
+	.replacement-card.is-active p {
+		color: var(--text-strong);
 	}
 
 	.replacement-rationale {
@@ -895,14 +902,14 @@
 		margin: 0;
 		font-size: 0.82rem;
 		line-height: 1.55;
-		color: rgba(0, 0, 0, 0.48);
+		color: var(--text-faint);
 	}
 
 	.empty-state.centered {
 		padding: 1rem 0.5rem;
 		text-align: center;
 		font-size: 11px;
-		color: rgba(0, 0, 0, 0.3);
+		color: var(--text-faint);
 	}
 
 	@media (max-width: 860px) {

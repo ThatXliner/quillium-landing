@@ -75,9 +75,9 @@
 		overflow: hidden;
 		border-radius: 12px;
 		box-shadow:
-			0 12px 48px rgba(44, 42, 39, 0.12),
-			0 4px 12px rgba(44, 42, 39, 0.06);
-		border: 1px solid rgba(0, 0, 0, 0.06);
+			0 12px 48px rgba(var(--shadow-color), 0.12),
+			0 4px 12px rgba(var(--shadow-color), 0.06);
+		border: 1px solid var(--border);
 	}
 	.carousel-track {
 		display: flex;
@@ -106,7 +106,7 @@
 		width: 8px;
 		height: 8px;
 		border-radius: 50%;
-		background: rgba(0, 0, 0, 0.15);
+		background: var(--border-strong);
 		border: none;
 		cursor: pointer;
 		padding: 0;
@@ -115,7 +115,7 @@
 			transform 0.2s;
 	}
 	.dot--active {
-		background: rgba(0, 0, 0, 0.5);
+		background: var(--text-soft);
 		transform: scale(1.3);
 	}
 </style>

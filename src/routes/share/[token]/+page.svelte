@@ -588,7 +588,10 @@
 
 <style>
 	.share-shell {
-		background: #f5f4f1;
+		background: var(--bg);
+		transition:
+			background-color 300ms ease,
+			color 300ms ease;
 	}
 
 	.share-topbar-shell {
@@ -610,9 +613,9 @@
 		min-width: 0;
 		padding: 0.5rem 1.5rem;
 		border-radius: 2rem;
-		background: rgba(209, 213, 219, 0.7);
-		border: 1px solid rgba(255, 255, 255, 0.3);
-		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+		background: var(--nav-glass);
+		border: 1px solid var(--nav-glass-border);
+		box-shadow: 0 10px 24px rgba(var(--shadow-color), 0.12);
 		backdrop-filter: blur(14px);
 		animation: shareTopbarSettle 560ms cubic-bezier(0.16, 1, 0.3, 1);
 		pointer-events: auto;
@@ -624,7 +627,7 @@
 		gap: 0.5rem;
 		flex-shrink: 0;
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.9);
+		color: var(--text-strong);
 	}
 
 	.share-status-dot {
@@ -638,7 +641,7 @@
 		width: 1px;
 		height: 2rem;
 		flex-shrink: 0;
-		background: rgba(0, 0, 0, 0.2);
+		background: var(--border-strong);
 	}
 
 	.share-title-block {
@@ -649,7 +652,7 @@
 	.share-title {
 		font-size: 0.875rem;
 		font-weight: 500;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -659,7 +662,7 @@
 	.share-topbar-meta {
 		margin-top: 0.05rem;
 		font-size: 0.68rem;
-		color: rgba(0, 0, 0, 0.42);
+		color: var(--text-faint);
 	}
 
 	.share-install-button {
@@ -677,10 +680,13 @@
 		width: min(816px, 100%);
 		min-height: calc(100vh - 4rem);
 		border-radius: 0.5rem;
-		background: #fff;
-		box-shadow: 0 20px 46px rgba(15, 23, 42, 0.18);
+		background: var(--surface);
+		box-shadow: 0 20px 46px rgba(var(--shadow-color), 0.18);
 		padding: 0.75rem 0.25rem;
 		animation: documentSheetSettle 620ms cubic-bezier(0.16, 1, 0.3, 1);
+		transition:
+			background-color 300ms ease,
+			color 300ms ease;
 	}
 
 	.editor-stage {
@@ -699,7 +705,7 @@
 		font-family: var(--doc-font-family, 'SF Pro Text', system-ui, sans-serif);
 		font-size: 18px;
 		line-height: 1.6;
-		color: rgba(15, 23, 42, 0.82);
+		color: var(--text);
 	}
 
 	.share-paragraph {
@@ -731,35 +737,42 @@
 			filter 0.16s ease;
 	}
 
+	/* These highlights carry always-light semantic fills (amber/green/purple),
+	   so their text must stay dark in BOTH themes — inheriting the cream document
+	   text would be unreadable on the pale fill in dark mode. */
 	.annotation-inline-comment {
 		background-color: #fef2cd;
+		color: rgba(0, 0, 0, 0.82);
 	}
 
 	.annotation-inline-comment-active {
-		background-color: #fcbc05;
+		background-color: var(--accent-amber);
+		color: rgba(0, 0, 0, 0.82);
 	}
 
 	.annotation-inline-suggestion {
 		text-decoration: underline;
-		text-decoration-color: #22c55e;
+		text-decoration-color: var(--accent-green);
 		text-decoration-thickness: 2px;
 		text-underline-offset: 3px;
 	}
 
 	.annotation-inline-suggestion-active {
 		background-color: #dcfce7;
+		color: rgba(0, 0, 0, 0.82);
 		text-decoration: none;
 	}
 
 	.annotation-inline-revision {
 		text-decoration: underline;
-		text-decoration-color: #a855f7;
+		text-decoration-color: var(--accent-purple);
 		text-decoration-thickness: 2px;
 		text-underline-offset: 3px;
 	}
 
 	.annotation-inline-revision-active {
 		background-color: #d8b4fe;
+		color: rgba(0, 0, 0, 0.82);
 		text-decoration: none;
 	}
 
@@ -781,11 +794,11 @@
 		width: 1.25rem;
 		height: 1.25rem;
 		padding: 0;
-		border: 1px solid rgba(15, 23, 42, 0.08);
+		border: 1px solid var(--border);
 		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.95);
+		background: var(--surface);
 		box-shadow:
-			0 6px 14px rgba(15, 23, 42, 0.05),
+			0 6px 14px rgba(var(--shadow-color), 0.05),
 			inset 0 1px 0 rgba(255, 255, 255, 0.92);
 		font-family:
 			system-ui,
@@ -828,7 +841,7 @@
 	.annotation-empty-state {
 		font-size: 0.84rem;
 		line-height: 1.55;
-		color: rgba(15, 23, 42, 0.68);
+		color: var(--text-soft);
 	}
 
 	.annotation-inline:focus-visible,
@@ -852,13 +865,13 @@
 		from {
 			opacity: 0;
 			transform: translateY(14px);
-			box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+			box-shadow: 0 8px 28px rgba(var(--shadow-color), 0.05);
 		}
 		to {
 			opacity: 1;
 			transform: translateY(0);
 			box-shadow:
-				0 18px 60px rgba(15, 23, 42, 0.09),
+				0 18px 60px rgba(var(--shadow-color), 0.09),
 				0 1px 0 rgba(255, 255, 255, 0.9) inset;
 		}
 	}

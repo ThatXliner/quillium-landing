@@ -150,33 +150,37 @@
 
 	.annotation-inline-comment {
 		background-color: #fef2cd;
+		color: rgba(0, 0, 0, 0.82);
 	}
 
 	.annotation-inline-comment-active {
-		background-color: #fcbc05;
+		background-color: var(--accent-amber);
+		color: rgba(0, 0, 0, 0.82);
 	}
 
 	.annotation-inline-suggestion {
 		text-decoration: underline;
-		text-decoration-color: #22c55e;
+		text-decoration-color: var(--accent-green);
 		text-decoration-thickness: 2px;
 		text-underline-offset: 3px;
 	}
 
 	.annotation-inline-suggestion-active {
 		background-color: #dcfce7;
+		color: rgba(0, 0, 0, 0.82);
 		text-decoration: none;
 	}
 
 	.annotation-inline-revision {
 		text-decoration: underline;
-		text-decoration-color: #a855f7;
+		text-decoration-color: var(--accent-purple);
 		text-decoration-thickness: 2px;
 		text-underline-offset: 3px;
 	}
 
 	.annotation-inline-revision-active {
 		background-color: #d8b4fe;
+		color: rgba(0, 0, 0, 0.82);
 		text-decoration: none;
 	}
 
@@ -204,7 +208,7 @@
 		font-weight: 700;
 		line-height: 1;
 		cursor: pointer;
-		box-shadow: 0 1px 2px rgba(15, 23, 42, 0.14);
+		box-shadow: 0 1px 2px rgba(var(--shadow-color), 0.14);
 		transition:
 			transform 0.16s ease,
 			box-shadow 0.16s ease;
@@ -218,21 +222,21 @@
 
 	.annotation-marker:hover {
 		transform: translateY(-1px);
-		box-shadow: 0 3px 7px rgba(15, 23, 42, 0.18);
+		box-shadow: 0 3px 7px rgba(var(--shadow-color), 0.18);
 	}
 
 	.annotation-tone-comment {
-		background: #fcbc05;
+		background: var(--accent-amber);
 		color: #5f4300;
 	}
 
 	.annotation-tone-suggestion {
-		background: #22c55e;
+		background: var(--accent-green);
 		color: white;
 	}
 
 	.annotation-tone-revision {
-		background: #a855f7;
+		background: var(--accent-purple);
 		color: white;
 	}
 </style>

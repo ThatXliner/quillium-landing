@@ -29,15 +29,15 @@
 	<div class="mx-auto max-w-2xl">
 		<header>
 			<h1
-				class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(2.5rem,6vw,3.75rem)] leading-[1.05] font-normal tracking-[-0.03em] text-black/90"
+				class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(2.5rem,6vw,3.75rem)] leading-[1.05] font-normal tracking-[-0.03em] text-[color:var(--text-strong)]"
 			>
 				Need help?
 			</h1>
-			<p class="max-w-xl text-[0.95rem] leading-relaxed text-black/45">
+			<p class="max-w-xl text-[0.95rem] leading-relaxed text-[color:var(--text)]">
 				Quillium is in public beta. If you run into a bug, have a question, or just want to say hi —
 				email us at <a
 					href="mailto:support@quillium.bryanhu.com"
-					class="text-[#3b82f6] no-underline hover:underline">support@quillium.bryanhu.com</a
+					class="text-[color:var(--accent-blue)] no-underline hover:underline">support@quillium.bryanhu.com</a
 				>.
 			</p>
 		</header>
@@ -45,7 +45,7 @@
 		<div class="mt-10">
 			<a
 				href="/"
-				class="text-[0.8rem] font-medium text-black/40 no-underline transition-colors duration-200 hover:text-black/70"
+				class="text-[0.8rem] font-medium text-[color:var(--text-soft)] no-underline transition-colors duration-200 hover:text-[color:var(--text)]"
 			>
 				&larr; Back to Home Page
 			</a>

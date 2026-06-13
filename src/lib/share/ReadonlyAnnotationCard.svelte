@@ -48,7 +48,7 @@
 			<h3 class="text-[10px] font-semibold tracking-wider text-blue-600/70 uppercase">Comment</h3>
 			<div class="flex items-center gap-0.5">
 				<button
-					class="rounded-md p-1 text-blue-400/50 transition-colors hover:bg-white/40 hover:text-blue-600/70"
+					class="rounded-md p-1 text-blue-400/50 transition-colors hover:bg-[color:var(--surface)]/40 hover:text-blue-600/70"
 					type="button"
 					onclick={onOpen}
 					title="Expand thread"
@@ -62,7 +62,7 @@
 		{#if annotation.selectedText}
 			<div class="px-3 pt-3 pb-0">
 				<button
-					class="w-full cursor-pointer truncate border-l-2 border-yellow-400/80 pl-2 text-left text-xs text-black/50 italic transition-colors hover:border-yellow-500/80 hover:text-black/70"
+					class="w-full cursor-pointer truncate border-l-2 border-yellow-400/80 pl-2 text-left text-xs text-[color:var(--text-soft)] italic transition-colors hover:border-yellow-500/80 hover:text-[color:var(--text)]"
 					type="button"
 					onclick={onSelect}
 					title="Jump to this comment in the document"
@@ -78,7 +78,7 @@
 					{#each active ? annotation.thread : annotation.thread.slice(0, 1) as message, i (message.time)}
 						<ReadonlyThreadMessage {message} truncate={!active} />
 						{#if !active && i === 0 && annotation.thread.length > 1}
-							<p class="pl-9 text-[10px] text-black/40">
+							<p class="pl-9 text-[10px] text-[color:var(--text-faint)]">
 								{annotation.thread.length - 1} more repl{annotation.thread.length === 2
 									? 'y'
 									: 'ies'}
@@ -87,7 +87,7 @@
 					{/each}
 				</div>
 			{:else}
-				<p class="text-xs leading-relaxed text-black/70">
+				<p class="text-xs leading-relaxed text-[color:var(--text)]">
 					No thread messages were attached to this comment.
 				</p>
 			{/if}
@@ -110,7 +110,7 @@
 
 		{#if annotation.thread.length > 0 && annotation.thread[0].author === 'AI'}
 			<div class="px-3 pt-2 pb-0">
-				<p class="text-[11px] leading-relaxed text-black/55">{annotation.thread[0].message}</p>
+				<p class="text-[11px] leading-relaxed text-[color:var(--text-soft)]">{annotation.thread[0].message}</p>
 			</div>
 		{/if}
 
@@ -118,12 +118,12 @@
 			{#each annotation.replacements as replacement, index (`${annotation.id}-${index}`)}
 				<button
 					class="w-full overflow-hidden rounded-lg border text-left transition-colors {index === 0
-						? 'border-green-400/50 bg-green-100/80 ring-1 ring-green-400/40'
-						: 'border-green-100/60 bg-white/50 hover:border-green-200/60 hover:bg-white/70'}"
+						? 'border-green-400/50 bg-green-100/80 text-[rgba(0,0,0,0.8)] ring-1 ring-green-400/40'
+						: 'border-green-100/60 bg-[color:var(--surface-2)] text-[color:var(--text)] hover:border-green-200/60 hover:bg-[color:var(--surface)]'}"
 					type="button"
 					onclick={onSelect}
 				>
-					<div class="px-3 py-2 text-xs leading-relaxed text-black/80">{replacement.text}</div>
+					<div class="px-3 py-2 text-xs leading-relaxed">{replacement.text}</div>
 					{#if replacement.rationale}
 						<div
 							class="border-t border-green-100/50 px-3 pt-1.5 pb-2 text-[10px] leading-snug text-green-700/60"
@@ -160,7 +160,7 @@
 			<button
 				aria-label="Branch instead"
 				title="Convert to revision with original and suggestion as versions"
-				class="flex cursor-default items-center gap-1 rounded-md bg-white/40 px-2 py-1 text-[11px] font-medium text-purple-600/70 ring-1 ring-green-200/50"
+				class="flex cursor-default items-center gap-1 rounded-md bg-[color:var(--surface-2)] px-2 py-1 text-[11px] font-medium text-purple-600/70 ring-1 ring-green-200/50"
 				type="button"
 				disabled
 			>
@@ -194,12 +194,12 @@
 				<div
 					class="inline-flex items-center overflow-hidden rounded-md {versionActive
 						? 'bg-purple-500/80 ring-1 ring-purple-400/40'
-						: 'bg-white/60 ring-1 ring-purple-200/40'}"
+						: 'bg-[color:var(--surface-2)] ring-1 ring-purple-200/40'}"
 				>
 					<button
 						class="max-w-[120px] truncate px-2 py-1 text-[11px] font-medium transition-colors {versionActive
 							? 'text-white'
-							: 'text-black/65 hover:text-black/85'}"
+							: 'text-[color:var(--text-soft)] hover:text-[color:var(--text-strong)]'}"
 						type="button"
 						disabled={versionActive}
 						title={version.text || '(empty)'}
@@ -213,7 +213,7 @@
 
 		<div class="flex justify-end gap-1.5 px-3 pb-3">
 			<button
-				class="ml-auto flex items-center gap-1 rounded-md bg-white/50 px-2 py-1 text-[11px] font-medium text-purple-600/60 ring-1 ring-purple-200/40 transition-colors hover:bg-white/70"
+				class="ml-auto flex items-center gap-1 rounded-md bg-[color:var(--surface-2)] px-2 py-1 text-[11px] font-medium text-purple-600/60 ring-1 ring-purple-200/40 transition-colors hover:bg-[color:var(--surface)]"
 				type="button"
 				onclick={onOpen}
 				title="Expand editor"
@@ -223,7 +223,7 @@
 		</div>
 
 		{#if selectedRevisionVersion}
-			<div class="mx-3 mb-3 overflow-hidden rounded-lg bg-white/60 ring-1 ring-white/40">
+			<div class="mx-3 mb-3 overflow-hidden rounded-lg bg-[color:var(--surface)] ring-1 ring-[color:var(--border)]">
 				<div class="revision-inline-preview">
 					<ReadonlyAnnotatedText
 						content={selectedRevisionVersion.text}
@@ -254,50 +254,50 @@
 	}
 
 	.editor-comment-card {
-		border-color: rgba(191, 219, 254, 0.4);
+		border-color: var(--tint-blue-border);
 		border-radius: 12px;
-		background: rgba(239, 246, 255, 0.6);
-		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+		background: var(--tint-blue);
+		box-shadow: 0 10px 24px rgba(var(--shadow-color), 0.08);
 		opacity: 0.9;
 	}
 
 	.editor-comment-card.is-active {
-		border-color: rgba(191, 219, 254, 0.6);
+		border-color: var(--tint-blue-border);
 		border-radius: 14px;
-		background: rgba(239, 246, 255, 0.9);
-		box-shadow: 0 18px 34px rgba(15, 23, 42, 0.12);
+		background: var(--tint-blue-active);
+		box-shadow: 0 18px 34px rgba(var(--shadow-color), 0.12);
 		opacity: 1;
 	}
 
 	.editor-suggestion-card {
-		border-color: rgba(187, 247, 208, 0.4);
+		border-color: var(--tint-green-border);
 		border-radius: 12px;
-		background: rgba(240, 253, 244, 0.6);
-		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+		background: var(--tint-green);
+		box-shadow: 0 10px 24px rgba(var(--shadow-color), 0.08);
 		opacity: 0.9;
 	}
 
 	.editor-suggestion-card.is-active {
-		border-color: rgba(187, 247, 208, 0.6);
+		border-color: var(--tint-green-border);
 		border-radius: 14px;
-		background: rgba(240, 253, 244, 0.9);
-		box-shadow: 0 18px 34px rgba(15, 23, 42, 0.12);
+		background: var(--tint-green-active);
+		box-shadow: 0 18px 34px rgba(var(--shadow-color), 0.12);
 		opacity: 1;
 	}
 
 	.editor-revision-card {
-		border-color: rgba(221, 214, 254, 0.4);
+		border-color: var(--tint-purple-border);
 		border-radius: 14px;
-		background: rgba(250, 245, 255, 0.6);
-		box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+		background: var(--tint-purple);
+		box-shadow: 0 10px 24px rgba(var(--shadow-color), 0.08);
 		opacity: 0.9;
 		clip-path: inset(0 round 14px);
 	}
 
 	.editor-revision-card.is-active {
-		border-color: rgba(221, 214, 254, 0.6);
-		background: rgba(250, 245, 255, 0.9);
-		box-shadow: 0 18px 34px rgba(15, 23, 42, 0.12);
+		border-color: var(--tint-purple-border);
+		background: var(--tint-purple-active);
+		box-shadow: 0 18px 34px rgba(var(--shadow-color), 0.12);
 		opacity: 1;
 	}
 
@@ -307,6 +307,6 @@
 		font-family: var(--doc-font-family, 'SF Pro Text', system-ui, sans-serif);
 		font-size: 13px;
 		line-height: 1.6;
-		color: rgba(0, 0, 0, 0.7);
+		color: var(--text);
 	}
 </style>

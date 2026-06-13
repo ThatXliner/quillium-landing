@@ -61,10 +61,10 @@
 		aspect-ratio: 16 / 9;
 		overflow: hidden;
 		border-radius: 16px;
-		background: #e5e7eb;
+		background: var(--surface-2);
 		box-shadow:
-			0 24px 64px rgba(44, 42, 39, 0.14),
-			0 6px 18px rgba(44, 42, 39, 0.06);
+			0 24px 64px rgba(var(--shadow-color), 0.14),
+			0 6px 18px rgba(var(--shadow-color), 0.06);
 	}
 	.video-frame iframe {
 		position: absolute;
@@ -102,7 +102,7 @@
 		color: #fff;
 		background: rgba(20, 20, 22, 0.55);
 		backdrop-filter: blur(8px);
-		box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+		box-shadow: 0 6px 24px rgba(var(--shadow-color), 0.25);
 		transition:
 			transform 0.25s cubic-bezier(0.33, 0, 0.2, 1),
 			background 0.25s;

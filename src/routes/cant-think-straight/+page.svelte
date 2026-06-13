@@ -94,7 +94,7 @@
 	></div>
 
 	<div
-		class="relative mb-8 flex items-center gap-3 text-[0.7rem] font-semibold tracking-[0.15em] text-black/35 uppercase"
+		class="relative mb-8 flex items-center gap-3 text-[0.7rem] font-semibold tracking-[0.15em] text-[color:var(--text-faint)] uppercase"
 	>
 		<div class="flex gap-1">
 			<span class="block h-1.5 w-1.5 rounded-full bg-[#3b82f6]"></span>
@@ -106,12 +106,12 @@
 	</div>
 
 	<h1
-		class="relative mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,5rem)] leading-[1.1] font-normal tracking-[-0.03em] text-black/88"
+		class="relative mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,5rem)] leading-[1.1] font-normal tracking-[-0.03em] text-[color:var(--text-strong)]"
 	>
 		Can't think <em class="text-[#3b82f6]">straight?</em>
 	</h1>
 
-	<p class="relative mb-12 max-w-[500px] text-[1.15rem] leading-[1.7] text-black/50">
+	<p class="relative mb-12 max-w-[500px] text-[1.15rem] leading-[1.7] text-[color:var(--text-soft)]">
 		Quillium works with that. Branch any sentence, keep every version, and never lose a revision.
 		Your thoughts don't go in a straight line and your writing app shouldn't either.
 	</p>
@@ -126,24 +126,24 @@
 		</a>
 		<a
 			href="#why"
-			class="inline-flex items-center gap-2 rounded-[10px] bg-white/50 px-7 py-3.5 text-[0.95rem] font-medium text-black/88 shadow-[0_1px_3px_rgba(0,0,0,0.08)] backdrop-blur-[12px] transition-all duration-300 hover:-translate-y-px hover:bg-white/70"
+			class="inline-flex items-center gap-2 rounded-[10px] bg-[color:var(--surface)]/50 px-7 py-3.5 text-[0.95rem] font-medium text-[color:var(--text-strong)] shadow-[0_1px_3px_rgba(var(--shadow-color),0.08)] backdrop-blur-[12px] transition-all duration-300 hover:-translate-y-px hover:bg-[color:var(--surface)]/70"
 		>
 			Why?
 		</a>
 	</div>
 
-	<p class="relative text-[0.75rem] text-black/30">
+	<p class="relative text-[0.75rem] text-[color:var(--text-faint)]">
 		<a
 			href="/pricing?utm_source=campaign&utm_medium=landing&utm_campaign=cant-think-straight"
-			class="text-black/40 underline underline-offset-2">Free forever</a
+			class="text-[color:var(--text-faint)] underline underline-offset-2">Free forever</a
 		>.
 		<a
 			href="/blog/quillium-is-not-an-ai-app?utm_source=campaign&utm_medium=landing&utm_campaign=cant-think-straight"
-			class="text-black/40 underline underline-offset-2">Not more AI slop</a
+			class="text-[color:var(--text-faint)] underline underline-offset-2">Not more AI slop</a
 		>.
 		<a
 			href="/blog/quillium-privacy?utm_source=campaign&utm_medium=landing&utm_campaign=cant-think-straight"
-			class="text-black/40 underline underline-offset-2">Privacy first</a
+			class="text-[color:var(--text-faint)] underline underline-offset-2">Privacy first</a
 		>.
 	</p>
 
@@ -153,7 +153,7 @@
 			<!-- Main trunk -->
 			<path
 				d="M 40 90 L 200 90"
-				stroke="rgba(0,0,0,0.12)"
+				stroke="var(--border-strong)"
 				stroke-width="2"
 				stroke-linecap="round"
 			/>
@@ -217,7 +217,7 @@
 				y="24"
 				font-family="Inter, sans-serif"
 				font-size="11"
-				fill="rgba(0,0,0,0.25)"
+				fill="var(--text-faint)"
 				font-weight="500">revision c</text
 			>
 			<text
@@ -225,7 +225,7 @@
 				y="44"
 				font-family="Inter, sans-serif"
 				font-size="11"
-				fill="rgba(0,0,0,0.25)"
+				fill="var(--text-faint)"
 				font-weight="500">revision b</text
 			>
 			<text
@@ -233,7 +233,7 @@
 				y="94"
 				font-family="Inter, sans-serif"
 				font-size="11"
-				fill="rgba(0,0,0,0.3)"
+				fill="var(--text-faint)"
 				font-weight="600">revision a</text
 			>
 			<text
@@ -241,7 +241,7 @@
 				y="144"
 				font-family="Inter, sans-serif"
 				font-size="11"
-				fill="rgba(0,0,0,0.25)"
+				fill="var(--text-faint)"
 				font-weight="500">revision d</text
 			>
 			<!-- Starting label -->
@@ -250,7 +250,7 @@
 				y="78"
 				font-family="Inter, sans-serif"
 				font-size="9"
-				fill="rgba(0,0,0,0.2)"
+				fill="var(--text-faint)"
 				font-weight="600"
 				letter-spacing="0.08em">YOUR IDEA</text
 			>
@@ -265,11 +265,11 @@
 <section id="why" class="mx-auto max-w-[900px] scroll-mt-24 px-6 py-20">
 	<p class="section-eyebrow">Why Quillium</p>
 	<h2
-		class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.15] font-normal tracking-[-0.02em] text-black/88"
+		class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.15] font-normal tracking-[-0.02em] text-[color:var(--text-strong)]"
 	>
 		Most writing apps assume you know what you want to say.
 	</h2>
-	<p class="max-w-[640px] text-[1.05rem] leading-[1.8] text-black/50">
+	<p class="max-w-[640px] text-[1.05rem] leading-[1.8] text-[color:var(--text-soft)]">
 		...that your ideas arrive fully formed, in order, ready to be typed out, but that's not how it
 		works. Quillium was built for the way writers actually think: in loops, in branches, in "wait,
 		what if I said it this way instead?"
@@ -287,10 +287,10 @@
 			>
 				&#x2387;
 			</div>
-			<h3 class="mb-2 font-[Newsreader,Georgia,serif] text-[1.25rem] font-normal text-black/88">
+			<h3 class="mb-2 font-[Newsreader,Georgia,serif] text-[1.25rem] font-normal text-[color:var(--text-strong)]">
 				Write in Branches
 			</h3>
-			<p class="text-[0.9rem] leading-[1.65] text-black/50">
+			<p class="text-[0.9rem] leading-[1.65] text-[color:var(--text-soft)]">
 				Fork any sentence. Explore three different openings. Keep them all. Decide later — or never.
 				Your revisions, your rules.
 			</p>
@@ -302,10 +302,10 @@
 			>
 				&#x270D;
 			</div>
-			<h3 class="mb-2 font-[Newsreader,Georgia,serif] text-[1.25rem] font-normal text-black/88">
+			<h3 class="mb-2 font-[Newsreader,Georgia,serif] text-[1.25rem] font-normal text-[color:var(--text-strong)]">
 				Annotations That Float
 			</h3>
-			<p class="text-[0.9rem] leading-[1.65] text-black/50">
+			<p class="text-[0.9rem] leading-[1.65] text-[color:var(--text-soft)]">
 				Leave notes beside your text, not buried in comments. See your thinking alongside your
 				writing, the way it actually happens in your head.
 			</p>
@@ -317,10 +317,10 @@
 			>
 				&#x1F512;
 			</div>
-			<h3 class="mb-2 font-[Newsreader,Georgia,serif] text-[1.25rem] font-normal text-black/88">
+			<h3 class="mb-2 font-[Newsreader,Georgia,serif] text-[1.25rem] font-normal text-[color:var(--text-strong)]">
 				Never Lose Work
 			</h3>
-			<p class="text-[0.9rem] leading-[1.65] text-black/50">
+			<p class="text-[0.9rem] leading-[1.65] text-[color:var(--text-soft)]">
 				Offline-first. SQLite-backed. Crash-resistant. Every keystroke is saved locally before
 				anything else. Your words are yours.
 			</p>
@@ -335,11 +335,11 @@
 		style="max-width: 80px; height: 2px; background: linear-gradient(90deg, #3b82f6, #a855f7, #22c55e, #fcbc05); opacity: 0.5;"
 	></div>
 	<blockquote
-		class="mb-8 border-none p-0 font-[Newsreader,Georgia,serif] text-[clamp(1.25rem,3vw,1.75rem)] leading-[1.6] text-black/65 italic"
+		class="mb-8 border-none p-0 font-[Newsreader,Georgia,serif] text-[clamp(1.25rem,3vw,1.75rem)] leading-[1.6] text-[color:var(--text-soft)] italic"
 	>
 		"Your thoughts don't go in a straight line. Why should your writing app?"
 	</blockquote>
-	<p class="text-[0.8rem] font-medium tracking-[0.05em] text-black/35">The Quillium Manifesto</p>
+	<p class="text-[0.8rem] font-medium tracking-[0.05em] text-[color:var(--text-faint)]">The Quillium Manifesto</p>
 </section>
 
 <!-- DOWNLOAD -->
@@ -349,16 +349,18 @@
 
 <style>
 	.feature-card {
-		background: white;
-		border: 1px solid rgba(0, 0, 0, 0.06);
+		background: var(--surface);
+		border: 1px solid var(--border);
 		border-radius: 16px;
 		padding: 2rem;
 		transition:
 			transform 0.3s,
-			box-shadow 0.3s;
+			box-shadow 0.3s,
+			background-color 300ms ease,
+			color 300ms ease;
 	}
 	.feature-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+		box-shadow: 0 12px 40px rgba(var(--shadow-color), 0.06);
 	}
 </style>

@@ -87,7 +87,7 @@
 			<h3 class="feature-heading">Great Minds Think Together</h3>
 			<p class="feature-lead">
 				Comments, revisions, and suggestions float beside the text they're about.
-				<a href="/omni" class="text-black/40 underline underline-offset-2 hover:text-black/55"
+				<a href="/omni" class="text-[color:var(--text-faint)] underline underline-offset-2 hover:text-[color:var(--text-soft)]"
 					>Collaborate with your editor, anytime and anywhere</a
 				>.
 			</p>
@@ -199,14 +199,14 @@
 		font-family: 'Newsreader', Georgia, serif;
 		font-size: 1.65rem;
 		font-weight: 400;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		margin: 0 0 12px 0;
 		line-height: 1.2;
 		letter-spacing: -0.01em;
 	}
 	.feature-lead {
 		font-size: 15.5px;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		line-height: 1.8;
 		margin: 0 0 16px 0;
 	}
@@ -276,7 +276,7 @@
 		height: auto;
 		border-radius: 10px;
 		box-shadow:
-			0 8px 32px rgba(44, 42, 39, 0.1),
-			0 2px 8px rgba(44, 42, 39, 0.06);
+			0 8px 32px rgba(var(--shadow-color), 0.1),
+			0 2px 8px rgba(var(--shadow-color), 0.06);
 	}
 </style>

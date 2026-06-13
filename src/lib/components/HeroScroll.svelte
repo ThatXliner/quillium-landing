@@ -210,8 +210,8 @@
 	});
 </script>
 
-<section class="w-full bg-[#f5f4f1]">
-	<div id="features" class="relative w-full overflow-hidden bg-[#f5f4f1] max-md:overflow-visible">
+<section class="w-full bg-[color:var(--bg)]">
+	<div id="features" class="relative w-full overflow-hidden bg-[color:var(--bg)] max-md:overflow-visible">
 		<div
 			class="flex h-screen w-full items-center justify-center max-md:h-auto max-md:px-5 max-md:py-8"
 		>
@@ -225,11 +225,11 @@
 					>
 						<img src="/logo.svg" alt="Quillium mark" width="72" height="72" />
 					</div>
-					<p class="m-0 mb-3 text-[0.7rem] font-semibold tracking-[0.13em] text-black/35 uppercase">
+					<p class="m-0 mb-3 text-[0.7rem] font-semibold tracking-[0.13em] text-[color:var(--text-faint)] uppercase">
 						The Non-Linear Writing App
 					</p>
 					<h1
-						class="m-0 mb-4 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.15] font-normal tracking-[-0.03em] text-black/88"
+						class="m-0 mb-4 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.15] font-normal tracking-[-0.03em] text-[color:var(--text-strong)]"
 						style="font-family: 'Newsreader', Georgia, serif;"
 					>
 						{displayText}{#if showPros}<span class="italic">Pros</span
@@ -237,7 +237,7 @@
 							>|</span
 						>
 					</h1>
-					<p class="m-0 mb-5 text-[1.1rem] leading-[1.6] text-black/50">
+					<p class="m-0 mb-5 text-[1.1rem] leading-[1.6] text-[color:var(--text-soft)]">
 						Write a sentence three different ways, and decide which to pick later. Branch any phrase
 						without losing a single word.
 					</p>
@@ -256,7 +256,7 @@
 						>
 					</div>
 
-					<div id="hero-scroll-cta" class="flex justify-center bg-[#f5f4f1] px-8 pt-6">
+					<div id="hero-scroll-cta" class="flex justify-center bg-[color:var(--bg)] px-8 pt-6">
 						<a href={downloadUrl} class="btn-primary">Download Now</a>
 					</div>
 				</div>
@@ -269,31 +269,31 @@
 								src={revisionImg}
 								alt=""
 								id="shot-editor"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain shadow-[0_16px_64px_rgba(var(--shadow-color),0.1),0_4px_16px_rgba(var(--shadow-color),0.05)]"
 							/>
 							<img
 								src={revisionImg}
 								alt=""
 								id="shot-revision"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(var(--shadow-color),0.1),0_4px_16px_rgba(var(--shadow-color),0.05)]"
 							/>
 							<img
 								src={commentImg}
 								alt=""
 								id="shot-comment"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(var(--shadow-color),0.1),0_4px_16px_rgba(var(--shadow-color),0.05)]"
 							/>
 							<img
 								src={inlineImg}
 								alt=""
 								id="shot-inline"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(var(--shadow-color),0.1),0_4px_16px_rgba(var(--shadow-color),0.05)]"
 							/>
 							<img
 								src={libraryImg}
 								alt=""
 								id="shot-library"
-								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(44,42,39,0.1),0_4px_16px_rgba(44,42,39,0.05)]"
+								class="absolute inset-0 h-full w-full rounded-xl object-contain opacity-0 shadow-[0_16px_64px_rgba(var(--shadow-color),0.1),0_4px_16px_rgba(var(--shadow-color),0.05)]"
 							/>
 						</div>
 						<div id="callouts-wrap" class="pointer-events-none absolute inset-0">
@@ -405,7 +405,7 @@
 							class="absolute inset-0 flex flex-col items-center justify-center text-center"
 						>
 							<p
-								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
+								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-[color:var(--text-soft)] italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
 								Scroll to learn more.
@@ -416,7 +416,7 @@
 							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
-								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
+								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-[color:var(--text-soft)] italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
 								Fork any sentence. Keep every version. Navigate your creative decisions freely and
@@ -428,13 +428,13 @@
 							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
-								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
+								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-[color:var(--text-soft)] italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
 								Comments, revisions, and suggestions float beside the text they're about.
 								<a
 									href="/omni"
-									class="text-black/40 underline underline-offset-2 hover:text-black/55"
+									class="text-[color:var(--text-faint)] underline underline-offset-2 hover:text-[color:var(--text-soft)]"
 									>Collaborate with your editor, anytime and anywhere.</a
 								>
 							</p>
@@ -444,7 +444,7 @@
 							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
-								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
+								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-[color:var(--text-soft)] italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
 								Revisions can hold revisions of their own. Follow an idea inward without losing the
@@ -456,7 +456,7 @@
 							class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center opacity-0"
 						>
 							<p
-								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-black/50 italic"
+								class="m-0 max-w-[500px] font-serif text-base leading-[1.6] text-[color:var(--text-soft)] italic"
 								style="font-family:'Newsreader',Georgia,serif;"
 							>
 								Your work is saved locally — durable, reliable, instant. Even if your computer
@@ -472,7 +472,7 @@
 			>
 				{#each [0, 1, 2, 3, 4] as i}
 					<span
-						class="progress-dot h-[7px] w-[7px] rounded-full bg-black/20 transition-transform duration-300"
+						class="progress-dot h-[7px] w-[7px] rounded-full bg-[color:var(--border-strong)] transition-transform duration-300"
 						data-slide={i}
 					></span>
 				{/each}
@@ -496,26 +496,26 @@
 		align-items: center;
 		gap: 0.3rem;
 		font-size: 0.9rem;
-		color: rgba(0, 0, 0, 0.5);
+		color: var(--text-soft);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		transition: color 0.3s;
 	}
 	.trust-link:hover {
-		color: rgba(0, 0, 0, 0.7);
+		color: var(--text);
 	}
 
 	.callout-label {
 		position: absolute;
 		transform: translate(-50%, -50%);
 		border-radius: 0.5rem;
-		background: rgba(255, 255, 255, 0.9);
+		background: var(--surface);
 		padding: 5px 0.75rem;
 		font-size: 0.78rem;
 		font-weight: 700;
 		line-height: 1.2;
 		white-space: nowrap;
-		box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+		box-shadow: 0 1px 10px rgba(var(--shadow-color), 0.08);
 		backdrop-filter: blur(16px);
 	}
 

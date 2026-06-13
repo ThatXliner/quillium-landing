@@ -74,13 +74,13 @@
 		</div>
 
 		<p
-			class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-black/35 uppercase contrast-more:text-black/55"
+			class="reveal mb-4 text-[0.75rem] font-semibold tracking-[0.15em] text-[color:var(--text-faint)] uppercase contrast-more:text-[color:var(--text-soft)]"
 		>
 			The Non-Linear Writing App
 		</p>
 
 		<h1
-			class="reveal reveal-delay-1 mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,4.5rem)] leading-[1.15] font-normal tracking-[-0.03em] text-black/88"
+			class="reveal reveal-delay-1 mb-6 max-w-[700px] font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,6vw,4.5rem)] leading-[1.15] font-normal tracking-[-0.03em] text-[color:var(--text-strong)]"
 		>
 			{displayedText}{#if showPros}<span class="italic">Pros</span>{/if}{#if showPeriod}.{/if}<span
 				class="typing-cursor"
@@ -89,14 +89,14 @@
 		</h1>
 
 		<p
-			class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-black/50 contrast-more:text-black/60"
+			class="reveal reveal-delay-2 mb-12 max-w-[520px] text-[1.1rem] leading-[1.7] text-[color:var(--text-soft)] contrast-more:text-[color:var(--text-soft)]"
 		>
 			Write a sentence three different ways, and decide which to pick later. Branch any phrase without
 			losing a single word.
 		</p>
 
 		{#if downloadCount > 100}
-			<p class="mb-4 text-[0.85rem] font-medium text-black/40 contrast-more:text-black/55">
+			<p class="mb-4 text-[0.85rem] font-medium text-[color:var(--text-faint)] contrast-more:text-[color:var(--text-soft)]">
 				Join {downloadCount.toLocaleString()}+ writers
 			</p>
 		{/if}
@@ -112,15 +112,15 @@
 				</a>
 				<a
 					href="#features"
-					class="inline-flex items-center gap-2 rounded-[10px] bg-white/50 px-6 py-3 text-[0.95rem] font-medium text-black/88 no-underline shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-50/30"
+					class="inline-flex items-center gap-2 rounded-[10px] border border-[color:var(--border)] bg-[color:var(--surface)]/50 px-6 py-3 text-[0.95rem] font-medium text-[color:var(--text-strong)] no-underline shadow-md backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--surface)]/80"
 				>
 					See how it works
 				</a>
 			</div>
-			<p class="text-[0.7rem] text-black/30 contrast-more:text-black/50">
+			<p class="text-[0.7rem] text-[color:var(--text-faint)] contrast-more:text-[color:var(--text-soft)]">
 				By downloading, you agree to the <a
 					href="/terms"
-					class="text-black/40 underline underline-offset-2 hover:text-black/55 contrast-more:text-black/55 contrast-more:hover:text-black/70"
+					class="text-[color:var(--text-faint)] underline underline-offset-2 hover:text-[color:var(--text-soft)] contrast-more:text-[color:var(--text-soft)] contrast-more:hover:text-[color:var(--text)]"
 					>Terms of Service</a
 				>
 			</p>
@@ -131,21 +131,21 @@
 			style="border-top: 2px solid; border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;"
 		>
 			<p
-				class="m-0 flex flex-wrap items-center justify-center gap-x-5 text-[0.9rem] tracking-wide text-black/50"
+				class="m-0 flex flex-wrap items-center justify-center gap-x-5 text-[0.9rem] tracking-wide text-[color:var(--text-soft)]"
 			>
 				<a
 					href="/blog/quillium-is-not-an-ai-app"
-					class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
+					class="inline-flex items-center gap-1 text-[color:var(--text-soft)] underline transition-colors duration-300 hover:text-[color:var(--text)]"
 					><Pen size={15} strokeWidth={2} class="opacity-50" />Write every word (No AI bs).</a
 				>
 				<a
 					href="/blog/quillium-privacy"
-					class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
+					class="inline-flex items-center gap-1 text-[color:var(--text-soft)] underline transition-colors duration-300 hover:text-[color:var(--text)]"
 					><Lock size={15} strokeWidth={2} class="opacity-50" />Fully private.</a
 				>
 				<a
 					href="/blog/how-quillium-keeps-your-writing-safe"
-					class="inline-flex items-center gap-1 text-black/50 underline transition-colors duration-300 hover:text-black/70"
+					class="inline-flex items-center gap-1 text-[color:var(--text-soft)] underline transition-colors duration-300 hover:text-[color:var(--text)]"
 					><ShieldCheck size={15} strokeWidth={2} class="opacity-50" />Safe and secure.</a
 				>
 			</p>

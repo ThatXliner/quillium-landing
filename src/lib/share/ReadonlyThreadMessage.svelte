@@ -41,11 +41,11 @@
 	</div>
 	<div class="min-w-0 flex-1">
 		<div class="flex items-baseline gap-1.5">
-			<span class="text-xs font-semibold text-black/80">{message.author}</span>
-			<span class="text-[10px] text-black/40">{formatTime(message.time)}</span>
+			<span class="text-xs font-semibold text-[color:var(--text)]">{message.author}</span>
+			<span class="text-[10px] text-[color:var(--text-faint)]">{formatTime(message.time)}</span>
 		</div>
 		<p
-			class="mt-0.5 text-xs leading-relaxed text-black/70 {truncate
+			class="mt-0.5 text-xs leading-relaxed text-[color:var(--text)] {truncate
 				? 'truncate'
 				: 'whitespace-pre-wrap'}"
 		>

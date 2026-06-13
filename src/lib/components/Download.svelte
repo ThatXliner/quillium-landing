@@ -60,7 +60,7 @@
 <section id="download" class="px-8 py-16 text-center">
 	<div class="mx-auto max-w-[36rem]">
 		<h2
-			class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-black/88"
+			class="mb-6 font-[Newsreader,Georgia,serif] text-[clamp(1.9rem,5vw,3rem)] font-normal tracking-[-0.01em] text-[color:var(--text-strong)]"
 		>
 			Start writing sideways.
 		</h2>
@@ -87,7 +87,7 @@
 		{/if}
 
 		<button
-			class="mt-2 text-xs text-black/35 underline decoration-black/15 underline-offset-2 transition-colors hover:text-black/55 contrast-more:text-black/50 contrast-more:decoration-black/25 contrast-more:hover:text-black/70"
+			class="mt-2 text-xs text-[color:var(--text-faint)] underline decoration-[color:var(--border-strong)] underline-offset-2 transition-colors hover:text-[color:var(--text-soft)] contrast-more:text-[color:var(--text-soft)] contrast-more:decoration-[color:var(--border-strong)] contrast-more:hover:text-[color:var(--text)]"
 			onclick={() => (dropdownOpen = !dropdownOpen)}
 		>
 			{dropdownOpen ? 'Hide' : 'Show'} all platforms
@@ -98,25 +98,25 @@
 				{#each platformOrder as key}
 					{@const p = downloads[key]}
 					<div
-						class="rounded-xl border border-black/6 bg-white/50 p-4 shadow-sm backdrop-blur-md {detected ===
+						class="rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] p-4 shadow-sm backdrop-blur-md {detected ===
 						key
 							? 'ring-2 ring-blue-400/20'
 							: ''}"
 					>
 						<p
-							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-black/50 uppercase contrast-more:text-black/60"
+							class="m-0 mb-2 text-[0.7rem] font-semibold tracking-[0.08em] text-[color:var(--text-soft)] uppercase contrast-more:text-[color:var(--text-soft)]"
 						>
 							{p.label}
 							{#if detected === key}
 								<span
-									class="ml-1 text-[0.6rem] font-normal tracking-normal text-[#3b82f6] normal-case"
+									class="ml-1 text-[0.6rem] font-normal tracking-normal text-[color:var(--accent-blue)] normal-case"
 									>(detected)</span
 								>
 							{/if}
 						</p>
 						<a
 							href={p.primary.url}
-							class="mb-1 block text-[0.8rem] font-medium text-[#3b82f6] no-underline hover:underline"
+							class="mb-1 block text-[0.8rem] font-medium text-[color:var(--accent-blue)] no-underline hover:underline"
 							onclick={() => trackDownload(p.primary.url)}
 						>
 							{p.primary.name}
@@ -124,7 +124,7 @@
 						{#each p.alt as alt}
 							<a
 								href={alt.url}
-								class="block text-[0.72rem] text-black/35 no-underline hover:text-black/55 contrast-more:text-black/50 contrast-more:hover:text-black/70"
+								class="block text-[0.72rem] text-[color:var(--text-faint)] no-underline hover:text-[color:var(--text-soft)] contrast-more:text-[color:var(--text-soft)] contrast-more:hover:text-[color:var(--text)]"
 								onclick={() => trackDownload(alt.url)}
 							>
 								{alt.name}
@@ -154,11 +154,11 @@
 			</div>
 		{/if}
 
-		<p class="mt-8 text-xs text-black/22 contrast-more:text-black/45">
+		<p class="mt-8 text-xs text-[color:var(--text-faint)] contrast-more:text-[color:var(--text-soft)]">
 			By downloading, you agree to the
 			<a
 				href="/terms"
-				class="text-black/30 underline underline-offset-2 hover:text-black/45 contrast-more:text-black/50 contrast-more:hover:text-black/65"
+				class="text-[color:var(--text-faint)] underline underline-offset-2 hover:text-[color:var(--text-soft)] contrast-more:text-[color:var(--text-soft)] contrast-more:hover:text-[color:var(--text)]"
 				>Terms of Service</a
 			>
 		</p>

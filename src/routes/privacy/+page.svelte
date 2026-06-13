@@ -47,13 +47,17 @@
 		<header class="mb-12">
 			<p class="section-eyebrow">Legal</p>
 			<h1
-				class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-black/88 italic"
+				class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-[color:var(--text-strong)] italic"
 			>
 				Privacy Policy
 			</h1>
-			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: April 8, 2026 · Quillium Beta</p>
+			<p class="mb-8 text-[0.8rem] text-[color:var(--text-faint)]">
+				Last updated: April 8, 2026 · Quillium Beta
+			</p>
 
-			<div class="inline-flex gap-0.5 rounded-full bg-white/50 p-1 shadow-sm backdrop-blur-md">
+			<div
+				class="inline-flex gap-0.5 rounded-full bg-[color:var(--surface)] p-1 shadow-sm backdrop-blur-md"
+			>
 				<button
 					role="tab"
 					aria-selected={activeTab === 'plain'}
@@ -84,7 +88,7 @@
 						class="shrink-0 rounded bg-[#3b82f6]/10 px-2 py-0.5 text-[0.65rem] font-bold tracking-[0.08em] text-[#3b82f6] uppercase"
 						>TL;DR</span
 					>
-					<p class="m-0 text-[0.875rem] leading-relaxed text-black/88">
+					<p class="m-0 text-[0.875rem] leading-relaxed text-[color:var(--text-strong)]">
 						We collect anonymous usage analytics and send error reports automatically. If you use AI
 						features, your text goes directly to your chosen AI provider—never through us. We don't
 						know who you are, and we never sell your data.
@@ -93,7 +97,7 @@
 
 				<div class="grid gap-3">
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color:var(--surface)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -101,18 +105,18 @@
 							<Clock size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">What we collect</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">What we collect</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Anonymous usage analytics—things like which features you use, session length, and
 								device type. We also collect anonymous session recordings of UI interactions (your
 								editor text is masked by default) and automatic error reports. We use PostHog for
-								all of this. <strong class="text-black/88">No names, emails, or login info.</strong>
+								all of this. <strong class="text-[color:var(--text-strong)]">No names, emails, or login info.</strong>
 							</p>
 						</div>
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color:var(--surface)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -120,8 +124,8 @@
 							<Star size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Why we collect it</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Why we collect it</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Analytics help us understand usage, fix bugs, and improve the app. Email is used
 								only to send you beta access, updates, and respond to feedback. No ads or profiling.
 							</p>
@@ -129,7 +133,7 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color:var(--surface)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -137,8 +141,8 @@
 							<Lock size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Who can see it</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Who can see it</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Analytics go to PostHog only—anonymized and not linked to you. If you use AI
 								features, your text goes directly to your chosen provider (OpenAI, Anthropic, or
 								Google)—we never see it. Dictionary lookups are sent to an external dictionary
@@ -148,7 +152,7 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color:var(--surface)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -156,19 +160,19 @@
 							<Globe size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Your rights</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Your rights</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Since we don't collect personal data, there's no profile to delete. On the website,
-								opt out via the <strong class="text-black/88">Cookie Settings</strong>
+								opt out via the <strong class="text-[color:var(--text-strong)]">Cookie Settings</strong>
 								link in the footer. In the desktop app, disable analytics via the toggle in
-								<strong class="text-black/88">Settings &gt; Privacy &gt; "Usage analytics"</strong>.
+								<strong class="text-[color:var(--text-strong)]">Settings &gt; Privacy &gt; "Usage analytics"</strong>.
 								California residents have additional rights under the CCPA.
 							</p>
 						</div>
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color:var(--surface)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -176,8 +180,8 @@
 							<AlignLeft size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Cookies</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Cookies</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								PostHog assigns a random identifier to track usage behavior. On the website, this
 								only persists if you accept cookies: if you decline, no identifier is stored. In the
 								desktop app, the identifier persists for the lifetime of your install. Either way,
@@ -188,7 +192,7 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color:var(--surface)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -196,8 +200,8 @@
 							<Mail size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Questions?</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Questions?</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Email us at <a
 									href="mailto:support@quillium.bryanhu.com"
 									class="text-[#3b82f6] no-underline hover:underline">support@quillium.bryanhu.com</a
@@ -207,7 +211,7 @@
 					</div>
 				</div>
 
-				<p class="mt-8 text-center text-[0.8rem] text-black/28">
+				<p class="mt-8 text-center text-[0.8rem] text-[color:var(--text-faint)]">
 					Want the full legal text?
 					<button class="inline-tab-switch" onclick={() => (activeTab = 'legal')}
 						>Switch to Full Legal view</button
@@ -532,7 +536,7 @@
 					<p>We aim to respond to all inquiries within 30 days.</p>
 				</section>
 
-				<p class="mt-8 text-center text-[0.8rem] text-black/28">
+				<p class="mt-8 text-center text-[0.8rem] text-[color:var(--text-faint)]">
 					Prefer a simpler summary?
 					<button class="inline-tab-switch" onclick={() => (activeTab = 'plain')}
 						>Switch to Plain English view</button
@@ -555,17 +559,17 @@
 		font-size: 0.8rem;
 		font-weight: 500;
 		font-family: 'Inter', sans-serif;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		cursor: pointer;
 		transition: all 0.2s;
 	}
 	.tab-btn.active {
-		background: white;
-		color: rgba(0, 0, 0, 0.88);
-		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+		background: var(--surface);
+		color: var(--text-strong);
+		box-shadow: 0 1px 4px rgba(var(--shadow-color), 0.08);
 	}
 	.tab-btn:not(.active):hover {
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 	}
 
 	/* ── Legal content ── */
@@ -577,20 +581,20 @@
 		font-size: 1.2rem;
 		font-weight: 400;
 		font-style: italic;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		margin: 0 0 12px 0;
 		padding-bottom: 8px;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		border-bottom: 1px solid var(--border);
 	}
 	.legal-content h3 {
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		margin: 20px 0 8px 0;
 	}
 	.legal-content p {
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		line-height: 1.75;
 		margin: 0 0 12px 0;
 	}
@@ -600,26 +604,26 @@
 	}
 	.legal-content li {
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		line-height: 1.75;
 		margin-bottom: 4px;
 	}
 	.legal-content a {
-		color: #3b82f6;
+		color: var(--accent-blue);
 		text-decoration: none;
 	}
 	.legal-content a:hover {
 		text-decoration: underline;
 	}
 	.legal-content strong {
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 	}
 
 	/* ── Tab switch link ── */
 	.inline-tab-switch {
 		background: none;
 		border: none;
-		color: #3b82f6;
+		color: var(--accent-blue);
 		font-size: 0.8rem;
 		font-family: 'Inter', sans-serif;
 		cursor: pointer;
@@ -628,6 +632,6 @@
 		text-underline-offset: 2px;
 	}
 	.inline-tab-switch:hover {
-		color: #2563eb;
+		color: var(--accent-blue-deep);
 	}
 </style>

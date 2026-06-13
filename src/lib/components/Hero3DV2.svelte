@@ -76,19 +76,12 @@
 		return variant !== 'none';
 	}
 
-	// Theme: light by default, dark only under `prefers-color-scheme: dark`. The
-	// whole rest of the app is light-only, so a dark hero would sit under a light
-	// nav/footer — to keep them in step we flip the same `data-nav-dark` attribute
-	// the dark hero originally used (nav, footer and this component's CSS all key
-	// off it). It's set whenever the dark media query matches while the hero is
-	// mounted, and cleared on unmount.
+	// Theme follows `prefers-color-scheme`. The whole app is now token-driven, so
+	// the nav, footer and this component's own DOM flip via CSS automatically —
+	// nothing to toggle on <html>. We only read the media query here to colour the
+	// WebGL scene (sky/fog/smoke/dust live in JS, not CSS) and to recolour it live
+	// if the OS theme changes while the hero is on screen.
 	let heroVisible = false;
-	let darkApplied: boolean | undefined;
-	function applyTheme(dark: boolean) {
-		if (dark === darkApplied) return;
-		darkApplied = dark;
-		document.documentElement.toggleAttribute('data-nav-dark', dark);
-	}
 	function syncNav() {}
 
 	// The three drafts of one sentence — the product story
@@ -158,11 +151,9 @@
 		const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduceMotion) staticMode = true;
 
-		// Theme follows the OS. Apply the CSS flip right away (before the scene
-		// builds) so the chapters/cards/nav/footer never flash the wrong palette,
-		// and keep the matchMedia around to react if the user toggles theme live.
+		// Read the OS theme for the WebGL scene's colours; the DOM flips on its own
+		// via tokens. Keep the matchMedia to recolour the live scene on theme change.
 		const darkMq = matchMedia('(prefers-color-scheme: dark)');
-		applyTheme(darkMq.matches);
 
 		// The observer is retained (cheap, harmless) in case we want hero-presence
 		// signals later; syncNav is a no-op now that theme is OS-driven.
@@ -181,7 +172,6 @@
 		// scene (sky, fog, smoke, dust) without tearing the whole thing down.
 		let recolorScene: ((theme: Theme) => void) | undefined;
 		const onThemeChange = (e: MediaQueryListEvent) => {
-			applyTheme(e.matches);
 			recolorScene?.(e.matches ? THEMES.dark : THEMES.light);
 		};
 		darkMq.addEventListener('change', onThemeChange);
@@ -207,7 +197,6 @@
 			destroyed = true;
 			navIo.disconnect();
 			darkMq.removeEventListener('change', onThemeChange);
-			applyTheme(false);
 			cleanupScene?.();
 		};
 	});
@@ -1367,8 +1356,8 @@
 	/* ── Dark mode (OS preference) ──
 	   Restores the original night-flight palette: dark sky, cream copy, dark
 	   scrims, heavier card shadows. The Three.js scene swaps its own colours in
-	   JS; this only covers the DOM layer over the canvas. Nav and footer flip via
-	   the shared [data-nav-dark] attribute (set by this component in dark mode). */
+	   JS; this only covers the DOM layer over the canvas. Nav and footer flip on
+	   their own now, via the global design tokens in layout.css. */
 	@media (prefers-color-scheme: dark) {
 		.hero-flight {
 			background: #171310;

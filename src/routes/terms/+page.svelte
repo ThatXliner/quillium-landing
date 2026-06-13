@@ -42,13 +42,15 @@
 		<header class="mb-12">
 			<p class="section-eyebrow">Legal</p>
 			<h1
-				class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-black/88 italic"
+				class="mb-2 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-[color:var(--text-strong)] italic"
 			>
 				Terms of Service
 			</h1>
-			<p class="mb-8 text-[0.8rem] text-black/28">Last updated: March 26, 2026</p>
+			<p class="mb-8 text-[0.8rem] text-[color:var(--text-faint)]">Last updated: March 26, 2026</p>
 
-			<div class="inline-flex gap-0.5 rounded-full bg-white/50 p-1 shadow-sm backdrop-blur-md">
+			<div
+				class="inline-flex gap-0.5 rounded-full bg-[color-mix(in_srgb,var(--surface)_50%,transparent)] p-1 shadow-sm backdrop-blur-md"
+			>
 				<button
 					role="tab"
 					aria-selected={activeTab === 'plain'}
@@ -79,14 +81,14 @@
 						class="shrink-0 rounded bg-[#3b82f6]/10 px-2 py-0.5 text-[0.65rem] font-bold tracking-[0.08em] text-[#3b82f6] uppercase"
 						>TL;DR</span
 					>
-					<p class="m-0 text-[0.875rem] leading-relaxed text-black/88">
+					<p class="m-0 text-[0.875rem] leading-relaxed text-[color:var(--text-strong)]">
 						This is an early beta. Things may break. Back up your work. Your writing is yours.
 					</p>
 				</div>
 
 				<div class="grid gap-3">
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color-mix(in_srgb,var(--surface)_50%,transparent)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-400/10"
@@ -94,8 +96,8 @@
 							<CircleAlert size={18} strokeWidth={1.4} color="#f59e0b" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Beta Status</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Beta Status</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								This is an unstable beta. Features may change or be removed at any time. Not
 								intended for production or critical work. We collect anonymous analytics but you may
 								opt out anytime.
@@ -104,14 +106,14 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color-mix(in_srgb,var(--surface)_50%,transparent)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-400/10">
 							<CircleX size={18} strokeWidth={1.4} color="#ef4444" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">No Liability</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">No Liability</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								The Service is provided "as-is" with no warranties. Data loss is possible — back up
 								important content. We are not liable for any damages arising from use.
 							</p>
@@ -119,7 +121,7 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color-mix(in_srgb,var(--surface)_50%,transparent)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -127,8 +129,8 @@
 							<CircleCheck size={18} strokeWidth={1.4} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Feedback</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Feedback</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Any feedback you share may be used to improve the Service without compensation.
 								Using the beta does not grant any ownership rights over the app or its features.
 							</p>
@@ -136,7 +138,7 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color-mix(in_srgb,var(--surface)_50%,transparent)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-400/10"
@@ -144,8 +146,8 @@
 							<Download size={18} strokeWidth={1.4} color="#10b981" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">Privacy & Updates</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">Privacy & Updates</h3>
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								We collect minimal analytics to improve the product. Terms may be updated during
 								beta; continued use means you accept changes.
 							</p>
@@ -153,7 +155,7 @@
 					</div>
 
 					<div
-						class="flex gap-4 rounded-xl bg-white/50 p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
+						class="flex gap-4 rounded-xl bg-[color-mix(in_srgb,var(--surface)_50%,transparent)] p-5 shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md"
 					>
 						<div
 							class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#3b82f6]/8"
@@ -161,10 +163,10 @@
 							<Lock size={20} strokeWidth={1.5} color="#3b82f6" />
 						</div>
 						<div>
-							<h3 class="mb-1 text-[0.875rem] font-semibold text-black/88">
+							<h3 class="mb-1 text-[0.875rem] font-semibold text-[color:var(--text-strong)]">
 								Your content is yours
 							</h3>
-							<p class="m-0 text-[0.8rem] leading-relaxed text-black/50">
+							<p class="m-0 text-[0.8rem] leading-relaxed text-[color:var(--text-soft)]">
 								Quillium is local-first. Your writing stays on your machine. We never access,
 								collect, or store your documents without your consent. See our
 								<a href="/privacy" class="text-[#3b82f6] no-underline hover:underline"
@@ -175,7 +177,7 @@
 					</div>
 				</div>
 
-				<p class="mt-8 text-center text-[0.8rem] text-black/28">
+				<p class="mt-8 text-center text-[0.8rem] text-[color:var(--text-faint)]">
 					Want the full legal text?
 					<button class="inline-tab-switch" onclick={() => (activeTab = 'legal')}
 						>Switch to Full Legal view</button
@@ -294,7 +296,7 @@
 					</p>
 				</section>
 
-				<p class="mt-8 text-center text-[0.8rem] text-black/28">
+				<p class="mt-8 text-center text-[0.8rem] text-[color:var(--text-faint)]">
 					Prefer a simpler summary?
 					<button class="inline-tab-switch" onclick={() => (activeTab = 'plain')}
 						>Switch to Plain English view</button
@@ -317,17 +319,17 @@
 		font-size: 0.8rem;
 		font-weight: 500;
 		font-family: 'Inter', sans-serif;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		cursor: pointer;
 		transition: all 0.2s;
 	}
 	.tab-btn.active {
-		background: white;
-		color: rgba(0, 0, 0, 0.88);
-		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+		background: var(--surface);
+		color: var(--text-strong);
+		box-shadow: 0 1px 4px rgba(var(--shadow-color), 0.08);
 	}
 	.tab-btn:not(.active):hover {
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 	}
 
 	/* ── Legal content ── */
@@ -339,20 +341,20 @@
 		font-size: 1.2rem;
 		font-weight: 400;
 		font-style: italic;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		margin: 0 0 12px 0;
 		padding-bottom: 8px;
-		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		border-bottom: 1px solid var(--border);
 	}
 	.legal-content h3 {
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 		margin: 20px 0 8px 0;
 	}
 	.legal-content p {
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		line-height: 1.75;
 		margin: 0 0 12px 0;
 	}
@@ -362,26 +364,26 @@
 	}
 	.legal-content li {
 		font-size: 0.875rem;
-		color: rgba(0, 0, 0, 0.6);
+		color: var(--text-soft);
 		line-height: 1.75;
 		margin-bottom: 4px;
 	}
 	.legal-content a {
-		color: #3b82f6;
+		color: var(--accent-blue);
 		text-decoration: none;
 	}
 	.legal-content a:hover {
 		text-decoration: underline;
 	}
 	.legal-content strong {
-		color: rgba(0, 0, 0, 0.88);
+		color: var(--text-strong);
 	}
 
 	/* ── Tab switch link ── */
 	.inline-tab-switch {
 		background: none;
 		border: none;
-		color: #3b82f6;
+		color: var(--accent-blue);
 		font-size: 0.8rem;
 		font-family: 'Inter', sans-serif;
 		cursor: pointer;
@@ -390,6 +392,6 @@
 		text-underline-offset: 2px;
 	}
 	.inline-tab-switch:hover {
-		color: #2563eb;
+		color: var(--accent-blue-deep);
 	}
 </style>

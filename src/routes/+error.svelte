@@ -88,16 +88,16 @@
 <Nav />
 
 <main class="min-h-screen px-6 pt-32 pb-20">
-	<section class="mx-auto max-w-3xl rounded-[32px] border border-black/6 bg-white/65 px-8 py-14 text-center shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
+	<section class="mx-auto max-w-3xl rounded-[32px] border border-[color:var(--border)] bg-[color:var(--surface)] px-8 py-14 text-center shadow-[0_24px_80px_rgba(var(--shadow-color),0.08)] backdrop-blur">
 		<p class="section-eyebrow mb-3">{status}</p>
-		<h1 class="font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,7vw,4.8rem)] leading-none text-black/88">
+		<h1 class="font-[Newsreader,Georgia,serif] text-[clamp(2.8rem,7vw,4.8rem)] leading-none text-[color:var(--text-strong)]">
 			{title}
 		</h1>
-		<p class="mx-auto mt-5 max-w-xl text-[1rem] leading-8 text-black/52">
+		<p class="mx-auto mt-5 max-w-xl text-[1rem] leading-8 text-[color:var(--text-soft)]">
 			{body}
 		</p>
 		{#if error?.message}
-			<p class="mx-auto mt-4 max-w-lg text-[0.85rem] leading-7 text-black/38">
+			<p class="mx-auto mt-4 max-w-lg text-[0.85rem] leading-7 text-[color:var(--text-faint)]">
 				{error.message}
 			</p>
 		{/if}
@@ -106,7 +106,7 @@
 			<a href="/" class="btn-primary">Back to Quillium</a>
 			<a
 				href="/#download"
-				class="inline-flex items-center rounded-[10px] bg-white/70 px-6 py-3 text-[0.95rem] font-medium text-black/70 no-underline shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:text-black/88"
+				class="inline-flex items-center rounded-[10px] bg-[color:var(--surface-2)] px-6 py-3 text-[0.95rem] font-medium text-[color:var(--text)] no-underline shadow-md inset-shadow-sm inset-shadow-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:text-[color:var(--text-strong)]"
 			>
 				Download the app
 			</a>

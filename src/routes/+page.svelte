@@ -27,6 +27,17 @@
 	let show3DV2Hero = $derived(heroVariant === '3d-variant-2');
 	let showScrollHero = $derived(!isMobile && !showVideoHero && !show3DV2Hero);
 
+	// Post-hero sections, gated per variant:
+	// - scroll hero: self-contained, shows nothing below.
+	// - 3D flight hero: chapters demo the branching story (skip Showcase) and the
+	//   chapter-5 finale is the download CTA (skip Download), but keep Features.
+	// - video hero: leads with the marketing video, so it keeps Showcase + Download
+	//   but skips Features to stay focused on the video.
+	// - control / mobile: the full Showcase → Features → Download stack.
+	let showShowcase = $derived(!showScrollHero && !show3DV2Hero);
+	let showFeatures = $derived(!showScrollHero && !showVideoHero);
+	let showDownload = $derived(!showScrollHero && !show3DV2Hero);
+
 	onMount(() => {
 		if (data.release.version) {
 			posthog.register({ app_version: data.release.version.replace(/^v/, '') });
@@ -147,29 +158,25 @@
 		<Hero release={data.release} />
 	{/if}
 
-	<!-- Every variant gets the standard demo sections below the hero, except the
-	     two self-contained ones: the scroll hero and the 3D flight hero — their
-	     scroll journeys ARE the feature demonstration. The 3D flight hero is a
-	     middle case: its chapters demo the core branching story (so it skips the
-	     Showcase carousel) and its chapter-5 finale folds in the download CTA and
-	     platform picker (so it skips the Download section), but it still shows the
-	     scrollable Features list below to round out the product story. -->
+	<!-- Post-hero demo sections. Which ones show is gated per variant by the
+	     showShowcase / showFeatures / showDownload flags (see <script>); a divider
+	     is rendered before any section that follows another. -->
 	<div class="post-hero">
-		{#if !showScrollHero && !show3DV2Hero}
+		{#if showShowcase}
 			<Showcase />
-
-			<div class="warm-divider section-divider"></div>
 		{/if}
 
-		{#if !showScrollHero}
-			<Features />
-
-			{#if !show3DV2Hero}
+		{#if showFeatures}
+			{#if showShowcase}
 				<div class="warm-divider section-divider"></div>
 			{/if}
+			<Features />
 		{/if}
 
-		{#if !show3DV2Hero}
+		{#if showDownload}
+			{#if showShowcase || showFeatures}
+				<div class="warm-divider section-divider"></div>
+			{/if}
 			<Download release={data.release} />
 		{/if}
 	</div>

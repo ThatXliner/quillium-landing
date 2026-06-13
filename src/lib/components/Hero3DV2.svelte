@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import posthog from 'posthog-js';
+	import { trackDownload as captureDownload } from '$lib/analytics';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -51,10 +52,11 @@
 	};
 	let openPlatform = $state<PlatformKey | null>(null);
 
-	// download_clicked is the experiment's primary funnel metric — every real
-	// download link here must fire it, exactly like the old Download section
+	// download_clicked is the primary funnel metric — every real download link here
+	// must fire it. Routed through captureDownload so first-touch source attribution
+	// rides along (see src/lib/analytics.ts).
 	function trackDownload(url: string) {
-		posthog.capture('download_clicked', { url, platform: detected });
+		captureDownload(url, detected, 'hero-3d');
 	}
 
 	let wrapperEl = $state<HTMLDivElement>();

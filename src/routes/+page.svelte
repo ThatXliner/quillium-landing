@@ -4,50 +4,47 @@
 	import { initReveal } from '$lib/reveal';
 	import Nav from '$lib/components/Nav.svelte';
 	import Hero from '$lib/components/Hero.svelte';
-	import HeroScroll from '$lib/components/HeroScroll.svelte';
-	import HeroVideo from '$lib/components/HeroVideo.svelte';
 	import Hero3DV2 from '$lib/components/Hero3DV2.svelte';
-	import Showcase from '$lib/components/Showcase.svelte';
+	import VideoOrCarousel from '$lib/components/VideoOrCarousel.svelte';
 	import Features from '$lib/components/Features.svelte';
 	import Download from '$lib/components/Download.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { MOBILE_BREAKPOINT } from '$lib/breakpoints';
 
-	// Set this once the marketing video is uploaded (YouTube video id).
+	// The marketing demo (YouTube video id) shown above the feature list.
 	const HERO_VIDEO_ID: string = 'YKsJSmKGITA';
 
 	let { data } = $props();
 
+	// Single landing layout (the hero-layout A/B test ended 2026-06-13; PostHog
+	// experiment 376508 stopped, flag `hero-layout` kept only as a dormant QA
+	// override). The page is now one fixed composition that diverges by device:
+	//   DESKTOP: Hero3DV2 scroll-driven flight (the "airplane" intro) → the
+	//     marketing video (VideoOrCarousel, → Showcase carousel on spotty links) →
+	//     Features → Download.
+	//   MOBILE: the plain static Hero (logo + headline + CTA) → Features → Download.
+	//     No flight (the 520vh sticky scene is desktop-pointer territory) and NO
+	//     video — watching a video embed on mobile is a poor experience, so the
+	//     static hero takes its place.
+	// `isMobile` defaults true so SSR renders the lightweight static-hero path; on
+	// mount the real value resolves and desktop swaps in the flight + video.
 	let isMobile = $state(true);
-	// `hero-layout` experiment: 'video' => video-first hero, '3d-variant-2' =>
-	// scroll-driven flight scene, else current scroll hero. Falls back to the
-	// scroll hero until the flag loads or if no video id is set.
-	let heroVariant = $state('control');
-	let showVideoHero = $derived(heroVariant === 'video' && HERO_VIDEO_ID !== '');
-	let show3DV2Hero = $derived(heroVariant === '3d-variant-2');
-	let showScrollHero = $derived(!isMobile && !showVideoHero && !show3DV2Hero);
 
-	// Post-hero sections, gated per variant:
-	// - scroll hero: self-contained, shows nothing below.
-	// - 3D flight hero: chapters demo the branching story (skip Showcase) and the
-	//   chapter-5 finale is the download CTA (skip Download), but keep Features.
-	// - video hero: the marketing video replaces the Showcase carousel, so it skips
-	//   Showcase but keeps Features + Download below.
-	// - control / mobile: the full Showcase → Features → Download stack.
-	let showShowcase = $derived(!showScrollHero && !show3DV2Hero && !showVideoHero);
-	let showFeatures = $derived(!showScrollHero);
-	let showDownload = $derived(!showScrollHero && !show3DV2Hero);
+	// Desktop gets the flight + video; mobile gets the static hero and skips both.
+	// The flight already carries its own finale download CTA, but we still render
+	// the standalone Download section at the very bottom so there's a closing
+	// call-to-action after the feature list for everyone.
+	let showFlight = $derived(!isMobile);
 
-	// The hero variant resolves on the client (URL override or PostHog flag), which
-	// swaps the post-hero layout *after* SSR. Re-wire the reveal animations once the
-	// new DOM has flushed so freshly-rendered `.reveal` sections (e.g. the Features
-	// list under hero=video) fade in instead of staying stuck at opacity:0.
-	// initReveal() is idempotent, so re-running it only picks up new nodes.
+	// isMobile resolves on the client and swaps the desktop (flight + video) and
+	// mobile (static hero) paths, which changes the DOM *after* SSR. Re-run the
+	// reveal animations once the new DOM has flushed so freshly-rendered `.reveal`
+	// sections (the static Hero's copy, Features, etc.) fade in instead of staying
+	// stuck at opacity:0. initReveal() is idempotent.
 	$effect(() => {
-		// Reading the flags registers them as dependencies, so the effect re-runs
-		// whenever the post-hero layout changes; JSON.stringify keeps the read from
-		// being dead-code-eliminated.
-		JSON.stringify([showShowcase, showFeatures, showDownload, showVideoHero, show3DV2Hero]);
+		// Read showFlight so the effect re-runs when the layout flips; JSON.stringify
+		// keeps the read from being dead-code-eliminated.
+		JSON.stringify([showFlight]);
 		tick().then(() => initReveal());
 	});
 
@@ -59,16 +56,6 @@
 		const mql = matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
 		isMobile = mql.matches;
 		mql.addEventListener('change', (e) => (isMobile = e.matches));
-
-		// `?hero=video|3d-variant-2|control` forces a variant (QA / dev, where flags don't load)
-		const heroOverride = new URLSearchParams(location.search).get('hero');
-		if (heroOverride) heroVariant = heroOverride;
-
-		posthog.onFeatureFlags(() => {
-			if (heroOverride) return;
-			const variant = posthog.getFeatureFlag('hero-layout');
-			if (typeof variant === 'string') heroVariant = variant;
-		});
 
 		// Smooth scroll for anchor links
 		document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -159,37 +146,29 @@
 
 <Nav />
 <main>
-	{#if showVideoHero}
-		<HeroVideo videoId={HERO_VIDEO_ID} release={data.release} />
-	{:else if show3DV2Hero}
+	<!-- 1. Top hero, by device: desktop gets the scroll-driven paper-plane flight,
+	     mobile gets the plain static hero. -->
+	{#if showFlight}
 		<Hero3DV2 release={data.release} />
-	{:else if showScrollHero}
-		<HeroScroll release={data.release} />
 	{:else}
 		<Hero release={data.release} />
 	{/if}
 
-	<!-- Post-hero demo sections. Which ones show is gated per variant by the
-	     showShowcase / showFeatures / showDownload flags (see <script>); a divider
-	     is rendered before any section that follows another. -->
+	<!-- 2. Desktop only: the marketing video (→ Showcase carousel on spotty links).
+	        Mobile skips it — a video embed is a poor mobile experience.
+	     3. Then for both: the feature list, then the closing Download CTA.
+	     A divider precedes any section that follows another. -->
 	<div class="post-hero">
-		{#if showShowcase}
-			<Showcase />
+		{#if showFlight}
+			<div class="warm-divider section-divider"></div>
+			<VideoOrCarousel videoId={HERO_VIDEO_ID} location="hero-video" />
 		{/if}
 
-		{#if showFeatures}
-			{#if showShowcase}
-				<div class="warm-divider section-divider"></div>
-			{/if}
-			<Features />
-		{/if}
+		<div class="warm-divider section-divider"></div>
+		<Features />
 
-		{#if showDownload}
-			{#if showShowcase || showFeatures}
-				<div class="warm-divider section-divider"></div>
-			{/if}
-			<Download release={data.release} />
-		{/if}
+		<div class="warm-divider section-divider"></div>
+		<Download release={data.release} />
 	</div>
 </main>
 

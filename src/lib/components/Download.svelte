@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import posthog from 'posthog-js';
+	import { trackDownload as captureDownload } from '$lib/analytics';
 
 	const REPO = 'ThatXliner/quillium-releases';
 
@@ -50,7 +50,7 @@
 	});
 
 	function trackDownload(url: string) {
-		posthog.capture('download_clicked', { url, platform: detected });
+		captureDownload(url, detected, 'download-section');
 	}
 
 	const platformOrder: ('mac' | 'windows' | 'linux')[] = ['mac', 'windows', 'linux'];

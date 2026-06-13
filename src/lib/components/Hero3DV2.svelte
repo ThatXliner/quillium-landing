@@ -1270,7 +1270,7 @@
 		margin: 1.6rem 0 0;
 		padding-top: 1rem;
 		border-top: 2px solid;
-		border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05) 1;
+		border-image: linear-gradient(90deg, transparent, #3b82f6, #a855f7, #22c55e, #fcbc05, transparent) 1;
 		font-size: 0.82rem;
 	}
 	.trust-row a {

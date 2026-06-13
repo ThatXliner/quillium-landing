@@ -309,9 +309,21 @@
 					if (revealed <= 0.0) discard;
 					float birth = smoothstep(0.0, 0.05, vUv.x); // feather the very start
 
-					// soft cross-section — fade hard toward the tube surface, no rim
-					float radial = 1.0 - abs(vUv.y - 0.5) * 2.0;
-					radial = pow(clamp(radial, 0.0, 1.0), 1.3);
+					// AGE-DRIVEN SPREAD: how far this point sits behind the flight head,
+					// 0 right at the plane → 1 at the oldest, most-trailed smoke. The tube
+					// geometry is a fixed-radius envelope; we shrink the *effective*
+					// cross-section near the head so the trail emerges thin from the
+					// airplane and billows out to the full tube width as it ages.
+					float age = clamp((uHead - vUv.x) / max(uHead, 0.001), 0.0, 1.0);
+					// ease so it pinches tightly at the nozzle then opens up smoothly
+					float spread = mix(0.16, 1.0, age * age * (3.0 - 2.0 * age));
+
+					// soft cross-section — fade hard toward the tube surface, no rim.
+					// Normalize the radial distance by spread: a small spread means only
+					// the very centre of the tube is opaque (a thin jet), a full spread
+					// fills the whole cross-section (billowing smoke).
+					float radial = 1.0 - clamp(abs(vUv.y - 0.5) * 2.0 / spread, 0.0, 1.0);
+					radial = pow(radial, 1.3);
 
 					// Single-pass domain warp: warp the lookup by one noise vector, then
 					// sample fbm there. 3 fbm calls total (was 14) but keeps the flowing,
@@ -359,7 +371,9 @@
 			);
 
 		// Two coaxial tubes per plane: a tighter brighter core + a broad faint
-		// haze, so the smoke has depth and a soft outer falloff.
+		// haze, so the smoke has depth and a soft outer falloff. Both are fixed-
+		// radius *envelopes*; the shader tapers the filled cross-section by age so
+		// the trail starts thin at the plane and spreads out behind it.
 		const smokeTrails: { mat: InstanceType<ThreeNS['ShaderMaterial']> }[] = [];
 		if (smokeOn) {
 			flightCurves.forEach((curve, i) => {

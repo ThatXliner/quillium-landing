@@ -76,15 +76,11 @@
 		return variant !== 'none';
 	}
 
-	// Nav theme: dark while the hero is on screen
+	// Nav theme: the flight now lives on a light paper sky, so the nav and
+	// footer keep their native light treatment — nothing to toggle here. (Kept
+	// as a no-op so the IntersectionObserver wiring below stays unchanged.)
 	let heroVisible = false;
-	let navDarkApplied: boolean | undefined;
-	function syncNav() {
-		if (heroVisible !== navDarkApplied) {
-			navDarkApplied = heroVisible;
-			document.documentElement.toggleAttribute('data-nav-dark', heroVisible);
-		}
-	}
+	function syncNav() {}
 
 	// The three drafts of one sentence — the product story
 	const DRAFTS = [
@@ -93,6 +89,11 @@
 		'Rain met her at the threshold.'
 	];
 
+	// Light-mode palette: the sky is the app's own background (#f5f4f1) so the
+	// hero is seamless with every other variant; the planes keep the original
+	// cream — the warm key/ambient still carve the folds with light and shadow,
+	// so cream paper reads against the soft-grey sky just as it did on the dark.
+	const PAPER_SKY = '#f5f4f1';
 	const CREAM = '#f7f1e3';
 
 	// Scroll progress windows for the five chapters — the full product story
@@ -128,8 +129,9 @@
 		const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduceMotion) staticMode = true;
 
-		// Dark navbar while this dark section is under it; the observed strip is
-		// the top sliver of the viewport, so it flips back once the hero scrolls past.
+		// The flight sky is light now, so the nav/footer keep their default light
+		// styling — no theme flip. The observer is retained (cheap, harmless) in
+		// case we want hero-presence signals later; syncNav is a no-op.
 		const navIo = new IntersectionObserver(
 			([entry]) => {
 				heroVisible = entry.isIntersecting;
@@ -159,7 +161,6 @@
 		return () => {
 			destroyed = true;
 			navIo.disconnect();
-			document.documentElement.removeAttribute('data-nav-dark');
 			cleanupScene?.();
 		};
 	});
@@ -177,10 +178,13 @@
 		host.appendChild(renderer.domElement);
 
 		const scene = new THREE.Scene();
-		scene.background = new THREE.Color('#171310');
-		scene.fog = new THREE.Fog('#171310', 14, 34);
+		scene.background = new THREE.Color(PAPER_SKY);
+		// Fog matches the sky so distant planes melt into the paper, just hazier.
+		scene.fog = new THREE.Fog(PAPER_SKY, 16, 38);
 		const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 60);
 
+		// Same warm daylight as the original dark scene, just unchanged — the only
+		// thing flipped for light mode is the colours, not the lighting rig.
 		scene.add(new THREE.AmbientLight(0xfff3df, 0.5));
 		const key = new THREE.DirectionalLight(0xfff3df, 2.2);
 		key.position.set(3, 5, 6);
@@ -342,11 +346,14 @@
 					gl_FragColor = vec4(uColor, a);
 				}`;
 
-		// Warm cream nudged toward each draft's hue
+		// On the paper sky the trails read as colored ink wisps rather than glowing
+		// vapor: each carries its draft's hue, deep enough to darken the paper it
+		// drifts over (NormalBlending paints these over the #f5f4f1 background). The
+		// grey anchor is neutral so the ink stays colour-true, not muddy/yellow.
 		const SMOKE_COLORS = [
-			new THREE.Color('#f3ecdd').lerp(new THREE.Color('#cfe0ff'), 0.16),
-			new THREE.Color('#f3ecdd').lerp(new THREE.Color('#ecd6ff'), 0.16),
-			new THREE.Color('#f3ecdd').lerp(new THREE.Color('#d6ffe0'), 0.16)
+			new THREE.Color('#3b82f6').lerp(new THREE.Color('#676360'), 0.3),
+			new THREE.Color('#a855f7').lerp(new THREE.Color('#676360'), 0.3),
+			new THREE.Color('#22c55e').lerp(new THREE.Color('#676360'), 0.3)
 		];
 
 		const tubeSegments = isMobile ? 240 : 400;
@@ -377,8 +384,8 @@
 		const smokeTrails: { mat: InstanceType<ThreeNS['ShaderMaterial']> }[] = [];
 		if (smokeOn) {
 			flightCurves.forEach((curve, i) => {
-				const core = makeSmokeMaterial(SMOKE_COLORS[i], 0.42, 5.5);
-				const haze = makeSmokeMaterial(SMOKE_COLORS[i], 0.13, 3.5);
+				const core = makeSmokeMaterial(SMOKE_COLORS[i], 0.5, 5.5);
+				const haze = makeSmokeMaterial(SMOKE_COLORS[i], 0.16, 3.5);
 				const coreMesh = new THREE.Mesh(
 					track(new THREE.TubeGeometry(curve, tubeSegments, 0.28, 14, false)),
 					core
@@ -403,16 +410,18 @@
 		const moteGeo = track(new THREE.BufferGeometry());
 		moteGeo.setAttribute('position', new THREE.BufferAttribute(motePos, 3));
 		const moteTex = track(makeMoteTexture(THREE));
+		// Soft ink dust: dark warm specks painted onto the paper (NormalBlending),
+		// not glowing motes. Additive blending would vanish on a light sky.
 		const moteMat = track(
 			new THREE.PointsMaterial({
-				color: 0xfff6e0,
+				color: 0x726f6a,
 				size: 0.07,
 				map: moteTex,
 				transparent: true,
-				opacity: 0.45,
+				opacity: 0.28,
 				sizeAttenuation: true,
 				depthWrite: false,
-				blending: THREE.AdditiveBlending
+				blending: THREE.NormalBlending
 			})
 		);
 		const motes = new THREE.Points(moteGeo, moteMat);
@@ -608,10 +617,11 @@
 		const c = document.createElement('canvas');
 		c.width = c.height = 64;
 		const ctx = c.getContext('2d')!;
+		// White-alpha falloff; the PointsMaterial.color tints it (dark ink dust)
 		const g = ctx.createRadialGradient(32, 32, 2, 32, 32, 32);
-		g.addColorStop(0, 'rgba(255, 246, 224, 1)');
-		g.addColorStop(0.4, 'rgba(255, 246, 224, 0.4)');
-		g.addColorStop(1, 'rgba(255, 246, 224, 0)');
+		g.addColorStop(0, 'rgba(255, 255, 255, 1)');
+		g.addColorStop(0.4, 'rgba(255, 255, 255, 0.4)');
+		g.addColorStop(1, 'rgba(255, 255, 255, 0)');
 		ctx.fillStyle = g;
 		ctx.fillRect(0, 0, 64, 64);
 		return new THREE.CanvasTexture(c);
@@ -821,7 +831,7 @@
 		{/if}
 	</div>
 	<span class="sr-only">
-		Three paper planes fly through a dark sky of drifting paper motes, one glowing ink trail
+		Three paper planes fly across a bright paper sky of drifting ink dust, one ink trail
 		splitting into three — each carrying a different draft of the same sentence: {DRAFTS.map(
 			(d) => `“${d}”`
 		).join(', ')}. Pieces of the Quillium interface accompany the flight: a revision card with
@@ -834,7 +844,7 @@
 	.hero-flight {
 		position: relative;
 		height: 520vh;
-		background: #171310;
+		background: #f5f4f1;
 	}
 	.hero-flight.static-mode {
 		height: 100vh;
@@ -856,11 +866,11 @@
 		height: 100%;
 	}
 	.static-mode .scene-host::after {
-		/* darken behind the static copy for contrast */
+		/* lighten behind the static copy so dark text stays legible */
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: rgba(23, 19, 16, 0.45);
+		background: rgba(245, 244, 241, 0.55);
 	}
 
 	/* ── Chapters ── */
@@ -872,12 +882,12 @@
 		pointer-events: none;
 		will-change: opacity, transform;
 	}
-	/* Soft scrim so copy stays readable where it crosses a glowing trail */
+	/* Soft scrim so copy stays readable where it crosses an ink trail */
 	.chapter::before {
 		content: '';
 		position: absolute;
 		inset: -2.5rem -3.5rem;
-		background: radial-gradient(ellipse at center, rgba(23, 19, 16, 0.72), transparent 72%);
+		background: radial-gradient(ellipse at center, rgba(245, 244, 241, 0.82), transparent 72%);
 		z-index: -1;
 	}
 	.chapter-static {
@@ -953,7 +963,7 @@
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		color: rgba(247, 241, 227, 0.72);
+		color: rgba(0, 0, 0, 0.5);
 	}
 	.headline {
 		margin: 0 0 1.1rem;
@@ -962,7 +972,7 @@
 		line-height: 1.08;
 		letter-spacing: -0.03em;
 		font-weight: 400;
-		color: #f7f1e3;
+		color: rgba(0, 0, 0, 0.9);
 		text-wrap: balance;
 	}
 	.headline .italic {
@@ -975,7 +985,7 @@
 		line-height: 1.1;
 		letter-spacing: -0.025em;
 		font-weight: 400;
-		color: #f7f1e3;
+		color: rgba(0, 0, 0, 0.9);
 		text-wrap: balance;
 	}
 	.subhead,
@@ -983,13 +993,13 @@
 		margin: 0;
 		font-size: 1.08rem;
 		line-height: 1.7;
-		color: rgba(247, 241, 227, 0.78);
+		color: rgba(0, 0, 0, 0.66);
 	}
 	.scroll-hint {
 		margin: 2.4rem 0 0;
 		font-size: 0.8rem;
 		letter-spacing: 0.08em;
-		color: rgba(247, 241, 227, 0.55);
+		color: rgba(0, 0, 0, 0.45);
 		animation: hint-bob 2.4s ease-in-out infinite;
 	}
 	@keyframes hint-bob {
@@ -1017,10 +1027,10 @@
 	.fine-print {
 		margin: 1rem 0 0;
 		font-size: 0.7rem;
-		color: rgba(247, 241, 227, 0.55);
+		color: rgba(0, 0, 0, 0.45);
 	}
 	.fine-print a {
-		color: rgba(247, 241, 227, 0.7);
+		color: rgba(0, 0, 0, 0.6);
 		text-decoration: underline;
 		text-underline-offset: 2px;
 	}
@@ -1043,10 +1053,11 @@
 		width: min(56vw, 300px);
 		padding: 1.05rem 1.15rem;
 		border-radius: 10px;
-		background: #fffdf8;
+		background: #fffefb;
+		border: 1px solid rgba(0, 0, 0, 0.05);
 		box-shadow:
-			0 24px 64px rgba(0, 0, 0, 0.5),
-			0 4px 12px rgba(0, 0, 0, 0.3);
+			0 18px 44px rgba(44, 38, 34, 0.14),
+			0 3px 10px rgba(44, 38, 34, 0.08);
 		font-family: Georgia, serif;
 		font-size: 0.88rem;
 		line-height: 1.65;
@@ -1089,10 +1100,11 @@
 		width: min(86vw, 330px);
 		padding: 1.1rem 1.2rem 1.2rem;
 		border-radius: 14px;
-		background: #fffdf8;
+		background: #fffefb;
+		border: 1px solid rgba(0, 0, 0, 0.05);
 		box-shadow:
-			0 24px 64px rgba(0, 0, 0, 0.5),
-			0 4px 12px rgba(0, 0, 0, 0.3);
+			0 18px 44px rgba(44, 38, 34, 0.14),
+			0 3px 10px rgba(44, 38, 34, 0.08);
 		text-align: left;
 	}
 	.demo-card--nested {
@@ -1162,8 +1174,9 @@
 		max-width: 300px;
 		padding: 0.45rem 0.7rem;
 		border-radius: 10px;
-		background: #fffdf8;
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+		background: #fffefb;
+		border: 1px solid rgba(0, 0, 0, 0.05);
+		box-shadow: 0 10px 26px rgba(44, 38, 34, 0.16);
 		opacity: 0;
 		pointer-events: none;
 		white-space: nowrap;
@@ -1204,21 +1217,21 @@
 		background: none;
 		font: inherit;
 		font-family: 'Inter', sans-serif;
-		color: rgba(247, 241, 227, 0.55);
+		color: rgba(0, 0, 0, 0.5);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		cursor: pointer;
 		transition: color 300ms ease;
 	}
 	.platform-toggle:hover {
-		color: rgba(247, 241, 227, 0.95);
+		color: rgba(0, 0, 0, 0.85);
 	}
 	.platform-toggle.platform--detected {
-		color: rgba(247, 241, 227, 0.92);
+		color: rgba(0, 0, 0, 0.82);
 		font-weight: 600;
 	}
 	.platform-toggle.platform--open {
-		color: rgba(247, 241, 227, 0.98);
+		color: rgba(0, 0, 0, 0.9);
 	}
 	.platform-binaries {
 		display: flex;
@@ -1229,9 +1242,9 @@
 		width: fit-content;
 		margin: 0.8rem auto 0;
 		padding: 0.65rem 0.95rem;
-		border: 1px solid rgba(247, 241, 227, 0.16);
+		border: 1px solid rgba(0, 0, 0, 0.1);
 		border-radius: 10px;
-		background: rgba(247, 241, 227, 0.05);
+		background: rgba(255, 255, 255, 0.5);
 		font-size: 0.8rem;
 	}
 	.platform-binaries--centered {
@@ -1239,23 +1252,23 @@
 		margin-inline: auto;
 	}
 	.binary {
-		color: rgba(247, 241, 227, 0.65);
+		color: rgba(0, 0, 0, 0.6);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		transition: color 300ms ease;
 	}
 	.binary:hover {
-		color: rgba(247, 241, 227, 0.95);
+		color: rgba(0, 0, 0, 0.9);
 	}
 	.binary--primary {
-		color: rgba(247, 241, 227, 0.95);
+		color: rgba(0, 0, 0, 0.9);
 		font-weight: 600;
 	}
 	.binary-note {
 		flex-basis: 100%;
 		margin: 0;
 		font-size: 0.65rem;
-		color: rgba(245, 158, 11, 0.75);
+		color: rgba(180, 83, 9, 0.9);
 		text-align: right;
 	}
 	.platform-binaries--centered .binary-note {
@@ -1274,13 +1287,13 @@
 		font-size: 0.82rem;
 	}
 	.trust-row a {
-		color: rgba(247, 241, 227, 0.6);
+		color: rgba(0, 0, 0, 0.55);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		transition: color 300ms ease;
 	}
 	.trust-row a:hover {
-		color: rgba(247, 241, 227, 0.95);
+		color: rgba(0, 0, 0, 0.9);
 	}
 
 	.sr-only {

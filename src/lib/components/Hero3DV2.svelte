@@ -590,7 +590,7 @@
 					</div>
 				</div>
 				<div class="chapter-copy">
-					<h2 class="chapter-heading w-lg">Fork any sentence.</h2>
+					<h2 class="chapter-heading">Fork any sentence.</h2>
 					<p class="chapter-sub">Because you have more than just one idea in your head</p>
 				</div>
 			</div>
@@ -780,12 +780,19 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: clamp(2rem, 10vw, 9rem);
-		width: min(92vw, 1060px);
+		gap: clamp(1.5rem, 6vw, 7rem);
+		width: min(92vw, 1180px);
 		max-width: none;
 	}
 	.chapter-2 .chapter-copy {
-		text-align: right;
+		flex: 0 1 30rem;
+		min-width: min(100%, 24rem);
+		text-align: center;
+	}
+	.chapter-2 .chapter-sub {
+		max-width: 24rem;
+		margin-inline: auto;
+		text-wrap: balance;
 	}
 	.chapter-3 {
 		left: clamp(1rem, 9vw, 11rem);
@@ -1195,6 +1202,9 @@
 		}
 		.chapter-2 .chapter-copy,
 		.chapter-4 .chapter-copy {
+			flex-basis: auto;
+			min-width: 0;
+			width: 100%;
 			text-align: center;
 		}
 		.chapter-3 {

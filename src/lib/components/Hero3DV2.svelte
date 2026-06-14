@@ -125,8 +125,9 @@
 		[0.61, 0.73],
 		[0.8, 1.2]
 	];
-	// Chapters with interactive fragments (and the CTA) accept pointer events
-	const INTERACTIVE = new Set([1, 3, 4]);
+	// Chapters with interactive fragments or a CTA button accept pointer events:
+	// chapter 1's download CTA, the fork/nest cards, and chapter 5's CTA.
+	const INTERACTIVE = new Set([0, 1, 3, 4]);
 
 	// Interactive fragment state: chapter 2's fork card and chapter 4's
 	// nested-revision card (outer take + the nest that lives inside Take 2)
@@ -749,7 +750,19 @@
 				<p class="eyebrow">The Non-Linear Writing App</p>
 				<h1 class="headline">Prose for <span class="italic">Pros</span>.</h1>
 				<p class="subhead">Every great sentence takes flight more than one way.</p>
-				<p class="scroll-hint" aria-hidden="true">Scroll ↓</p>
+				<div class="cta-row">
+					<a
+						href={downloadUrl}
+						class="btn-primary"
+						onclick={() => {
+							posthog.capture('cta_clicked', { cta: 'download', location: 'hero' });
+							trackDownload(downloadUrl);
+						}}
+					>
+						Download Now
+					</a>
+				</div>
+				<p class="scroll-hint" aria-hidden="true">Scroll for more information ↓</p>
 			</div>
 
 			<div bind:this={chapterEls[1]} class="chapter chapter-2">
@@ -956,6 +969,13 @@
 		left: clamp(1rem, 8vw, 9rem);
 		top: 50%;
 		transform: translateY(-50%) translateY(var(--off, 28px));
+	}
+	.chapter-1 .cta-row {
+		justify-content: flex-start;
+		margin-top: 2rem;
+	}
+	.chapter-1 .scroll-hint {
+		margin-top: 1.6rem;
 	}
 	/* Fork chapter: interactive card left, copy right; the fork animates in
 	   the gap between them */

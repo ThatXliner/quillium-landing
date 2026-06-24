@@ -195,4 +195,12 @@
 		background: none;
 		padding: 0;
 	}
+	:global(.prose img) {
+		display: block;
+		margin: 2rem auto;
+		max-width: min(100%, 22rem);
+		height: auto;
+		border-radius: 0.75rem;
+		border: 1px solid var(--border);
+	}
 </style>

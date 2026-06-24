@@ -23,20 +23,18 @@ Additionally, because Quillium is fundamentally a *nonlinear* writing app, we de
 
 ## Drafts can now be Nonlinear
 
-Instead of a stack of drafts where you have a new version on top of an old one, you can now have the option to split a draft into other versions. In computer science, we call this a [tree](https://en.wikipedia.org/wiki/Tree_(abstract_data_type)). 
-
-![](@assets/screenshots/drafts.png)
-
-Instead of only allowing an iteration, you can now branch into separate document-level versions. Unlike revisions, a branch is closer to a fresh document than an edit, so you can use it however you want. I personally use iterations for refining a draft I believe in, and branches for trying out a completely different structure or, for my college essays, a completely different storyline.
-
-To review:
+Instead of a stack of drafts where each new version sits on top of the old one, you now have two distinct moves: you can iterate on a draft, or branch off it.
 
 1. Iterating is the everyday move: "the next version, continuing from here." When you iterate, the old draft locks (it's been superseded) and your new draft becomes the one you edit. An iteration chain stays flat: a list of versions, oldest to newest. Even after a hundred iterations, it reads as a hundred-item list, not a hundred-level-deep tree.
-2. Branching is the rarer move: "a different take on the same idea." When you branch, nothing locks. The original and the branch are both live, side by side, and the branch starts its own iteration chain. This is different from revisions because branches give you a lot more freedom. 
+2. Branching is the rarer move: "a different take on the same idea." When you branch, nothing locks. The original and the branch are both live, side by side, and the branch starts its own iteration chain. This is different from revisions because branches give you a lot more freedom.
+
+In computer science, we'd call the whole shape a [tree](https://en.wikipedia.org/wiki/Tree_(abstract_data_type)).
+
+![Quillium drafts panel showing a flat iteration run with an indented branch]($assets/screenshots/drafts.png)
 
 In terms of UI design, the common action (iterate) gets the cheap visual (a flat list) while the rare action (branch) gets the expensive one (an indented line of its own). The frequent thing stays simple, meaning you only pay for the complexity when you actually reach for it.
 
-In short, instead of a stack of drafts where each new version sits on top of the old one, you now have two distinct moves: you can iterate on a draft, or branch off it.
+In practice, I use iterations for refining a draft I believe in, and branches for trying out a completely different structure or, for my college essays, a completely different storyline.
 
 ## But still there's an "issue" with Drafts.
 
@@ -50,7 +48,7 @@ The current workaround is to create new Quillium documents. You would have a sep
 
 ## Enter Tabs.
 
-![](@assets/screenshots/tabs.png)
+![Quillium tab bar with Research, Brainstorm, and Draft tabs in one document]($assets/screenshots/tabs.png)
 
 Think of each tab as a separate workspace inside a single Quillium document. You might have:
 

@@ -27,10 +27,12 @@ Instead of a stack of drafts where you have a new version on top of an old one, 
 
 ![](@assets/screenshots/drafts.png)
 
+Instead of only allowing an iteration, you can now branch into separate document-level versions. Unlike revisions, a branch is closer to a fresh document than an edit, so you can use it however you want. I personally use iterations for refining a draft I believe in, and branches for trying out a completely different structure or, for my college essays, a completely different storyline.
+
 To review:
 
 1. Iterating is the everyday move: "the next version, continuing from here." When you iterate, the old draft locks (it's been superseded) and your new draft becomes the one you edit. An iteration chain stays flat: a list of versions, oldest to newest. Even after a hundred iterations, it reads as a hundred-item list, not a hundred-level-deep tree.
-2. Branching is the rarer move: "a different take on the same idea." When you branch, nothing locks. The original and the branch are both live, side by side, and the branch starts its own iteration chain. This is different from revisions because branches give you a lot more freedom. A branch is closer to a fresh document than an edit, so you can use it however you want. I personally use iterations for refining a draft I believe in, and branches for trying out a completely different structure — or, for my college essays, a completely different storyline.
+2. Branching is the rarer move: "a different take on the same idea." When you branch, nothing locks. The original and the branch are both live, side by side, and the branch starts its own iteration chain. This is different from revisions because branches give you a lot more freedom. 
 
 In terms of UI design, the common action (iterate) gets the cheap visual (a flat list) while the rare action (branch) gets the expensive one (an indented line of its own). The frequent thing stays simple, meaning you only pay for the complexity when you actually reach for it.
 

@@ -29,6 +29,7 @@
         "eslint-plugin-svelte": "^3.16.0",
         "globals": "^16.5.0",
         "mdsvex": "^0.12.7",
+        "mdsvex-relative-images": "^2.0.0",
         "prettier": "^3.8.1",
         "prettier-plugin-svelte": "^3.5.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
@@ -606,6 +607,8 @@
 
     "json-stable-stringify-without-jsonify": ["json-stable-stringify-without-jsonify@1.0.1", "", {}, "sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw=="],
 
+    "just-camel-case": ["just-camel-case@4.0.2", "", {}, "sha512-df6QI/EIq+6uHe/wtaa9Qq7/pp4wr4pJC/r1+7XhVL6m5j03G6h9u9/rIZr8rDASX7CxwDPQnZjffCo2e6PRLw=="],
+
     "keyv": ["keyv@4.5.4", "", { "dependencies": { "json-buffer": "3.0.1" } }, "sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw=="],
 
     "kleur": ["kleur@4.1.5", "", {}, "sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ=="],
@@ -655,6 +658,8 @@
     "magic-string": ["magic-string@0.30.21", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.5" } }, "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="],
 
     "mdsvex": ["mdsvex@0.12.7", "", { "dependencies": { "@types/mdast": "^4.0.4", "@types/unist": "^2.0.3", "prism-svelte": "^0.4.7", "prismjs": "^1.17.1", "unist-util-visit": "^2.0.1", "vfile-message": "^2.0.4" }, "peerDependencies": { "svelte": "^3.56.0 || ^4.0.0 || ^5.0.0-next.120" } }, "sha512-gx4bReLCUvq+MPErHXYeyX+TEq1hsS2KfiZtEOMNTcbibSouFy8AHc5h04KbGCl+g5tLuo4/lbgRVYRnc7bJZw=="],
+
+    "mdsvex-relative-images": ["mdsvex-relative-images@2.0.0", "", { "dependencies": { "just-camel-case": "^4.0.2", "unist-util-visit": "^3.1.0" } }, "sha512-QqFL5b9zcnQwAvlJK3SMX2bpDw3+/8jiEXZUAkRyeCUF+X3V+hx6xLbgzDriR4bA5vbTq8zDzPGMtLwLOU2Xeg=="],
 
     "meshoptimizer": ["meshoptimizer@1.1.1", "", {}, "sha512-oRFNWJRDA/WTrVj7NWvqa5HqE1t9MYDj2VaWirQCzCCrAd2GHrqR/sQezCxiWATPNlKTcRaPRHPJwIRoPBAp5g=="],
 
@@ -906,6 +911,8 @@
 
     "import-fresh/resolve-from": ["resolve-from@4.0.0", "", {}, "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="],
 
+    "mdsvex-relative-images/unist-util-visit": ["unist-util-visit@3.1.0", "", { "dependencies": { "@types/unist": "^2.0.0", "unist-util-is": "^5.0.0", "unist-util-visit-parents": "^4.0.0" } }, "sha512-Szoh+R/Ll68QWAyQyZZpQzZQm2UPbxibDvaY8Xc9SUtYgPsDzx5AWSk++UUt2hJuow8mvwR+rG+LQLw+KsuAKA=="],
+
     "posthog-js/fflate": ["fflate@0.4.8", "", {}, "sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA=="],
 
     "protobufjs/@types/node": ["@types/node@24.10.13", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-oH72nZRfDv9lADUBSo104Aq7gPHpQZc4BTx38r9xf9pg5LfP6EzSyH2n7qFmmxRQXh7YlUXODcYsg6PuTDSxGg=="],
@@ -997,6 +1004,10 @@
     "@typescript-eslint/typescript-estree/minimatch/brace-expansion": ["brace-expansion@5.0.4", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg=="],
 
     "glob/minimatch/brace-expansion": ["brace-expansion@5.0.4", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg=="],
+
+    "mdsvex-relative-images/unist-util-visit/unist-util-is": ["unist-util-is@5.2.1", "", { "dependencies": { "@types/unist": "^2.0.0" } }, "sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw=="],
+
+    "mdsvex-relative-images/unist-util-visit/unist-util-visit-parents": ["unist-util-visit-parents@4.1.1", "", { "dependencies": { "@types/unist": "^2.0.0", "unist-util-is": "^5.0.0" } }, "sha512-1xAFJXAKpnnJl8G7K5KgU7FY55y3GcLIXqkzUj5QF/QVP7biUm0K0O2oqVkYsdjzJKifYeWn9+o6piAK2hGSHw=="],
 
     "rehype-autolink-headings/unist-util-visit/@types/unist": ["@types/unist@3.0.3", "", {}, "sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q=="],
 

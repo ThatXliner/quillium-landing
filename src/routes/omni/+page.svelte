@@ -19,6 +19,207 @@
 		ArrowRight
 	} from '@lucide/svelte';
 
+	const HEX_RADIUS = 54;
+	const HEX_WIDTH = Math.sqrt(3) * HEX_RADIUS;
+	const HEX_Y_STEP = HEX_RADIUS * 1.5;
+	const HEX_ROWS = Array.from({ length: 15 }, (_, row) => row);
+	const HEX_COLS = Array.from({ length: 18 }, (_, col) => col);
+
+	type Point = { x: number; y: number };
+
+	function hexCenter(row: number, col: number) {
+		return {
+			x: -40 + col * HEX_WIDTH + (row % 2 ? HEX_WIDTH / 2 : 0),
+			y: 92 + row * HEX_Y_STEP
+		};
+	}
+
+	function hexVertex(row: number, col: number, index: number, radius = HEX_RADIUS) {
+		const center = hexCenter(row, col);
+		const angle = ((60 * index - 90) * Math.PI) / 180;
+		return {
+			x: center.x + radius * Math.cos(angle),
+			y: center.y + radius * Math.sin(angle)
+		};
+	}
+
+	function hexPoints(cx: number, cy: number, radius = HEX_RADIUS) {
+		return Array.from({ length: 6 }, (_, index) => {
+			const angle = ((60 * index - 90) * Math.PI) / 180;
+			return `${(cx + radius * Math.cos(angle)).toFixed(1)},${(cy + radius * Math.sin(angle)).toFixed(1)}`;
+		}).join(' ');
+	}
+
+	function pathFromPoints(points: Point[]) {
+		return points
+			.map(
+				(point, index) => `${index === 0 ? 'M' : 'L'}${point.x.toFixed(1)} ${point.y.toFixed(1)}`
+			)
+			.join('');
+	}
+
+	function pointKey(point: Point) {
+		return `${point.x.toFixed(1)},${point.y.toFixed(1)}`;
+	}
+
+	function edgeKey(from: Point, to: Point) {
+		return [pointKey(from), pointKey(to)].sort().join('|');
+	}
+
+	function buildHexGraph() {
+		const graph = new Map<string, { point: Point; neighbors: Map<string, Point> }>();
+
+		function ensureNode(point: Point) {
+			const key = pointKey(point);
+			const existing = graph.get(key);
+			if (existing) return existing;
+
+			const node = { point, neighbors: new Map<string, Point>() };
+			graph.set(key, node);
+			return node;
+		}
+
+		function addEdge(from: Point, to: Point) {
+			ensureNode(from).neighbors.set(pointKey(to), to);
+			ensureNode(to).neighbors.set(pointKey(from), from);
+		}
+
+		for (const row of HEX_ROWS) {
+			for (const col of HEX_COLS) {
+				const vertices = Array.from({ length: 6 }, (_, index) => hexVertex(row, col, index));
+
+				for (let index = 0; index < vertices.length; index += 1) {
+					addEdge(vertices[index], vertices[(index + 1) % vertices.length]);
+				}
+			}
+		}
+
+		return graph;
+	}
+
+	const HEX_GRAPH = buildHexGraph();
+
+	function seededRandom(seed: number) {
+		let value = seed % 2147483647;
+		if (value <= 0) value += 2147483646;
+		return () => {
+			value = (value * 48271) % 2147483647;
+			return value / 2147483647;
+		};
+	}
+
+	function seededNetworkPath(
+		row: number,
+		col: number,
+		startVertex: number,
+		steps: number,
+		seed: number
+	) {
+		const random = seededRandom(seed);
+		let current = hexVertex(row, col, startVertex);
+		let previousKey = '';
+		const points = [current];
+		const visitedPoints = new Set([pointKey(current)]);
+		const visitedEdges = new Set<string>();
+
+		for (let step = 0; step < steps; step += 1) {
+			const node = HEX_GRAPH.get(pointKey(current));
+			if (!node) break;
+
+			let candidates = [...node.neighbors.values()].filter((point) => {
+				return point.x > -120 && point.x < 1560 && point.y > 24 && point.y < 1260;
+			});
+
+			const withoutBacktracking = candidates.filter((point) => pointKey(point) !== previousKey);
+			if (withoutBacktracking.length > 0) candidates = withoutBacktracking;
+
+			const unvisitedEdges = candidates.filter(
+				(point) => !visitedEdges.has(edgeKey(current, point))
+			);
+			if (unvisitedEdges.length > 0) candidates = unvisitedEdges;
+
+			const freshPoints = candidates.filter((point) => !visitedPoints.has(pointKey(point)));
+			if (freshPoints.length > 0 && random() > 0.25) candidates = freshPoints;
+
+			const next = candidates[Math.floor(random() * candidates.length)];
+			if (!next) break;
+
+			visitedEdges.add(edgeKey(current, next));
+			previousKey = pointKey(current);
+			current = next;
+			visitedPoints.add(pointKey(current));
+			points.push(current);
+		}
+
+		return pathFromPoints(points);
+	}
+
+	const PACKET_RUNS = [
+		{
+			className: 'packet-run--cyan',
+			duration: '9.2s',
+			delay: '-0.8s',
+			dash: '0.24',
+			path: seededNetworkPath(1, 0, 5, 13, 1401)
+		},
+		{
+			className: 'packet-run--blue',
+			duration: '10.4s',
+			delay: '-4.6s',
+			dash: '0.22',
+			path: seededNetworkPath(1, 8, 5, 12, 3901)
+		},
+		{
+			className: 'packet-run--green',
+			duration: '9.8s',
+			delay: '-7.2s',
+			dash: '0.23',
+			path: seededNetworkPath(2, 14, 3, 11, 14923)
+		},
+		{
+			className: 'packet-run--violet',
+			duration: '11.2s',
+			delay: '-2.7s',
+			dash: '0.21',
+			path: seededNetworkPath(4, 3, 0, 12, 4403)
+		},
+		{
+			className: 'packet-run--cyan',
+			duration: '10.8s',
+			delay: '-8.9s',
+			dash: '0.22',
+			path: seededNetworkPath(4, 11, 1, 13, 7603)
+		},
+		{
+			className: 'packet-run--blue',
+			duration: '9.6s',
+			delay: '-5.5s',
+			dash: '0.24',
+			path: seededNetworkPath(7, 5, 0, 12, 9803)
+		},
+		{
+			className: 'packet-run--green',
+			duration: '11.4s',
+			delay: '-1.4s',
+			dash: '0.21',
+			path: seededNetworkPath(8, 13, 1, 12, 10903)
+		},
+		{
+			className: 'packet-run--violet',
+			duration: '10.2s',
+			delay: '-6.8s',
+			dash: '0.22',
+			path: seededNetworkPath(10, 3, 5, 11, 11903)
+		},
+		{
+			className: 'packet-run--cyan',
+			duration: '12s',
+			delay: '-9.7s',
+			dash: '0.23',
+			path: seededNetworkPath(11, 9, 4, 12, 12907)
+		}
+	];
+
 	let email = $state('');
 	let submitting = $state(false);
 	let submitted = $state(false);
@@ -241,66 +442,111 @@
 	})}<\/script>`}
 </svelte:head>
 
-<Nav />
-
-<main class="min-h-screen px-6 pt-32 pb-20">
-	<!-- ============ HERO ============ -->
-	<section class="mx-auto max-w-3xl text-center">
-		<h1 class="hero-heading">
-			Write Anywhere.<br /><span class="italic">Think Together.</span>
-		</h1>
-		<p class="hero-lead">
-			Quillium Omni: cloud sync across all your devices.<br />Real-time collaboration that just
-			works.
-		</p>
-
-		<!-- Waitlist form -->
-		<div class="mx-auto mt-10 max-w-lg">
-			{#if !submitted}
-				<p class="mb-3 text-center text-sm leading-[1.5] text-[color:var(--text-soft)] italic">
-					Priority is given to active users.
-					<a href="/#download" class="underline">Download the app first</a> to move up the list.
-				</p>
-
-				<form onsubmit={handleSubmit} class="flex gap-2 max-[440px]:flex-col">
-					<input
-						type="email"
-						placeholder="your@email.com"
-						bind:value={email}
-						required
-						class="waitlist-input"
-						aria-label="Email address w-md"
+<div class="omni-theme">
+	<div class="omni-backdrop" aria-hidden="true">
+		<svg class="omni-network" viewBox="0 0 1440 1180" preserveAspectRatio="xMidYMin slice">
+			<defs>
+				<filter id="omni-packet-glow" x="-50%" y="-50%" width="200%" height="200%">
+					<feGaussianBlur stdDeviation="5.5" result="blur" />
+					<feColorMatrix
+						in="blur"
+						type="matrix"
+						values="0 0 0 0 0.35 0 0 0 0 0.75 0 0 0 0 1 0 0 0 0.95 0"
+						result="glow"
 					/>
-					<button type="submit" class="btn-primary" disabled={!email || submitting}>
-						{submitting ? 'Joining…' : 'Join the waitlist for Omni'}
-						{#if !submitting}
-							<ArrowRight size={16} strokeWidth={2} />
-						{/if}
-					</button>
-				</form>
-				{#if error}
-					<p class="mt-3 text-[0.8rem] text-[color:var(--accent-red)]">{error}</p>
-				{/if}
-				<p class="mt-4 text-[0.72rem] text-[color:var(--text-faint)]">
-					No spam. You'll hear from us when Omni is ready for early testers.
-				</p>
-			{:else}
-				<div class="success-card">
-					<Check size={18} strokeWidth={2} />
-					<p>You're on the list. We'll be in touch when Omni opens up.</p>
-					<p class="mt-2 text-[0.75rem] text-[color:var(--text-faint)]">
-						Make sure you've <a href="/#download" class="underline">downloaded Quillium</a> — active users
-						get waitlist priority.
+					<feMerge>
+						<feMergeNode in="glow" />
+						<feMergeNode in="SourceGraphic" />
+					</feMerge>
+				</filter>
+			</defs>
+
+			<g class="hex-grid">
+				{#each HEX_ROWS as row}
+					{#each HEX_COLS as col}
+						<polygon
+							points={hexPoints(
+								-40 + col * HEX_WIDTH + (row % 2 ? HEX_WIDTH / 2 : 0),
+								92 + row * HEX_Y_STEP
+							)}
+						/>
+					{/each}
+				{/each}
+			</g>
+			<g class="packet-layer">
+				{#each PACKET_RUNS as run}
+					<g
+						class={`packet-run ${run.className}`}
+						style={`--duration: ${run.duration}; --delay: ${run.delay}; --dash: ${run.dash};`}
+					>
+						<path pathLength="1" d={run.path} />
+						<path pathLength="1" d={run.path} />
+					</g>
+				{/each}
+			</g>
+		</svg>
+	</div>
+
+	<Nav />
+
+	<main class="omni-page min-h-screen px-6 pt-32 pb-20">
+		<!-- ============ HERO ============ -->
+		<section class="mx-auto max-w-3xl text-center">
+			<h1 class="hero-heading">
+				Write Anywhere.<br /><span class="italic">Think Together.</span>
+			</h1>
+			<p class="hero-lead">
+				Quillium Omni: cloud sync across all your devices.<br />Real-time collaboration that just
+				works.
+			</p>
+
+			<!-- Waitlist form -->
+			<div class="mx-auto mt-10 max-w-lg">
+				{#if !submitted}
+					<p class="mb-3 text-center text-sm leading-[1.5] text-[color:var(--text-soft)] italic">
+						Priority is given to active users.
+						<a href="/#download" class="underline">Download the app first</a> to move up the list.
 					</p>
-				</div>
-			{/if}
-		</div>
-	</section>
 
-	<!-- <div class="warm-divider mx-auto my-24 max-w-5xl"></div> -->
+					<form onsubmit={handleSubmit} class="flex gap-2 max-[440px]:flex-col">
+						<input
+							type="email"
+							placeholder="your@email.com"
+							bind:value={email}
+							required
+							class="waitlist-input"
+							aria-label="Email address w-md"
+						/>
+						<button type="submit" class="btn-primary" disabled={!email || submitting}>
+							{submitting ? 'Joining…' : 'Join the waitlist for Omni'}
+							{#if !submitting}
+								<ArrowRight size={16} strokeWidth={2} />
+							{/if}
+						</button>
+					</form>
+					{#if error}
+						<p class="mt-3 text-[0.8rem] text-[color:var(--accent-red)]">{error}</p>
+					{/if}
+					<p class="mt-4 text-[0.72rem] text-[color:var(--text-faint)]">
+						No spam. You'll hear from us when Omni is ready for early testers.
+					</p>
+				{:else}
+					<div class="success-card">
+						<Check size={18} strokeWidth={2} />
+						<p>You're on the list. We'll be in touch when Omni opens up.</p>
+						<p class="mt-2 text-[0.75rem] text-[color:var(--text-faint)]">
+							Make sure you've <a href="/#download" class="underline">downloaded Quillium</a> — active
+							users get waitlist priority.
+						</p>
+					</div>
+				{/if}
+			</div>
+		</section>
 
-	<!-- ============ PRINCIPLE ============ -->
-	<!-- <section class="mx-auto max-w-2xl text-center">
+		<!-- <div class="warm-divider mx-auto my-24 max-w-5xl"></div> -->
+
+		<!-- ============ PRINCIPLE ============ -->
+		<!-- <section class="mx-auto max-w-2xl text-center">
 		<p class="section-eyebrow section-eyebrow--centered">The idea</p>
 		<h2 class="section-heading mb-6">
 			Shared text, <span class="italic">independent views</span>.
@@ -312,357 +558,605 @@
 		</p>
 	</section> -->
 
-	<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
+		<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
 
-	<!-- ============ FEATURES ============ -->
-	<section class="mx-auto max-w-5xl">
-		<div class="reveal mb-16 max-w-xl">
-			<p class="section-eyebrow">What Omni adds</p>
-			<h2 class="section-heading">Two things, bundled.</h2>
-			<p class="mt-4 text-[0.95rem] leading-[1.7] text-[color:var(--text-soft)]">
-				Cloud sync across your devices, and real-time collaboration with other people. One
-				subscription, both included.
-			</p>
-		</div>
-
-		<!-- ─── Group A: Cloud sync ─── -->
-		<div class="reveal feature-group-label">
-			<span class="feature-group-dot" style="background:#3b82f6;"></span>
-			<p class="feature-group-heading">Across your devices</p>
-		</div>
-
-		<!-- Feature 1: Device sync (mocked visual) -->
-		<div class="reveal feature-row">
-			<div class="feature-visual">
-				<div class="devices-demo">
-					<svg class="sync-lines" viewBox="0 0 300 300" aria-hidden="true">
-						<!-- Growing branches (drawn once) -->
-						<g class="branches">
-							<path class="branch branch--laptop" d="M 150 150 L 78 82" />
-							<path class="branch branch--desktop" d="M 150 150 L 222 82" />
-							<path class="branch branch--phone" d="M 150 150 L 150 232" />
-						</g>
-						<!-- Settled rails (dotted) -->
-						<g class="rails">
-							<line x1="78" y1="82" x2="150" y2="150" />
-							<line x1="222" y1="82" x2="150" y2="150" />
-							<line x1="150" y1="232" x2="150" y2="150" />
-						</g>
-						<!-- Leaf pops at device endpoints -->
-						<circle class="leaf leaf--laptop" cx="78" cy="82" r="4" />
-						<circle class="leaf leaf--desktop" cx="222" cy="82" r="4" />
-						<circle class="leaf leaf--phone" cx="150" cy="232" r="4" />
-						<!-- Packet pool: 2 per branch (one each direction) -->
-						<circle class="packet" data-branch="laptop" data-dir="out" cx="150" cy="150" r="3.5" />
-						<circle class="packet" data-branch="laptop" data-dir="in" cx="78" cy="82" r="3" />
-						<circle class="packet" data-branch="desktop" data-dir="out" cx="150" cy="150" r="3.5" />
-						<circle class="packet" data-branch="desktop" data-dir="in" cx="222" cy="82" r="3" />
-						<circle class="packet" data-branch="phone" data-dir="out" cx="150" cy="150" r="3.5" />
-						<circle class="packet" data-branch="phone" data-dir="in" cx="150" cy="232" r="3" />
-					</svg>
-
-					<div class="device device--laptop">
-						<Laptop size={36} strokeWidth={1.3} />
-						<span class="device-label">MacBook</span>
-					</div>
-					<div class="device device--desktop">
-						<Monitor size={36} strokeWidth={1.3} />
-						<span class="device-label">Studio</span>
-					</div>
-					<div class="device device--phone">
-						<Smartphone size={28} strokeWidth={1.3} />
-						<span class="device-label">iPhone<sup>*</sup></span>
-					</div>
-
-					<div class="sync-hub">
-						<Cloud size={24} strokeWidth={1.5} />
-						<span class="sync-hub-pulse"></span>
-					</div>
-				</div>
-			</div>
-			<div class="feature-text">
-				<div class="feature-icon-wrap" style="background:rgba(59,130,246,0.08);">
-					<Cloud size={24} strokeWidth={1.5} color="#3b82f6" />
-				</div>
-				<h3 class="feature-heading">Every device, one document</h3>
-				<p class="feature-lead">
-					Start a draft on your laptop. Edit a paragraph from your phone on the train. Pick up on
-					your desktop at home—even mid-sentence, with your revision history intact. Omni is fast,
-					background, and invisible.
+		<!-- ============ FEATURES ============ -->
+		<section class="mx-auto max-w-5xl">
+			<div class="reveal mb-16 max-w-xl">
+				<p class="section-eyebrow">What Omni adds</p>
+				<h2 class="section-heading">Two things, bundled.</h2>
+				<p class="mt-4 text-[0.95rem] leading-[1.7] text-[color:var(--text-soft)]">
+					Cloud sync across your devices, and real-time collaboration with other people. One
+					subscription, both included.
 				</p>
-				<div class="tag-list">
-					<span class="tag tag--blue">macOS</span>
-					<span class="tag tag--blue">Windows</span>
-					<span class="tag tag--blue">Linux</span>
-					<!-- <span class="tag tag--blue">iOS</span>
+			</div>
+
+			<!-- ─── Group A: Cloud sync ─── -->
+			<div class="reveal feature-group-label">
+				<span class="feature-group-dot" style="background:#3b82f6;"></span>
+				<p class="feature-group-heading">Across your devices</p>
+			</div>
+
+			<!-- Feature 1: Device sync (mocked visual) -->
+			<div class="reveal feature-row">
+				<div class="feature-visual">
+					<div class="devices-demo">
+						<svg class="sync-lines" viewBox="0 0 300 300" aria-hidden="true">
+							<!-- Growing branches (drawn once) -->
+							<g class="branches">
+								<path class="branch branch--laptop" d="M 150 150 L 78 82" />
+								<path class="branch branch--desktop" d="M 150 150 L 222 82" />
+								<path class="branch branch--phone" d="M 150 150 L 150 232" />
+							</g>
+							<!-- Settled rails (dotted) -->
+							<g class="rails">
+								<line x1="78" y1="82" x2="150" y2="150" />
+								<line x1="222" y1="82" x2="150" y2="150" />
+								<line x1="150" y1="232" x2="150" y2="150" />
+							</g>
+							<!-- Leaf pops at device endpoints -->
+							<circle class="leaf leaf--laptop" cx="78" cy="82" r="4" />
+							<circle class="leaf leaf--desktop" cx="222" cy="82" r="4" />
+							<circle class="leaf leaf--phone" cx="150" cy="232" r="4" />
+							<!-- Packet pool: 2 per branch (one each direction) -->
+							<circle
+								class="packet"
+								data-branch="laptop"
+								data-dir="out"
+								cx="150"
+								cy="150"
+								r="3.5"
+							/>
+							<circle class="packet" data-branch="laptop" data-dir="in" cx="78" cy="82" r="3" />
+							<circle
+								class="packet"
+								data-branch="desktop"
+								data-dir="out"
+								cx="150"
+								cy="150"
+								r="3.5"
+							/>
+							<circle class="packet" data-branch="desktop" data-dir="in" cx="222" cy="82" r="3" />
+							<circle class="packet" data-branch="phone" data-dir="out" cx="150" cy="150" r="3.5" />
+							<circle class="packet" data-branch="phone" data-dir="in" cx="150" cy="232" r="3" />
+						</svg>
+
+						<div class="device device--laptop">
+							<Laptop size={36} strokeWidth={1.3} />
+							<span class="device-label">MacBook</span>
+						</div>
+						<div class="device device--desktop">
+							<Monitor size={36} strokeWidth={1.3} />
+							<span class="device-label">Studio</span>
+						</div>
+						<div class="device device--phone">
+							<Smartphone size={28} strokeWidth={1.3} />
+							<span class="device-label">iPhone<sup>*</sup></span>
+						</div>
+
+						<div class="sync-hub">
+							<Cloud size={24} strokeWidth={1.5} />
+							<span class="sync-hub-pulse"></span>
+						</div>
+					</div>
+				</div>
+				<div class="feature-text">
+					<div class="feature-icon-wrap" style="background:rgba(59,130,246,0.08);">
+						<Cloud size={24} strokeWidth={1.5} color="#3b82f6" />
+					</div>
+					<h3 class="feature-heading">Every device, one document</h3>
+					<p class="feature-lead">
+						Start a draft on your laptop. Edit a paragraph from your phone on the train. Pick up on
+						your desktop at home—even mid-sentence, with your revision history intact. Omni is fast,
+						background, and invisible.
+					</p>
+					<div class="tag-list">
+						<span class="tag tag--blue">macOS</span>
+						<span class="tag tag--blue">Windows</span>
+						<span class="tag tag--blue">Linux</span>
+						<!-- <span class="tag tag--blue">iOS</span>
 					<span class="tag tag--blue">Android</span> -->
+					</div>
+					<p class="feature-footnote"><sup>*</sup>Quillium is not yet available for mobile.</p>
 				</div>
-				<p class="feature-footnote"><sup>*</sup>Quillium is not yet available for mobile.</p>
-			</div>
-		</div>
-
-		<!-- Feature 4 (moved): Offline/reconnect — part of Cloud sync group -->
-		<div class="reveal feature-row feature-row--reversed">
-			<div class="feature-text">
-				<div class="feature-icon-wrap" style="background:rgba(34,197,94,0.08);">
-					<WifiOff size={24} strokeWidth={1.5} color="#22c55e" />
-				</div>
-				<h3 class="feature-heading">Offline-first, always</h3>
-				<p class="feature-lead">
-					Lose Wi-Fi, crash the app, yank the power: Quillium keeps going. Every keystroke lands on
-					the device in front of you first. The cloud is just where they meet.
-				</p>
 			</div>
 
-			<div class="feature-visual">
-				<div class="offline-demo">
-					<div class="offline-badge">
-						<WifiOff size={16} strokeWidth={1.5} />
-						<span>Offline</span>
+			<!-- Feature 4 (moved): Offline/reconnect — part of Cloud sync group -->
+			<div class="reveal feature-row feature-row--reversed">
+				<div class="feature-text">
+					<div class="feature-icon-wrap" style="background:rgba(34,197,94,0.08);">
+						<WifiOff size={24} strokeWidth={1.5} color="#22c55e" />
 					</div>
-					<div class="offline-lines">
-						<div class="offline-line"></div>
-						<div class="offline-line offline-line--short"></div>
-						<div class="offline-line"></div>
-						<div class="offline-line offline-line--shorter"></div>
-						<div class="offline-cursor"></div>
-					</div>
-					<p class="offline-status">
-						<Check size={14} strokeWidth={2} />
-						Saved locally · will sync when online
+					<h3 class="feature-heading">Offline-first, always</h3>
+					<p class="feature-lead">
+						Lose Wi-Fi, crash the app, yank the power: Quillium keeps going. Every keystroke lands
+						on the device in front of you first. The cloud is just where they meet.
 					</p>
 				</div>
-			</div>
-		</div>
 
-		<!-- ─── Group B: Collaboration ─── -->
-		<div class="reveal feature-group-label feature-group-label--spaced">
-			<span class="feature-group-dot" style="background:#a855f7;"></span>
-			<p class="feature-group-heading">With other people</p>
-		</div>
-
-		<!-- Feature 2: Annotations -->
-		<div class="reveal feature-row feature-row--reversed">
-			<div class="feature-visual">
-				<div class="annotations-demo">
-					<div class="doc-snippet">
-						<p>
-							The lighthouse <span class="highlight-yellow">cast its beam</span> across the water,
-							<span class="highlight-blue">indifferent to the storm</span>.
+				<div class="feature-visual">
+					<div class="offline-demo">
+						<div class="offline-badge">
+							<WifiOff size={16} strokeWidth={1.5} />
+							<span>Offline</span>
+						</div>
+						<div class="offline-lines">
+							<div class="offline-line"></div>
+							<div class="offline-line offline-line--short"></div>
+							<div class="offline-line"></div>
+							<div class="offline-line offline-line--shorter"></div>
+							<div class="offline-cursor"></div>
+						</div>
+						<p class="offline-status">
+							<Check size={14} strokeWidth={2} />
+							Saved locally · will sync when online
 						</p>
 					</div>
-					<div class="annotation annotation--editor">
-						<div class="annotation-avatar" style="background:#f59e0b;">R</div>
-						<div class="annotation-body">
-							<p class="annotation-author">Rena · editor</p>
-							<p class="annotation-text">Can we try "swept" here? More active.</p>
-						</div>
-					</div>
-					<div class="annotation annotation--you">
-						<div class="annotation-avatar" style="background:#3b82f6;">Y</div>
-						<div class="annotation-body">
-							<p class="annotation-author">You · just now</p>
-							<p class="annotation-text">Yeah — also wondering if "storm" is too tidy.</p>
-						</div>
-					</div>
 				</div>
 			</div>
-			<div class="feature-text">
-				<div class="feature-icon-wrap" style="background:rgba(252,188,5,0.1);">
-					<MessageSquare size={24} strokeWidth={1.5} color="#d97706" />
+
+			<!-- ─── Group B: Collaboration ─── -->
+			<div class="reveal feature-group-label feature-group-label--spaced">
+				<span class="feature-group-dot" style="background:#a855f7;"></span>
+				<p class="feature-group-heading">With other people</p>
+			</div>
+
+			<!-- Feature 2: Annotations -->
+			<div class="reveal feature-row feature-row--reversed">
+				<div class="feature-visual">
+					<div class="annotations-demo">
+						<div class="doc-snippet">
+							<p>
+								The lighthouse <span class="highlight-yellow">cast its beam</span> across the water,
+								<span class="highlight-blue">indifferent to the storm</span>.
+							</p>
+						</div>
+						<div class="annotation annotation--editor">
+							<div class="annotation-avatar" style="background:#f59e0b;">R</div>
+							<div class="annotation-body">
+								<p class="annotation-author">Rena · editor</p>
+								<p class="annotation-text">Can we try "swept" here? More active.</p>
+							</div>
+						</div>
+						<div class="annotation annotation--you">
+							<div class="annotation-avatar" style="background:#3b82f6;">Y</div>
+							<div class="annotation-body">
+								<p class="annotation-author">You · just now</p>
+								<p class="annotation-text">Yeah — also wondering if "storm" is too tidy.</p>
+							</div>
+						</div>
+					</div>
 				</div>
-				<h3 class="feature-heading">Annotations that move in real time</h3>
-				<p class="feature-lead">
-					Comments, suggestions, and revisions sync live, anchored to the exact words they
-					reference.
-				</p>
-				<!-- <div class="tag-list">
+				<div class="feature-text">
+					<div class="feature-icon-wrap" style="background:rgba(252,188,5,0.1);">
+						<MessageSquare size={24} strokeWidth={1.5} color="#d97706" />
+					</div>
+					<h3 class="feature-heading">Annotations that move in real time</h3>
+					<p class="feature-lead">
+						Comments, suggestions, and revisions sync live, anchored to the exact words they
+						reference.
+					</p>
+					<!-- <div class="tag-list">
 					<span class="tag tag--amber">Threaded comments</span>
 					<span class="tag tag--amber">Inline suggestions</span>
 					<span class="tag tag--amber">Full attribution</span>
 				</div> -->
+				</div>
 			</div>
-		</div>
 
-		<!-- Feature 3: Shared text, independent views -->
-		<div class="reveal feature-row">
-			<div class="feature-visual">
-				<div class="branches-demo">
-					<p class="branch-label">One document · two views</p>
-					<div class="branch-tree">
-						<div class="branch-row">
-							<div class="branch-node branch-node--active">main</div>
-							<div class="viewer-badge">
-								<span class="viewer-dot" style="background:#f59e0b;"></span>
-								Rena viewing
+			<!-- Feature 3: Shared text, independent views -->
+			<div class="reveal feature-row">
+				<div class="feature-visual">
+					<div class="branches-demo">
+						<p class="branch-label">One document · two views</p>
+						<div class="branch-tree">
+							<div class="branch-row">
+								<div class="branch-node branch-node--active">main</div>
+								<div class="viewer-badge">
+									<span class="viewer-dot" style="background:#f59e0b;"></span>
+									Rena viewing
+								</div>
+							</div>
+							<div class="branch-line"></div>
+							<div class="branch-row">
+								<div class="branch-node">drafting-ch3</div>
+							</div>
+							<div class="branch-line branch-line--fork"></div>
+							<div class="branch-row">
+								<div class="branch-node branch-node--you">opening-v2</div>
+								<div class="viewer-badge">
+									<span class="viewer-dot" style="background:#3b82f6;"></span>
+									You viewing
+								</div>
 							</div>
 						</div>
-						<div class="branch-line"></div>
-						<div class="branch-row">
-							<div class="branch-node">drafting-ch3</div>
-						</div>
-						<div class="branch-line branch-line--fork"></div>
-						<div class="branch-row">
-							<div class="branch-node branch-node--you">opening-v2</div>
-							<div class="viewer-badge">
-								<span class="viewer-dot" style="background:#3b82f6;"></span>
-								You viewing
-							</div>
-						</div>
+						<p class="branch-caption">
+							Same branches, same annotations — each of you decides which revision to look at.
+						</p>
 					</div>
-					<p class="branch-caption">
-						Same branches, same annotations — each of you decides which revision to look at.
+				</div>
+				<div class="feature-text">
+					<div class="feature-icon-wrap" style="background:rgba(168,85,247,0.08);">
+						<GitBranch size={24} strokeWidth={1.5} color="#a855f7" />
+					</div>
+					<h3 class="feature-heading">Shared text, independent views</h3>
+					<p class="feature-lead">
+						Read one revision while your friend edits another, or opt into follow mode when you
+						actually want to sit beside them.
 					</p>
-				</div>
-			</div>
-			<div class="feature-text">
-				<div class="feature-icon-wrap" style="background:rgba(168,85,247,0.08);">
-					<GitBranch size={24} strokeWidth={1.5} color="#a855f7" />
-				</div>
-				<h3 class="feature-heading">Shared text, independent views</h3>
-				<p class="feature-lead">
-					Read one revision while your friend edits another, or opt into follow mode when you
-					actually want to sit beside them.
-				</p>
-				<!-- <div class="tag-list">
+					<!-- <div class="tag-list">
 					<span class="tag tag--purple">Independent scroll</span>
 					<span class="tag tag--purple">Per-user revision view</span>
 					<span class="tag tag--purple">Opt-in follow mode</span>
 				</div> -->
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
+		<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
 
-	<!-- ============ PRICING CALLOUT ============ -->
-	<section class="mx-auto max-w-2xl">
-		<div class="mb-6">
-			<p class="section-eyebrow">Pricing</p>
-			<h2 class="section-heading">
-				Bring everyone. <span class="italic">Only owners pay.</span>
-			</h2>
-		</div>
-
-		<div
-			class="mx-auto flex h-full w-fit flex-col overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]"
-		>
-			<div class="border-b border-[color:var(--border)] px-5 py-4">
-				<p class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-[color:var(--text-faint)] uppercase">
-					Quillium Omni
-				</p>
-				<p class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-[color:var(--text-soft)] italic">
-					~$20<span class="text-[0.85rem] text-[color:var(--text-faint)]">/month</span>
-				</p>
-				<p class="mt-1 text-[0.7rem] text-[color:var(--text-faint)]">
-					The more users we have, the cheaper we can make it.
-				</p>
+		<!-- ============ PRICING CALLOUT ============ -->
+		<section class="mx-auto max-w-2xl">
+			<div class="mb-6">
+				<p class="section-eyebrow">Pricing</p>
+				<h2 class="section-heading">
+					Bring everyone. <span class="italic">Only owners pay.</span>
+				</h2>
 			</div>
-			<div class="flex flex-1 flex-col px-5 py-4">
-				<ul class="space-y-2">
-					<li class="check-item">Collaborators you invite don't need a subscription</li>
-					<li class="check-item">Mobile apps stay free — sync just makes them better</li>
-					<li class="check-item">Cancel anytime; your local documents stay yours</li>
-					<li class="check-item">The writing app is free forever. Omni is always optional</li>
-				</ul>
-				<a
-					href="/pricing#paid"
-					class="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.75rem] font-medium text-[color:var(--accent-blue)] no-underline hover:underline"
-				>
-					See the full pricing story
-					<ArrowRight size={12} strokeWidth={2} />
-				</a>
+
+			<div
+				class="mx-auto flex h-full w-fit flex-col overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]"
+			>
+				<div class="border-b border-[color:var(--border)] px-5 py-4">
+					<p
+						class="mb-1 text-[0.65rem] font-semibold tracking-[0.08em] text-[color:var(--text-faint)] uppercase"
+					>
+						Quillium Omni
+					</p>
+					<p
+						class="font-[Newsreader,Georgia,serif] text-[1.4rem] leading-none text-[color:var(--text-soft)] italic"
+					>
+						~$20<span class="text-[0.85rem] text-[color:var(--text-faint)]">/month</span>
+					</p>
+					<p class="mt-1 text-[0.7rem] text-[color:var(--text-faint)]">
+						The more users we have, the cheaper we can make it.
+					</p>
+				</div>
+				<div class="flex flex-1 flex-col px-5 py-4">
+					<ul class="space-y-2">
+						<li class="check-item">Collaborators you invite don't need a subscription</li>
+						<li class="check-item">Mobile apps stay free — sync just makes them better</li>
+						<li class="check-item">Cancel anytime; your local documents stay yours</li>
+						<li class="check-item">The writing app is free forever. Omni is always optional</li>
+					</ul>
+					<a
+						href="/pricing#paid"
+						class="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.75rem] font-medium text-[color:var(--accent-blue)] no-underline hover:underline"
+					>
+						See the full pricing story
+						<ArrowRight size={12} strokeWidth={2} />
+					</a>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
+		<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
 
-	<!-- ============ FAQ ============ -->
-	<section class="mx-auto max-w-2xl">
-		<h2 class="section-heading">FAQ</h2>
+		<!-- ============ FAQ ============ -->
+		<section class="mx-auto max-w-2xl">
+			<h2 class="section-heading">FAQ</h2>
 
-		<div class="mt-12 space-y-8">
-			<div class="faq-row">
-				<p class="faq-q">When will Omni ship?</p>
-				<p class="faq-a">
-					It's currently available through the waitlist!
-					<!-- Soon-ish. Auth, the relay server, and the sync protocol are in progress. We're not giving
+			<div class="mt-12 space-y-8">
+				<div class="faq-row">
+					<p class="faq-q">When will Omni ship?</p>
+					<p class="faq-a">
+						It's currently available through the waitlist!
+						<!-- Soon-ish. Auth, the relay server, and the sync protocol are in progress. We're not giving
 					a date because we'd miss it, but it's the next major feature after the current round of
 					editor improvements. -->
-				</p>
-			</div>
-			<div class="faq-row">
-				<p class="faq-q">Why is this a paid add-on?</p>
-				<p class="faq-a">
-					Running a real-time relay server costs real money. We'd rather charge honestly for
-					infrastructure than mine your data. The free app stays free because it doesn't rely on our
-					servers.
-				</p>
-			</div>
-			<!-- <div class="faq-row">
+					</p>
+				</div>
+				<div class="faq-row">
+					<p class="faq-q">Why is this a paid add-on?</p>
+					<p class="faq-a">
+						Running a real-time relay server costs real money. We'd rather charge honestly for
+						infrastructure than mine your data. The free app stays free because it doesn't rely on
+						our servers.
+					</p>
+				</div>
+				<!-- <div class="faq-row">
 				<p class="faq-q">Can I try it before paying?</p>
 				<p class="faq-a">
     				No, but we do offer a full refund after 7 days. This is just like <a href="https://obsidian.md/pricing" class="text-black/40 underline underline-offset-2 hover:text-black/55">Obsidian</a>.
 				</p>
 			</div> -->
-			<div class="faq-row">
-				<p class="faq-q">What if I cancel?</p>
-				<p class="faq-a">
-					Your documents were always stored on your local device first. Omni is only a layer on top,
-					not a replacement.
-				</p>
-			</div>
-		</div>
-	</section>
-
-	<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
-
-	<!-- ============ FINAL CTA ============ -->
-	<section class="mx-auto max-w-2xl text-center">
-		<h2
-			class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-[color:var(--text-strong)]"
-		>
-			Be first in line.
-		</h2>
-		<p class="mb-8 text-[0.95rem] text-[color:var(--text-soft)]">
-			Join the waitlist and we'll reach out when early access opens.
-		</p>
-
-		{#if !submitted}
-			<form onsubmit={handleSubmit} class="mx-auto flex max-w-[28rem] gap-2 max-[440px]:flex-col">
-				<input
-					type="email"
-					placeholder="your@email.com"
-					bind:value={email}
-					required
-					class="waitlist-input"
-					aria-label="Email address"
-				/>
-				<button type="submit" class="btn-primary" disabled={!email || submitting}>
-					{submitting ? 'Joining…' : 'Join the waitlist'}
-					{#if !submitting}
-						<ArrowRight size={16} strokeWidth={2} />
-					{/if}
-				</button>
-			</form>
-			{#if error}
-				<p class="mt-3 text-[0.8rem] text-[color:var(--accent-red)]">{error}</p>
-			{/if}
-		{:else}
-			<div class="mx-auto max-w-[28rem]">
-				<div class="success-card">
-					<Check size={18} strokeWidth={2} />
-					<p>You're on the list. We'll be in touch when Omni opens up.</p>
+				<div class="faq-row">
+					<p class="faq-q">What if I cancel?</p>
+					<p class="faq-a">
+						Your documents were always stored on your local device first. Omni is only a layer on
+						top, not a replacement.
+					</p>
 				</div>
 			</div>
-		{/if}
-	</section>
-</main>
+		</section>
 
-<Footer />
+		<div class="warm-divider mx-auto my-24 max-w-5xl"></div>
+
+		<!-- ============ FINAL CTA ============ -->
+		<section class="mx-auto max-w-2xl text-center">
+			<h2
+				class="mb-4 font-[Newsreader,Georgia,serif] text-[clamp(1.75rem,4vw,2.5rem)] leading-[1.15] font-normal tracking-[-0.02em] text-[color:var(--text-strong)]"
+			>
+				Be first in line.
+			</h2>
+			<p class="mb-8 text-[0.95rem] text-[color:var(--text-soft)]">
+				Join the waitlist and we'll reach out when early access opens.
+			</p>
+
+			{#if !submitted}
+				<form onsubmit={handleSubmit} class="mx-auto flex max-w-[28rem] gap-2 max-[440px]:flex-col">
+					<input
+						type="email"
+						placeholder="your@email.com"
+						bind:value={email}
+						required
+						class="waitlist-input"
+						aria-label="Email address"
+					/>
+					<button type="submit" class="btn-primary" disabled={!email || submitting}>
+						{submitting ? 'Joining…' : 'Join the waitlist'}
+						{#if !submitting}
+							<ArrowRight size={16} strokeWidth={2} />
+						{/if}
+					</button>
+				</form>
+				{#if error}
+					<p class="mt-3 text-[0.8rem] text-[color:var(--accent-red)]">{error}</p>
+				{/if}
+			{:else}
+				<div class="mx-auto max-w-[28rem]">
+					<div class="success-card">
+						<Check size={18} strokeWidth={2} />
+						<p>You're on the list. We'll be in touch when Omni opens up.</p>
+					</div>
+				</div>
+			{/if}
+		</section>
+	</main>
+
+	<Footer />
+</div>
 
 <style>
+	.omni-theme {
+		--bg: #f5f4f1;
+		--surface: #fffefb;
+		--surface-2: #faf9f7;
+		--text-strong: rgba(0, 0, 0, 0.9);
+		--text: rgba(0, 0, 0, 0.75);
+		--text-soft: rgba(0, 0, 0, 0.6);
+		--text-faint: rgba(0, 0, 0, 0.45);
+		--border: rgba(0, 0, 0, 0.08);
+		--border-strong: rgba(0, 0, 0, 0.18);
+		--shadow-color: 44, 38, 34;
+		--nav-glass: rgba(245, 244, 241, 0.75);
+		--nav-glass-solid: rgba(245, 244, 241, 0.95);
+		--nav-glass-border: rgba(255, 255, 255, 0.3);
+		--omni-wash-top: rgba(255, 255, 255, 0.18);
+		--omni-wash-bottom: rgba(255, 255, 255, 0.08);
+		--omni-center: rgba(245, 244, 241, 0.72);
+		--omni-center-mid: rgba(245, 244, 241, 0.48);
+		--omni-edge: rgba(245, 244, 241, 0.08);
+		--omni-edge-2: rgba(245, 244, 241, 0.08);
+		--omni-hero-clear: rgba(245, 244, 241, 0.94);
+		--omni-hero-clear-mid: rgba(245, 244, 241, 0.78);
+		--omni-lower-fade: rgba(245, 244, 241, 0.08);
+		--omni-grid-line: rgba(59, 130, 246, 0.28);
+		color-scheme: light;
+		position: relative;
+		isolation: isolate;
+		min-height: 100vh;
+		overflow: clip;
+		background: var(--bg);
+		color: var(--text-strong);
+	}
+
+	.omni-backdrop {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		height: clamp(720px, 105vh, 980px);
+		z-index: 0;
+		pointer-events: none;
+		overflow: hidden;
+		background:
+			linear-gradient(180deg, var(--omni-wash-top), transparent 44%, var(--omni-wash-bottom)),
+			linear-gradient(
+				110deg,
+				rgba(59, 130, 246, 0.08),
+				transparent 30%,
+				rgba(168, 85, 247, 0.05) 72%,
+				transparent
+			),
+			var(--bg);
+	}
+
+	.omni-backdrop::before,
+	.omni-backdrop::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.omni-backdrop::before {
+		background-image:
+			linear-gradient(rgba(59, 130, 246, 0.025) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(168, 85, 247, 0.018) 1px, transparent 1px);
+		background-size: 96px 96px;
+		opacity: 0.4;
+	}
+
+	.omni-backdrop::after {
+		background:
+			radial-gradient(
+				ellipse clamp(22rem, 54vw, 45rem) 18rem at 50% 34%,
+				var(--omni-hero-clear) 0%,
+				var(--omni-hero-clear-mid) 46%,
+				transparent 76%
+			),
+			radial-gradient(
+				ellipse 42rem 25rem at 50% 30%,
+				var(--omni-center) 0%,
+				var(--omni-center-mid) 44%,
+				transparent 72%
+			),
+			linear-gradient(
+				90deg,
+				var(--bg) 0%,
+				var(--omni-edge) 18%,
+				var(--omni-edge-2) 82%,
+				var(--bg) 100%
+			),
+			linear-gradient(180deg, var(--omni-lower-fade) 0%, transparent 42%, var(--bg) 100%);
+	}
+
+	.omni-network {
+		position: absolute;
+		inset: -5vh -8vw;
+		width: 116vw;
+		height: 112%;
+		opacity: 0.96;
+	}
+
+	.hex-grid {
+		opacity: 0.8;
+	}
+
+	.hex-grid polygon {
+		fill: none;
+		stroke: var(--omni-grid-line);
+		stroke-width: 1.1;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.packet-layer {
+		filter: url('#omni-packet-glow');
+	}
+
+	.packet-run {
+		--packet-color: rgba(96, 165, 250, 0.88);
+		animation: omni-packet-presence var(--duration) ease-in-out infinite;
+		animation-delay: var(--delay);
+		animation-fill-mode: both;
+		opacity: 0;
+	}
+
+	.packet-run--cyan {
+		--packet-color: rgba(8, 216, 255, 0.98);
+	}
+
+	.packet-run--blue {
+		--packet-color: rgba(37, 99, 235, 0.96);
+	}
+
+	.packet-run--violet {
+		--packet-color: rgba(139, 92, 246, 0.9);
+	}
+
+	.packet-run--green {
+		--packet-color: rgba(16, 185, 129, 0.86);
+	}
+
+	.packet-run path {
+		fill: none;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-dasharray: var(--dash) 1.15;
+		stroke-dashoffset: 1;
+		animation: omni-packet-flow var(--duration) linear infinite;
+		animation-delay: var(--delay);
+	}
+
+	.packet-run path:first-child {
+		stroke: var(--packet-color);
+		stroke-width: 10;
+		opacity: 0.42;
+	}
+
+	.packet-run path:last-child {
+		stroke: var(--packet-color);
+		stroke-width: 3;
+		opacity: 1;
+	}
+
+	.omni-page {
+		position: relative;
+		z-index: 1;
+	}
+
+	.omni-theme .reveal {
+		opacity: 1;
+		transform: none;
+	}
+
+	.omni-theme :global(footer) {
+		position: relative;
+		z-index: 1;
+		background: var(--bg);
+	}
+
+	@keyframes omni-packet-flow {
+		to {
+			stroke-dashoffset: -1;
+		}
+	}
+
+	@keyframes omni-packet-presence {
+		0%,
+		100% {
+			opacity: 0;
+		}
+
+		12% {
+			opacity: 0.28;
+		}
+
+		24%,
+		76% {
+			opacity: 1;
+		}
+
+		90% {
+			opacity: 0.22;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.packet-run {
+			animation: none;
+			opacity: 0.55;
+		}
+
+		.packet-run path {
+			animation: none;
+			stroke-dashoffset: 0.35;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.omni-backdrop {
+			height: 900px;
+		}
+
+		.omni-network {
+			inset: -4vh -50vw;
+			width: 200vw;
+			opacity: 0.9;
+		}
+	}
+
 	/* ── Hero ── */
 	.hero-heading {
 		font-family: 'Newsreader', Georgia, serif;
@@ -808,8 +1302,7 @@
 		line-height: 1.55;
 		color: var(--text-faint);
 	}
-	.feature-footnote sup,
-	.feature-lead sup {
+	.feature-footnote sup {
 		font-size: 0.9em;
 		margin-right: 1px;
 		vertical-align: baseline;
@@ -824,25 +1317,10 @@
 		font-family: 'Inter', sans-serif;
 		font-weight: 500;
 	}
-	.tag--purple {
-		background: rgba(168, 85, 247, 0.08);
-		border: 1px solid rgba(168, 85, 247, 0.2);
-		color: #7c3aed;
-	}
-	.tag--green {
-		background: rgba(34, 197, 94, 0.08);
-		border: 1px solid rgba(34, 197, 94, 0.2);
-		color: #16a34a;
-	}
 	.tag--blue {
 		background: rgba(59, 130, 246, 0.08);
 		border: 1px solid rgba(59, 130, 246, 0.2);
 		color: #2563eb;
-	}
-	.tag--amber {
-		background: rgba(245, 158, 11, 0.1);
-		border: 1px solid rgba(245, 158, 11, 0.22);
-		color: #b45309;
 	}
 
 	/* ── Devices demo ── */
@@ -859,8 +1337,7 @@
 		padding: 12px;
 		border-radius: 18px;
 		background:
-			radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 65%),
-			var(--surface);
+			radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 65%), var(--surface);
 		border: 1px solid var(--border);
 	}
 	.sync-lines {

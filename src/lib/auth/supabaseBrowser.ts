@@ -2,5 +2,10 @@ import { PUBLIC_SUPABASE_PUBLISHABLE_KEY, PUBLIC_SUPABASE_URL } from '$env/stati
 import { createBrowserClient } from '@supabase/ssr';
 
 export function createSupabaseBrowserClient() {
-	return createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY);
+	return createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_PUBLISHABLE_KEY, {
+		auth: {
+			detectSessionInUrl: false
+		},
+		isSingleton: false
+	});
 }

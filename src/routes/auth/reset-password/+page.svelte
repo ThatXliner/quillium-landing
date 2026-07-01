@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolveAuthUrlSession } from '$lib/auth/authUrl';
+	import { createSupabaseBrowserClient } from '$lib/auth/supabaseBrowser';
 	import Footer from '$lib/components/Footer.svelte';
 	import Nav from '$lib/components/Nav.svelte';
-	import { createSupabaseBrowserClient } from '$lib/auth/supabaseBrowser';
 	import { AlertCircle, CheckCircle2, KeyRound } from '@lucide/svelte';
 	import type { SupabaseClient } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
@@ -17,13 +18,13 @@
 
 	onMount(async () => {
 		supabase = createSupabaseBrowserClient();
-		const { data, error } = await supabase.auth.getSession();
+		const authResult = await resolveAuthUrlSession(supabase);
 
-		if (error) {
-			errorMessage = error.message;
+		if (authResult.error) {
+			errorMessage = authResult.error.message;
 		} else {
-			canReset = !!data.session;
-			if (!data.session) {
+			canReset = !!authResult.session;
+			if (!authResult.session) {
 				errorMessage = 'This reset link is expired or invalid. Request a new password reset link.';
 			}
 		}

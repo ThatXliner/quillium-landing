@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolveAuthUrlSession } from '$lib/auth/authUrl';
+	import { createSupabaseBrowserClient } from '$lib/auth/supabaseBrowser';
 	import Footer from '$lib/components/Footer.svelte';
 	import Nav from '$lib/components/Nav.svelte';
-	import { createSupabaseBrowserClient } from '$lib/auth/supabaseBrowser';
 	import { AlertCircle, CheckCircle2, Download, KeyRound } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
@@ -62,38 +63,29 @@
 	});
 
 	onMount(async () => {
-		const params = new URLSearchParams(window.location.search);
-		const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-		const errorDescription =
-			params.get('error_description') ||
-			params.get('error') ||
-			hashParams.get('error_description') ||
-			hashParams.get('error');
-
-		if (errorDescription) {
-			authState = 'error';
-			detail = errorDescription;
-			processing = false;
-			return;
-		}
-
 		const supabase = createSupabaseBrowserClient();
-		const { data: sessionData, error } = await supabase.auth.getSession();
+		const authResult = await resolveAuthUrlSession(supabase);
 
-		if (error) {
+		if (authResult.error) {
 			authState = 'error';
-			detail = error.message;
+			detail = authResult.error.message;
 			processing = false;
 			return;
 		}
 
-		const authType = params.get('type') || hashParams.get('type') || initialAuthData.type;
-		if (sessionData.session && authType === 'recovery') {
-			await goto('/auth/reset-password');
+		if (authResult.wantsPasswordReset || authResult.type === 'recovery') {
+			if (authResult.session) {
+				await goto('/auth/reset-password');
+				return;
+			}
+
+			authState = 'error';
+			detail = 'This reset link is expired or invalid. Request a new password reset link.';
+			processing = false;
 			return;
 		}
 
-		if (sessionData.session && authState === 'ready') {
+		if (authResult.session && authState === 'ready') {
 			authState = 'confirmed';
 		}
 

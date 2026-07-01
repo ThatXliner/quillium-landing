@@ -40,21 +40,21 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-
 
 function getSupabaseEnv() {
 	const supabaseUrl = env.PUBLIC_SUPABASE_URL;
-	const publishableAnonKey = env.PUBLIC_SUPABASE_PUBLISHABLE_ANON_KEY;
+	const publishableKey = env.PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-	if (!supabaseUrl || !publishableAnonKey) {
-		throw new Error('Missing PUBLIC_SUPABASE_URL or PUBLIC_SUPABASE_PUBLISHABLE_ANON_KEY');
+	if (!supabaseUrl || !publishableKey) {
+		throw new Error('Missing PUBLIC_SUPABASE_URL or PUBLIC_SUPABASE_PUBLISHABLE_KEY');
 	}
 
-	return { supabaseUrl, publishableAnonKey };
+	return { supabaseUrl, publishableKey };
 }
 
 let supabaseAdmin: ReturnType<typeof createClient> | undefined;
 
 function getSupabaseAdmin() {
 	if (supabaseAdmin) return supabaseAdmin;
-	const { supabaseUrl, publishableAnonKey } = getSupabaseEnv();
-	supabaseAdmin = createClient(supabaseUrl, publishableAnonKey, {
+	const { supabaseUrl, publishableKey } = getSupabaseEnv();
+	supabaseAdmin = createClient(supabaseUrl, publishableKey, {
 		auth: {
 			persistSession: false,
 			autoRefreshToken: false,

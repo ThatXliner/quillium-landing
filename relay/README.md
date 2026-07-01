@@ -45,7 +45,7 @@ Passing auth in the query string works with browser WebSockets, but it can show 
 Example production origins:
 
 ```text
-ALLOWED_ORIGINS=https://quillium.ai,https://quillium.bryanhu.com,tauri://localhost
+ALLOWED_ORIGINS=https://quillium.bryanhu.com
 ```
 
 ## Render Deployment
